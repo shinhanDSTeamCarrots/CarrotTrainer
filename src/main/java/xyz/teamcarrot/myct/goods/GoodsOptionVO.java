@@ -1,5 +1,8 @@
 package xyz.teamcarrot.myct.goods;
 
+import lombok.Data;
+
+@Data
 public class GoodsOptionVO {
 
 	private int option_no;

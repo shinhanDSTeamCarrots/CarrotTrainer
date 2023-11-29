@@ -2,6 +2,8 @@ package xyz.teamcarrot.myct.goods;
 
 import java.sql.Timestamp;
 
+import lombok.Data;
+@Data
 public class CartVO {
 	
 	private int cart_no;
