@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+a {
+    text-decoration: none;
+}
+a:visited {
+	color: #435334;
+}
+.wrap {
+    width:100%;
+    margin : 0 auto;    /* 가운데 정렬 */
+}
+.header {
+	background-color:#fefbda;
+	height: 108px;
+}
+.size {
+    position: relative;
+    width:1200px;
+    margin : 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+.size > .title {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 102px;
+}
+.title-text > a {
+	display: block;
+}
+.title-img {
+	width: 102px;
+	height: 96px;
+}
+#mct {
+	font-size: 60px;
+	font-weight: 800;
+	color: #435334;
+	height: 70%;
+}
+#mct > a:visited {
+	color: #435334;
+}
+#my-carrot-trainer {
+	font-size: 20px;
+	font-weight: 700;
+	color: #748e63;
+	height: 30%;
+}
+#my-carrot-trainer > a:visited {
+	color: #748e63;
+}
+#carrot {
+	position: absolute;
+	object-fit: cover;
+	width: 102px;
+	height: 96px;
+}
+.login {
+    position: absolute;
+    right : 0;
+    margin-top: 10px;
+    top : 0;
+    color: #435334;
+    font-weight: bold;
+}
+.menu {
+    width:1200px;
+    margin : 0 auto;
+    height:40px;
+}
+.menu > ul {
+	background-color:#748E63;
+	font-weight: bold;
+	font-size: 18px;
+    margin:0;
+    padding:0;
+    
+}
+.menu > ul > li {
+    list-style: none;
+    border:1px solid #748E63;
+    background-color:#CEDEBD;
+    color:#435334;
+    text-align: center;
+    float:left;
+    width:25%;
+    height:42px;
+    line-height:40px;
+}
+.menu > ul > li:hover {
+    background-color:#9EB384;
+}
+.container {
+    overflow: hidden;
+    height:auto;
+    width:1200px;
+    margin : 0 auto;
+    padding : 20px;
+}
+
+.footer {
+    background-color:#40513b;
+    color:#c2c2c2;
+    clear :both;
+    padding:30px 0;
+    width:100%;
+}
+.footer > .size {
+    width:1200px;
+    margin:0 auto;
+}
+.footer > .size > .info > p {
+    line-height: 20px;
+}
+.footer > .size > .sns_area {
+    position: absolute;
+    top : 0;
+    right : 0;
+}
+.sns_area > a {
+    margin: 10px;
+}
+
+ul, li {
+    list-style-type: none;
+    position: relative;
+}
+.depth2 {
+    z-index:10;
+    position: absolute;
+    text-align: center;
+    width:100%;
+    background-color: #CEDEBD;
+    display:none;
+    border:1px solid #748E63;
+}
+.depth2 > li:hover {
+    background-color:#9EB384;
+}
+
