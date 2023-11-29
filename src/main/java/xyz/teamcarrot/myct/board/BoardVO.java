@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class tb_board {
+public class BoardVO {
 	private int board_no;
 	private String board_title;
 	private Timestamp board_rdate;

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class tb_board_reply {
+public class BoardReplyVO {
 	private int reply_no;
 	private String reply_content;
 	private Timestamp reply_rdate;
