@@ -17,6 +17,22 @@
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    		<div class=bodyReport-title">
+    			<p class="healthInfo-title-text">EXERCISE</p>
+   				<button class="select" type="submit" onclick="">선택</button>
+    		</div>
+    		<div class="title-division-line"></div>
+    		<div class="bodyReport-text">안녕하세요, 당근님!</div>
+    		<div class="bodyReport-content">
+    			<div class="bodyReport-list">
+    			</div>
+    			<div id="bodyReport-bmi">
+    			</div>
+    			<div id="bodyReport-food">
+    			</div>
+    			<div id="bodyReport-exercise">
+    			</div>
+    		</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

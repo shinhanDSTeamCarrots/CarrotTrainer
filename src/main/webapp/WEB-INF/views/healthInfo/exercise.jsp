@@ -18,7 +18,9 @@
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    		<!-- 리스트 -->
     		<div class="info">
+    			<!-- 검색 -->
     			<div class="search">
     				<div class="healthInfo-title">
 	    				<p class="healthInfo-title-text">EXERCISE</p>
@@ -33,11 +35,15 @@
     				<div class="search-tag">
     				</div>
     			</div>
+    			<!-- 목록 -->
     			<div class="list">
     				<p class="list-text">즐겨찾기 목록</p>
 	    			<%-- 검색하면
-	                <c:if test="${ }}">
+	                <c:if test="${ }">
 	                    <a class="list-text">즐겨찾기 목록</a>
+	                </c:if>
+	                <c:if test="${ }">
+	                    <a class="list-text">목록</a>
 	                </c:if>
 	                <c:if test="${ }">
 	                    <a class="list-text">검색 결과</a>
@@ -48,9 +54,18 @@
 	                	<p>검색 결과: 00개</p>
 	                </div>
 	                <div class="list-result">
+	                <tbody>
+	                <!-- 즐찾목록있으면 -->
+	               	<c:if test="">
+					</c:if>
+					<!-- 없으면 전체 -->
+					<c:forEach var="" items=""> 
+					</c:forEach>
+	                </tbody>
 	                </div>
     			</div>
    			</div>
+   			<!-- 기록란 -->
     		<div class="add-info">
     			<div class="add-info-content">
 	    			<div class="add-info-title">

@@ -12,7 +12,7 @@
 	display: flex;
 	width: 800px;
 	margin: 10px auto;
-	margin-right: 70px;
+	margin-right: 40px;
 	flex-direction: column;
 }
 /* 제목 */
@@ -66,6 +66,7 @@
 .list-text {
 	font-size: 15px;
 	font-weight: 700;
+	margin-left: 10px;
 }
 .list-division-line {
 	background-color: #CEDEBD;
