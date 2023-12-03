@@ -14,4 +14,5 @@ public class ReviewVO {
 	private int goods_no;
 	private int member_no;
 	private String member_name;
+	private int self_like;
 }
