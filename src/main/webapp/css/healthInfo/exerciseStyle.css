@@ -23,19 +23,6 @@
 .healthInfo-title > .healthInfo-title-text {
 	width: 85%;
 }
-.healthInfo-title > .select {
-	width: 15%;
-	height: 30px;
-	margin: 5px auto 5px;
-	background-color: #CEDEBD;
-	border-radius: 10px;
-	font-size: 12px;
-	font-weight: 700;
-}
-.healthInfo-title > .select:hover {
-	background-color: #435334;
-	color: #FAF1E4;
-}
 /* 검색 */
 .search-place {
 	margin: 0px 25px;
@@ -65,10 +52,28 @@
 	height: 20px;
 }
 /* 검색 내용 */
-.list-text {
+.list-title {
+	display: flex;
+	flex-direction: row;
+}
+.list-title > .list-title-text {
+	width: 85%;
 	font-size: 15px;
 	font-weight: 700;
-	margin-left: 10px;
+	margin: 5px 5px 5px 10px;
+}
+.list-title > .select {
+	width: 15%;
+	height: 30px;
+	margin: 5px 20px 5px 5px;
+	background-color: #CEDEBD;
+	border-radius: 10px;
+	font-size: 12px;
+	font-weight: 700;
+}
+.list-title > .select:hover {
+	background-color: #435334;
+	color: #FAF1E4;
 }
 .list-division-line {
 	background-color: #CEDEBD;

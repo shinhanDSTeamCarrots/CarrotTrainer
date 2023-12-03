@@ -4,15 +4,15 @@
 <%@ page session="false"%>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>운동 정보</title>
-<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
-<script src="js/script.js"></script>
+	<meta charset="utf-8">
+	<title>운동 정보</title>
+	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
+	<script src="js/script.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -24,7 +24,6 @@
 				<div class="search">
 					<div class="healthInfo-title">
 						<p class="healthInfo-title-text">EXERCISE</p>
-						<button class="select" type="submit" onclick="">선택</button>
 					</div>
 					<div class="title-division-line"></div>
 					<div class="search-place">
@@ -36,16 +35,19 @@
 				</div>
 				<!-- 목록 -->
 				<div class="list">
-					<p class="list-text">목록</p>
-					<%-- 로그인 했을 때,
-	                <c:if test="${ }">
-	                    <a class="list-text">즐겨찾기 목록</a>
-	                </c:if>
-	                검색하면 (검색결과부터 구현)
-	                <c:if test="${ }">
-	                    <a class="list-text">검색 결과</a>
-	                </c:if>
-	                --%>
+					<div class="list-title">
+						<p class="list-title-text">목록</p>
+						<%-- 로그인 했을 때,
+		                <c:if test="${ }">
+		                    <p class="list-title-text">즐겨찾기 목록</p>
+		                </c:if>
+		                검색하면 (검색결과부터 구현)
+		                <c:if test="${ }">
+		                    <p class="list-title-text">검색 결과</p>
+		                </c:if>
+		                --%>
+		                <button class="select" type="submit" onclick="">선택</button>
+		            </div>
 					<div class="list-division-line">
 						<img>
 						<p>검색 결과: <span class="sql-text">${healthDic.size()}</span>개</p>
@@ -70,7 +72,7 @@
 								<tr class="item-division-line">
 									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>
 									<td id="health" style="text-align: left;">${healthDic.health }</td>
-									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal</td>
+									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal/hr</td>
 								</tr>
 							</c:forEach>
 							</tbody>
