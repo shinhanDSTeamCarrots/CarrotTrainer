@@ -11,12 +11,30 @@
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/bmiStyle.css" />
 	<script src="js/script.js"></script>
 </head>
 <body>
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    		<div class="bmi-title">
+    			<p class="bmi-title-text">DIARY</p>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary.do'">오늘의 다이어리</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport.do'">모아보기</button>
+    		</div>
+    		<div class="title-division-line"></div>
+    		<div class="bmi-text">안녕하세요, <span class="sql-text">당근</span>님!</div>
+    		<div class="bmi-content">
+	    		<div class="bmi-data">
+	    			<div class="bmi-input-data">
+	   				</div>
+	   				<div class="bmi-input-button">
+	   				</div>
+	   			</div>
+	   			<div class="bmi-info">
+	   			</div>
+   			</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>
