@@ -1,0 +1,92 @@
+.container {
+	width:1200px;
+	margin : 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 0px;
+}
+/*----------
+	타이틀
+----------*/
+/* 제목 */
+.bodyReport-title {
+	display: flex;
+	flex-direction: row;
+}
+.bodyReport-title > .bodyReport-title-text {
+	width: 85%;
+	color: #435334;
+	font-size: 30px;
+	font-weight: 700;
+	margin-top : auto;
+	margin-left: 10px;
+	margin-bottom: 2px;
+}
+.bodyReport-title > .move {
+	width: 15%;
+	height: 30px;
+	margin: 20px 20px 5px 5px;
+	background-color: #CEDEBD;
+	border-radius: 10px;
+	font-size: 12px;
+	font-weight: 700;
+}
+.bodyReport-title > .move:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+/* 구분선 */
+.title-division-line {
+	width:1160px;
+	border-top: 3px solid #435334;
+	margin : 0 auto 10px;
+}
+/* 사용자 이름 */
+.bodyReport-text {
+	font-size: 20px;
+	font-weight: 700;
+	margin: 20px 20px 15px 5px;
+}
+
+/*--------------
+	리포트 내용
+--------------*/
+/* 리스트 */
+.bodyReport-list {
+	width:800px;
+    margin: 0 auto;
+    height: 20px;
+}
+.bodyReport-list > ul {
+	background-color:#9EB384;
+	font-weight: bold;
+	font-size: 15px;
+    margin:0;
+    padding:0;
+}
+.bodyReport-list > ul > li {
+    list-style: none;
+    border:1px solid #748E63;
+    background-color:#9EB384;
+    color:#435334;
+    text-align: center;
+    float:left;
+    width:33.3%;
+    height:42px;
+    line-height:40px;
+}
+.bodyReport-list > ul > li:hover {
+    background-color:#CEDEBD;
+}
+/* 리포트 */
+.bodyReport-content {
+	background-color: #FAF1E4;
+}
+.bodyReport-content-detail {
+	background-color: #FFFFFF;
+	border-radius: 20px;
+	width:800px;
+	height: 800px;
+	margin: 70px auto 60px;
+}
