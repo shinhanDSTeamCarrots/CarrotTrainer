@@ -125,5 +125,9 @@ $RECYCLE.BIN/
 # 설정
 .classpath
 .project
+target/
+pom.xml
+target
+MANIFEST.MF
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java
