@@ -1,6 +1,6 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºä mapper <-> ÄÁÆ®·Ñ·¯ ¿¬°á
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ mapper <-> ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½ï¿½ï¿½ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+@Service
 public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	ReviewMapper mapper;
@@ -20,30 +21,30 @@ public class ReviewServiceImpl implements ReviewService {
 	ReviewLikeMapper likeMapper;
 
 	
-	/* ¸®ºä Ãß°¡
-	 * @param: »ý¼ºÇÑ ReviewVO
-	 * @return: Ãß°¡ÇÑ Review ÀÇ review_no 
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	 * @param: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ReviewVO
+	 * @return: ï¿½ß°ï¿½ï¿½ï¿½ Review ï¿½ï¿½ review_no 
 	 */
 	@Override
 	public int insertReview(ReviewVO vo) {
-		//µ¿½Ã¿¡ »óÇ°¿¡¼­µµ update
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ update
 		return mapper.insertReview(vo);
 	}
 
-	/* ¸®ºä ¼öÁ¤
-	 * @param: ¼öÁ¤ÇÑ ReviewVO
-	 * @return: ¼öÁ¤ÇÑ Review ÀÇ review_no 
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * @param: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ReviewVO
+	 * @return: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Review ï¿½ï¿½ review_no 
 	 */
 	@Override
 	public int updateReview(ReviewVO vo) {
-		//µ¿½Ã¿¡ »óÇ°¿¡¼­µµ update
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ update
 		mapper.updateReview(vo);
 		return vo.getReview_no();
 	}
 
-	/* ¸®ºä ¸®½ºÆ®
-	 * @param goods_no	ÁöÁ¤ »óÇ°
-	 * @param page		Æ¯Á¤ page. default 1
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+	 * @param goods_no	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°
+	 * @param page		Æ¯ï¿½ï¿½ page. default 1
 	 * @return: review list
 	 */
 	@Override
@@ -56,25 +57,25 @@ public class ReviewServiceImpl implements ReviewService {
 		}*/
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		hashmap.put("goods_no", goods_no);
-		//·Î±×ÀÎ »óÅÂ¸é
+		//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½
 		if(0==0) {
 			hashmap.put("self_no",0);
 		}
 		else {
-			//·Î±×ÀÎ ¾È µÈ »óÅÂ¸é
+			//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½
 			hashmap.put("self_no",null);
 		}
-		//¼­Ä¡Å¸ÀÔÀÌ member_search¸é Æ¯Á¤ id °Ë»ö
-		//goods_searchÀÌ¸é ±âº» °Ë»ö
+		//ï¿½ï¿½Ä¡Å¸ï¿½ï¿½ï¿½ï¿½ member_searchï¿½ï¿½ Æ¯ï¿½ï¿½ id ï¿½Ë»ï¿½
+		//goods_searchï¿½Ì¸ï¿½ ï¿½âº» ï¿½Ë»ï¿½
 		hashmap.put("searchType", "goods_search");
 		hashmap.put("alignType", "like_desc");
 		hashmap.put("page",page-1);
 		return mapper.selectReview(hashmap);
 	}
 
-	/* ¸®ºä »èÁ¦
-	 * @param »èÁ¦ÇÒ ¸®ºä ¹øÈ£
-	 * @return: »èÁ¦ÇÑ review no
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * @param ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
+	 * @return: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ review no
 	 */
 	@Override
 	public int deleteReview(int review_no) {
@@ -82,9 +83,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return review_no;
 	}
 
-	/* ¸®ºä ÁÁ¾Æ¿ä
-	 * @param review_no		ÁÁ¾Æ¿ä ÇÑ ¸®ºä
-	 * @param member_no		ÁÁ¾Æ¿äÇÑ ¸â¹ö
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½
+	 * @param review_no		ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * @param member_no		ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 */
 	@Override
 	public void likeReview(int review_no, int member_no) {
@@ -92,9 +93,9 @@ public class ReviewServiceImpl implements ReviewService {
 		mapper.likeReview(review_no, member_no);
 	}
 
-	/* ¸®ºä ÁÁ¾Æ¿ä Ãë¼Ò
-	 * @param review_no		ÁÁ¾Æ¿äÇÑ ¸®ºä
-	 * @param member_no		ÁÁ¾Æ¿äÇÑ ¸â¹ö
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½
+	 * @param review_no		ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * @param member_no		ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 */
 	@Override
 	public void dislikeReview(int review_no, int member_no) {

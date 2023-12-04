@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xyz.teamcarrot.review.ReviewMapper">
+<mapper namespace="xyz.teamcarrot.myct.review.ReviewMapper">
 
-	<insert id="insertReview" parameterType="xyz.teamcarrot.review.ReviewVO">
+	<insert id="insertReview" parameterType="xyz.teamcarrot.myct.review.ReviewVO">
 		INSERT INTO tb_review (
 			  content
 			, point
@@ -23,14 +23,14 @@
 		</selectKey>
 	</insert>
 	
-	<update id="updateReview" parameterType="xyz.teamcarrot.review.ReviewVO">
+	<update id="updateReview" parameterType="xyz.teamcarrot.myct.review.ReviewVO">
 		UPDATE 	tb_review
 		SET		content = #{content}
 			  , point   = #{point}
 		WHERE review_no = #{review_no}
 	</update>
 	
-	<select id="selectReview" parameterType="map" resultType="xyz.teamcarrot.review.ReviewVO">
+	<select id="selectReview" parameterType="map" resultType="xyz.teamcarrot.myct.review.ReviewVO">
 		SELECT	r.review_no AS review_no
 			  , r.content AS content
 			  , r.point AS point
