@@ -12,5 +12,6 @@ public class CartVO {
 	private int goods_no;
 	private int member_no;
 	private int option_no;
+	//커밋 적용용 임시 메시지 후에 삭제 해주세요
 
 }
