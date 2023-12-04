@@ -1,6 +1,6 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºä mapper <-> ÄÁÆ®·Ñ·¯ ¿¬°á
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ mapper <-> ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½ï¿½ï¿½ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
@@ -8,6 +8,8 @@ package xyz.teamcarrot.myct.review;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+@Service
 public interface ReviewService {
 	int insertReview(ReviewVO vo);
 	int updateReview(ReviewVO vo);
