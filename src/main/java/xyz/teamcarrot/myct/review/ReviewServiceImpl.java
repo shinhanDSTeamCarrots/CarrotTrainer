@@ -28,7 +28,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int insertReview(ReviewVO vo) {
 		//���ÿ� ��ǰ������ update
-		return mapper.insertReview(vo);
+		int res =  mapper.insertReview(vo);
+		mapper.goodsTableUpdate(vo.getGoods_no());
+		return res;
 	}
 
 	/* ���� ����
@@ -39,6 +41,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public int updateReview(ReviewVO vo) {
 		//���ÿ� ��ǰ������ update
 		mapper.updateReview(vo);
+		mapper.goodsTableUpdate(vo.getGoods_no());
 		return vo.getReview_no();
 	}
 
@@ -80,6 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int deleteReview(int review_no) {
 		mapper.deleteReview(review_no);
+		//mapper.goodsTableUpdate(goods_no);
 		return review_no;
 	}
 

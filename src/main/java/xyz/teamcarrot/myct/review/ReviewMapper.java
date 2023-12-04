@@ -1,6 +1,6 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºä mapper ¼±¾ð
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ mapper ï¿½ï¿½ï¿½ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
@@ -21,4 +21,5 @@ public interface ReviewMapper {
 	int deleteReview(int reviewno);
 	int likeReview(@Param("review_no")int review_no, @Param("member_no")int member_no);
 	int dislikeReview(@Param("review_no")int review_no, @Param("member_no")int member_no);
+	void goodsTableUpdate(@Param("goods_no")int goods_no);
 }

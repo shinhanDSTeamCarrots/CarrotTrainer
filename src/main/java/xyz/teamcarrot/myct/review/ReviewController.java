@@ -1,6 +1,6 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºä ÄÁÆ®·Ñ·¯. ÇÔ¼öº° ±â´É ÈÄ¼ú
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½. ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ä¼ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
@@ -24,10 +24,10 @@ public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
-	//¸®½ºÆ® Ãâ·Â
+	//ì‡¼í•‘ëª° ìƒí’ˆ ë¦¬ë·° ë¦¬ìŠ¤íŠ¸
 	@GetMapping("review/shoppingReview.do")
 	public ModelAndView ShoppingReview(HttpSession session) {
-		//************************************ÆäÀÌÁöº°·Î ¹Ù²Ü°Å °í¹ÎÁ»
+		//************************************ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		int shoppingitem = (int)session.getAttribute("*********************");
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
@@ -36,36 +36,36 @@ public class ReviewController {
 		return mav;
 	}
 	
-	//Æ¯Á¤ À¯Àú°¡ ÀÛ¼ºÇÑ ¸®ºä ¸®½ºÆ®
+	//ë‚´ê°€ ì“´ ë¦¬ë·° ë³´ê¸°
 	@GetMapping("review/myreview.do")
 	public ModelAndView MyReview(HttpSession session) {
-		//********************************************Æ¯Á¤ À¯Àú°¡ ÀÛ¼ºÇÑ ¸®ºä ¸®½ºÆ®
+		//********************************************Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*******url");//url ÁöÁ¤
+		mav.setViewName("*******url");//url ï¿½ï¿½ï¿½ï¿½
 		mav.addObject("list", null);//object
 		return mav;
 	}
 	
-	//¸®ºä ÀÛ¼º ½ÃÀÛ
+	//ë¦¬ë·° ì‘ì„± í˜ì´ì§€
 	@GetMapping("review/write.do")
 	public ModelAndView Write() {
-		//¸®ºä ÀÛ¼º ÆäÀÌÁö ¿¬µ¿
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("*************view name");
 		mav.addObject("mode", "w");
 		return mav;
 	}
 	
-	//¸®ºä ÀÛ¼º¿Ï·á
+	//ë¦¬ë·° ì‘ì„± í›„ ì‡¼í•‘ëª° ì—°ê²°
 	@PostMapping("review/afterwrite.do")
 	public String AfterWrite(HttpServletRequest request) {
-		request.getParameter("°ªµé");
-		return "»óÇ° ÆäÀÌÁö";
+		request.getParameter("*********after url");
+		return "**********url";
 	}
 	
 	
 	
-	//¸®ºä ¼öÁ¤
+	//ë¦¬ë·° ìˆ˜ì •
 	@GetMapping("review/modify.do")
 	public ModelAndView Modify() {
 		ModelAndView mav = new ModelAndView();
@@ -73,7 +73,7 @@ public class ReviewController {
 		mav.addObject("mode", "m");
 		return mav;
 	}
-	//¸®ºä »èÁ¦
+	//ë¦¬ë·° ì‚­ì œ
 	@PostMapping("review/delete.do")
 	public ModelAndView Delete(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -84,7 +84,7 @@ public class ReviewController {
 		return mav;
 	}
 	
-	//¸®ºä ÁÁ¾Æ¿ä
+	//ë¦¬ë·° ì¢‹ì•„ìš”
 	@ResponseBody
 	@PostMapping("review/like.do")
 	public String Like(HttpServletRequest request) {
@@ -99,7 +99,7 @@ public class ReviewController {
 		}
 	}
 	
-	//¸®ºä ÁÁ¾Æ¿ä Ãë¼Ò
+	//ë¦¬ë·° ì¢‹ì•„ìš” ì·¨ì†Œí•¨
 	@ResponseBody
 	@PostMapping("review/dislike.do")
 	public String Dislike(HttpServletRequest request) {

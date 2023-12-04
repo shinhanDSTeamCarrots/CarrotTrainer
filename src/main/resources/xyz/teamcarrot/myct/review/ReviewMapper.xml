@@ -112,6 +112,12 @@
 	 -->
 	</update>
 	
+	<update id="goodsTableUpdate" parameterType="int">
+		UPDATE tb_goods
+		SET goods_rate = (SELECT AVG(IFNULL(point,0)) FROM tb_review WHERE goods_no=${goods_no} GROUP BY goods_no)
+		WHERE goods_no=${goods_no}
+	</update>
+	
 	
 	<!-- select id="count" parameterType="kr.co.project.comment.CommentVO" resultType="int">
 		select count(*) from comment
