@@ -36,7 +36,7 @@
                 <li>
                     <a href="#">건강뉴스</a>
                     <ul class="depth2">
-                        <li><a href="#">MENU1-1</a></li>
+                        <li><a href="/myct/healthnews/cardboard.do">웰니스 뉴스</a></li>
                         <li><a href="#">MENU1-2</a></li>
                         <li><a href="#">MENU1-3</a></li>
                     </ul>
@@ -54,9 +54,9 @@
                 <li>
                     <a href="#">커뮤니티</a>
                     <ul class="depth2">
-                        <li><a href="#">공지사항</a></li>
-                        <li><a href="#">자유게시판</a></li>
-                        <li><a href="#">문의게시판</a></li>
+                        <li><a href="/myct/board/noticeboard.do">공지사항</a></li>
+                        <li><a href="/myct/board/freeboard.do">자유게시판</a></li>
+                        <li><a href="/myct/board/qnaboard.do">문의게시판</a></li>
                     </ul>
                 </li>
                 <li>
