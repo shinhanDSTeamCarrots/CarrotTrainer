@@ -11,9 +11,10 @@ public class GoodsController {
 	@Autowired
 	private GoodsService service;
 	
-	@GetMapping("/goods/chickenList.do")
+	@GetMapping("/chickenList.do")
 	public String list(Model model) {
 		model.addAttribute("goodsList", service.goodsList());
-		return "goods/chickenList";
+		return "/goods/chickenList";
 	}
+	//getattribute category no 변서 저장해서 getmapping뒤에 붙이기
 }

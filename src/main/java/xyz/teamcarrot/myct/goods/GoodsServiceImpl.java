@@ -13,8 +13,8 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper mapper;
 
 	@Override
-	public List<Map<String, Object>> goodsList() {
-		List<Map<String,Object>> goodsList = mapper.list();
+	public List<GoodsVO> goodsList() {
+		List<GoodsVO> goodsList = mapper.list();
 		
 		return goodsList;
 	}

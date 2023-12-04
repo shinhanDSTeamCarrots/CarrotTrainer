@@ -19,7 +19,7 @@
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
     		<div class="category">	
-    			<ul>
+    			<ul class="depth1">
     				<li>
 	    				<a>카테고리</a>
 	    				<ul class="depth2">
