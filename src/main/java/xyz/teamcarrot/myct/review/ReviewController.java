@@ -31,7 +31,7 @@ public class ReviewController {
 		int shoppingitem = (int)session.getAttribute("*********************");
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*******url");
+		mav.setViewName("goods/reviewslist");
 		mav.addObject("list", null);
 		return mav;
 	}
@@ -60,7 +60,7 @@ public class ReviewController {
 	@PostMapping("review/afterwrite.do")
 	public String AfterWrite(HttpServletRequest request) {
 		request.getParameter("*********after url");
-		return "**********url";
+		return "/review/complete.jsp";
 	}
 	
 	

@@ -129,5 +129,6 @@ target/
 pom.xml
 target
 MANIFEST.MF
+src/test/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,java
