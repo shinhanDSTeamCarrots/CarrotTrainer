@@ -24,7 +24,7 @@
 	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary.do'">오늘의 다이어리</button>
 	    		</div>
 	    		<div class="title-division-line"></div>
-	    		<div class="bodyReport-text">안녕하세요, <span class="sql-text">당근</span>님!</div>
+	    		<p class="bodyReport-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
     		</div>
    			<div class="bodyReport-list" id="scroll-event">
    				<ul>

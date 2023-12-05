@@ -24,7 +24,7 @@
    				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport.do'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
-    		<p class="bmi-text">안녕하세요, <span class="sql-text">당근</span>님!</p>
+    		<p class="bmi-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
     		<div class="bmi-content">
 	    		<div class="bmi-data">
 	    			<div class="bmi-input-data">

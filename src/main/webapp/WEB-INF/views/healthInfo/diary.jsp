@@ -17,6 +17,22 @@
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    		<div class="diary-title">
+    			<p class="diary-title-text">TODAY'S DIARY</p>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport.do'">모아보기</button>
+    		</div>
+    		<div class="title-division-line"></div>
+    		<p class="diary-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
+    		<div class="diary-content">
+    			<div class="diary-result">
+    				<div class="diary-calendar">
+    				</div>
+    				<div class="diary-result-text">
+    				</div>
+    			</div>
+    			<div class="diary-comment">
+    			</div>
+    		</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

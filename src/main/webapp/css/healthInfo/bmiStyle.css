@@ -33,12 +33,6 @@
 	background-color: #435334;
 	color: #FAF1E4;
 }
-/* 구분선 */
-.title-division-line {
-	width:1160px;
-	border-top: 3px solid #435334;
-	margin : 0 auto 10px;
-}
 /* 사용자 이름 */
 .bmi-text {
 	font-size: 20px;
@@ -77,6 +71,11 @@ button:hover {
 /*-----------
 	구분선
 -----------*/
+.title-division-line {
+	width:1160px;
+	border-top: 3px solid #435334;
+	margin : 0 auto;
+}
 .detail-division-line {
 	border-top: 2px solid #CEDEBD;
 	margin : 10px auto 10px auto;
