@@ -11,11 +11,11 @@
 	타이틀
 ----------*/
 /* 제목 */
-.bodyReport-title {
+.bodyReport-title-content {
 	display: flex;
 	flex-direction: row;
 }
-.bodyReport-title > .bodyReport-title-text {
+.bodyReport-title-content > .bodyReport-title-text {
 	width: 85%;
 	color: #435334;
 	font-size: 30px;
@@ -24,7 +24,7 @@
 	margin-left: 10px;
 	margin-bottom: 2px;
 }
-.bodyReport-title > .move {
+.bodyReport-title-content > .move {
 	width: 15%;
 	height: 30px;
 	margin: 20px 20px 5px 5px;
@@ -33,7 +33,7 @@
 	font-size: 12px;
 	font-weight: 700;
 }
-.bodyReport-title > .move:hover {
+.bodyReport-title-content > .move:hover {
 	background-color: #435334;
 	color: #FAF1E4;
 }
@@ -44,7 +44,7 @@
 	margin : 0 auto 10px;
 }
 /* 사용자 이름 */
-.bodyReport-text {
+.bodyReport-title > .bodyReport-text {
 	font-size: 20px;
 	font-weight: 700;
 	margin: 20px 20px 15px 5px;
@@ -92,7 +92,8 @@
 	margin: 70px auto 60px;
 	padding: 20px;
 }
-.bodyReport-text {
-	font-weight: bold;
+.bodyReport-content-detail > .bodyReport-text {
+	font-weight: 700;
 	font-size: 25px;
+	margin-left: 20px;
 }

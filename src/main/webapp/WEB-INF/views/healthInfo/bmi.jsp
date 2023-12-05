@@ -24,12 +24,51 @@
    				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport.do'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
-    		<div class="bmi-text">안녕하세요, <span class="sql-text">당근</span>님!</div>
+    		<p class="bmi-text">안녕하세요, <span class="sql-text">당근</span>님!</p>
     		<div class="bmi-content">
 	    		<div class="bmi-data">
 	    			<div class="bmi-input-data">
+		    			<ul>
+		    				<li>나이:</li>
+			    			<li><input></li>
+	   					</ul>
+	   					<ul>
+		    				<li>신장:</li>
+			    			<li><input></li>
+	   					</ul>
+	   					<ul>
+		    				<li>체중:</li>
+			    			<li><input></li>
+	   					</ul>
+	   					<ul>
+		    				<li>성별:</li>
+			    			<li><input></li>
+	   					</ul>
+	   					<ul>
+		    				<li>목표:</li>
+			    			<li></li>
+	   					</ul>
+	   					<ul>
+		    				<li>운동량:</li>
+			    			<li></li>
+	   					</ul>
 	   				</div>
 	   				<div class="bmi-input-button">
+	   					<button class="bmi-btn" type="submit" onclick="">계산하기</button>
+	   					<%-- 로그인 했을 때, type submit 아닐때는 기능 없
+		                <c:if test="${ }">
+		                </c:if>
+		                --%>
+	   					<button class="bmi-btn" type="" onclick="">초기화</button>
+	   				</div>
+	   				<div class="bmi-result">
+	   					<div class="detail-division-line"></div>
+	   					<div class="bmi-result-text">
+	   						<p>당근님의 BMI는 21.50이며 정상 범위에 속합니다.</p>
+	   						<p>당근님의 비만도와 활동량을 고려한 하루 권장 칼로리 섭취량은 1553kcal 입니다. </p>
+	   					</div>
+	   					<div class="bmi-result-graph">
+	   					</div>
 	   				</div>
 	   			</div>
 	   			<div class="bmi-info">

@@ -27,10 +27,7 @@
 	width: 15%;
 	height: 30px;
 	margin: 20px 20px 5px 5px;
-	background-color: #CEDEBD;
 	border-radius: 10px;
-	font-size: 12px;
-	font-weight: 700;
 }
 .bmi-title > .move:hover {
 	background-color: #435334;
@@ -52,3 +49,35 @@
 /*-------------
 	bmi 내용
 -------------*/
+.bmi-content {
+	
+}
+.bmi-data {
+	
+}
+.bmi-input-button > .bmi-btn {
+	width: 15%;
+	height: 35px;
+	margin: 10px;
+}
+
+/*---------
+	버튼
+---------*/
+button {
+	background-color: #CEDEBD;
+	font-size: 12px;
+	font-weight: 700;
+}
+button:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+/*-----------
+	구분선
+-----------*/
+.detail-division-line {
+	border-top: 2px solid #CEDEBD;
+	margin : 10px auto 10px auto;
+}
