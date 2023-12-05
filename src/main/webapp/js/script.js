@@ -9,7 +9,7 @@ $(function(){
 
 //메뉴 클릭시 해당 영역으로 이동
 $(function () {
-	$('li > a').click(function (){
-    	$('html, body').animate({scrollTop: $(this.hash).offset.top}, 300);
+	$('#scroll-event').click(function (){
+    	$('html, body').animate({scrollTop: $(this.hash).offset().top}, 300);
     });
 });

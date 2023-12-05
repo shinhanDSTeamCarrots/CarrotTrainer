@@ -24,7 +24,7 @@
     		</div>
     		<div class="title-division-line"></div>
     		<div class="bodyReport-text">안녕하세요, <span class="sql-text">당근</span>님!</div>
-   			<div class="bodyReport-list">
+   			<div class="bodyReport-list" id="scroll-event">
    				<ul>
     				<li><a href="#bodyReport-bmi">나의 BMI 변화</a></li>
 	    			<li><a href="#bodyReport-food">나의 음식 기록</a></li>
@@ -33,10 +33,13 @@
    			</div>
    			<div class="bodyReport-content">
     			<div class="bodyReport-content-detail" id="bodyReport-bmi">
+    				<a class="bodyReport-text">나의 BMI 변화</a>
     			</div>
     			<div class="bodyReport-content-detail" id="bodyReport-food">
+    				<a class="bodyReport-text">나의 음식 기록</a>
     			</div>
     			<div class="bodyReport-content-detail" id="bodyReport-exercise">
+    				<a class="bodyReport-text">나의 운동 기록</a>
     			</div>
     		</div>
 	    </div>

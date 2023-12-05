@@ -90,4 +90,9 @@
 	width:800px;
 	height: 800px;
 	margin: 70px auto 60px;
+	padding: 20px;
+}
+.bodyReport-text {
+	font-weight: bold;
+	font-size: 25px;
 }
