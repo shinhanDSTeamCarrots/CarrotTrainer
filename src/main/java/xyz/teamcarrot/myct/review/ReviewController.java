@@ -6,18 +6,20 @@
  */
 package xyz.teamcarrot.myct.review;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import xyz.teamcarrot.myct.member.MemberVO;
 
 @Controller
 public class ReviewController {
@@ -26,12 +28,30 @@ public class ReviewController {
 	
 	//쇼핑몰 상품 리뷰 리스트
 	@GetMapping("review/shoppingReview.do")
-	public ModelAndView ShoppingReview(HttpSession session) {
-		//************************************���������� �ٲܰ� �����
-		int shoppingitem = (int)session.getAttribute("*********************");
+	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
+		//상품 번호랑 자기 번호, 페이지 번호 받아온다*********************************
+		//int goods_no = (int)session.getAttribute("*********************");
+		int goods_no = Integer.parseInt(request.getParameter("goods_no"));
+		
+		int page_no = 1;
+		try{
+			page_no = Integer.parseInt(request.getParameter("page_no"));
+		}catch(Exception e) {
+			//do noting
+		}
+		
+		MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
+		int self_no = -1;
+		if(loginVO != null) {
+			self_no = loginVO.getMember_no();
+		}
+		
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("goods/reviewslist");
+		
+		Map map = service.selectData(goods_no);
+		map.put("list", service.selectReview(goods_no, self_no,page_no));
 		mav.addObject("list", null);
 		return mav;
 	}
