@@ -44,11 +44,11 @@
                 <li>
                     <a href="#">건강정보</a>
                     <ul class="depth2">
-                        <li><a href="#">일일 권장량 계산</a></li>
-                        <li><a href="#">음식 정보</a></li>
-                        <li><a href="#">운동 정보</a></li>
-                        <li><a href="#">다이어리</a></li>
-                        <li><a href="#">리포트</a></li>
+                        <li><a href="${pageContext.request.contextPath}/bmi.do">일일 권장량 계산</a></li>
+                        <li><a href="${pageContext.request.contextPath}/food.do">음식 정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/exercise.do">운동 정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/diary.do">다이어리</a></li>
+                        <li><a href="${pageContext.request.contextPath}/bodyReport.do">리포트</a></li>
                     </ul>
                 </li>
                 <li>
@@ -62,7 +62,7 @@
                 <li>
                     <a href="#">쇼핑</a>
                     <ul class="depth2">
-                        <li><a href="#">닭가슴살</a></li>
+                        <li><a href="./goods/chickenList.do">닭가슴살</a></li>
                         <li><a href="#">도시락</a></li>
                         <li><a href="#">샐러드</a></li>
                     </ul>

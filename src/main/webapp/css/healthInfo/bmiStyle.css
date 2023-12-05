@@ -1,0 +1,54 @@
+.container {
+	width:1200px;
+	margin : 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 0px;
+}
+/*----------
+	타이틀
+----------*/
+/* 제목 */
+.bmi-title {
+	display: flex;
+	flex-direction: row;
+}
+.bmi-title > .bmi-title-text {
+	width: 85%;
+	color: #435334;
+	font-size: 30px;
+	font-weight: 700;
+	margin-top : auto;
+	margin-left: 10px;
+	margin-bottom: 2px;
+}
+.bmi-title > .move {
+	width: 15%;
+	height: 30px;
+	margin: 20px 20px 5px 5px;
+	background-color: #CEDEBD;
+	border-radius: 10px;
+	font-size: 12px;
+	font-weight: 700;
+}
+.bmi-title > .move:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+/* 구분선 */
+.title-division-line {
+	width:1160px;
+	border-top: 3px solid #435334;
+	margin : 0 auto 10px;
+}
+/* 사용자 이름 */
+.bmi-text {
+	font-size: 20px;
+	font-weight: 700;
+	margin: 20px 20px 15px 5px;
+}
+
+/*-------------
+	bmi 내용
+-------------*/
