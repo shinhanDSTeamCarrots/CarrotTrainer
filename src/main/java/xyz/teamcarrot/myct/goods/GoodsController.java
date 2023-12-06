@@ -17,4 +17,5 @@ public class GoodsController {
 		return "/goods/chickenList";
 	}
 	//getattribute category no 변서 저장해서 getmapping뒤에 붙이기
+	//model안에 goodsList에 service.goodsList가 들어가있는걸 goodsList를 chickenList c:{"goodsList"} 
 }

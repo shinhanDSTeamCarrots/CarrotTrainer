@@ -9,6 +9,7 @@
 	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/goods/goodslist.css"/>
@@ -18,52 +19,54 @@
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
-    		<div class="category">	
-    			<ul class="depth1">
-    				<li>
-	    				<a>카테고리</a>
-	    				<ul class="depth2">
-		    				<li><a href="">닭가슴살</a></li>
-		    				<li><a href="">도시락</a></li>
-		    				<li><a href="">샐러드</a></li>	    				
-	    				</ul>
-    				</li>
-    			</ul>
-    		</div>
-    	<div class="goods_header">
-    	
-    	
-    		<h1>닭가슴살</h1>
     		
-    		<!-- 검색창 -->
-    		<div class="search_wrap">
-    			<div class="search_area">
-    				<input type="text" name="search_goods" value=""> 
-     				<button id="search">검색</button>
-     			</div>
-    		</div>
+    		<!-- 카테고리 메뉴바 -->
+    		<div class="goods_header">
+	    		<div class="category">	
+	    			<ul class="depth1">
+	    				<li>
+		    				<a>카테고리</a>
+		    				<ul class="depth2">
+			    				<li><a href="">닭가슴살</a></li>
+			    				<li><a href="">도시락</a></li>
+			    				<li><a href="">샐러드</a></li>	    				
+		    				</ul>
+	    				</li>
+	    			</ul>
+	    		</div>
     		
-    		<!-- 상품목록 -->
-    		<div class="goods_list">
-    			<ul>
-    				<c:forEach items="${list }" var="list">
-    				<li>
-    					<div class="goodsImg">
-    						<img src="${list.image}">
-    					</div>
-    					<div class="goodsName">
-    						<a href="#">${list.goods_name }</a>
-    					</div>
-    					<div class="goodsPrice">
-    						${list.price }
-    					</div>
-    				</li>
-    				</c:forEach>
-    			</ul>
+    	<!-- 상품 카테고리명 & 검색창 -->	
+    	
+   		<h1>닭가슴살</h1>
+
+   		<!-- 검색창 -->
+   		<div class="search_wrap">
+   			<div class="search_area">
+   				<input type="text" name="search_goods" value=""> 
+    			<button id="search">검색</button>
     		</div>
+   		</div>
     	</div>
-    	</div>
-		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    	<!-- 상품목록 -->
+   		<div class="goods_list">
+   			<ul>
+				<c:forEach items="${goodsList }" var="goodsList">
+				<li>
+					<div class="goodsImg">
+						
+					</div>
+					<div class="goodsName">
+						<a href="#">${goodsList.goods_name }</a>
+					</div>
+					<div class="goodsPrice">
+						${goodsList.price }
+					</div>
+				</li>
+				</c:forEach>
+   			</ul>
+   		</div>
+   	</div>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>
 </body>
 </html>
