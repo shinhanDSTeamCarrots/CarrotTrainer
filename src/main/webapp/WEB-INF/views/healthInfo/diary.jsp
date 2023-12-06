@@ -11,6 +11,7 @@
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/diaryStyle.css" />
 	<script src="js/script.js"></script>
 </head>
 <body>
@@ -28,9 +29,38 @@
     				<div class="diary-calendar">
     				</div>
     				<div class="diary-result-text">
+	    				<div class="diary-result-main">
+	    					<div class="diary-result-main-text">
+		    					<p>총 섭취량 <span class="sql-diary-result-main">1100</span>kcal</p>
+		    					<p>총 활동량 <span class="sql-diary-result-main">50</span>kcal</p>
+	    					</div>
+	    					<div class="detail-division-line"></div>
+	    					<div id="diary-result-main-sub">
+		    					<p>남은 섭취량 <span class="sql-diary-result">200</span>kcal</p>
+		    					<p>오늘의 상태는? <span class="sql-diary-result">8</span>kg</p>
+	    					</div>
+	    				</div>
+	    				<div class="diary-contact-text">
+	    					<a href="${pageContext.request.contextPath}/foodDiary.do">오늘의 음식 기록하기 ></a>
+	    					<a href="${pageContext.request.contextPath}/exercise.do">오늘의 운동 기록하기 ></a>
+	    					<a href="${pageContext.request.contextPath}/bmi.do">오늘의 상태 기록하기 ></a>
+    					</div>
     				</div>
     			</div>
     			<div class="diary-comment">
+    				<p id="diary-comment-title"><span class="sql-diary-comment">당근</span>님의 <span class="sql-diary-comment">11월 20일</span>부터 <span class="sql-diary-comment">11월 26일</span>까지의 기록이에요</p>
+    				<div class="diary-comment-detail" id="body">
+    					<p>총 <span class="sql-diary-detail">0.5</span>kg 몸의 변화가 생겼어요!</p>
+    					<p>목표 몸무게 달성까지 앞으로 잘 부탁드려요~</p>
+    				</div>
+    				<div class="diary-comment-detail" id="food">
+    					<p>주로 <span class="sql-diary-detail">저녁</span>을 든든하게 먹었네요ㅎㅎ</p>
+    					<p>내일부터는 <span class="sql-diary-detail">아침</span>을 든든하게 먹는 건 어떨까요~?</p>
+    				</div>
+    				<div class="diary-comment-detail" id="exercise">
+    					<p>총 <span class="sql-diary-detail">3</span>회 운동을 진행했고 <span class="sql-diary-detail">요가</span>를 가장 즐겨했어요</p>
+    					<p>꾸준한 운동은 몸 건강에 좋아요</p>
+    				</div>
     			</div>
     		</div>
     	</div>

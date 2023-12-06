@@ -43,6 +43,7 @@
 /*-------------
 	bmi 내용
 -------------*/
+
 .bmi-content {
 	
 }
@@ -52,7 +53,33 @@
 .bmi-input-button > .bmi-btn {
 	width: 15%;
 	height: 35px;
-	margin: 10px;
+	margin: 20px;
+}
+
+/*-------------
+	bmi 결과
+-------------*/
+
+.bmi-result-text {
+	padding: 20px;
+}
+.bmi-result-text p {
+	font-size: 15px;
+	font-weight: 800;
+	text-align : center;
+}
+
+/*-------------------
+	SQL 데이터 텍스트
+-------------------*/
+.sql-text-name {
+	color: #748E63;
+	font-size: 26px;
+	font-weight: 800;
+}
+.sql-result-text {
+	color: #748E63;
+	font-size: 22px;
 }
 
 /*---------

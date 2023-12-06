@@ -16,7 +16,7 @@
 	flex-direction: row;
 }
 .bodyReport-title-content > .bodyReport-title-text {
-	width: 85%;
+	width: 87%;
 	color: #435334;
 	font-size: 30px;
 	font-weight: 700;
@@ -44,7 +44,7 @@
 	margin : 0 auto;
 }
 /* 사용자 이름 */
-.bodyReport-title > .bodyReport-text {
+.bodyReport-text {
 	font-size: 20px;
 	font-weight: 700;
 	margin: 20px 20px 15px 5px;
@@ -96,4 +96,13 @@
 	font-weight: 700;
 	font-size: 25px;
 	margin-left: 20px;
+}
+
+/*-------------------
+	SQL 데이터 텍스트
+-------------------*/
+.sql-text-name {
+	color: #748E63;
+	font-size: 26px;
+	font-weight: 800;
 }

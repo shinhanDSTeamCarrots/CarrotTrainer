@@ -61,18 +61,18 @@
 		                --%>
 	   					<button class="bmi-btn" type="" onclick="">초기화</button>
 	   				</div>
-	   				<div class="bmi-result">
-	   					<div class="detail-division-line"></div>
-	   					<div class="bmi-result-text">
-	   						<p>당근님의 BMI는 21.50이며 정상 범위에 속합니다.</p>
-	   						<p>당근님의 비만도와 활동량을 고려한 하루 권장 칼로리 섭취량은 1553kcal 입니다. </p>
-	   					</div>
-	   					<div class="bmi-result-graph">
-	   					</div>
+	   				<div class="bmi-info">
 	   				</div>
 	   			</div>
-	   			<div class="bmi-info">
-	   			</div>
+   				<div class="bmi-result">
+   					<div class="detail-division-line"></div>
+   					<div class="bmi-result-text">
+   						<p><span class="sql-result-text">당근</span>님의 BMI는 <span class="sql-result-text">21.50</span>이며 <span class="sql-result-text">정상 범위</span>에 속합니다.</p>
+   						<p><span class="sql-result-text">당근</span>님의 비만도와 활동량을 고려한 하루 권장 칼로리 섭취량은 <span class="sql-result-text">1553</span>kcal 입니다. </p>
+   					</div>
+   					<div class="bmi-result-graph">
+   					</div>
+   				</div>
    			</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

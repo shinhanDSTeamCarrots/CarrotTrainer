@@ -11,6 +11,7 @@
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/foodDiaryStyle.css" />
 	<script src="js/script.js"></script>
 </head>
 <body>
@@ -35,13 +36,13 @@
     					</div>
     				</div>
     				<div class="foodDiary-food-input">
-    					<div class="breakfast">
+    					<div class="foodDiary-food-inform" id="breakfast">
     					</div>
-    					<div class="lunch">
+    					<div class="foodDiary-food-inform" id="lunch">
     					</div>
-    					<div class="dinner">
+    					<div class="foodDiary-food-inform" id="dinner">
     					</div>
-    					<div class=snack">
+    					<div class="foodDiary-food-inform" id="snack">
     					</div>
     				</div>
     			</div>
