@@ -1,6 +1,5 @@
  package xyz.teamcarrot.myct.board;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.Data;

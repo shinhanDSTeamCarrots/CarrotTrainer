@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.board.BoardMapper">
+
+	<!-- 게시판 등록 -->
+	<insert id="enroll">
+		insert into tb_board(board_no, board_title, board_rdate, board_view) 
+		values (#{board_no}, #{board_title}, #{board_rdate}, #{board_view})
+		
+	</insert>
+	
+	<!-- 게시판 목록 -->
+	<select id="getList" resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select * from tb_board
+	</select>
+	
+	<!-- 게시판 조회 -->
+	<select id="getPage" resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select * from tb_board where board_no = #{board_no}
+	</select>
+	
+</mapper>

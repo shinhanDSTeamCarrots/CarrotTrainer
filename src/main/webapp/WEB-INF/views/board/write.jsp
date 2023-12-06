@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,12 +94,12 @@
 
             <div class="form-group">
                 <label for="title">글제목</label>
-                <input type="text" id="title">
+                <input type="text" id="title" name="title">
             </div>
 
             <div class="form-group">
                 <label for="content">글 내용</label>
-                <textarea id="content"></textarea>
+                <textarea id="content" name="content"></textarea>
                 <script>
                     CKEDITOR.replace('content');
                 </script>
