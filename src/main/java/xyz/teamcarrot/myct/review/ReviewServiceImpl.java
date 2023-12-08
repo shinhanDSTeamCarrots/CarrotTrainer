@@ -52,22 +52,9 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @return: review list
 	 */
 	@Override
-	public List<ReviewVO> selectReview(int goods_no,int self_no, int page) {
-		/*if(page == 1) {
-			return mapper.selectReview(goods_no);
-		}
-		else {
-			return mapper.selectReviewWithPage(goods_no, page);
-		}*/
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		hashmap.put("goods_no", goods_no);
-		hashmap.put("self_no",self_no);
-		hashmap.put("page",page);
-		//��ġŸ���� member_search�� Ư�� id �˻�
-		//goods_search�̸� �⺻ �˻�
-		hashmap.put("searchType", "goods_search");
-		hashmap.put("alignType", "like_desc");
-		return mapper.selectReview(hashmap);
+	public List<ReviewVO> selectReview(Map<String,Object>map) {
+
+		return mapper.selectReview(map);
 	}
 
 	/* ���� ����

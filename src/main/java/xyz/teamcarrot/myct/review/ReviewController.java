@@ -6,7 +6,9 @@
  */
 package xyz.teamcarrot.myct.review;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +28,12 @@ public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
+	
+	
 	//쇼핑몰 상품 리뷰 리스트
 	@GetMapping("review/shoppingReview.do")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
-		//상품 번호랑 자기 번호, 페이지 번호 받아온다*********************************
-		//int goods_no = (int)session.getAttribute("*********************");
+		System.out.println("review/shopping start");
 		int goods_no = Integer.parseInt(request.getParameter("goods_no"));
 		
 		int page_no = 1;
@@ -45,14 +48,58 @@ public class ReviewController {
 		if(loginVO != null) {
 			self_no = loginVO.getMember_no();
 		}
+		String alignType = "";
+		if(request.getParameter("alignType") == null || request.getParameter("alignType").equals("")) {
+			alignType = "regist_desc";
+		}
+		else {
+			alignType=request.getParameter("alignType");
+		}
 		
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("goods/reviewslist");
+		mav.setViewName("goods/reviewlist");
+		System.out.println("review/shopping selectData");
 		
-		Map map = service.selectData(goods_no);
-		map.put("list", service.selectReview(goods_no, self_no,page_no));
-		mav.addObject("list", null);
+		Map returnmap = service.selectData(goods_no);
+		
+		
+		
+		Map paramMap = new HashMap<String, Object>();
+		paramMap.put("page",(page_no-1) * 10 );
+		paramMap.put("self_no", self_no);
+		paramMap.put("goods_no", goods_no);
+		paramMap.put("alignType", alignType);
+		paramMap.put("searchType", "goods_search");
+		
+		
+		System.out.println(returnmap.get("total_page").getClass().getName());
+		
+		
+		
+		returnmap.put("list", service.selectReview(paramMap));
+		returnmap.put("page",page_no);
+		returnmap.put("alignType", alignType);
+		int total_cnt = ((Long)returnmap.get("total_cnt")).intValue();
+		int total_page = ((Long)returnmap.get("total_page")).intValue();
+		System.out.println("total_cnt: "+total_cnt);
+		System.out.println("total_page: "+total_page);
+		if(total_cnt > 0) {
+			List<Integer> listint = new ArrayList<Integer>();
+			for(int i = ((page_no-1)/5) * 5 + 1; (i <= total_page )&&(i <= ((page_no-1)/5+1) * 5);i++ ) {
+				System.out.println("added: "+i);
+				listint.add(i);
+			}
+			returnmap.put("page_list", listint);
+		}
+		returnmap.put("prev_page", (page_no/5) * 5 );
+		returnmap.put("next_pageable", (page_no/5 + 1) * 5 +1 >= total_page ? false : true);
+		returnmap.put("next_page", (page_no/5 +1) * 5 +1 );
+		
+		//returnmap.put("pageFirst",page_no/5);
+		//returnmap.put("pageLast", (page_no/5)+1);
+		
+		mav.addObject("map", returnmap);
 		return mav;
 	}
 	
@@ -77,7 +124,7 @@ public class ReviewController {
 	}
 	
 	//리뷰 작성 후 쇼핑몰 연결
-	@PostMapping("review/afterwrite.do")
+	@PostMapping("review/write.do")
 	public String AfterWrite(HttpServletRequest request) {
 		request.getParameter("*********after url");
 		return "/review/complete.jsp";

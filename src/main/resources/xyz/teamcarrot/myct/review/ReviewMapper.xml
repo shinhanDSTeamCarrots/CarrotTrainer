@@ -50,7 +50,7 @@
 			LEFT JOIN tb_goods AS g
 							   ON g.goods_no = r.goods_no
 			LEFT JOIN tb_review_like AS l
-									 ON r.goods_no = l.goods_no
+									 ON r.review_no = l.review_no
 									AND r.member_no = #{self_no}
 		WHERE
 				0 = 0
@@ -114,17 +114,19 @@
 		WHERE goods_no=${goods_no}
 	</update>
 	
-	<select id="selectListData" resultType="map" parameterMap="int">
+	<select id="selectListData" resultType="map" parameterType="int">
 		<!-- 기초 데이터 검색 -->
 		<!-- 페이지 수, 평균 포인트, 포인트 별 값 -->
 		SELECT
-			  CAST((COUNT(*) / 10) AS INT)  + 1 AS total_page
-			, AVG(1.0 * point) / 2.0 AS avg_point
+			  CAST(((COUNT(*)+1) / 10) AS INT) AS total_page
+			, COUNT(*) AS total_cnt
+			, IFNULL(AVG(1.0 * point) / 2.0,0) AS avg_point
 			, COUNT(CASE WHEN point = 2 THEN 1 WHEN point = 3 THEN 1 END) as point_1
 			, COUNT(CASE WHEN point = 4 THEN 1 WHEN point = 5 THEN 1 END) as point_2
 			, COUNT(CASE WHEN point = 6 THEN 1 WHEN point = 7 THEN 1 END) as point_3
 			, COUNT(CASE WHEN point = 8 THEN 1 WHEN point = 9 THEN 1 END) as point_4
 			, COUNT(CASE WHEN point = 10 THEN 1 END) as point_5
+			, goods_no
 		FROM tb_review
 		WHERE goods_no = ${goods_no}
 	</select>
