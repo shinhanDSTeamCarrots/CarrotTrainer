@@ -6,6 +6,8 @@ import lombok.Data;
 public class FoodDiaryInfoVO {
 	private int food_diary_info_no;
 	private String food_name;
+	private int food_gram;
+	private String food_unit;
 	private int food_calorie;
 	private double food_carbs;
 	private double food_protein;
