@@ -44,6 +44,7 @@
 			  		WHEN l.review_like_no IS NOT NULL THEN '1'
 			  		ELSE '0'
 			  	END AS self_like
+			  , r.image
 		FROM tb_review AS r
 			JOIN tb_member AS m 
 									 ON r.member_no = m.member_no

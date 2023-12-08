@@ -126,7 +126,8 @@ public class ReviewController {
 	//리뷰 작성 후 쇼핑몰 연결
 	@PostMapping("review/write.do")
 	public String AfterWrite(HttpServletRequest request) {
-		request.getParameter("*********after url");
+		//request.getParameter("*********after url");
+		
 		return "/review/complete.jsp";
 	}
 	

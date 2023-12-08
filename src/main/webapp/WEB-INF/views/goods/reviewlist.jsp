@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+	var memno;
+	
 	function alignTypeBtnClicked(alignType) {
 		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
 		href += "goods_no=${map.goods_no}";
@@ -21,6 +23,26 @@
 		href += "&alignType="+"${map.alignType}";
 		href += "&page_no="+pagecnt;
 		location.replace(href);
+	}
+	function onLikeClicked(review_no){
+		//로그인 되어있는지 확인
+		
+		//로그인 되어있으면
+		if(true){
+			//ajax 호출하고
+			//다시 뽑아오기
+		}
+		//안되어있으면
+		//반응 안함
+	}
+	function onLikeCancled(review_no){
+		
+	}
+	function onEditBtnClicked(review_no){
+		
+	}
+	function onDeleteBtnClicked(review_no){
+		
 	}
 </script>
 </head>
@@ -135,6 +157,28 @@
 		        	<br>
 		        	<p>${vo.regist_date }</p>
 		        	<p>${vo.content }</p>
+		        	<br>
+		        	<c:choose>
+		        		<c:when test="${ empty loginVO.member_vo  || vo.member_no ne loginVO.member_no}">
+		        			<!-- 내 글이 아니고 -->
+		        			<c:choose>
+		        				<c:when test="${vo.self_like eq 0 }">
+		        					<!-- 좋아요 안눌렀으면 -->
+		        					<input type="button" alt="이 리뷰가 좋아요" src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no})"/>
+		        				</c:when>
+		        				<c:otherwise>
+		        					<!-- 좋아요 누른 상태면 -->
+		        					<input type="button" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like_cancle.png"" onclick="onLikeCancled(${vo.review_no})" />
+		        				</c:otherwise>
+		        			</c:choose>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<!-- 내 글이면 수정하고  -->
+		        			<input type="button" alt="수정버튼" value="수정" onclick="onEditBtnClicked(${vo.review_no})"/>
+		        			<input type="button" alt="삭제버튼" value="삭제" onclick="onDeleteBtnClicked(${vo.review_no})"/>
+		        		</c:otherwise>
+		        	</c:choose>
+		        	<br>
 	        	</li>
 	        </c:forEach>
         </c:if>
