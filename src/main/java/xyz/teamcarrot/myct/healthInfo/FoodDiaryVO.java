@@ -12,11 +12,11 @@ public class FoodDiaryVO {
 	private Date intake_date;
 	private int intake_time;
 	private String image;
-	private double total_calorie;
+	private int total_calorie;
 	private double total_carbs;
 	private double total_protein;
 	private double total_fat;
 	private double total_sugar;
-	private double total_salt;
+	private int total_salt;
 	private int member_no;
 }
