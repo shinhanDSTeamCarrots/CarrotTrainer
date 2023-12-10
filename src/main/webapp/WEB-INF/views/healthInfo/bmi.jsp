@@ -30,27 +30,36 @@
 	    			<div class="bmi-input-data">
 		    			<ul>
 		    				<li>나이:</li>
-			    			<li><input></li>
+			    			<li><input type="text"></li>
 	   					</ul>
 	   					<ul>
 		    				<li>신장:</li>
-			    			<li><input></li>
+			    			<li><input type="text"></li>
 	   					</ul>
 	   					<ul>
 		    				<li>체중:</li>
-			    			<li><input></li>
+			    			<li><input type="text"></li>
 	   					</ul>
 	   					<ul>
 		    				<li>성별:</li>
-			    			<li><input></li>
+			    			<li>
+			    				<input type="radio">남
+			    				<input type="radio">여
+			    			</li>
 	   					</ul>
 	   					<ul>
 		    				<li>목표:</li>
-			    			<li></li>
+			    			<li><input type="text">kg</li>
 	   					</ul>
 	   					<ul>
 		    				<li>운동량:</li>
-			    			<li></li>
+			    			<li>
+			    				<select>
+			    					<option>저강도</option>
+			    					<option>중강도</option>
+			    					<option>고강도</option>
+			    				</select>
+			    			</li>
 	   					</ul>
 	   				</div>
 	   				<div class="bmi-input-button">

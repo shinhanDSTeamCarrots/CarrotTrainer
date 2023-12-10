@@ -47,8 +47,9 @@
 .bmi-content {
 	
 }
-.bmi-data {
-	
+.bmi-input-data ul {
+	display: flex;
+    flex-direction: row;
 }
 .bmi-input-button > .bmi-btn {
 	width: 15%;
