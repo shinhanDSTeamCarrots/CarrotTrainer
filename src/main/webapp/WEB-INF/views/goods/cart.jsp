@@ -58,16 +58,16 @@
 								<img src="/webapp/img/goods/닭가슴살${cartList.goods_no }.jpg">
 							</div>
 							<div class="goodsName">
-								<a href="#">${goodsList.goods_name }</a>
+								<a href="#">${cartList.cart_name }</a>
 							</div>
 							<div class="goodsOption">
-								${goodsList.option_name}
+								${cartList.option_name}
 							</div>
 							<div class="itemCnt">
-								
+								${cartList.goods_cnt}
 							</div>
 							<div class="itemPrice">
-							
+								${cartList.option_name}
 							</div>
 						</li>
 						</c:forEach>
