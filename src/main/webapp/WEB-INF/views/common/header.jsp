@@ -6,11 +6,11 @@
             	<!-- 이미지, 글씨 클릭 시 메인으로 이동 -->
             	<div class="title">
 	           		<div class="title-text">
-	            		<a id="mct" href="#">나당트</a>
-	            		<a id="my-carrot-trainer" href="#">나의 당근 트레이너</a>
+	            		<a id="mct" href="${pageContext.request.contextPath}">나당트</a>
+	            		<a id="my-carrot-trainer" href="${pageContext.request.contextPath}">나의 당근 트레이너</a>
 	           		</div>
 	           		<div class="title-img">
-           				<a href="#"><img id="carrot" src="${pageContext.request.contextPath}/img/carrot-removebg-preview.png"></a>
+           				<a href="${pageContext.request.contextPath}"><img id="carrot" src="${pageContext.request.contextPath}/img/carrot-removebg-preview.png"></a>
            			</div>
            		</div>
                 

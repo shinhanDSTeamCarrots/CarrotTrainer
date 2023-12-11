@@ -4,18 +4,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding : 20px;
     padding-bottom: 0px;
 }
 /*----------
 	타이틀
 ----------*/
 /* 제목 */
-.bodyReport-title {
+.bodyReport-title-content {
 	display: flex;
 	flex-direction: row;
 }
-.bodyReport-title > .bodyReport-title-text {
-	width: 85%;
+.bodyReport-title-content > .bodyReport-title-text {
+	width: 87%;
 	color: #435334;
 	font-size: 30px;
 	font-weight: 700;
@@ -23,8 +24,8 @@
 	margin-left: 10px;
 	margin-bottom: 2px;
 }
-.bodyReport-title > .move {
-	width: 15%;
+.bodyReport-title-content > .move {
+	width: 13%;
 	height: 30px;
 	margin: 20px 20px 5px 5px;
 	background-color: #CEDEBD;
@@ -32,7 +33,7 @@
 	font-size: 12px;
 	font-weight: 700;
 }
-.bodyReport-title > .move:hover {
+.bodyReport-title-content > .move:hover {
 	background-color: #435334;
 	color: #FAF1E4;
 }
@@ -40,7 +41,7 @@
 .title-division-line {
 	width:1160px;
 	border-top: 3px solid #435334;
-	margin : 0 auto 10px;
+	margin : 0 auto;
 }
 /* 사용자 이름 */
 .bodyReport-text {
@@ -89,4 +90,19 @@
 	width:800px;
 	height: 800px;
 	margin: 70px auto 60px;
+	padding: 20px;
+}
+.bodyReport-content-detail > .bodyReport-text {
+	font-weight: 700;
+	font-size: 25px;
+	margin-left: 20px;
+}
+
+/*-------------------
+	SQL 데이터 텍스트
+-------------------*/
+.sql-text-name {
+	color: #748E63;
+	font-size: 26px;
+	font-weight: 800;
 }

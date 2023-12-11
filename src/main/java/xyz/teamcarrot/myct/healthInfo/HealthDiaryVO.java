@@ -8,7 +8,7 @@ import lombok.Data;
 public class HealthDiaryVO {
 	private int health_diary_no;
 	private String health_name;
-	private double health_calorie;
+	private int health_calorie;
 	private int health_time;
 	private Date health_date;
 	private int member_no;
