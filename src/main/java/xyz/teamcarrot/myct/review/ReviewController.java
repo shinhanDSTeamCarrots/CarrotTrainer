@@ -1,10 +1,15 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºä ÄÁÆ®·Ñ·¯. ÇÔ¼öº° ±â´É ÈÄ¼ú
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½. ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ä¼ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
 package xyz.teamcarrot.myct.review;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,69 +17,137 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import xyz.teamcarrot.myct.member.MemberVO;
 
 @Controller
 public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
-	//¸®½ºÆ® Ãâ·Â
+	
+	//í…ŒìŠ¤íŠ¸ 1
+	//ì‡¼í•‘ëª° ìƒí’ˆ ë¦¬ë·° ë¦¬ìŠ¤íŠ¸
 	@GetMapping("review/shoppingReview.do")
-	public ModelAndView ShoppingReview(HttpSession session) {
-		//************************************ÆäÀÌÁöº°·Î ¹Ù²Ü°Å °í¹ÎÁ»
-		int shoppingitem = (int)session.getAttribute("*********************");
+	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
+		System.out.println("review/shopping start");
+		int goods_no = Integer.parseInt(request.getParameter("goods_no"));
+		
+		int page_no = 1;
+		try{
+			page_no = Integer.parseInt(request.getParameter("page_no"));
+		}catch(Exception e) {
+			//do noting
+		}
+		
+		MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
+		int self_no = -1;
+		if(loginVO != null) {
+			self_no = loginVO.getMember_no();
+		}
+		String alignType = "";
+		if(request.getParameter("alignType") == null || request.getParameter("alignType").equals("")) {
+			alignType = "regist_desc";
+		}
+		else {
+			alignType=request.getParameter("alignType");
+		}
+		
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*******url");
-		mav.addObject("list", null);
+		mav.setViewName("goods/reviewlist");
+		System.out.println("review/shopping selectData");
+		
+		Map returnmap = service.selectData(goods_no);
+		
+		
+		
+		Map paramMap = new HashMap<String, Object>();
+		paramMap.put("page",(page_no-1) * 10 );
+		paramMap.put("self_no", self_no);
+		paramMap.put("goods_no", goods_no);
+		paramMap.put("alignType", alignType);
+		paramMap.put("searchType", "goods_search");
+		
+		
+		System.out.println(returnmap.get("total_page").getClass().getName());
+		
+		
+		
+		returnmap.put("list", service.selectReview(paramMap));
+		returnmap.put("page",page_no);
+		returnmap.put("alignType", alignType);
+		int total_cnt = ((Long)returnmap.get("total_cnt")).intValue();
+		int total_page = ((Long)returnmap.get("total_page")).intValue();
+		System.out.println("total_cnt: "+total_cnt);
+		System.out.println("total_page: "+total_page);
+		if(total_cnt > 0) {
+			List<Integer> listint = new ArrayList<Integer>();
+			for(int i = ((page_no-1)/5) * 5 + 1; (i <= total_page )&&(i <= ((page_no-1)/5+1) * 5);i++ ) {
+				System.out.println("added: "+i);
+				listint.add(i);
+			}
+			returnmap.put("page_list", listint);
+		}
+		returnmap.put("prev_page", (page_no/5) * 5 );
+		returnmap.put("next_pageable", (page_no/5 + 1) * 5 +1 >= total_page ? false : true);
+		returnmap.put("next_page", (page_no/5 +1) * 5 +1 );
+		
+		//returnmap.put("pageFirst",page_no/5);
+		//returnmap.put("pageLast", (page_no/5)+1);
+		
+		mav.addObject("map", returnmap);
 		return mav;
 	}
 	
-	//Æ¯Á¤ À¯Àú°¡ ÀÛ¼ºÇÑ ¸®ºä ¸®½ºÆ®
+	//ë‚´ê°€ ì“´ ë¦¬ë·° ë³´ê¸°
 	@GetMapping("review/myreview.do")
 	public ModelAndView MyReview(HttpSession session) {
-		//********************************************Æ¯Á¤ À¯Àú°¡ ÀÛ¼ºÇÑ ¸®ºä ¸®½ºÆ®
+		//********************************************Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*******url");//url ÁöÁ¤
+		mav.setViewName("*******url");//url ï¿½ï¿½ï¿½ï¿½
 		mav.addObject("list", null);//object
 		return mav;
 	}
 	
-	//¸®ºä ÀÛ¼º ½ÃÀÛ
+	//ë¦¬ë·° ì‘ì„± í˜ì´ì§€
 	@GetMapping("review/write.do")
 	public ModelAndView Write() {
-		//¸®ºä ÀÛ¼º ÆäÀÌÁö ¿¬µ¿
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*************view name");
+		mav.setViewName("review/reviewWrite");
+		//ë¦¬ë·° ì •ë³´ìš© goods_no ê°€ì ¸ì˜´
 		mav.addObject("mode", "w");
+		
+		
 		return mav;
 	}
 	
-	//¸®ºä ÀÛ¼º¿Ï·á
-	@PostMapping("review/afterwrite.do")
+	//ë¦¬ë·° ì‘ì„± í›„ ì‡¼í•‘ëª° ì—°ê²°
+	@PostMapping("review/write.do")
 	public String AfterWrite(HttpServletRequest request) {
-		request.getParameter("°ªµé");
-		return "»óÇ° ÆäÀÌÁö";
+		//request.getParameter("*********after url");
+		//ë¦¬ë·° ì •ë³´ ê°€ì ¸ì˜´
+		
+		return "/review/complete.jsp";
 	}
 	
 	
 	
-	//¸®ºä ¼öÁ¤
+	//ë¦¬ë·° ìˆ˜ì •
 	@GetMapping("review/modify.do")
 	public ModelAndView Modify() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("**********************url");
+		mav.setViewName("review/reviewWrite");
+		//ë¦¬ë·° ì •ë³´ìš© goods_no ë‘
+		//ë¦¬ë·° ì •ë³´ ê°€ì ¸ì˜´
 		mav.addObject("mode", "m");
 		return mav;
 	}
-	//¸®ºä »èÁ¦
+	//ë¦¬ë·° ì‚­ì œ
 	@PostMapping("review/delete.do")
 	public ModelAndView Delete(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -85,7 +158,7 @@ public class ReviewController {
 		return mav;
 	}
 	
-	//¸®ºä ÁÁ¾Æ¿ä
+	//ë¦¬ë·° ì¢‹ì•„ìš”
 	@ResponseBody
 	@PostMapping("review/like.do")
 	public String Like(HttpServletRequest request) {
@@ -100,7 +173,7 @@ public class ReviewController {
 		}
 	}
 	
-	//¸®ºä ÁÁ¾Æ¿ä Ãë¼Ò
+	//ë¦¬ë·° ì¢‹ì•„ìš” ì·¨ì†Œí•¨
 	@ResponseBody
 	@PostMapping("review/dislike.do")
 	public String Dislike(HttpServletRequest request) {

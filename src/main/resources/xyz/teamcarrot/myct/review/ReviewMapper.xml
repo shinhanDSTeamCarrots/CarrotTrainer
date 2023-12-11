@@ -44,13 +44,14 @@
 			  		WHEN l.review_like_no IS NOT NULL THEN '1'
 			  		ELSE '0'
 			  	END AS self_like
+			  , r.image
 		FROM tb_review AS r
 			JOIN tb_member AS m 
 									 ON r.member_no = m.member_no
 			LEFT JOIN tb_goods AS g
 							   ON g.goods_no = r.goods_no
 			LEFT JOIN tb_review_like AS l
-									 ON r.goods_no = l.goods_no
+									 ON r.review_no = l.review_no
 									AND r.member_no = #{self_no}
 		WHERE
 				0 = 0
@@ -96,21 +97,40 @@
 	</delete>
 	
 	<update id="likeReview" parameterType="map">
-	<!-- 
 		UPDATE tb_review
-		SET review_cnt = ( SELECT COUNT(*) FROM tb_review_like WHERE review_no = ${review_no} AND member_no = ${member_no})
+		SET review_cnt = ( SELECT COUNT(*) FROM tb_review_like WHERE review_no = ${review_no} AND member_no = ${member_no} GROUP BY review_no)
 		WHERE review_no = ${review_no}
-	 -->
 	</update>
 	
 	
 	<update id="dislikeReview" parameterType="map">
-	<!-- 
 		UPDATE tb_review
 		SET review_cnt = review_cnt - 1
 		WHERE review_no = ${review_no}
-	 -->
 	</update>
+	
+	<update id="goodsTableUpdate" parameterType="int">
+		UPDATE tb_goods
+		SET goods_rate = (SELECT AVG( 1.0 *IFNULL( point,0)) / 2.0 FROM tb_review WHERE goods_no=${goods_no} GROUP BY goods_no)
+		WHERE goods_no=${goods_no}
+	</update>
+	
+	<select id="selectListData" resultType="map" parameterType="int">
+		<!-- 기초 데이터 검색 -->
+		<!-- 페이지 수, 평균 포인트, 포인트 별 값 -->
+		SELECT
+			  CAST(((COUNT(*)+1) / 10) AS INT) AS total_page
+			, COUNT(*) AS total_cnt
+			, IFNULL(AVG(1.0 * point) / 2.0,0) AS avg_point
+			, COUNT(CASE WHEN point = 2 THEN 1 WHEN point = 3 THEN 1 END) as point_1
+			, COUNT(CASE WHEN point = 4 THEN 1 WHEN point = 5 THEN 1 END) as point_2
+			, COUNT(CASE WHEN point = 6 THEN 1 WHEN point = 7 THEN 1 END) as point_3
+			, COUNT(CASE WHEN point = 8 THEN 1 WHEN point = 9 THEN 1 END) as point_4
+			, COUNT(CASE WHEN point = 10 THEN 1 END) as point_5
+			, goods_no
+		FROM tb_review
+		WHERE goods_no = ${goods_no}
+	</select>
 	
 	
 	<!-- select id="count" parameterType="kr.co.project.comment.CommentVO" resultType="int">
