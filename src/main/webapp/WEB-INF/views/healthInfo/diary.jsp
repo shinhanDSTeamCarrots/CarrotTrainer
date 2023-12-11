@@ -43,7 +43,7 @@
 	    				<div class="diary-contact-text">
 	    					<a href="${pageContext.request.contextPath}/foodDiary.do">오늘의 음식 기록하기 ></a>
 	    					<a href="${pageContext.request.contextPath}/exercise.do">오늘의 운동 기록하기 ></a>
-	    					<a href="${pageContext.request.contextPath}/bmi.do">오늘의 상태 기록하기 ></a>
+	    					<a class="modal-popup" id="today-popup">오늘의 상태 기록하기 ></a>
     					</div>
     				</div>
     			</div>
@@ -61,6 +61,46 @@
     					<p>총 <span class="sql-diary-detail">3</span>회 운동을 진행했고 <span class="sql-diary-detail">요가</span>를 가장 즐겨했어요</p>
     					<p>꾸준한 운동은 몸 건강에 좋아요</p>
     				</div>
+    			</div>
+    		</div>
+    		<!-- 모달 팝업 -->
+    		<div id="modalWrap">
+    			<div id="modalContent">
+    			  	<div id="modalBody">
+    			  		<!-- 닫기 버튼 -->
+    			  		<span id="closeBtn">&times;</span>
+    			  		<!-- 팝업 내용 -->
+    			  		<div id="modalBody-main">
+    			  			<div id="modalBody-title">
+    			  				<div id="modalBody-title-text">오늘의 상태</div>
+    			  				<div class="title-division-line"></div>
+    			  			</div>
+    			  			<div id="modalBody-main">
+    			  				<div id="modalBody-weight">
+	    			  				<div id="">
+	    			  					<div class="modalBody-main-text">체중(kg)</div>
+		    			  				<div id="minus-button">-</div>
+		    			  				<input id="">
+		    			  				<div id="plus-button">+</div>
+		    			  			</div>
+	    			  				<div class="list-division-line"></div>
+    			  				</div>
+    			  				<div id="modalBody-result">
+	    			  				<div id="">
+	    			  					<div class="modalBody-main-text">골격근량(kg)</div>
+		    			  				<input id="">
+		    			  			</div>
+		    			  			<div id="">
+	    			  					<div class="modalBody-main-text">체지방량(%)</div>
+		    			  				<input id="">
+		    			  			</div>
+    			  				</div>
+    			  			</div>
+    			  			<div id="modalBody-button">
+    			  				<button>기록 완료</button>
+    			  			</div>
+    			  		</div>
+    			  	</div>
     			</div>
     		</div>
     	</div>

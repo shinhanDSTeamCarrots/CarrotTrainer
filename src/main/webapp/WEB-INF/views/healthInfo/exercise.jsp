@@ -114,6 +114,44 @@
 	                --%>
 				</div>
 			</div>
+			<!-- 모달 팝업 -->
+    		<div id="modalWrap">
+    			<div id="modalContent">
+    			  	<div id="modalBody">
+    			  		<!-- 닫기 버튼 -->
+    			  		<span id="closeBtn">&times;</span>
+    			  		<!-- 팝업 내용 -->
+    			  		<div id="modalBody-main">
+    			  			<div id="modalBody-title">
+    			  				<div id="modalBody-title-text">걷기</div>
+    			  				<div class="title-division-line"></div>
+    			  			</div>
+    			  			<div id="modalBody-main">
+    			  				<div id="modalBody-exercise">
+	    			  				<div id="">
+	    			  					<div>운동강도</div>
+		    			  				<input id="">
+	    			  				</div>
+	    			  				<div id="">
+	    			  					<div>운동시간(분)</div>
+	    			  					<div id="minus-button">-</div>
+		    			  				<input id="">
+		    			  				<div id="plus-button">+</div>
+	    			  				</div>
+	    			  				<div class="list-division-line"></div>
+	    			  			</div>
+    			  				<div id="modalBody-result">
+    			  					<div>칼로리(kcal)</div>
+	    			  				<input id="">
+    			  				</div>
+    			  			</div>
+    			  			<div id="modalBody-button">
+    			  				<button>기록 완료</button>
+    			  			</div>
+    			  		</div>
+    			  	</div>
+    			</div>
+    		</div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
