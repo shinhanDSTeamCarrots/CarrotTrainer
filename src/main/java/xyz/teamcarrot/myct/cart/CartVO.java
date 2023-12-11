@@ -1,4 +1,4 @@
-package xyz.teamcarrot.myct.goods;
+package xyz.teamcarrot.myct.cart;
 
 import java.sql.Timestamp;
 

@@ -62,7 +62,7 @@
                 <li>
                     <a href="#">쇼핑</a>
                     <ul class="depth2">
-                        <li><a href="./goods/chickenList.do">닭가슴살</a></li>
+                        <li><a href="${pageContext.request.contextPath}/chickenList.do">닭가슴살</a></li>
                         <li><a href="#">도시락</a></li>
                         <li><a href="#">샐러드</a></li>
                     </ul>
