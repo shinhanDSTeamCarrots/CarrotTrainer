@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/diaryStyle.css" />
 	<script src="js/script.js"></script>
+	<script src="js/healthInfo/healthInfoScript.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -43,7 +44,7 @@
 	    				<div class="diary-contact-text">
 	    					<a href="${pageContext.request.contextPath}/foodDiary.do">오늘의 음식 기록하기 ></a>
 	    					<a href="${pageContext.request.contextPath}/exercise.do">오늘의 운동 기록하기 ></a>
-	    					<a class="modal-popup" id="today-popup">오늘의 상태 기록하기 ></a>
+	    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
     					</div>
     				</div>
     			</div>
@@ -70,29 +71,29 @@
     			  		<!-- 닫기 버튼 -->
     			  		<span id="closeBtn">&times;</span>
     			  		<!-- 팝업 내용 -->
-    			  		<div id="modalBody-main">
+    			  		<div id="modalBody-content">
     			  			<div id="modalBody-title">
     			  				<div id="modalBody-title-text">오늘의 상태</div>
     			  				<div class="title-division-line"></div>
     			  			</div>
     			  			<div id="modalBody-main">
     			  				<div id="modalBody-weight">
-	    			  				<div id="">
-	    			  					<div class="modalBody-main-text">체중(kg)</div>
-		    			  				<div id="minus-button">-</div>
-		    			  				<input id="">
-		    			  				<div id="plus-button">+</div>
+	    			  				<div class="modalBody-result">
+	    			  					<div class="modalBody-text">체중(kg)</div>
+		    			  				<div class="modalBody-input">
+		    			  					<div id="minus-button">-</div>
+			    			  				<input id="">
+			    			  				<div id="plus-button">+</div>
+		    			  				</div>
 		    			  			</div>
-	    			  				<div class="list-division-line"></div>
-    			  				</div>
-    			  				<div id="modalBody-result">
-	    			  				<div id="">
-	    			  					<div class="modalBody-main-text">골격근량(kg)</div>
-		    			  				<input id="">
+	    			  				<div class="detail-division-line"></div>
+	    			  				<div class="modalBody-result">
+	    			  					<div class="modalBody-text">골격근량(kg)</div>
+		    			  				<div class="modalBody-input"><input id=""></div>
 		    			  			</div>
-		    			  			<div id="">
-	    			  					<div class="modalBody-main-text">체지방량(%)</div>
-		    			  				<input id="">
+		    			  			<div class="modalBody-result">
+	    			  					<div class="modalBody-text">체지방량(%)</div>
+		    			  				<div class="modalBody-input"><input id=""></div>
 		    			  			</div>
     			  				</div>
     			  			</div>

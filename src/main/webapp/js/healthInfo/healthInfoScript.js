@@ -1,17 +1,20 @@
 //모달 팝업
-const btn = document.getElementById('popupBtn');
-const modal = document.getElementById('modalWrap');
-const closeBtn = document.getElementById('closeBtn');
-
-btn.onclick = function() {
-  modal.style.display = 'block';
-}
-closeBtn.onclick = function() {
-  modal.style.display = 'none';
-}
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+$(function() {
+	$('#popupBtn').click(function(){
+		$('#modalWrap').css('display', 'flex');
+	});
+});
+// 닫기 버튼을 클릭했을 때 모달이 사라짐
+$(function() {
+	$('#modalWrap').click(function(){
+		$('#modalWrap').css('display', 'none');
+	});
+});
+// 팝업 외부를 클릭했을 때 모달이 사라짐
+$(function() {
+	$('#closeBtn').click(function(e){
+		if (e.target === this) {
+    		$(this).css('display', 'none');
+    	}
+	});
+});
