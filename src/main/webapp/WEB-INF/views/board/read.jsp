@@ -92,42 +92,36 @@ textarea{
 		<textarea rows="3" name="board_content" readonly="readonly"><c:out value="${pageInfo.board_content}"/></textarea>
 	</div>
 	
-	<!-- 
-	<div class="input_wrap">
-		<label>게시판 작성자</label>
-		<input name="writer" readonly="readonly" value='<c:out value="${pageInfo.writer}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>게시판 등록일</label>
-		<input name="regdater" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.regdate}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>게시판 수정일</label>
-		<input name="updateDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${pageInfo.updateDate}"/>' >
-	</div>	
-	 -->
+	
 	<div class="btn_wrap">
-		<a class="btn" id="list_btn">목록 페이지</a> 
+		 <a class="btn" id="list_btn">조회 페이지</a> 
 		<a class="btn" id="modify_btn">수정 하기</a>
 	</div>
+	
 	<form id="infoForm" action="/board/modify" method="get">
-		<input type="hidden" id="bno" name="bno" value='<c:out value="${pageInfo.bno}"/>'>
+		
+		<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
+		<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+		<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
+		<input type="hidden" name="type" value="${cri.type }">
+		<input type="hidden" name="keyword" value="${cri.keyword }"> 
 	</form>
+	
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	
 	<script>
-	let form = $("#infoForm");
+	let form = $("#infoForm");	
 	
 	$("#list_btn").on("click", function(e){
 		form.find("#board_no").remove();
-		form.attr("action", "/board/freeboard");
+		form.attr("action", "/myct/board/freeboard.do");
 		form.submit();
 	});
 	
 	$("#modify_btn").on("click", function(e){
-		form.attr("action", "/board/modify");
+		form.attr("action", "/myct/board/modify.do");
 		form.submit();
 	});	
 </script>
