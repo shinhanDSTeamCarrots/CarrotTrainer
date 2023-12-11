@@ -15,19 +15,20 @@
            		</div>
                 
                 <div class="login">
-                	<a href="#">로그인</a> |
-                    <a href="#">회원가입</a>
-                <%-- 로그인
-                <c:if test="${ }}">
-                    <a href="">로그인</a> |
-                    <a href="">회원가입</a>
+               		<a href="/myct/member/login.do">로그인</a> |
+                    <a href="/myct/member/join.do">회원가입</a>                     
+                    
+                <%-- 
+                <c:if test="${empty loginInfo}}">
+                    <a href="/myct/member/login.do">로그인</a> |
+                    <a href="/myct/member/join.do">회원가입</a>
                 </c:if>
-                <c:if test="${ }">
-                    <a href="">로그아웃</a> |
+                <c:if test="${!empty loginInfo}">
+                    <a href="/myct/member/logout.do">로그아웃</a> |
                     <a href="">마이페이지</a> |
                     <a href="">장바구니</a>
-                </c:if>
-                --%>
+                </c:if>    
+                --%>            
                 </div>
             </div>
         </div>
