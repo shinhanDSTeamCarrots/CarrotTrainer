@@ -1,8 +1,8 @@
 package xyz.teamcarrot.myct.goods;
 
 import java.sql.Timestamp;
-
 import lombok.Data;
+
 @Data
 public class GoodsVO {
 
@@ -23,4 +23,18 @@ public class GoodsVO {
 	private int is_delete;
 	private double goods_rate;
 	private int category_no;
+	
+	private int option_no;
+	private String option_name;
+	private int price_updown;
+	
+	@Override
+    public String toString() {
+        return "GoodsVO{" +
+                "goods_no=" + goods_no +
+                ",option_name=" + option_name +
+                ", goods_name='" + goods_name + '\'' +
+                ", price=" + price +                
+                '}';
+    }
 }

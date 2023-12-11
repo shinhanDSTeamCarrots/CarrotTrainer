@@ -1,0 +1,154 @@
+.container {
+	width:1200px;
+	margin : 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding : 20px;
+}
+/*----------
+	타이틀
+----------*/
+/* 제목 */
+.diary-title {
+	display: flex;
+	flex-direction: row;
+}
+.diary-title > .diary-title-text {
+	width: 87%;
+	color: #435334;
+	font-size: 30px;
+	font-weight: 700;
+	margin-top : auto;
+	margin-left: 10px;
+	margin-bottom: 2px;
+}
+.diary-title > .move {
+	width: 13%;
+	height: 30px;
+	margin: 20px 20px 5px 5px;
+	border-radius: 10px;
+}
+.diary-title > .move:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+/* 사용자 이름 */
+.diary-text {
+	font-size: 20px;
+	font-weight: 700;
+	margin: 20px 20px 15px 5px;
+}
+
+/*---------
+	내용
+---------*/
+.diary-result {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 20px;
+}
+/*달력*/
+.diary-calendar {
+	width: 40%;
+}
+/*섭취량관련 내용*/
+.diary-result-text {
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+}
+.diary-result-main {
+	margin-bottom: 15px;
+}
+.diary-result-main > .diary-result-main-text {
+	font-size: 25px;
+	font-weight: 800;
+}
+.diary-result-main > .detail-division-line {
+	width: 70%;
+	margin: 0;
+}
+.diary-result-main > #diary-result-main-sub {
+	font-size: 20px;
+	font-weight: 700;
+}
+.diary-result-text > .diary-contact-text {
+	display: flex;
+	flex-direction: column;
+}
+.diary-contact-text a {
+	font-size: 13px;
+}
+
+/*-----------------
+	개인 추천 한마디
+-----------------*/
+.diary-comment {
+	background-color: #FAF1E4;
+	border-radius: 10px;
+	padding: 30px;
+}
+.diary-comment-detail {
+	margin: 10px;
+}
+.diary-comment p {
+	font-size: 15px;
+	font-weight: 800;
+}
+.diary-comment > #diary-comment-title {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+/*-------------------
+	SQL 데이터 텍스트
+-------------------*/
+.sql-text-name {
+	color: #748E63;
+	font-size: 26px;
+	font-weight: 800;
+}
+.sql-diary-result-main {
+	color: #748E63;
+	font-size: 33px;
+}
+.sql-diary-result {
+	color: #748E63;
+	font-size: 28px;
+}
+/*개인 추천 한마디*/
+.sql-diary-comment {
+	font-size: 23px;
+	color: #748E63;
+}
+.sql-diary-detail {
+	font-size: 21px;
+	color: red;
+}
+
+/*---------
+	버튼
+---------*/
+button {
+	background-color: #CEDEBD;
+	font-size: 12px;
+	font-weight: 700;
+}
+button:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+/*-----------
+	구분선
+-----------*/
+.title-division-line {
+	width:1160px;
+	border-top: 3px solid #435334;
+	margin : 0 auto;
+}
+.detail-division-line {
+	border-top: 2px solid #CEDEBD;
+	margin : 10px auto 10px auto;
+}
