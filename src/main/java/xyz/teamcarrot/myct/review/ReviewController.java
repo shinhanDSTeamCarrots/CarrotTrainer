@@ -30,7 +30,7 @@ public class ReviewController {
 	ReviewService service;
 	
 	
-	
+	//테스트 1
 	//쇼핑몰 상품 리뷰 리스트
 	@GetMapping("review/shoppingReview.do")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
