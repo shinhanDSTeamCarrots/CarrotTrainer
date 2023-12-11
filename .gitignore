@@ -123,10 +123,10 @@ $RECYCLE.BIN/
 *.properties
 
 # 설정
-#.classpath
-#.project
+.classpath
+.project
 target/
-#pom.xml
+pom.xml
 target
 MANIFEST.MF
 
