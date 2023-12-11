@@ -54,7 +54,7 @@
 				<c:forEach items="${goodsList}" var="goods">
 				<li>
 					<div class="goodsImg">
-						<a href="#"></a>
+						<a href="#"><img url="/src/main/webapp/img/goods/닭가슴살${goods.goods_no }.jpg"></a>
 					</div>
 					<div class="goodsName">
 						<a href="#">${goods.goods_name}</a>
