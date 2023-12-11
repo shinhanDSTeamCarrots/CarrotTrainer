@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	var memno;
 	
@@ -25,24 +26,70 @@
 		location.replace(href);
 	}
 	function onLikeClicked(review_no){
-		//로그인 되어있는지 확인
-		
+	//로그인 되어있는지 확인
+		let mem_no;
 		//로그인 되어있으면
 		if(true){
 			//ajax 호출하고
-			//다시 뽑아오기
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/review/like.do"
+				data: {member_no: mem_no,
+					   review_no: review_no},
+				success: function(data){
+					if(data == "T"){
+						//처리 됨
+					}else{//F
+						//처리 안됨. 다시 롤백
+					}
+				},
+				error: function(data){
+					alert("처리하지 못하였습니다.");
+				}
+			});
 		}
 		//안되어있으면
 		//반응 안함
 	}
 	function onLikeCancled(review_no){
+		//로그인 되어있는지 확인
+		
+		//로그인 되어있으면
+		if(true){
+			//ajax 호출하고
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/review/dislike.do"
+				data: {member_no: mem_no,
+					   review_no: review_no},
+				success: function(data){
+					if(data == "T"){
+						//처리 됨
+					}else{//F
+						//처리 안됨. 다시 롤백
+					}
+				},
+				error: function(data){
+					alert("처리하지 못하였습니다.");
+				}
+			});
+		}
+		//안되어있으면
+		//반응 안함
 		
 	}
 	function onEditBtnClicked(review_no){
-		
+		let href = "${pageContext.request.contextPath}"+ "/review/modify.do?";
+		href += "review_no="+"${review_no}";
+		location.replace(href);		
 	}
 	function onDeleteBtnClicked(review_no){
-		
+		//삭제할건지 alert 띄움
+		let returnVal = confirm('해당 리뷰를 삭제하시겠습니까?');
+		if(returnVal){
+			//리뷰 삭제 실행 후 리로드
+		}
+		//아무것도 안함
 	}
 </script>
 </head>

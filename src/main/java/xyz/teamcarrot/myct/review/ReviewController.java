@@ -116,10 +116,12 @@ public class ReviewController {
 	//리뷰 작성 페이지
 	@GetMapping("review/write.do")
 	public ModelAndView Write() {
-		//���� �ۼ� ������ ����
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*************view name");
+		mav.setViewName("review/reviewWrite");
+		//리뷰 정보용 goods_no 가져옴
 		mav.addObject("mode", "w");
+		
+		
 		return mav;
 	}
 	
@@ -127,6 +129,7 @@ public class ReviewController {
 	@PostMapping("review/write.do")
 	public String AfterWrite(HttpServletRequest request) {
 		//request.getParameter("*********after url");
+		//리뷰 정보 가져옴
 		
 		return "/review/complete.jsp";
 	}
@@ -137,7 +140,9 @@ public class ReviewController {
 	@GetMapping("review/modify.do")
 	public ModelAndView Modify() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("**********************url");
+		mav.setViewName("review/reviewWrite");
+		//리뷰 정보용 goods_no 랑
+		//리뷰 정보 가져옴
 		mav.addObject("mode", "m");
 		return mav;
 	}
