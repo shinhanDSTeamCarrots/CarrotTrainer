@@ -29,19 +29,12 @@ public class MemberController {
 		return String.valueOf(r);
 	}
 
-	@GetMapping("/member/regist.do")
-	public String regist(MemberVO vo, Model model) {
-		boolean r = memberService.regist(vo); // service -> mapper -> sql
-		if (r) { // 정상적으로 DB에 insert
-			model.addAttribute("cmd", "move");
-			model.addAttribute("msg", "회원가입되었습니다.");
-			model.addAttribute("url", "/project/index.do");
-		} else { // 등록안됨
-			model.addAttribute("cmd", "back");
-			model.addAttribute("msg", "회원가입실패");
-		}
-		return "common/alert";
+	
+	@GetMapping("home.do")
+	public String homeTest() {
+		return "home";
 	}
+	
 
 	@GetMapping("/member/join2.do")
 	public String test2() {
@@ -72,8 +65,15 @@ public class MemberController {
 			return "member/alert";
 		} else { // 로그인성공			
 			sess.setAttribute("loginInfo", login);
-			return "/member/memberDel";
+			return "home";
 		}
+	}
+	
+	@GetMapping("/member/logout.do")
+	public String logout(Model model, HttpSession sess) {
+//		sess.removeAttribute("loginInfo");
+		sess.invalidate();
+		return "home"; //home.jsp 파일이랑 연결됨
 	}
 
 	@GetMapping("/member/join_naverKakao.do")

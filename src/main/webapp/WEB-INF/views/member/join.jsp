@@ -18,28 +18,29 @@
 <script src="js/script.js"></script>
 <script>
 	function infoSave() {
-		if ($("#member_id").val() == '') {
+		if ($("#member_id").val().trim() == '') {
 			alert('아이디를 입력해 주세요.');
 			return false;
 		}
+		
 
 		/* 왜 return이 아니라 return false로 해줘야 하는지? */
 		var idVal = document.getElementById("member_id").value;
-		if (idVal.length<5|| idVal.length> = 20) {
+		if (idVal.length<5|| idVal.length>= 20) {
 			alert("아이디는 5자 이상 20자 미만으로 입력해 주세요.");
 			return false;
 		}
 
 		//중복확인 안 누르고 다음 버튼 눌렀을때, 중복 아이디 이미 있을때 어떻게 할지 생각
-		if ($("#member_pw").val() == '') {
+		if ($("#member_pw").val().trim() == '') {
 			alert('비밀번호를 입력해 주세요.');
 			return false;
 		}
-		if ($("#member_pwCheck").val() == '') {
+		if ($("#member_pwCheck").val().trim() == '') {
 			alert('비밀번호를 확인해 주세요.');
 			return false;
 		}
-		if ($("#member_pw").val() != $("#member_pwCheck").val()) {
+		if ($("#member_pw").val().trim() != $("#member_pwCheck").val().trim()) {
 			alert("비밀번호가 일치하지 않습니다.");
 			return false;
 		}
@@ -56,11 +57,13 @@
 		}
 
 		$("#frm").submit();
-
+		
 	}
 	var dupCheck = false;
+	var dupCheckNumber = 0;
 	$(function() {
 		$("#idCheck").click(function() {
+			dupCheckNumber++;
 			$.ajax({
 				url : 'idCheck.do',
 				data : {
@@ -69,13 +72,13 @@
 				success : function(res) {
 					console.log(res);
 					if (res == 'true') {
-						alert('이메일이 중복되었습니다.');
+						alert('중복된 아이디입니다.');
 						$("#member_id").val('');
 						$("#member_id").focus();
 					} else {
+						
+						alert('사용가능한 아이디입니다.');
 						dupCheck = true;
-						alert('사용가능한 이메일입니다.');
-
 					}
 				}
 			})
@@ -156,7 +159,7 @@ table.reg tbody tr td input {
 			<div class="menu">
 				<h1 class="title">회원가입</h1>
 				<a href="join_naverKakao">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
-				<form name="frm" id="frm" action="regist.do" method="get">
+				<form name="frm" id="frm" action="join.do" method="get">
 					<table class="reg">
 						<caption>회원가입</caption>
 						<colgroup>
