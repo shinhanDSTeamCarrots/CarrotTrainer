@@ -17,7 +17,7 @@ public class BodyInfoVO {
 	private double muscle_mass;
 	private double fat_mass;
 	private double bmi;
-	private double target_calorie;
+	private int target_calorie;
 	private double target_carbs;
 	private double target_protein;
 	private double target_fat;

@@ -17,4 +17,5 @@ public class ReviewVO {
 	private String member_name;
 	private String goods_name;
 	private int self_like;
+	private byte[] image;
 }
