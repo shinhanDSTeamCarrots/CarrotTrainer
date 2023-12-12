@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-@Controller
+/*@Controller
 
 @RequestMapping("/cart/*")
 public class CartController {
@@ -50,4 +50,4 @@ public class CartController {
     public void updateCart(@RequestBody CartVO cart) {
         service.updateCart(cart);
     }
-}
+}*/

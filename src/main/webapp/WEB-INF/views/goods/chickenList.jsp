@@ -54,13 +54,13 @@
 				<c:forEach items="${goodsList}" var="goods">
 				<li>
 					<div class="goodsImg">
-						<a href="#"></a>
+						<img src="/myct/img/goods/${goods.image }.jpg"/>
 					</div>
 					<div class="goodsName">
 						<a href="#">${goods.goods_name}</a>
 					</div>
 					<div class="goodsPrice">
-						${goods.price}
+						${goods.price}원
 					</div>
 				</li>
 				</c:forEach>

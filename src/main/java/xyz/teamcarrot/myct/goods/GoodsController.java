@@ -21,9 +21,9 @@ public class GoodsController {
 		model.addAttribute("goodsList", goodsList);
 		
 		// 콘솔에 출력
-        for (GoodsVO goods : goodsList) {
+        /*for (GoodsVO goods : goodsList) {
             logger.info("{}", goods);
-        }
+        }*/
 	
 		return "/goods/chickenList";
 	}
