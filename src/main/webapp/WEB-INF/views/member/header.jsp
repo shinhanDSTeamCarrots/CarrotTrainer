@@ -17,17 +17,18 @@
            		<c:choose>
            		<c:when test="${sessionScope.loginInfo==null}">
 	                <div class="login">
-	               		<a href="${pageContext.request.contextPath}/member/login.do">로그인</a> |
-	                    <a href="${pageContext.request.contextPath}/member/join.do">회원가입</a>
+	               		<a href="/myct/member/login.do">로그인</a> |
+	                    <a href="/myct/member/join.do">회원가입</a>
 	                </div>
            		</c:when>
            		<c:otherwise>
 	                <div class="login">
-	               		<a href="${pageContext.request.contextPath}/member/login.do">마이페이지</a> |
-	                    <a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
+	               		<a href="/myct/member/login.do">마이페이지</a> |
+	                    <a href="/myct/member/logout.do">로그아웃</a>
 	                </div>
            		</c:otherwise>
            		</c:choose>
+                
             </div>
         </div>
         <div class="menu">
