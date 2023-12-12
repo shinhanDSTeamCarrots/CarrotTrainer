@@ -5,5 +5,6 @@ import java.util.Map;
 
 public interface GoodsService {
 
-	List<Map<String,Object>> goodsList();
+	List<GoodsVO> goodsList();
+	
 }

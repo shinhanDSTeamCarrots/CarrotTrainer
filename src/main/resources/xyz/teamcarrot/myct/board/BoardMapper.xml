@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.board.BoardMapper">
+
+<!-- namespace 속성 값을 앞에서 생성하고 작성한 Mapper 인터페이스의 경로를 포함하는 인터페이스의 이름을 작성
+	MyBatis가 Mapper 인터페이스와 XML을 인터페이스 이람과 namespace 속성값을 가지고 판단하기 때문에 이 부분은 매우 중요하다 !!
+ -->
+
+	
+	<!-- 게시판 등록 -->
+	<insert id="enroll" parameterType="xyz.teamcarrot.myct.board.BoardVO">
+	    insert into tb_board(member_no, board_title, board_content, category_no) 
+	    values (#{member_no}, #{board_title}, #{board_content}, #{category_no})
+	</insert>
+
+	<!-- 게시판 삭제 -->
+    <delete id="delete">
+        delete from tb_board where board_no = #{board_no}
+    </delete>
+
+	<!-- 게시판 목록 -->
+	<select id="getList"
+		resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select * from tb_board
+	</select>
+
+	<!-- 게시판 조회 -->
+	<select id="getPage"
+		resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select * from tb_board where board_no = #{board_no}
+	</select>
+
+	<!-- 게시판 수정 -->
+	<update id="modify">
+		<!-- MySQL -->
+		update tb_board set board_title = #{board_title}, board_content =
+		#{board_content} where board_no = #{board_no}
+	</update>
+	
+	
+	
+	
+	<!-- 검색 조건문 -->
+    <sql id="criteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            board_title like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            board_content like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            member_no like concat('%',#{keyword},'%' )
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>	
+        </trim>
+    
+    </sql>
+	
+	
+	<!-- MySQL-->
+    <!-- 게시물 목록(페이징) -->
+    <select id="getListPaging" resultType="xyz.teamcarrot.myct.board.BoardVO">
+    
+        select * from (
+                select board_no, board_title, board_rdate, board_view, board_content, category_no, member_no
+                from tb_board 
+                 <if test="keyword != null">
+                    where board_title like concat('%',#{keyword},'%' )
+                </if>
+                order by board_no desc) as T1 
+     	
+        limit #{skip},#{amount}
+    
+    </select>
+	
+	 <!-- 게시물 총 개숫 -->
+    <select id="getTotal" resultType="int">
+    
+        select count(*) from tb_board
+        <if test="keyword != null">
+       
+            <!-- MySQL -->
+            where board_title like concat('%',#{keyword},'%')
+        
+        </if>
+    
+    </select>
+	
+</mapper>

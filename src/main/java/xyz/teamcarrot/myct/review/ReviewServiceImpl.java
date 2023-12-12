@@ -9,6 +9,7 @@ package xyz.teamcarrot.myct.review;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,9 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int insertReview(ReviewVO vo) {
 		//���ÿ� ��ǰ������ update
-		return mapper.insertReview(vo);
+		int res =  mapper.insertReview(vo);
+		mapper.goodsTableUpdate(vo.getGoods_no());
+		return res;
 	}
 
 	/* ���� ����
@@ -39,6 +42,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public int updateReview(ReviewVO vo) {
 		//���ÿ� ��ǰ������ update
 		mapper.updateReview(vo);
+		mapper.goodsTableUpdate(vo.getGoods_no());
 		return vo.getReview_no();
 	}
 
@@ -48,29 +52,9 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @return: review list
 	 */
 	@Override
-	public List<ReviewVO> selectReview(int goods_no, int page) {
-		/*if(page == 1) {
-			return mapper.selectReview(goods_no);
-		}
-		else {
-			return mapper.selectReviewWithPage(goods_no, page);
-		}*/
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		hashmap.put("goods_no", goods_no);
-		//�α��� ���¸�
-		if(0==0) {
-			hashmap.put("self_no",0);
-		}
-		else {
-			//�α��� �� �� ���¸�
-			hashmap.put("self_no",null);
-		}
-		//��ġŸ���� member_search�� Ư�� id �˻�
-		//goods_search�̸� �⺻ �˻�
-		hashmap.put("searchType", "goods_search");
-		hashmap.put("alignType", "like_desc");
-		hashmap.put("page",page-1);
-		return mapper.selectReview(hashmap);
+	public List<ReviewVO> selectReview(Map<String,Object>map) {
+
+		return mapper.selectReview(map);
 	}
 
 	/* ���� ����
@@ -80,6 +64,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int deleteReview(int review_no) {
 		mapper.deleteReview(review_no);
+		//mapper.goodsTableUpdate(goods_no);
 		return review_no;
 	}
 
@@ -101,6 +86,10 @@ public class ReviewServiceImpl implements ReviewService {
 	public void dislikeReview(int review_no, int member_no) {
 		likeMapper.deleteReviewLike(member_no, review_no);
 		mapper.dislikeReview(review_no, member_no);
+	}
+	@Override
+	public Map<String,Object> selectData(int goods_no){
+		return mapper.selectListData(goods_no);
 	}
 
 }
