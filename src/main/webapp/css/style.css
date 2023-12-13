@@ -96,14 +96,6 @@ a:visited {
 .menu > ul > li:hover {
     background-color:#9EB384;
 }
-.container {
-    overflow: hidden;
-    height:auto;
-    width:1200px;
-    margin : 0 auto;
-    padding : 20px;
-}
-
 .footer {
     background-color:#40513b;
     color:#c2c2c2;
