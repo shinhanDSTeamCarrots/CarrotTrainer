@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	var memno;
+	var mem_no = "${sessionScope.loginInfo.member_no}";
 	
 	function alignTypeBtnClicked(alignType) {
 		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
@@ -27,14 +27,42 @@
 	}
 	function onLikeClicked(review_no){
 	//로그인 되어있는지 확인
-		let mem_no;
 		//로그인 되어있으면
-		if(true){
+		console.log("{"+review_no+"}");
+		if(mem_no != ""){
 			//ajax 호출하고
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/like.do"
-				data: {member_no: mem_no,
+				url: "${pageContext.request.contextPath}/review/like.do",
+				data: {mem_no: mem_no,
+					   review_no: review_no},
+				success: function(data){
+					if(data == "T"){
+						alert("좋아요!");
+					}else{//F
+						alert("좋아요 처리 안됨");
+					}
+				},
+				error: function(data){
+					alert("처리하지 못하였습니다.");
+				}
+			});
+		}
+		else{
+			alert("로그인 후 이용해주세요!");
+		}
+		//안되어있으면
+		//반응 안함
+	}
+	function onLikeCancled(review_no){
+		//로그인 되어있는지 확인
+		//로그인 되어있으면
+		if(mem_no!=""){
+			//ajax 호출하고
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/review/dislike.do",
+				data: {mem_no: mem_no,
 					   review_no: review_no},
 				success: function(data){
 					if(data == "T"){
@@ -48,31 +76,8 @@
 				}
 			});
 		}
-		//안되어있으면
-		//반응 안함
-	}
-	function onLikeCancled(review_no){
-		//로그인 되어있는지 확인
-		
-		//로그인 되어있으면
-		if(true){
-			//ajax 호출하고
-			$.ajax({
-				type: "POST",
-				url: "${pageContext.request.contextPath}/review/dislike.do"
-				data: {member_no: mem_no,
-					   review_no: review_no},
-				success: function(data){
-					if(data == "T"){
-						//처리 됨
-					}else{//F
-						//처리 안됨. 다시 롤백
-					}
-				},
-				error: function(data){
-					alert("처리하지 못하였습니다.");
-				}
-			});
+		else{
+			alert("로그인 후 이용해주세요!");
 		}
 		//안되어있으면
 		//반응 안함
@@ -150,7 +155,6 @@
     	</li>
 	        <!-- 실제 데이터 -->
 	        <c:forEach var="vo" items="${map.list }">
-				        <!-- 위 정보 -->
 		        <li>
 		        	<!-- 평점 -->
 		        	<div>
@@ -211,11 +215,11 @@
 		        			<c:choose>
 		        				<c:when test="${vo.self_like eq 0 }">
 		        					<!-- 좋아요 안눌렀으면 -->
-		        					<input type="button" alt="이 리뷰가 좋아요" src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no})"/>
+		        					<input type="image" alt="이 리뷰가 좋아요" src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no})"/>
 		        				</c:when>
 		        				<c:otherwise>
 		        					<!-- 좋아요 누른 상태면 -->
-		        					<input type="button" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like_cancle.png"" onclick="onLikeCancled(${vo.review_no})" />
+		        					<input type="image" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like_cancle.png"" onclick="onLikeCancled(${vo.review_no})" />
 		        				</c:otherwise>
 		        			</c:choose>
 		        		</c:when>
@@ -235,7 +239,6 @@
     </table>
     <div>
     <!-- 페이지 -->
-    
         <c:if test="${map.total_cnt > 0 }">
         <c:set var="first_page" value="${map.page / 5 }"></c:set>
         <p>페이지 구현중입니다</p>

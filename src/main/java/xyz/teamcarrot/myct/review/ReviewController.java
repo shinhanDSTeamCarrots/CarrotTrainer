@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,7 +44,7 @@ public class ReviewController {
 			//do noting
 		}
 		
-		MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
+		MemberVO loginVO = (MemberVO)session.getAttribute("loginInfo");
 		int self_no = -1;
 		if(loginVO != null) {
 			self_no = loginVO.getMember_no();
@@ -161,14 +161,16 @@ public class ReviewController {
 	//리뷰 좋아요
 	@ResponseBody
 	@PostMapping("review/like.do")
-	public String Like(HttpServletRequest request) {
+	public String Like(HttpServletRequest request, @RequestBody HashMap<String, String> map ) {
 		try {
-			int review_no = (int)request.getAttribute("review_no");
-			int member_no = (int)request.getAttribute("member_no");
-			service.likeReview(review_no, member_no);
+			System.out.println("review Like Called");
+			int revi_no = Integer.parseInt(map.get("review_no"));
+			int member_no = Integer.parseInt(map.get("mem_no"));
+			service.likeReview(revi_no, member_no);
 			return "T";
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			return "F";
 		}
 	}
