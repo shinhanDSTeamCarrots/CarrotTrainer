@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.healthInfo.HealthInfoMapper">
+	<!-- bmi 정보 입력 -->
+	<insert id="insertBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
+		INSERT INTO tb_body_info (
+			body_info_date, age, height, weight, gender, targer_weight, exercise_mass, muscle_mass, fat_mass 
+			, bmi, target_cal, target_calorie, target_carbs, target_protein, target_fat, target_sugar
+			, member_no
+		) VALUES (
+			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{targer_weight}, #{exercise_mass}, #{muscle_mass}, #{fat_mass}
+			, #{bmi}, #{target_cal}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
+			, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="food_dic_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+</mapper>

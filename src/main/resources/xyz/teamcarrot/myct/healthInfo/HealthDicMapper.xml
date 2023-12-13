@@ -5,4 +5,6 @@
 	<select id="healthDic" resultType="hashmap">
 		SELECT health_dic_no as no, health, met FROM tb_health_dic
 	</select>
+	
+	<!-- 음식 정보 -->
 </mapper>

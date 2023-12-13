@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ExerciseController {
 	
 	@Autowired
-	HealthInfoService service;
+	HealthDicService service;
 	
+	//기본 목록
 	@GetMapping("/exercise.do")
 	public String exercise(Model model) {
 		model.addAttribute("healthDic", service.gethealthDic());
