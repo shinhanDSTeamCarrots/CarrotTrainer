@@ -18,5 +18,17 @@ public class GoodsServiceImpl implements GoodsService {
 		List<GoodsVO> goodsList = mapper.list();
 		return goodsList;
 	}
+	
+	@Override
+	public List<GoodsVO> getCategoryGoodsList(int category_no){
+		List<GoodsVO> goodsPerCate = mapper.getCategoryGoodsList(category_no);
+		return goodsPerCate;
+	}
+	
+	@Override
+	public List<GoodsVO> detailList(){
+		List<GoodsVO> detailList=mapper.detailList();
+		return detailList;
+	}
 
 }

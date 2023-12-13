@@ -28,16 +28,15 @@
 	    				<li>
 		    				<a>카테고리</a>
 		    				<ul class="depth2">
-			    				<li><a href="">닭가슴살</a></li>
-			    				<li><a href="">도시락</a></li>
-			    				<li><a href="">샐러드</a></li>	    				
+			    				<li><a href="${pageContext.request.contextPath}/goodsList.do/1">닭가슴살</a></li>
+			    				<li><a href="${pageContext.request.contextPath}/goodsList.do/2">도시락</a></li>
+			    				<li><a href="${pageContext.request.contextPath}/goodsList.do/3">샐러드</a></li>	    				
 		    				</ul>
 	    				</li>
 	    			</ul>
 	    		</div>
-	    		   		
-		    	<!-- 상품 카테고리명 & 검색창 -->
-		   		<h1>닭가슴살</h1>
+	    		<!-- 상품 카테고리명 & 검색창 -->
+		   		<h1>${goods.category_name }</h1>
 		
 		   		<!-- 검색창 -->
 		   		<div class="search_wrap">
@@ -45,16 +44,19 @@
 		   				<input type="text" name="search_goods" value=""> 
 		    			<button id="search">검색</button>
 		    		</div>
-		   		</div>
-		    </div>
+		   		</div>		
+	    	</div>	   		
+		   	
 		    
     	<!-- 상품목록 -->
    		<div class="goods_list">
    			<ul>
 				<c:forEach items="${goodsList}" var="goods">
+				
+		    	
 				<li>
-					<div class="goodsImg">
-						<img src="/myct/img/goods/${goods.image }.jpg"/>
+					<div onclick="location.href="${pageContext.request.contextPath}/goodsList.do/${goods.category_no }/;" style="cursor: pointer;"class="goodsImg">
+						<img id="goodsImg" src="/myct/img/goods/${goods.image }.jpg"/>
 					</div>
 					<div class="goodsName">
 						<a href="#">${goods.goods_name}</a>
@@ -66,6 +68,7 @@
 				</c:forEach>
    			</ul>
    		</div>
+  
    	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

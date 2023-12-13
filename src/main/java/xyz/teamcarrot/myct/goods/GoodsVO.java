@@ -28,6 +28,8 @@ public class GoodsVO {
 	private String option_name;
 	private int price_updown;
 	
+	private String category_name;
+	
 	@Override
     public String toString() {
         return "GoodsVO{" +

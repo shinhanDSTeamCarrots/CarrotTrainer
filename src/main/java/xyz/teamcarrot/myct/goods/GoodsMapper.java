@@ -9,7 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface GoodsMapper {
 	//상품 목록
 	List<GoodsVO> list();
-
+	
+	//카테고리별 상품 목록 
+	List<GoodsVO> getCategoryGoodsList(int category_no);
+		
+	//상품상세 목록
+	List<GoodsVO> detailList();
+	
 	//상품 추가
 	void insert(GoodsVO goods);
 	
