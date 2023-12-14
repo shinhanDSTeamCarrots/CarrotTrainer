@@ -12,8 +12,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/diaryStyle.css" />
-	<script src="js/script.js"></script>
-	<script src="js/healthInfo/healthInfoScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/healthInfoScript.js"></script>
 </head>
 <body>
     <div class="wrap">

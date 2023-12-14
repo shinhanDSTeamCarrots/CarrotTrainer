@@ -14,7 +14,7 @@ public class ExerciseController {
 	//기본 목록
 	@GetMapping("/exercise.do")
 	public String exercise(Model model) {
-		model.addAttribute("healthDic", service.gethealthDic());
+		model.addAttribute("healthDic", service.getHealthDic());
 		return "/healthInfo/exercise";
 	}
 }
