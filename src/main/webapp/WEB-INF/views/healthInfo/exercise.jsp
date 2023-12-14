@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -13,7 +12,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/healthInfoScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
 </head>
 <body>
 	<div class="wrap">

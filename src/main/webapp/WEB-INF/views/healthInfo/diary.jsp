@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -13,7 +12,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/diaryStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/healthInfoScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -21,7 +20,7 @@
     	<div class="container">
     		<div class="diary-title">
     			<p class="diary-title-text">TODAY'S DIARY</p>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport.do'">모아보기</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<p class="diary-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
@@ -42,8 +41,8 @@
 	    					</div>
 	    				</div>
 	    				<div class="diary-contact-text">
-	    					<a href="${pageContext.request.contextPath}/foodDiary.do">오늘의 음식 기록하기 ></a>
-	    					<a href="${pageContext.request.contextPath}/exercise.do">오늘의 운동 기록하기 ></a>
+	    					<a href="${pageContext.request.contextPath}/foodDiary">오늘의 음식 기록하기 ></a>
+	    					<a href="${pageContext.request.contextPath}/exercise">오늘의 운동 기록하기 ></a>
 	    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
     					</div>
     				</div>

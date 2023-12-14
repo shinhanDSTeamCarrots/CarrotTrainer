@@ -12,7 +12,7 @@ public class ExerciseController {
 	HealthDicService service;
 	
 	//기본 목록
-	@GetMapping("/exercise.do")
+	@GetMapping("/exercise")
 	public String exercise(Model model) {
 		model.addAttribute("healthDic", service.getHealthDic());
 		return "/healthInfo/exercise";
