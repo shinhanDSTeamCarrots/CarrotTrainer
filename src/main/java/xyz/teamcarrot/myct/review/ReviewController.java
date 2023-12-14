@@ -6,6 +6,7 @@
  */
 package xyz.teamcarrot.myct.review;
 
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,13 +31,13 @@ import xyz.teamcarrot.myct.member.MemberVO;
 public class ReviewController {
 	@Autowired
 	ReviewService service;
+	private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 	
-	
-	//테스트 1
+	//AJAX 로 변환 필요?
 	//쇼핑몰 상품 리뷰 리스트
 	@GetMapping("review/shoppingReview.do")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
-		System.out.println("review/shopping start");
+		logger.warn("review/shopping start");
 		int goods_no = Integer.parseInt(request.getParameter("goods_no"));
 		
 		int page_no = 1;
@@ -60,7 +63,7 @@ public class ReviewController {
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("goods/reviewlist");
-		System.out.println("review/shopping selectData");
+		logger.debug("review/shopping selectData");
 		
 		Map returnmap = service.selectData(goods_no);
 		
@@ -74,7 +77,7 @@ public class ReviewController {
 		paramMap.put("searchType", "goods_search");
 		
 		
-		System.out.println(returnmap.get("total_page").getClass().getName());
+		logger.error(returnmap.get("total_page").getClass().getName());
 		
 		
 		
@@ -83,12 +86,12 @@ public class ReviewController {
 		returnmap.put("alignType", alignType);
 		int total_cnt = ((Long)returnmap.get("total_cnt")).intValue();
 		int total_page = ((Long)returnmap.get("total_page")).intValue();
-		System.out.println("total_cnt: "+total_cnt);
-		System.out.println("total_page: "+total_page);
+		logger.error("total_cnt: "+total_cnt);
+		logger.error("total_page: "+total_page);
 		if(total_cnt > 0) {
 			List<Integer> listint = new ArrayList<Integer>();
 			for(int i = ((page_no-1)/5) * 5 + 1; (i <= total_page )&&(i <= ((page_no-1)/5+1) * 5);i++ ) {
-				System.out.println("added: "+i);
+				logger.error("added: "+i);
 				listint.add(i);
 			}
 			returnmap.put("page_list", listint);
@@ -116,9 +119,16 @@ public class ReviewController {
 	
 	//리뷰 작성 페이지
 	@GetMapping("review/write.do")
-	public ModelAndView Write() {
+	public ModelAndView Write(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("review/reviewWrite");
+		try {
+			int goods_no =Integer.parseInt(request.getParameter("goods_no"));
+			mav.addObject("goods_no",goods_no);
+		}
+		catch(Exception e) {
+			logger.error(e.toString());	
+		}
 		//리뷰 정보용 goods_no 가져옴
 		mav.addObject("mode", "w");
 		
@@ -139,35 +149,43 @@ public class ReviewController {
 	
 	//리뷰 수정
 	@GetMapping("review/modify.do")
-	public ModelAndView Modify() {
+	public ModelAndView Modify(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("review/reviewWrite");
+		int goods_no =(int)request.getAttribute("goods_no");
 		//리뷰 정보용 goods_no 랑
 		//리뷰 정보 가져옴
+		mav.addObject("goods_no",goods_no);
 		mav.addObject("mode", "m");
 		return mav;
 	}
 	//리뷰 삭제
+	@ResponseBody
 	@PostMapping("review/delete.do")
-	public ModelAndView Delete(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("*********url name");
-		ReviewVO vo = (ReviewVO)request.getAttribute("ReviewVO");
-		service.deleteReview(vo.getReview_no());
+	public String Delete(HttpServletRequest request, @RequestParam int review_no) {
+		try {
+			service.deleteReview(review_no);
+			return "T";
+		}catch(Exception e) {
+			logger.error(e.toString());
+			return "F";
+		}
 		
-		return mav;
 	}
 	
 	//리뷰 좋아요
 	@ResponseBody
 	@PostMapping("review/like.do")
-	public String Like(HttpServletRequest request, @RequestBody HashMap<String, String> map ) {
+	public String Like(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no ) {
 		try {
-			System.out.println("review Like Called");
-			int revi_no = Integer.parseInt(map.get("review_no"));
-			int member_no = Integer.parseInt(map.get("mem_no"));
-			service.likeReview(revi_no, member_no);
+			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);
+			logger.debug("review Like Called");
+			service.likeReview(review_no, mem_no);
 			return "T";
+		}
+		catch(org.springframework.dao.DuplicateKeyException duplicateException) {
+			//이미 처리됨
+			return "D";
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -178,11 +196,11 @@ public class ReviewController {
 	//리뷰 좋아요 취소함
 	@ResponseBody
 	@PostMapping("review/dislike.do")
-	public String Dislike(HttpServletRequest request) {
+	public String Dislike(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no) {
 		try {
-			int review_no = (int)request.getAttribute("review_no");
-			int member_no = (int)request.getAttribute("member_no");
-			service.dislikeReview(review_no, member_no);
+			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);
+			logger.debug("review Like Called");
+			service.dislikeReview(review_no, mem_no);
 			return "T";
 		}
 		catch(Exception e){

@@ -2,7 +2,6 @@ package xyz.teamcarrot.myct.review;
 
 import java.sql.Timestamp;
 
-
 import lombok.Data;
 
 @Data
@@ -18,4 +17,8 @@ public class ReviewVO {
 	private String goods_name;
 	private int self_like;
 	private byte[] image;
+	public String blobToImage() {
+		String base64ToString = new String(image);
+		return base64ToString;
+	}
 }

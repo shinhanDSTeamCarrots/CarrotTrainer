@@ -73,7 +73,7 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @param member_no		���ƿ��� ���
 	 */
 	@Override
-	public void likeReview(int review_no, int member_no) {
+	public void likeReview(int review_no, int member_no)throws org.springframework.dao.DuplicateKeyException {
 		likeMapper.insertReviewLike(member_no, review_no);
 		mapper.likeReview(review_no, member_no);
 	}

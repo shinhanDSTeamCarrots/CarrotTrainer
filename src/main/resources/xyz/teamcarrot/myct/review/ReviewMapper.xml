@@ -10,6 +10,7 @@
 			, like_cnt
 			, goods_no
 			, member_no
+			, image
 		)	VALUES (
 			  #{content}
 			, #{point}
@@ -17,6 +18,7 @@
 			, 0
 			, #{goods_no}
 			, #{member_no} 
+			, #{image}
 		)
 		<selectKey keyProperty="review_no" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID()
@@ -27,6 +29,7 @@
 		UPDATE 	tb_review
 		SET		content = #{content}
 			  , point   = #{point}
+			  , image 	= #{image}
 		WHERE review_no = #{review_no}
 	</update>
 	
@@ -52,7 +55,7 @@
 							   ON g.goods_no = r.goods_no
 			LEFT JOIN tb_review_like AS l
 									 ON r.review_no = l.review_no
-									AND r.member_no = #{self_no}
+									AND l.member_no = #{self_no}
 		WHERE
 				0 = 0
 			<choose>
@@ -98,14 +101,14 @@
 	
 	<update id="likeReview" parameterType="map">
 		UPDATE tb_review
-		SET review_cnt = ( SELECT COUNT(*) FROM tb_review_like WHERE review_no = ${review_no} AND member_no = ${member_no} GROUP BY review_no)
+		SET like_cnt = ( SELECT COUNT(*) FROM tb_review_like WHERE review_no = ${review_no} GROUP BY review_no)
 		WHERE review_no = ${review_no}
 	</update>
 	
 	
 	<update id="dislikeReview" parameterType="map">
 		UPDATE tb_review
-		SET review_cnt = review_cnt - 1
+		SET like_cnt = like_cnt - 1
 		WHERE review_no = ${review_no}
 	</update>
 	
