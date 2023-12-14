@@ -35,8 +35,17 @@
 	    			</ul>
 	    		</div>
 	    		<!-- 상품 카테고리명 & 검색창 -->
-		   		<h1><c:out value="${goodsList[0].category_name }"/></h1>
-		
+		   		<h1>
+		   		    <c:choose>
+				        <c:when test="${not empty goodsList[0].category_name}">
+				            <c:out value="${goodsList[0].category_name}" />
+				        </c:when>
+				        <c:otherwise>
+				            전체상품
+				        </c:otherwise>
+				    </c:choose>
+		   		</h1>
+		   		
 		   		<!-- 검색창 -->
 		   		<div class="search_wrap">
 		   			<div class="search_area">

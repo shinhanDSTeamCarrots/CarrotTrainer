@@ -7,10 +7,7 @@
 		SELECT * FROM tb_goods
 	</select>
 	
-	<!-- 카테고리 이름 가져오기 -->
-	<select id="category" parameterType="int" resultType="string">
-		SELECT category_name FROM tb_goods_category
-	</select>
+	
 	
 	<!-- 카테고리별 상품 리스트 -->
 	<select id="getCategoryGoodsList" parameterType="int" resultType="xyz.teamcarrot.myct.goods.GoodsVO">
@@ -19,6 +16,7 @@
 		INNER JOIN tb_goods_category c ON g.category_no=c.category_no
 		WHERE g.category_no=#{category_no}
 	</select>
+	
 	
 	<!-- 상품상세 리스트 -->
 	<select id="detail" resultType="xyz.teamcarrot.myct.goods.GoodsVO">

@@ -62,12 +62,16 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="option">
-						<select name="selectOption">
-							<option disabled selected> [필수] 옵션을 선택해주세요 </option>
-							<c:forEach items="${detail}" var="detail">
-								<option>${detail.option_name } +${detail.price_updown }원 </option>	
-							</c:forEach>
-						</select>
+						<c:if test="${not empty detail}">
+							<select name="selectOption">
+								<option disabled selected> [필수] 옵션을 선택해주세요 </option>
+								<c:forEach items="${detail}" var="detail">
+						            <c:if test="${not empty detail.option_name}">
+						                <option>${detail.option_name} +${detail.price_updown}원</option>
+						            </c:if>
+						        </c:forEach>
+							</select>
+						</c:if>
 					</div>
 					<div class="btns">	
 						<button class="cartbtn" onclick="">장바구니</button>
@@ -89,6 +93,15 @@
 			<div class="detailMenuContent">
 				<div class="itemDetailImage" id="detailImage">
 					<p>상세이미지</p>
+					<div class="detailImages">
+				        <c:forEach var="i" begin="1" end="5">
+			                <c:set var="imageDetail" value="${'image_detail' + i}" />
+			                <p>Debug: ${item[imageDetail]}</p>
+			                <c:if test="${not empty item[imageDetail]}">
+			                    <img src="${pageContext.request.contextPath}/myct/img/goods/${item[imageDetail]}.jpg" alt="상세이미지${i}">
+			                </c:if>
+			            </c:forEach>
+				    </div>
 				</div>
 				<div class="itemDetailPurchaseInfo" id="detailPurchaseInfo">
 					${item.purchase_info}
