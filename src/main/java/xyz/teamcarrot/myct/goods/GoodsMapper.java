@@ -14,7 +14,9 @@ public interface GoodsMapper {
 	List<GoodsVO> getCategoryGoodsList(int category_no);
 		
 	//상품상세 목록
-	List<GoodsVO> detailList();
+	GoodsVO detail(int goods_no);
+	
+	List<GoodsOptionVO> goodsOption(int goods_no);
 	
 	//상품 추가
 	void insert(GoodsVO goods);

@@ -35,8 +35,10 @@ public class GoodsVO {
         return "GoodsVO{" +
                 "goods_no=" + goods_no +
                 ",option_name=" + option_name +
+                ",category_name=" + category_name +
                 ", goods_name='" + goods_name + '\'' +
                 ", price=" + price +                
                 '}';
     }
+	
 }

@@ -26,9 +26,15 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public List<GoodsVO> detailList(){
-		List<GoodsVO> detailList=mapper.detailList();
-		return detailList;
+	public GoodsVO detail(int goods_no){
+		GoodsVO detail=mapper.detail(goods_no);
+		return detail;
+	}
+
+	@Override
+	public List<GoodsOptionVO> goodsOption(int goods_no) {
+		List<GoodsOptionVO> goodsOptions = mapper.goodsOption(goods_no);
+		return goodsOptions;
 	}
 
 }

@@ -19,36 +19,36 @@ public class GoodsController {
 	private GoodsService service;
 	
 		
-	@GetMapping(value="/goodsList.do")
+	@GetMapping(value="/goodsList")
 	public String list(Model model) {
 		List<GoodsVO> goodsList=service.goodsList();
-		model.addAttribute("goodsList");
+		model.addAttribute("goodsList", goodsList);
 		
 		// 콘솔에 출력
         /*for (GoodsVO goods : goodsList) {
             logger.info("{}", goods);
-        }*/
-		
+        }*/		
 		return "/goods/goodsList";
 	}
 
 	
-	@RequestMapping(value="/goodsList.do/{category_no}", method=RequestMethod.GET)
+	@RequestMapping(value="/goodsList/{category_no}", method=RequestMethod.GET)
 	public String cateGoodsList(Model model, @PathVariable int category_no) {
 		System.out.println("category number 체크! " + category_no);
 		List<GoodsVO> goodsPerCate=service.getCategoryGoodsList(category_no);
-		for (GoodsVO goods : goodsPerCate) {
-            logger.info("{}", goods);
-        }
-		model.addAttribute("goodsList", goodsPerCate);
-			
+		
+		model.addAttribute("goodsList", goodsPerCate);			
 		return "/goods/goodsList";
 	}
 	
-	@GetMapping(value="/detail.do")
-	public String detailList(Model model) {
-		List<GoodsVO> detailList=service.detailList();
-		model.addAttribute("detailList");
+	
+	@RequestMapping(value="/detail/{goods_no}", method=RequestMethod.GET)
+	public String detailList(Model model,@PathVariable int goods_no) {
+		System.out.println("goods number 체크" + goods_no);
+		GoodsVO goods = service.detail(goods_no);
+		List<GoodsOptionVO> options = service.goodsOption(goods_no);
+		model.addAttribute("item",goods);
+		model.addAttribute("detail", options);
 		return "/goods/detail";
 	}
 }

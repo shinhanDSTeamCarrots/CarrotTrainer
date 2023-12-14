@@ -59,11 +59,11 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/goodsList.do">쇼핑</a>
+                    <a href="${pageContext.request.contextPath}/goodsList">쇼핑</a>
                     <ul class="depth2">
-                        <li><a href="${pageContext.request.contextPath}/goodsList.do/1">닭가슴살</a></li>
-                        <li><a href="${pageContext.request.contextPath}/goodsList.do/2">도시락</a></li>
-                        <li><a href="${pageContext.request.contextPath}/goodsList.do/3">샐러드</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/1">닭가슴살</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/2">도시락</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/3">샐러드</a></li>
                     </ul>
                 </li>
             </ul>
