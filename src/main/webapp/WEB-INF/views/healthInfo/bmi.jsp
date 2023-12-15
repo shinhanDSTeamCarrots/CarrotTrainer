@@ -67,11 +67,14 @@
 		   					</ul>
 		   				</div>
 		   				<div class="bmi-input-button">
-		   					<button class="bmi-btn" id="bmi-calc">계산하기</button>
+		   					<button class="bmi-btn" id="bmi-calc">계산</button>
 		   					<%--
-		   					onclick시 하단 내용 출력
+		   					onclick시 bmi-result 내용 출력
 			                --%>
 		   					<button class="bmi-btn" type="reset">초기화</button>
+		   					<%--
+		   					onclick시 bmi-result 내용 닫기
+			                --%>
 		   				</div>
 		   			</form>
 	   				<div class="bmi-info">
@@ -80,19 +83,18 @@
    				<div class="bmi-result">
    					<div class="detail-division-line"></div>
    					<div class="bmi-result-text">
-   						<p><span class="sql-result-text">당근</span>님의 BMI는 <span class="sql-result-text" id="bmi"></span>이며 <span class="sql-result-text" id="bmiResult"></span> 범위에 속합니다.</p>
-   						<p>평균 체중은 <span class="sql-result-text" id="avgWeight"></span>kg이고 평균 체중과 목표 체중의 차이는 <span class="sql-result-text" id="difWeight"></span>kg입니다.</p>
+   						<p><span class="sql-result-text">당근</span>님의 BMI는 <span class="sql-result-text" id="bmi"></span>이며 <span class="sql-result-text" id="bmiResult"></span>범위에 속합니다.</p>
+   						<p>평균 체중은 <span class="sql-result-text" id="avgWeight"></span>kg이고 평균 체중과 목표 체중의 차이는 <span class="sql-result-text" id="difWeight"></span>kg로 <span class="sql-result-text" id="aimResult"></span>범위에 속합니다.</p>
    						<p><span class="sql-result-text">당근</span>님의 비만도와 활동량을 고려한 하루 권장 칼로리 섭취량은 <span class="sql-result-text" id="target_calorie"></span>kcal 입니다. </p>
    					</div>
    					<div class="bmi-result-graph">
    					</div>
    					<div>
-   						<button class="bmi-btn" type="submit">등록하기</button>
+   						<button class="bmi-btn" type="submit">입력하기</button>
    						<%--
-   						로그인 되어있으면 등록, 안되어있으면 로그인이 필요합니다 alert
-   						<c:if test="${ }">
-		                </c:if>
-		                --%>
+		   					로그인 되어있으면 db로 값 저장
+		   					안되어있으면 로그인 필요한 부분 로그인하시겠습니까 이동 confirm
+			            --%>
    					</div>
    				</div>
    			</div>
