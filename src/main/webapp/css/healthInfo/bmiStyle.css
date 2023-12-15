@@ -43,7 +43,6 @@
 /*-------------
 	bmi 내용
 -------------*/
-
 .bmi-content {
 	
 }
@@ -60,7 +59,27 @@
 /*-------------
 	bmi 결과
 -------------*/
+@keyframes resultOpen {
+	from {
+		opacity: 0;
+	}
 
+	to {
+		opacity: 1;
+	}
+}
+.bmi-result {
+    display: none;
+}
+.bmi-result.show {
+    display: flex;
+    flex-direction: column;
+    animation: resultOpen 0.5s;
+    opacity: 1; /* 투명도 */
+}
+.bmi-result > .detail-division-line {
+	width: 100%;
+}
 .bmi-result-text {
 	padding: 20px;
 }
@@ -77,6 +96,10 @@
 	color: #748E63;
 	font-size: 26px;
 	font-weight: 800;
+}
+.sql-result-text-name {
+	color: #748E63;
+	font-size: 22px;
 }
 .sql-result-text {
 	color: #748E63;

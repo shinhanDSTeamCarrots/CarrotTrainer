@@ -1,24 +1,35 @@
 //bmi 계산
 $(function() {
-	$('#bmi-calc').click(function(e) {
+	$("#bmi-calc").click(function(e) {
 		e.preventDefault();
 		if (bmiConfirm()) {
+			onDisplay();
 			bmiCalc();
 		}
 	});
-	//입력 확인 알림창
+	$("#bmi-reset").click(function(e) {
+		offDisplay();
+	});
+	//result div 열고 닫기
+	function onDisplay() {
+    	$(".bmi-result").addClass("show");
+	}
+	function offDisplay() {
+	    $(".bmi-result").removeClass("show");
+	}
+	//입력 확인 알림
 	function bmiConfirm() {
-		if ($("#age").val() === '') {
+		if ($("#age").val().trim() === "") {
 			alert('나이를 입력하세요');
 			$("#age").focus();
 			return false;
 		}
-		if ($("#height").val() === '') {
+		if ($("#height").val().trim() === "") {
 			alert('신장을 입력하세요');
 			$("#height").focus();
 			return false;
 		}
-		if ($("#weight").val() === '') {
+		if ($("#weight").val().trim() === "") {
 			alert('체중을 입력하세요');
 			$("#weight").focus();
 			return false;
@@ -27,26 +38,25 @@ $(function() {
 			alert('성별을 선택하세요');
 			return false;
 		}
-		if ($("#target_weight").val() === '') {
+		if ($("#target_weight").val().trim() === "") {
 			alert('목표 몸무게를 입력하세요');
 			$("#target_weight").focus();
 			return false;
 		}
-		if ($("#exercise_mass").val() === '') {
-			alert('평소 운동량을 입력하세요');
+		if ($("#exercise_mass").val() === null) {
+			alert('평소 운동량을 선택하세요');
 			$("#exercise_mass").focus();
 			return false;
 		}
 		return true;
 	}
-	//계산
 	function bmiCalc(){
 		//입력받은 값
-		const age = parseFloat($("#age").val());
-		const height = parseFloat($("#height").val());
-		const weight = parseFloat($("#weight").val());
+		const age = parseFloat($("#age").val().trim());
+		const height = parseFloat($("#height").val().trim());
+		const weight = parseFloat($("#weight").val().trim());
 		const gender = $("input[name='gender']:checked").val();
-		const target_weight = parseFloat($("#target_weight").val());
+		const target_weight = parseFloat($("#target_weight").val().trim());
 		const exercise_mass = $("#exercise_mass").val();
 
 		//계산 값
@@ -73,7 +83,7 @@ $(function() {
 		}
 		
 		//체중 차이
-		difWeight = Math.round(Math.abs(target_weight-avgWeight)*100)/100;
+		difWeight = Math.round(Math.abs(weight-target_weight)*100)/100;
 		
 		//목표 체중 범위
 		if(Math.round(Math.abs(weight-target_weight)) < 1) {
@@ -114,24 +124,19 @@ $(function() {
 			target_calorie = Math.round(avgWeight*35);
 		}
 		
-		//하루 목표 영양소 > 유지인 경우는 제외
-		if(aimResult = "체중 증량") {
-			target_calorie = target_calorie*1.1;
+		//하루 목표 영양소 > 유지인 경우는 *1.0
+		if(aimResult === "체중 증량") {
+			target_calorie = Math.round(target_calorie*1.1);
 		}
-		else if(aimResult = "체중 감소") {
-			target_calorie = target_calorie*0.9;
+		else if(aimResult === "체중 감소") {
+			target_calorie = Math.round(target_calorie*0.9);
 		}
 		
-		target_carbs = Math.round((target_carbs*0.5)/4);
-		target_protein = Math.round((target_carbs*0.3)/4);
-		target_fat = Math.round((target_carbs*0.2)/9);
-		target_sugar = Math.round((target_carbs*0.1)/4);
+		target_carbs = Math.round((target_calorie*0.5)/4);
+		target_protein = Math.round((target_calorie*0.3)/4);
+		target_fat = Math.round((target_calorie*0.2)/9);
+		target_sugar = Math.round((target_calorie*0.1)/4);
 		
-		console.log(target_calorie)
-		console.log(target_carbs)
-		console.log(target_protein)
-		console.log(target_fat)
-		console.log(target_sugar)
 		//계산값 텍스트 삽입
 		$("#avgWeight").text(avgWeight.toFixed(1));
 		$("#difWeight").text(difWeight.toFixed(1));
