@@ -89,7 +89,7 @@
 	}
 	function onEditBtnClicked(review_no){
 		let href = "${pageContext.request.contextPath}"+ "/review/modify.do?";
-		href += "review_no="+"${review_no}";
+		href += "review_no="+review_no;
 		location.replace(href);		
 	}
 	function onDeleteBtnClicked(review_no){

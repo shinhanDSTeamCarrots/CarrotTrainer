@@ -6,7 +6,6 @@
  */
 package xyz.teamcarrot.myct.review;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,8 @@ import xyz.teamcarrot.myct.member.MemberVO;
 public class ReviewController {
 	@Autowired
 	ReviewService service;
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 	
 	//AJAX 로 변환 필요?
@@ -38,8 +39,13 @@ public class ReviewController {
 	@GetMapping("review/shoppingReview.do")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
 		logger.warn("review/shopping start");
-		int goods_no = Integer.parseInt(request.getParameter("goods_no"));
-		
+		int goods_no;
+		try {
+			goods_no = Integer.parseInt(request.getParameter("goods_no"));
+		}
+		catch(NumberFormatException nfe) {
+			goods_no = -1;
+		}
 		int page_no = 1;
 		try{
 			page_no = Integer.parseInt(request.getParameter("page_no"));
@@ -119,9 +125,21 @@ public class ReviewController {
 	
 	//리뷰 작성 페이지
 	@GetMapping("review/write.do")
-	public ModelAndView Write(HttpServletRequest request) {
+	public ModelAndView Write(HttpServletRequest request, HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
+		
+		
+		if(((MemberVO)sess.getAttribute("loginInfo")) == null) {
+			mav.setViewName("redirect:/");
+			return mav;
+		}
+		
+		
+		
 		mav.setViewName("review/reviewWrite");
+		
+		
+		
 		try {
 			int goods_no =Integer.parseInt(request.getParameter("goods_no"));
 			mav.addObject("goods_no",goods_no);
@@ -131,34 +149,72 @@ public class ReviewController {
 		}
 		//리뷰 정보용 goods_no 가져옴
 		mav.addObject("mode", "w");
+		mav.addObject("ReviewNo",-1);
 		
 		
 		return mav;
-	}
-	
-	//리뷰 작성 후 쇼핑몰 연결
-	@PostMapping("review/write.do")
-	public String AfterWrite(HttpServletRequest request) {
-		//request.getParameter("*********after url");
-		//리뷰 정보 가져옴
-		
-		return "/review/complete.jsp";
 	}
 	
 	
 	
 	//리뷰 수정
 	@GetMapping("review/modify.do")
-	public ModelAndView Modify(HttpServletRequest request) {
+	public ModelAndView Modify(HttpServletRequest request, HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
+
+		if(((MemberVO)sess.getAttribute("loginInfo")) == null) {
+			mav.setViewName("redirect:/");
+			return mav;
+		}
+		
 		mav.setViewName("review/reviewWrite");
-		int goods_no =(int)request.getAttribute("goods_no");
+		int review_no;
+		try {
+			review_no =Integer.parseInt(request.getParameter("review_no"));
+		}
+		catch(Exception e) {
+			review_no = -1;
+		}
 		//리뷰 정보용 goods_no 랑
 		//리뷰 정보 가져옴
-		mav.addObject("goods_no",goods_no);
+		ReviewVO vo = service.getSpecificReview(review_no);
+		mav.addObject("goods_no",vo.getGoods_no());
+		mav.addObject("ReviewNo",vo.getReview_no());
+		mav.addObject("ReviewVO", vo);
 		mav.addObject("mode", "m");
 		return mav;
 	}
+	
+	
+	//리뷰 작성 후 쇼핑몰 연결
+	@PostMapping("review/write.do")
+	public String AfterWrite( HttpSession session,@RequestParam Map<String, String> formData, HttpServletRequest req) {
+		ReviewVO vo;
+		vo = new ReviewVO();
+		String mode = formData.get("mode");
+		if(mode.equals("m")) {
+			vo.setReview_no(Integer.parseInt(formData.get("review_no")));
+		}
+		if(mode.equals("w"))
+			vo.setGoods_no(Integer.parseInt(formData.get("goods_no")));
+		logger.info(formData.get("imgstr"));
+		if(formData.get("imgstr") != null && !formData.get("imgstr").equals("") && formData.get("imgstr").getBytes() != null)
+			vo.setImage(formData.get("imgstr").getBytes());
+		vo.setPoint(Integer.parseInt(formData.get("point")));
+		vo.setContent(formData.get("content"));
+
+		if(mode.equals("w"))
+			vo.setMember_no(((MemberVO)session.getAttribute("loginInfo")).getMember_no());
+		
+		if(mode.equals("w"))
+			service.insertReview(vo);
+		else
+			service.updateReview(vo);
+		
+		
+		return "redirect:/";
+	}
+	
 	//리뷰 삭제
 	@ResponseBody
 	@PostMapping("review/delete.do")

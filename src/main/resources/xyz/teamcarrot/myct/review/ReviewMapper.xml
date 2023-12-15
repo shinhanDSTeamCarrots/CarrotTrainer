@@ -29,7 +29,9 @@
 		UPDATE 	tb_review
 		SET		content = #{content}
 			  , point   = #{point}
+			  <if test="image != null">
 			  , image 	= #{image}
+			  </if>
 		WHERE review_no = #{review_no}
 	</update>
 	
@@ -135,6 +137,27 @@
 		WHERE goods_no = ${goods_no}
 	</select>
 	
+	<select id="getSpecificReview" resultType="xyz.teamcarrot.myct.review.ReviewVO" parameterType="map">
+		SELECT	r.review_no AS review_no
+			  , r.content AS content
+			  , r.point AS point
+			  , r.regist_date AS regist_date
+			  , r.like_cnt AS like_cnt
+			  , r.goods_no AS goods_no
+			  , r.member_no AS member_no
+			  , IFNULL(m.member_nickname,m.member_name) AS member_name
+			  , g.goods_name as goods_name
+			  , r.image
+		FROM tb_review AS r
+			JOIN tb_member AS m 
+									 ON r.member_no = m.member_no
+			LEFT JOIN tb_goods AS g
+							   ON g.goods_no = r.goods_no
+		WHERE
+				0 = 0
+				AND r.review_no = #{review_no}
+	
+	</select>
 	
 	<!-- select id="count" parameterType="kr.co.project.comment.CommentVO" resultType="int">
 		select count(*) from comment

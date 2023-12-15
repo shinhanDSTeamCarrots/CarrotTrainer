@@ -92,4 +92,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return mapper.selectListData(goods_no);
 	}
 
+	@Override
+	public ReviewVO getSpecificReview(int review_no) {
+		return mapper.getSpecificReview(review_no);
+	}
+
 }
