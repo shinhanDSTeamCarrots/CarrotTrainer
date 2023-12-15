@@ -73,7 +73,6 @@
 					<div class="loginSuccess">
 						<input type="submit" value="로그인" onclick="return loginCheck();">
 					</div>
-					
 				</div>
 			</div>
 		</form>

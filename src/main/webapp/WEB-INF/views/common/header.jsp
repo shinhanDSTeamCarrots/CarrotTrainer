@@ -23,7 +23,7 @@
            		</c:when>
            		<c:otherwise>
 	                <div class="login">
-	               		<a href="${pageContext.request.contextPath}/member/memberEdit.do">마이페이지</a> |
+	               		<a href="${pageContext.request.contextPath}/member/login.do">마이페이지</a> |
 	                    <a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 	                </div>
            		</c:otherwise>

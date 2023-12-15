@@ -1,79 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>카카오/네이버 회원가입</title>
-<META name="viewport"
-	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/style.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
-<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
-
-
-<script>
-
-var naverLogin = new naver.LoginWithNaverId(
-		{
-			clientId: "cqlFYY_wCYU5ntDTTBWE", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
-			callbackUrl: "http://localhost:8090/myct/", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
-			isPopup: false,
-			callbackHandle: true
-		}
-	);	
-
-naverLogin.init();
-window.addEventListener('load', function () {
-	naverLogin.getLoginStatus(function (status) {
-		if (status) {
-			var email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
-    		
-			console.log(naverLogin.user); 
-    		
-            if( email == undefined || email == null) {
-				alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
-				naverLogin.reprompt();
-				return;
-			}
-		} else {
-			console.log("callback 처리에 실패하였습니다.");
-		}
-	});
-});
-
-
-var testPopUp;
-function openPopUp() {
-    testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
-}
-function closePopUp(){
-    testPopUp.close();
-}
-
-function naverLogout() {
-	openPopUp();
-	setTimeout(function() {
-		closePopUp();
-		}, 1000);
-	
-	
-}
-</script>
+<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
+	<script src="js/script.js"></script>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<div class="joinOath">
-	 <a id="naverIdLogin_loginButton" href="javascript:;">
-          <span>네이버 로그인</span>
-      </a>
-	</div>
-	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+	<div class = "naverKakao">
+    						<a href=""><img src="kakaoRegister.png" alt="카카오"></a>
+                 			<a href=""><img src="naverRegister.png" alt="네이버"></a>
+                 <!-- 가입하고 나서 어떻게 홈페이지로 이동시킬지 생각하기 -->	
+                 <!-- 파일명 수정(joinOath), table 써서 묶는거 고려해 보기(fieldset 굳이 사용할 필요 없음), 이미지 파일 절대 경로로 지정 -->		
+    </div>
 </body>
 </html>
