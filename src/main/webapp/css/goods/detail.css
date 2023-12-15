@@ -231,10 +231,47 @@ a:visited {
     background-color:#CEDEBD;
 }
 
+
+/* 상품 상세 정보들 */
 .detailMenuContent{
 	width:100%;
     margin-top: 20px;
-    flex_direction:row;
+	display: flex;
+	flex-direction:column;
 	
 }
 
+
+.detailMenuContent > .itemDetailImage{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.detailMenuContent > .itemDetailPurchaseInfo{
+	margin-bottom:20px;	
+}
+
+.detailMenuContent > .itemDetailPurchaseInfo > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}
+.detailMenuContent > .itemDetailReview{
+	margin-bottom:20px;	
+}
+
+.detailMenuContent > .itemDetailReview > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}
+.detailMenuContent > .itemDetailQna{
+	margin-bottom:20px;	
+}
+.detailMenuContent > .itemDetailQna > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}

@@ -19,13 +19,13 @@ public interface GoodsMapper {
 	List<GoodsOptionVO> goodsOption(int goods_no);
 	
 	//상품 추가
-	void insert(GoodsVO goods);
+	int insert(GoodsVO goods);
 	
 	//상품 삭제
-	void delete(int goods_no);
+	int delete(int goods_no);
 	
 	//상품 수정
-	void update(GoodsVO goods);
+	int update(GoodsVO goods);
 	
 	
 }

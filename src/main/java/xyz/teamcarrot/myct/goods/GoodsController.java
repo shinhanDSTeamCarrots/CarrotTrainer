@@ -19,7 +19,7 @@ public class GoodsController {
 	private GoodsService service;
 	
 		
-	@GetMapping(value="/goodsList")
+	@GetMapping("/goodsList")
 	public String list(Model model) {
 		List<GoodsVO> goodsList=service.goodsList();
 		model.addAttribute("goodsList", goodsList);
@@ -32,7 +32,7 @@ public class GoodsController {
 	}
 
 	
-	@RequestMapping(value="/goodsList/{category_no}", method=RequestMethod.GET)
+	@GetMapping("/goodsList/{category_no}")
 	public String cateGoodsList(Model model, @PathVariable int category_no) {
 		System.out.println("category number 체크! " + category_no);
 		List<GoodsVO> goodsPerCate=service.getCategoryGoodsList(category_no);
@@ -42,7 +42,7 @@ public class GoodsController {
 	}
 	
 	
-	@RequestMapping(value="/detail/{goods_no}", method=RequestMethod.GET)
+	@GetMapping("/detail/{goods_no}")
 	public String detailList(Model model,@PathVariable int goods_no) {
 		System.out.println("goods number 체크" + goods_no);
 		GoodsVO goods = service.detail(goods_no);

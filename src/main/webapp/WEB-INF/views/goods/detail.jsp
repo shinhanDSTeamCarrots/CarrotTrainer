@@ -58,7 +58,7 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="deliveryfee">
-						<p>배송비 | ${item.delivery_fee }원</p>
+						<p>배송비 |  ${item.delivery_fee }원</p>
 					</div>
 					<div class="title-division-line"></div>
 					<div class="option">
@@ -67,17 +67,17 @@
 								<option disabled selected> [필수] 옵션을 선택해주세요 </option>
 								<c:forEach items="${detail}" var="detail">
 						            <c:if test="${not empty detail.option_name}">
-						                <option>${detail.option_name} +${detail.price_updown}원</option>
+						                <option id="selectedoption" value="optionNo">${detail.option_name}	+${detail.price_updown}원</option>
 						            </c:if>
 						        </c:forEach>
 							</select>
 						</c:if>
 					</div>
 					<div class="btns">	
-						<button class="cartbtn" onclick="">장바구니</button>
-						<button class="purchasebtn" onclick="">구매하기</button>
-						
-					</div>
+						<button class="cartbtn">장바구니</button>
+						<button class="purchasebtn" onclick="">구매하기</button>						
+					</div>			
+
 				</div>
 			</div>	
 			<!-- 상품상세 페이지 메뉴 바 -->
@@ -90,20 +90,21 @@
   				</ul>
    			</div>
 		
+		
+			<!-- 상품 상세 정보들 -->
 			<div class="detailMenuContent">
 				<div class="itemDetailImage" id="detailImage">
-					<p>상세이미지</p>
 					<div class="detailImages">
 				        <c:forEach var="i" begin="1" end="5">
-			                <c:set var="imageDetail" value="${'image_detail' + i}" />
-			                <p>Debug: ${item[imageDetail]}</p>
+			                <c:set var="imageDetail" value="image_detail${i}" />
 			                <c:if test="${not empty item[imageDetail]}">
-			                    <img src="${pageContext.request.contextPath}/myct/img/goods/${item[imageDetail]}.jpg" alt="상세이미지${i}">
+			                    <img src="/myct/img/goods/${item[imageDetail]}.jpg">
 			                </c:if>
 			            </c:forEach>
 				    </div>
 				</div>
 				<div class="itemDetailPurchaseInfo" id="detailPurchaseInfo">
+					<p>구매정보</p>
 					${item.purchase_info}
 				</div>
 				<div class="itemDetailReview" id="detailReview">
@@ -121,3 +122,48 @@
 	</div>
 </body>
 </html>
+
+
+<!-- js -->
+<script>
+function cartbtn(){
+	//로그인 여부 확인
+	//로그인 돼있으면 장바구니에 담기
+	//안돼있으면 로그인이 필요한 서비스입니다 (로그인 창으로 이동하시겠습니까?)
+	var mem_no = "${sessionScope.loginInfo.member_no}";
+	let goods_no="${item.goods_no}";
+	let option_no=$("#selectedoption").val();
+	if(mem_no!=""){
+		//ajax호출
+		$.ajax({
+			type:"POST",
+			url:"${pageContext.request.contextPath}/goods/cart",
+			data:{mem_no:mem_no,
+				goods_no:goods_no,
+				option_no:option_no,
+				count:1},
+			success:fuction(result){
+				if(result=="T"){
+					console.log(result);
+					alert("장바구니에 상품이 담겼습니다");
+					
+				}
+			},
+			error:function(data){
+	        	alert("처리하지 못하였습니다.");			
+		})
+	}
+	else{
+		alert("로그인이 필요한 서비스입니다!");
+		
+	}
+	
+	var str="장바구니로 이동하시겠습니까?";
+	if(confirm(str)){
+		window.location.href="${pageContext.request.contextPath}/cart";
+	}else{
+		
+	}
+}
+
+</script>

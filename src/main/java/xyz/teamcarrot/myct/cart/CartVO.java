@@ -12,5 +12,7 @@ public class CartVO {
 	private int goods_no;
 	private int member_no;
 	private int option_no;
+	
+	private int final_price;
 
 }
