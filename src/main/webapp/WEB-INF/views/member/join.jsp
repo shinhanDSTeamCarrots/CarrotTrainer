@@ -21,7 +21,6 @@
 			alert('아이디를 입력해 주세요.');
 			return false;
 		}
-		
 
 		/* 왜 return이 아니라 return false로 해줘야 하는지? */
 		var idVal = document.getElementById("member_id").value;
@@ -56,62 +55,68 @@
 		}
 
 		$("#frm").submit();
-		
+
 	}
 	var dupCheck = false;
 	var dupCheckNumber = 0;
-	$(function() {
-		$("#idCheck").click(function() {
-			dupCheckNumber++;
-			$.ajax({
-				url : 'idCheck.do',
-				data : {
-					id : $('#member_id').val()
-				},
-				success : function(res) {
-					console.log(res);
-					if (res == 'true') {
-						alert('중복된 아이디입니다.');
-						$("#member_id").val('');
-						$("#member_id").focus();
-					} else {
-						
-						alert('사용가능한 아이디입니다.');
-						dupCheck = true;
-					}
-				}
-			})
-		})
-	})
+	  $(function () {
+          $("#idCheck").click(function () {
+              dupCheckNumber++;
+              $.ajax({
+                  url: 'idCheck.do',
+                  data: {
+                      id: $('#member_id').val()
+                  },
+                  success: function (res) {
+                      console.log(res);
+                      if (res == 'true') {
+                          // 중복된 아이디
+                          $("#idCheckMessage").text('아이디가 중복되었습니다.').css('color', 'red');
+                          $("#member_id").val('');
+                          $("#member_id").focus();
+                      } else {
+                          // 사용 가능한 아이디
+                          $("#idCheckMessage").text('사용 가능한 아이디입니다.').css('color', 'green');
+                      }
+                  }
+              });
+          });
+      })
+	
+	function validatePhoneNumber() {
+            var phoneNumber = document.getElementById("member_hp").value;
+            var isValid = /^\d{11}$/.test(phoneNumber);
 
+            if (!isValid) {
+                document.getElementById("error-message").style.display = "block";
+            } else {
+                document.getElementById("error-message").style.display = "none";
+            }
+        }
 </script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
 	function zipcode() {
 		new daum.Postcode({
 			oncomplete : function(data) {
-				
+
 				var extraRoadAddr = ''; // 참고 항목 변수
 
-	
 				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
 					extraRoadAddr += data.bname;
 				}
-				
+
 				if (data.buildingName !== '' && data.apartment === 'Y') {
 					extraRoadAddr += (extraRoadAddr !== '' ? ', '
 							+ data.buildingName : data.buildingName);
 				}
-			
+
 				if (extraRoadAddr !== '') {
 					extraRoadAddr = ' (' + extraRoadAddr + ')';
 				}
 
-				
 				$('#zipcode').val(data.zonecode);
-				 //
+				//
 				$('#member_addr').val(roadAddr);
 			}
 		}).open();
@@ -140,6 +145,10 @@ table.reg tbody tr td input {
 	margin-bottom: 10px;
 	width: 250px;
 }
+
+.error-message {
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -148,7 +157,7 @@ table.reg tbody tr td input {
 		<div class="container">
 			<div class="menu">
 				<h1 class="title">회원가입</h1>
-				<a href="joinOath">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
+				<a href="joinOath.do">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
 				<form name="frm" id="frm" action="regist.do" method="post">
 					<table class="reg">
 						<caption>회원가입</caption>
@@ -161,14 +170,21 @@ table.reg tbody tr td input {
 								<td><input type="text" name="member_id" id="member_id"
 									style="float: left;"> <a href="javascript:;"
 									style="float: left; width: auto; clear: none;" id="idCheck">중복확인</a>
-
 								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td><span id="idCheckMessage"></span></td>
 							</tr>
 							<tr>
 								<th>비밀번호</th>
 								<td><input type="password" name="member_pw" id="member_pw"
 									style="float: left;" placeholder="영문, 숫자, 특수문자 포함 8자 이상">
 								</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td><span id="passwordCheckMessage"></span></td>
 							</tr>
 							<tr>
 								<th>비밀번호 확인</th>
@@ -200,7 +216,10 @@ table.reg tbody tr td input {
 							<tr>
 								<th>핸드폰</th>
 								<td><input type="text" name="member_hp" id="member_hp"
-									style="float: left;" placeholder="'-'표시 생략"></td>
+									style="float: left;" placeholder="'-'표시 생략" oninput="validatePhoneNumber()">
+									<div id="error-message" class="error-message"
+										style="display: none;">입력값이 올바르지 않습니다.</div></td>
+
 							</tr>
 							<tr>
 								<th rowspan="3">*주소</th>
@@ -210,21 +229,22 @@ table.reg tbody tr td input {
 									style="float: left; width: auto; clear: none;">우편번호</a></td>
 							</tr>
 							<tr>
-								<td><input type="text" name="member_addr"
-									id="member_addr" value="" maxlength="15" style="float: left;"
-									readonly></td>
+								<td><input type="text" name="member_addr" id="member_addr"
+									value="" maxlength="15" style="float: left;" readonly></td>
 							</tr>
 							<tr>
 								<td><input type="text" name="member_addrDetail"
-									id="member_addrDetail" value="" maxlength="15" style="float: left;"></td>
+									id="member_addrDetail" value="" maxlength="15"
+									style="float: left;"></td>
 							</tr>
 						</tbody>
 					</table>
-					<input type = "submit" value = "다음" onclick = "return infoSave()"/>
-				</form>
+					<input type="submit" value="다음" onclick="return infoSave()" />
+				</form>				
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
+	
 </body>
 </html>
