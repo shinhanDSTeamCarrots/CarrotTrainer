@@ -43,7 +43,7 @@
 		   					</ul>
 		   					<ul>
 			    				<li>체중:</li>
-				    			<li><input type="text" name="weight" id="weight" value="">kg</li>
+				    			<li><input type="text" name="body_info_weight" id="body_info_weight" value="">kg</li>
 		   					</ul>
 		   					<ul>
 			    				<li>성별:</li>
