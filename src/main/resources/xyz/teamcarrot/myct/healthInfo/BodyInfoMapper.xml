@@ -17,4 +17,16 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	<!-- 오늘의 상태 정보 입력 -->
+	<insert id="insertBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		INSERT INTO tb_body_change (
+			body_change_date, body_change_weight, muscle_mass, fat_mass, member_no
+		) VALUES (
+			NOW(), #{body_change_weight}, #{muscle_mass}, #{fat_mass}, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="body_change_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
 </mapper>

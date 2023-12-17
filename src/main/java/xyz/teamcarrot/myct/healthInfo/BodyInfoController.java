@@ -48,4 +48,17 @@ public class BodyInfoController {
 			return "redirect:/";
 		}
 	}*/
+	@PostMapping("/insertBodyChange")
+	public String regist(BodyChangeVO vo, Model model) {
+		boolean r = service.insertBodyChange(vo);
+		if (r) { // 정상적으로 DB에 insert 
+			model.addAttribute("cmd", "move");
+			model.addAttribute("msg", "등록되었습니다.");
+			model.addAttribute("url", "/healthInfo/diary");
+		} else { // 등록안됨
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "등록 실패");
+		}
+		return "common/alert";
+	}
 }

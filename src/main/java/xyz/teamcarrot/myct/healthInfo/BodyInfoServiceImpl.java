@@ -13,4 +13,11 @@ public class BodyInfoServiceImpl implements BodyInfoService {
 	public boolean insertBodyInfo(BodyInfoVO vo) {
 		return mapper.insertBodyInfo(vo) > 0 ? true : false;
 	}
+	@Override
+	public boolean insertBodyChange(BodyChangeVO vo) {
+		return mapper.insertBodyChange(vo) > 0 ? true : false;
+	}
+	public int updateBodyChange(BodyChangeVO vo) {
+		return mapper.updateBodyChange(vo);
+	}
 }

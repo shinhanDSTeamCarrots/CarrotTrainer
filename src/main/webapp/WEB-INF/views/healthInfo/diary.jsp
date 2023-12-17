@@ -76,25 +76,25 @@
     			  				<div class="title-division-line"></div>
     			  			</div>
     			  			<div id="modalBody-main">
-    			  				<div id="modalBody-weight">
+    			  				<form name="modalBody-weight" id="modalBody-weight" action="insertBodyChange" method="post">
 	    			  				<div class="modalBody-result">
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
 		    			  					<div id="minus-button">-</div>
-			    			  				<input id="">
+			    			  				<input name="body_change_weight" id="body_change_weight">
 			    			  				<div id="plus-button">+</div>
 		    			  				</div>
 		    			  			</div>
 	    			  				<div class="detail-division-line"></div>
 	    			  				<div class="modalBody-result">
 	    			  					<div class="modalBody-text">골격근량(kg)</div>
-		    			  				<div class="modalBody-input"><input id=""></div>
+		    			  				<div class="modalBody-input"><input name="muscle_mass" id="muscle_mass"></div>
 		    			  			</div>
 		    			  			<div class="modalBody-result">
-	    			  					<div class="modalBody-text">체지방량(%)</div>
-		    			  				<div class="modalBody-input"><input id=""></div>
+	    			  					<div class="modalBody-text">체지방률(%)</div>
+		    			  				<div class="modalBody-input"><input name="fat_mass" id="fat_mass"></div>
 		    			  			</div>
-    			  				</div>
+    			  				</form>
     			  			</div>
     			  			<div id="modalBody-button">
     			  				<button>기록 완료</button>
