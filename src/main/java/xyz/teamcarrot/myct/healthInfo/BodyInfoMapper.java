@@ -9,6 +9,7 @@ public interface BodyInfoMapper {
 	
 	//tb_body_change 테이블 > 몸무게, 근육량, 체지방량 입력
 	int insertBodyChange(BodyChangeVO vo);
+	BodyChangeVO selectBodyChange(int no);
 	int updateBodyChange(BodyChangeVO vo);
-	//int deleteBodyChange(BodyChangeVO vo);
+	int deleteBodyChange(int no);
 }

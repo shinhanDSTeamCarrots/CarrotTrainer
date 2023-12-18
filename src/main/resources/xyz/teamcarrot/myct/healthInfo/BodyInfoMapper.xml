@@ -17,16 +17,33 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	
 	<!-- 오늘의 상태 정보 입력 -->
 	<insert id="insertBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
 		INSERT INTO tb_body_change (
-			regist_date, body_change_weight, muscle_mass, fat_mass, member_no
+			regist_date, weight, muscle_mass, fat_mass, member_no
 		) VALUES (
-			NOW(), #{body_change_weight}, #{muscle_mass}, #{fat_mass}, #{member_no}
+			NOW(), #{weight}, #{muscle_mass}, #{fat_mass}, #{member_no}
 		)
 		<!-- tb_body_info테이블 키 값 -->
 		<selectKey keyProperty="body_change_no" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	<!-- 오늘의 상태 정보 불러오기 -->
+	<select id="selectBodyChange" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		SELECT * FROM tb_body_change WHERE member_no = #{member_no} AND regist_date = NOW();
+	</select>
+	<!-- 오늘의 상태 정보 수정 -->
+	<update id="updateBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		UPDATE tb_body_change
+			weight = #{weight}
+			, muscle_mass = #{muscle_mass}
+			, fat_mass = #{fat_mass}
+		WHERE body_change_no = #{body_change_no}
+	</update>
+	<!-- 오늘의 상태 정보 삭제 -->
+	<delete id="deleteBodyChange" parameterType="int">
+		delete from tb_body_change WHERE body_change_no = #{body_change_no}
+	</delete>
 </mapper>
