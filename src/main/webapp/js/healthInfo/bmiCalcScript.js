@@ -9,6 +9,16 @@ $(function() {
 			e.preventDefault();
 		}
 	});
+	//수정
+	$("#bmi-updateBtn").click(function(e) {
+		if(confirm("내용을 수정할 경우, 기존 목표 칼로리 및 기타 수치가 변경됩니다.\n정말 수정하시겠습니까?")) {
+			$(".bmi-input-data").attr("action", "updateBodyInfo");
+			$(".bmi-input-data").submit();
+		}
+		else {
+			e.preventDefault();
+		}
+	});
 	
 	//bmi 계산
 	$("#bmi-calc").click(function(e) {

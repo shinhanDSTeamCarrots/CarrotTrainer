@@ -21,6 +21,23 @@
 	<select id="selectBodyInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
 		SELECT * FROM tb_body_info WHERE member_no = #{member_no};
 	</select>
+	<!-- bmi 정보 수정 -->
+	<update id="updateBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
+		UPDATE tb_body_info
+		SET age = #{age}
+			, height = #{height}
+			, weight = #{weight}
+			, gender = #{gender}
+			, target_weight = #{target_weight}
+			, exercise_mass = #{exercise_mass}
+			, bmi = #{bmi}
+			, target_calorie = #{target_calorie}
+			, target_carbs = #{target_carbs}
+			, target_protein = #{target_protein}
+			, target_fat = #{target_fat}
+			, target_sugar = #{target_sugar}
+		WHERE body_info_no = #{body_info_no};
+	</update>
 	
 	<!-- 오늘의 상태 정보 입력 -->
 	<insert id="insertBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">

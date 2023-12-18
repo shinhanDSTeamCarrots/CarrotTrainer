@@ -18,6 +18,10 @@ public class BodyInfoServiceImpl implements BodyInfoService {
 	public BodyInfoVO selectBodyInfo(int member_no) {
 		return mapper.selectBodyInfo(member_no);
 	}
+	@Override
+	public int updateBodyInfo(BodyInfoVO vo) {
+		return mapper.updateBodyInfo(vo);
+	}
 	
 	//tb_body_change 테이블 
 	@Override

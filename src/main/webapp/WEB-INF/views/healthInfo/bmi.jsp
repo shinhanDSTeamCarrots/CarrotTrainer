@@ -63,6 +63,8 @@
 			    				</select>
 			    			</li>
 	   					</ul>
+	   					<input type="hidden" name="body_info_no" id="body_info_no" value="${bodyInfo.body_info_no }">
+		    			<input type="hidden" name="member_no" id="member_no" value="${bodyInfo.member_no }">
 	   				</form>
 	   				<div class="bmi-input-button">
 	   					<button class="bmi-btn" id="bmi-calc">계산</button>

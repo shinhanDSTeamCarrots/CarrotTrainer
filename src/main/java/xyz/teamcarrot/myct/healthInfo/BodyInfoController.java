@@ -41,12 +41,30 @@ public class BodyInfoController {
 		if(bodyInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/bmi");
+			model.addAttribute("url", "/myct/bmi");
 		} else {
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "정보 등록 실패");
 		}
 		return "/common/alert";
+	}
+	@PostMapping("/updateBodyInfo")
+	public String updateBodyInfo(Model model, BodyInfoVO vo) {
+		int no = service.updateBodyInfo(vo);
+		
+		String msg = "";
+		String url = "/myct/bmi";
+
+		if(no > 0) {
+			msg = "수정되었습니다.";
+		} else {
+			msg = "수정 오류";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("cmd", "move");
+
+		return "common/alert";
 	}
 	
 	/*--------------
@@ -71,7 +89,7 @@ public class BodyInfoController {
 			model.addAttribute("bodyChange", service.insertBodyChange(vo));
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
-			model.addAttribute("url", "/diary");
+			model.addAttribute("url", "/myct/diary");
 		} else { // 비로그인일 경우 > confirm알라트로 변경!
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "로그인이 필요합니다.");
@@ -102,7 +120,7 @@ public class BodyInfoController {
 		int no = service.deleteBodyChange(vo);
 		
 		String msg = "";
-		String url = "/diary";
+		String url = "/myct/diary";
 
 		if(no > 0) {
 			msg = "삭제되었습니다.";
