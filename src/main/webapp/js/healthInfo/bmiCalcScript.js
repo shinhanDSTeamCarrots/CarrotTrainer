@@ -1,5 +1,16 @@
-//bmi 계산
 $(function() {
+	//입력
+	$("#bmi-insertBtn").click(function(e) {
+		if(confirm("입력하시겠습니까?")) {
+			$(".bmi-input-data").attr("action", "insertBodyInfo");
+			$(".bmi-input-data").submit();
+		}
+		else {
+			e.preventDefault();
+		}
+	});
+	
+	//bmi 계산
 	$("#bmi-calc").click(function(e) {
 		e.preventDefault();
 		if (bmiConfirm()) {
@@ -72,20 +83,19 @@ $(function() {
 		let target_protein;
 		let target_fat;
 		let target_sugar;
-	
 		
-		//평균 체중
-		if(gender==="1") {
+		//평균 체중 계산
+		if(gender === "1") {
 			avgWeight = Math.round(Math.pow(height/100, 2)*22*100)/100;
 		}
-		if(gender==="2") {
+		if(gender === "2") {
 			avgWeight = Math.round(Math.pow(height/100, 2)*21*100)/100;
 		}
 		
-		//체중 차이
+		//체중 차이 계산
 		difWeight = Math.round(Math.abs(weight-target_weight)*100)/100;
 		
-		//목표 체중 범위
+		//목표 체중 범위 설정
 		if(Math.round(Math.abs(weight-target_weight)) < 1) {
 			aimResult = "유지";
 		}
@@ -96,10 +106,10 @@ $(function() {
 			aimResult = "체중 감소";
 		}
 		
-		//bmi
+		//bmi 계산
 		bmi = Math.round(weight/Math.pow(height/100, 2)*100)/100;
 		
-		//bmi 결과
+		//bmi 결과 설정
 		if(bmi >= 30) {
 			bmiResult = "비만";
 		}
@@ -113,7 +123,7 @@ $(function() {
 			bmiResult = "저체중";
 		}
 			
-		//섭취 목표 칼로리
+		//섭취 목표 칼로리 계산
 		if(exercise_mass === "1") {
 			target_calorie = Math.round(avgWeight*25);
 		}
@@ -124,7 +134,7 @@ $(function() {
 			target_calorie = Math.round(avgWeight*35);
 		}
 		
-		//하루 목표 영양소 > 유지인 경우는 *1.0
+		//체중 증량 또는 감소에 따른 칼로리 조정: 하루 목표 영양소 > 유지인 경우는 *1.0
 		if(aimResult === "체중 증량") {
 			target_calorie = Math.round(target_calorie*1.1);
 		}
@@ -132,6 +142,7 @@ $(function() {
 			target_calorie = Math.round(target_calorie*0.9);
 		}
 		
+		//영양소 목표 계산
 		target_carbs = Math.round((target_calorie*0.5)/4);
 		target_protein = Math.round((target_calorie*0.3)/4);
 		target_fat = Math.round((target_calorie*0.2)/9);
@@ -145,5 +156,18 @@ $(function() {
 		$("#bmi").text(bmi.toFixed(2));
 		$("#bmiResult").text(bmiResult);
 		$("#target_calorie").text(target_calorie);
-	}
+		
+		//input hidden 생성 및 추가
+		const inputNames = ['target_carbs', 'target_protein', 'target_fat', 'target_sugar', 'avgWeight', 'difWeight', 'aimResult', 'bmi', 'bmiResult', 'target_calorie'];
+		const inputValues = [target_carbs, target_protein, target_fat, target_sugar, avgWeight.toFixed(1), difWeight.toFixed(1), aimResult, bmi.toFixed(2), bmiResult, target_calorie];
+
+    	for (let i = 0; i < inputNames.length; i++) {
+        	const input = $('<input>', {
+	            type: 'hidden',
+	            name: inputNames[i],
+	            value: inputValues[i]
+        	});
+        	$(".bmi-input-data").append(input);
+    	}
+    }
 });

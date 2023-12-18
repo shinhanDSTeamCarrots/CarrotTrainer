@@ -20,38 +20,33 @@ public class BodyInfoController {
 	@Autowired
 	private BodyInfoService service;
 	
-	//@ResponseBody
-	/*
-	@PostMapping("/bmiResult.do")
-	public String bmiResult() {
-		return "/healthInfo/bmi";
-	}*/
-	
+	/*--------------
+ 		bmi.jsp
+	--------------*/
 	@GetMapping("/bmi")
 	public String bmi() {
 		return "/healthInfo/bmi";
 	}
-	
-	/*
-	@GetMapping("/bmiResult.do")
-	public String bmiResult() {
-		return "/healthInfo/bmi";
-	}
-	
-	@PostMapping("/bmiResult.do")
-	public String bmi2(BodyInfoVO vo, Model model, HttpSession sess) {
-		boolean insertBodyInfo= service.insertBodyInfo(vo);
+	@PostMapping("/insertBodyInfo")
+	public String insertBodyInfo(BodyInfoVO vo, Model model, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
-		if(mem != null) { //세션에 로그인된 정보가 있으면
+		vo.setMember_no(mem.getMember_no());
+		boolean bodyInfo = service.insertBodyInfo(vo);
+		
+		if(bodyInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/healthInfo/bmi");
-			return "/common/alert";
-		} else { //비회원일 경우
-			//sess.setAttribute("bodyInfo", insertBodyInfo);
-			return "redirect:/";
+			model.addAttribute("url", "/myct/bmi");
+		} else {
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "정보 등록 실패");
 		}
-	}*/
+		return "/common/alert";
+	}
+	
+	/*--------------
+	 	diary.jsp
+	--------------*/
 	@GetMapping("/diary")
 	public String diary(Model model, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");

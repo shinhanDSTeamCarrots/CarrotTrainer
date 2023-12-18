@@ -4,16 +4,16 @@
 	<!-- bmi 정보 입력 -->
 	<insert id="insertBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
 		INSERT INTO tb_body_info (
-			body_info_date, age, height, weight, gender, targer_weight, exercise_mass
-			, bmi, target_cal, target_calorie, target_carbs, target_protein, target_fat, target_sugar
+			body_info_date, age, height, weight, gender, target_weight, exercise_mass
+			, bmi, target_calorie, target_carbs, target_protein, target_fat, target_sugar
 			, member_no
 		) VALUES (
-			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{targer_weight}, #{exercise_mass}
-			, #{bmi}, #{target_cal}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
+			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{target_weight}, #{exercise_mass}
+			, #{bmi}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
 			, #{member_no}
 		)
 		<!-- tb_body_info테이블 키 값 -->
-		<selectKey keyProperty="food_dic_no" order="AFTER" resultType="int">
+		<selectKey keyProperty="body_info_no" order="AFTER" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>

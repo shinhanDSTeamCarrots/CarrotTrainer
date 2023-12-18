@@ -71,7 +71,9 @@
 							 --%>
 							<c:forEach var="healthDic" items="${healthDic}">
 								<tr class="item-division-line">
-									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>
+									<td style="text-align: center;"><button type="button" id="healthCheck" name="healthCheck" value="${healthDic.no }"></button></td>
+									<%--
+									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>--%>
 									<td id="health" style="text-align: left;">${healthDic.health }</td>
 									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal/hr</td>
 								</tr>

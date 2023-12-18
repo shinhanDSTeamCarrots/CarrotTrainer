@@ -87,6 +87,13 @@
 	font-size: 10px;
 	font-weight: 700;
 }
+/* 버튼 */
+#healthCheck {
+	width: 20px;
+	height: 20px;
+	background-color: #CEDEBD;
+}
+
 
 /*----------------
 	진행 운동 목록

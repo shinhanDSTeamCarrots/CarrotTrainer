@@ -10,7 +10,7 @@ public class BodyInfoVO {
 	private Date body_info_date;
 	private int age;
 	private double height;
-	private double body_info_weight;
+	private double weight;
 	private double target_weight;
 	private int gender;
 	private int exercise_mass;
