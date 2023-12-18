@@ -14,7 +14,7 @@ import xyz.teamcarrot.myct.member.MemberVO;
 
 @Controller
 public class BodyInfoController {
-	
+	//테스트 작성 코드
 	private static final Logger log = LoggerFactory.getLogger(BodyInfoController.class);
 	
 	@Autowired
@@ -52,17 +52,26 @@ public class BodyInfoController {
 			return "redirect:/";
 		}
 	}*/
+	@GetMapping("/diary")
+	public String diary(Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		
+		if (mem != null) {
+			model.addAttribute("bodyChange", service.selectBodyChange(mem.getMember_no()));
+		}
+		return "/healthInfo/diary";
+	}
 	@PostMapping("/insertBodyChange")
 	public String insertBodyChange(Model model, BodyChangeVO vo, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		
-		log.info("테스트");
+		//log.info("db 데이터 입력 테스트");
 		if (mem != null) { // 정상적으로 DB에 insert
 			vo.setMember_no(mem.getMember_no());
 			model.addAttribute("bodyChange", service.insertBodyChange(vo));
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
-			model.addAttribute("url", "/healthInfo/diary");
+			model.addAttribute("url", "/myct/diary");
 		} else { // 비로그인일 경우 > confirm알라트로 변경!
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "로그인이 필요합니다.");

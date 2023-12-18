@@ -14,7 +14,7 @@
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/insertConfirmScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/diaryScript.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -39,7 +39,12 @@
 	    					<div class="detail-division-line"></div>
 	    					<div id="diary-result-main-sub">
 		    					<p>남은 섭취량 <span class="sql-diary-result">200</span>kcal</p>
-		    					<p>오늘의 상태는? <span class="sql-diary-result"></span>kg</p>
+		    					<p>오늘의 상태는? 
+			    					<span class="sql-diary-result" id="sql-weight-result">
+				    					<c:if test="${empty bodyChange }">0.0</c:if>
+						                <c:if test="${!empty bodyChange }">${bodyChange.weight }</c:if>
+			    					</span>kg
+		    					</p>
 	    					</div>
 	    				</div>
 	    				<div class="diary-contact-text">
@@ -83,18 +88,22 @@
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
 		    			  					<div id="minus-button">-</div>
-			    			  				<input type="text" name="weight" id="weight">
+			    			  				<input type="text" name="weight" id="weight" value="${bodyChange.weight }">
 			    			  				<div id="plus-button">+</div>
 		    			  				</div>
 		    			  			</div>
 	    			  				<div class="detail-division-line"></div>
 	    			  				<div class="modalBody-result">
 	    			  					<div class="modalBody-text">골격근량(kg)</div>
-		    			  				<div class="modalBody-input"><input type="text" name="muscle_mass" id="muscle_mass"></div>
+		    			  				<div class="modalBody-input">
+		    			  					<input type="text" name="muscle_mass" id="muscle_mass" value="${bodyChange.muscle_mass }">
+		    			  				</div>
 		    			  			</div>
 		    			  			<div class="modalBody-result">
 	    			  					<div class="modalBody-text">체지방률(%)</div>
-		    			  				<div class="modalBody-input"><input type="text" name="fat_mass" id="fat_mass"></div>
+		    			  				<div class="modalBody-input">
+		    			  					<input type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
+		    			  				</div>
 		    			  			</div>
     			  				</form>
     			  			</div>

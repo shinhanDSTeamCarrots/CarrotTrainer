@@ -19,8 +19,8 @@ public class BodyInfoServiceImpl implements BodyInfoService {
 		return mapper.insertBodyChange(vo);
 	}
 	@Override
-	public BodyChangeVO selectBodyChange(BodyChangeVO vo) {
-		return mapper.selectBodyChange(vo.getBody_change_no());
+	public BodyChangeVO selectBodyChange(int member_no) {
+		return mapper.selectBodyChange(member_no);
 	}
 	@Override
 	public int updateBodyChange(BodyChangeVO vo) {

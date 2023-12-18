@@ -32,7 +32,7 @@
 	</insert>
 	<!-- 오늘의 상태 정보 불러오기 -->
 	<select id="selectBodyChange" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
-		SELECT * FROM tb_body_change WHERE member_no = #{member_no} AND regist_date = NOW();
+		SELECT * FROM tb_body_change WHERE member_no = #{member_no} AND regist_date = CURDATE();
 	</select>
 	<!-- 오늘의 상태 정보 수정 -->
 	<update id="updateBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
@@ -40,7 +40,7 @@
 			weight = #{weight}
 			, muscle_mass = #{muscle_mass}
 			, fat_mass = #{fat_mass}
-		WHERE body_change_no = #{body_change_no}
+		WHERE member_no = #{member_no} AND regist_date = NOW();
 	</update>
 	<!-- 오늘의 상태 정보 삭제 -->
 	<delete id="deleteBodyChange" parameterType="int">

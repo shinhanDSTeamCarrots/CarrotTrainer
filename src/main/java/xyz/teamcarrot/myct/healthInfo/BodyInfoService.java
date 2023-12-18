@@ -6,7 +6,7 @@ public interface BodyInfoService {
 	
 	//tb_body_change 테이블 > "로그인이 되었을 때", 몸무게, 근육량, 체지방량 입력
 	int insertBodyChange(BodyChangeVO vo);
-	BodyChangeVO selectBodyChange(BodyChangeVO vo);
+	BodyChangeVO selectBodyChange(int member_no);
 	int updateBodyChange(BodyChangeVO vo);
 	int deleteBodyChange(BodyChangeVO vo);
 }

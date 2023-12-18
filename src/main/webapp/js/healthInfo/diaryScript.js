@@ -1,5 +1,5 @@
-//입력값 확인
 $(function() {
+	//입력값 확인
 	$("#modalBody-button").click(function(e) {
 		if(bodyChangeConfirm()) {
 			$("#modalBody-weight").submit();
