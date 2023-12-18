@@ -97,7 +97,7 @@
 	font-size: 26px;
 	font-weight: 800;
 }
-.sql-result-text-name {
+#result-user-name {
 	color: #748E63;
 	font-size: 22px;
 }

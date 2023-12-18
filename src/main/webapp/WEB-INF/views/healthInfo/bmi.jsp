@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/bmiStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/bmiCalcScript.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 </head>
 <body>
     <div class="wrap">
@@ -43,7 +43,7 @@
 		   					</ul>
 		   					<ul>
 			    				<li>체중:</li>
-				    			<li><input type="text" name="body_info_weight" id="body_info_weight" value="">kg</li>
+				    			<li><input type="text" name="weight" id="weight" value="">kg</li>
 		   					</ul>
 		   					<ul>
 			    				<li>성별:</li>
@@ -79,7 +79,7 @@
    				<div class="bmi-result">
    					<div class="detail-division-line"></div>
    					<div class="bmi-result-text">
-   						<p><span class="sql-result-text-name"></span>님의 BMI는 <span class="sql-result-text" id="bmi"></span>이며 <span class="sql-result-text" id="bmiResult"></span>범위에 속합니다.</p>
+   						<p><span class="sql-text-name" id="result-user-name"></span>님의 BMI는 <span class="sql-result-text" id="bmi"></span>이며 <span class="sql-result-text" id="bmiResult"></span>범위에 속합니다.</p>
    						<p>평균 체중은 <span class="sql-result-text" id="avgWeight"></span>kg이고 현재 체중과 목표 체중의 차이는 <span class="sql-result-text" id="difWeight"></span>kg로 <span class="sql-result-text" id="aimResult"></span>목적에 속합니다.</p>
    						<p><span class="sql-result-text-name"></span>님의 목적과 활동량을 고려한 하루 권장 칼로리 섭취량은 <span class="sql-result-text" id="target_calorie"></span>kcal 입니다. </p>
    					</div>

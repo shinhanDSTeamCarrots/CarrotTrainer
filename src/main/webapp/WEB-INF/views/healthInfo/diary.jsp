@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/diaryStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 </head>
 <body>
     <div class="wrap">
@@ -23,7 +24,7 @@
    				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
-    		<p class="diary-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
+    		<p class="diary-text">안녕하세요, <span class="sql-text-name"></span>님!</p>
     		<div class="diary-content">
     			<div class="diary-result">
     				<div class="diary-calendar">
@@ -48,7 +49,7 @@
     				</div>
     			</div>
     			<div class="diary-comment">
-    				<p id="diary-comment-title"><span class="sql-diary-comment">당근</span>님의 <span class="sql-diary-comment">11월 20일</span>부터 <span class="sql-diary-comment">11월 26일</span>까지의 기록이에요</p>
+    				<p id="diary-comment-title"><span class="sql-text-name" id="sql-user-name"></span>님의 <span class="sql-diary-comment">11월 20일</span>부터 <span class="sql-diary-comment">11월 26일</span>까지의 기록이에요</p>
     				<div class="diary-comment-detail" id="body">
     					<p>총 <span class="sql-diary-detail">0.5</span>kg 몸의 변화가 생겼어요!</p>
     					<p>목표 몸무게 달성까지 앞으로 잘 부탁드려요~</p>

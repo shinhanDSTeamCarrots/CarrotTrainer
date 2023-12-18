@@ -49,15 +49,16 @@ public class BodyInfoController {
 		}
 	}*/
 	@PostMapping("/insertBodyChange")
-	public String regist(BodyChangeVO vo, Model model) {
-		boolean r = service.insertBodyChange(vo);
-		if (r) { // 정상적으로 DB에 insert 
+	public String regist(BodyChangeVO vo, Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		if (mem != null) { // 정상적으로 DB에 insert 
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
 			model.addAttribute("url", "/healthInfo/diary");
-		} else { // 등록안됨
+		} else { // 비로그인일 경우
 			model.addAttribute("cmd", "back");
-			model.addAttribute("msg", "등록 실패");
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/member/login");
 		}
 		return "common/alert";
 	}

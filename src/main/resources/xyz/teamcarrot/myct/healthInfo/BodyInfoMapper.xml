@@ -4,11 +4,11 @@
 	<!-- bmi 정보 입력 -->
 	<insert id="insertBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
 		INSERT INTO tb_body_info (
-			body_info_date, age, height, body_info_weight, gender, targer_weight, exercise_mass
+			body_info_date, age, height, weight, gender, targer_weight, exercise_mass
 			, bmi, target_cal, target_calorie, target_carbs, target_protein, target_fat, target_sugar
 			, member_no
 		) VALUES (
-			NOW(), #{age}, #{height}, #{body_info_weight}, #{gender}, #{targer_weight}, #{exercise_mass}
+			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{targer_weight}, #{exercise_mass}
 			, #{bmi}, #{target_cal}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
 			, #{member_no}
 		)
@@ -20,7 +20,7 @@
 	<!-- 오늘의 상태 정보 입력 -->
 	<insert id="insertBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
 		INSERT INTO tb_body_change (
-			body_change_date, body_change_weight, muscle_mass, fat_mass, member_no
+			regist_date, body_change_weight, muscle_mass, fat_mass, member_no
 		) VALUES (
 			NOW(), #{body_change_weight}, #{muscle_mass}, #{fat_mass}, #{member_no}
 		)

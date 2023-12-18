@@ -118,6 +118,9 @@
 	font-size: 28px;
 }
 /*개인 추천 한마디*/
+#sql-user-name {
+	font-size: 23px;
+}
 .sql-diary-comment {
 	font-size: 23px;
 	color: #748E63;

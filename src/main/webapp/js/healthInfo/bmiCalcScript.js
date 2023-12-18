@@ -29,9 +29,9 @@ $(function() {
 			$("#height").focus();
 			return false;
 		}
-		if ($("#body_info_weight").val().trim() === "") {
+		if ($("#weight").val().trim() === "") {
 			alert('체중을 입력하세요');
-			$("#body_info_weight").focus();
+			$("#weight").focus();
 			return false;
 		}
 		if ($("input[name='gender']:checked").val() === undefined) {
@@ -54,7 +54,7 @@ $(function() {
 		//입력받은 값
 		const age = parseFloat($("#age").val().trim());
 		const height = parseFloat($("#height").val().trim());
-		const weight = parseFloat($("#body_info_weight").val().trim());
+		const weight = parseFloat($("#weight").val().trim());
 		const gender = $("input[name='gender']:checked").val();
 		const target_weight = parseFloat($("#target_weight").val().trim());
 		const exercise_mass = $("#exercise_mass").val();
