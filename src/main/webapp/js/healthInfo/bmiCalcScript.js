@@ -19,6 +19,13 @@ $(function() {
 		}
 	});
 	$("#bmi-reset").click(function(e) {
+		$("#age").val("");
+    	$("#height").val("");
+    	$("#weight").val("");
+    	$("#input[name='gender']").prop("checked", false);
+    	$("#target_weight").val("");
+    	$("#exercise_mass").val("");
+    	
 		offDisplay();
 	});
 	//result div 열고 닫기

@@ -24,7 +24,12 @@ public class BodyInfoController {
  		bmi.jsp
 	--------------*/
 	@GetMapping("/bmi")
-	public String bmi() {
+	public String bmi(Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		
+		if (mem != null) {
+			model.addAttribute("bodyInfo", service.selectBodyInfo(mem.getMember_no()));
+		}
 		return "/healthInfo/bmi";
 	}
 	@PostMapping("/insertBodyInfo")
@@ -36,7 +41,7 @@ public class BodyInfoController {
 		if(bodyInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/myct/bmi");
+			model.addAttribute("url", "/bmi");
 		} else {
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "정보 등록 실패");
@@ -66,7 +71,7 @@ public class BodyInfoController {
 			model.addAttribute("bodyChange", service.insertBodyChange(vo));
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
-			model.addAttribute("url", "/myct/diary");
+			model.addAttribute("url", "/diary");
 		} else { // 비로그인일 경우 > confirm알라트로 변경!
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "로그인이 필요합니다.");
@@ -97,7 +102,7 @@ public class BodyInfoController {
 		int no = service.deleteBodyChange(vo);
 		
 		String msg = "";
-		String url = "/myct/diary";
+		String url = "/diary";
 
 		if(no > 0) {
 			msg = "삭제되었습니다.";

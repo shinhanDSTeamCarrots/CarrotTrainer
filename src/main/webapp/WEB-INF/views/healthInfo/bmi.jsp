@@ -31,35 +31,35 @@
 	    			<form class="bmi-input-data" method="post">
 		    			<ul>
 		    				<li>나이:</li>
-			    			<li><input type="text" name="age" id="age" value=""></li>
+			    			<li><input type="text" name="age" id="age" value="${bodyInfo.age }"></li>
 	   					</ul>
 	   					<ul>
 		    				<li>신장:</li>
-			    			<li><input type="text" name="height" id="height" value="">cm</li>
+			    			<li><input type="text" name="height" id="height" value="${bodyInfo.height }">cm</li>
 	   					</ul>
 	   					<ul>
 		    				<li>체중:</li>
-			    			<li><input type="text" name="weight" id="weight" value="">kg</li>
+			    			<li><input type="text" name="weight" id="weight" value="${bodyInfo.weight }">kg</li>
 	   					</ul>
 	   					<ul>
 		    				<li>성별:</li>
 			    			<li>
-			    				<input type="radio" name="gender" id="male" value="1">남
-			    				<input type="radio" name="gender" id="female" value="2">여
+			    				<input type="radio" name="gender" id="male" value="1" ${bodyInfo.gender == 1 ? 'checked' : ''}>남
+			    				<input type="radio" name="gender" id="female" value="2" ${bodyInfo.gender == 2 ? 'checked' : ''}>여
 			    			</li>
 	   					</ul>
 	   					<ul>
 		    				<li>목표:</li>
-			    			<li><input type="text" name="target_weight" id="target_weight" value="">kg</li>
+			    			<li><input type="text" name="target_weight" id="target_weight" value="${bodyInfo.target_weight }">kg</li>
 	   					</ul>
 	   					<ul>
 		    				<li>운동량:</li>
 			    			<li>
 			    				<select name="exercise_mass" id="exercise_mass">
 			    					<option value="" disabled selected>[필수] 평소 운동량을 선택해주세요</option>
-			    					<option value="1">저강도</option>
-			    					<option value="2">중강도</option>
-			    					<option value="3">고강도</option>
+			    					<option value="1" ${bodyInfo.exercise_mass == 1 ? 'selected' : ''}>저강도</option>
+			    					<option value="2" ${bodyInfo.exercise_mass == 2 ? 'selected' : ''}>중강도</option>
+			    					<option value="3" ${bodyInfo.exercise_mass == 3 ? 'selected' : ''}>고강도</option>
 			    				</select>
 			    			</li>
 	   					</ul>
@@ -81,12 +81,12 @@
    					<div class="bmi-result-graph">
    					</div>
    					<div>
-   						<button class="bmi-btn" id="bmi-insertBtn">입력하기</button>
-   						<%--
-		   					테이블이 null이고 로그인 되어있으면 db로 값 저장
-		   					로그인되어있는데 db에 값 이미 있으면버튼 없음
-		   					로그인 안되어있으면 로그인 필요한 부분 로그인하시겠습니까 이동 confirm
-			            --%>
+						<c:if test="${!empty loginInfo && empty bodyInfo}">
+							<button class="bmi-btn" id="bmi-insertBtn">입력하기</button>
+						</c:if>
+						<c:if test="${!empty loginInfo && !empty bodyInfo}">
+							<button class="bmi-btn" id="bmi-updateBtn">수정하기</button>
+						</c:if>
    					</div>
    				</div>
    			</div>
