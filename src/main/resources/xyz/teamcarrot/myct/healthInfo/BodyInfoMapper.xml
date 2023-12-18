@@ -37,10 +37,10 @@
 	<!-- 오늘의 상태 정보 수정 -->
 	<update id="updateBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
 		UPDATE tb_body_change
-			weight = #{weight}
+		SET weight = #{weight}
 			, muscle_mass = #{muscle_mass}
 			, fat_mass = #{fat_mass}
-		WHERE member_no = #{member_no} AND regist_date = NOW();
+		WHERE body_change_no = #{body_change_no} AND regist_date = CURDATE();
 	</update>
 	<!-- 오늘의 상태 정보 삭제 -->
 	<delete id="deleteBodyChange" parameterType="int">

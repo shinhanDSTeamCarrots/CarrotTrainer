@@ -28,6 +28,6 @@ public class BodyInfoServiceImpl implements BodyInfoService {
 	}
 	@Override
 	public int deleteBodyChange(BodyChangeVO vo) {
-		return 0;
+		return mapper.deleteBodyChange(vo.getBody_change_no());
 	}
 }

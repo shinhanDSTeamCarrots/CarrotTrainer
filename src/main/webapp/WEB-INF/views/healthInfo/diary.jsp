@@ -83,7 +83,7 @@
     			  				<div class="title-division-line"></div>
     			  			</div>
     			  			<div id="modalBody-main">
-    			  				<form id="modalBody-weight" action="insertBodyChange" method="post">
+    			  				<form id="modalBody-weight" method="post">
 	    			  				<div class="modalBody-result">
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
@@ -105,10 +105,16 @@
 		    			  					<input type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
 		    			  				</div>
 		    			  			</div>
+		    			  			<input type="hidden" name="body_change_no" id="body_change_no" value="${bodyChange.body_change_no }">
+		    			  			<input type="hidden" name="member_no" id="member_no" value="${bodyChange.member_no }">
     			  				</form>
     			  			</div>
     			  			<div id="modalBody-button">
-    			  				<button>기록 완료</button>
+	    			  			<c:if test="${empty bodyChange }"><button id="modalBody-insertBtn">기록 완료</button></c:if>
+							    <c:if test="${!empty bodyChange }">
+							    	<button class="modalBody-updelBtn" id="modalBody-updateBtn">수정</button>
+							    	<button class="modalBody-updelBtn" id="modalBody-deleteBtn">삭제</button>
+							    </c:if>
     			  			</div>
     			  		</div>
     			  	</div>

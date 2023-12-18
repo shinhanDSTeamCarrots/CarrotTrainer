@@ -79,4 +79,40 @@ public class BodyInfoController {
 		}
 		return "common/alert";
 	}
+	@PostMapping("/updateBodyChange")
+	public String updateBodyChange(Model model, BodyChangeVO vo) {
+		int no = service.updateBodyChange(vo);
+		
+		String msg = "";
+		String url = "/myct/diary";
+
+		if(no > 0) {
+			msg = "수정되었습니다.";
+		} else {
+			msg = "수정 오류";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("cmd", "move");
+
+		return "common/alert";
+	}
+	@PostMapping("/deleteBodyChange")
+	public String deleteBodyChange(Model model, BodyChangeVO vo) {
+		int no = service.deleteBodyChange(vo);
+		
+		String msg = "";
+		String url = "/myct/diary";
+
+		if(no > 0) {
+			msg = "삭제되었습니다.";
+		} else {
+			msg = "삭제 오류";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("cmd", "move");
+
+		return "common/alert";
+	}
 }

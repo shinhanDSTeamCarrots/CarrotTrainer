@@ -215,10 +215,18 @@
 	color: #435334;
 }
 /* 입력 버튼 */
+#modalBody-button {
+	display: flex;
+    flex-direction: row;
+}
 #modalBody-button > button {
 	font-size: 15px;
 	width: 100%;
 	height: 50px;
+}
+#modalBody-button > .modalBody-updelBtn {
+	width: 40%;
+	margin: 0 5%;
 }
 
 /*---------
