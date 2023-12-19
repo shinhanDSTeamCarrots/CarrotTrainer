@@ -6,6 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface HealthInfoMapper {
-	List<Map<String, Object>> healthDic();
+public interface HealthDicMapper {
+	List<Map<String, Object>> healthDic(String healthName);
 }

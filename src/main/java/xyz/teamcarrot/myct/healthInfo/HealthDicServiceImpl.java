@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HealthInfoServiceImpl implements HealthInfoService {
+public class HealthDicServiceImpl implements HealthDicService {
 
 	@Autowired
-	HealthInfoMapper mapper;
+	HealthDicMapper mapper;
 	
 	@Override
-	public List<Map<String, Object>> gethealthDic(){
-		List<Map<String, Object>> healthDicList = mapper.healthDic();
+	public List<Map<String, Object>> getHealthDic(String healthName){
+		List<Map<String, Object>> healthDicList = mapper.healthDic(healthName);
 		//총 개수
 		int totalCount = healthDicList.size();
 		
