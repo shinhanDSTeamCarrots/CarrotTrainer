@@ -37,5 +37,10 @@ public class HomeController {
 		return "home";
 	}
 	
+	@GetMapping("/board/list.do")
+	public String boardInfo() {
+		
+		return "board/list";
+	}
 	
 }

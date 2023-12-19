@@ -114,10 +114,8 @@ textarea {
 			<form id="infoForm" action="/myct/board/modify.do" method="get">
 				<input type="hidden" id="board_no" name="board_no"
 					value='<c:out value="${pageInfo.board_no}"/>'>
-					<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-					<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
-					<input type="hidden" name="type" value="${cri.type }">
-					<input type="hidden" name="keyword" value="${cri.keyword }"> 
+					<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
+				
 			</form>
 		</div>
 	</div>
@@ -128,11 +126,33 @@ textarea {
 		let mForm = $("#modifyForm"); // 페이지 데이터 수정 from
 
 		/* 목록 페이지 이동 버튼 */
-		$("#list_btn").on("click", function(e) {
-			form.find("#board_no").remove();
-			form.attr("action", "/myct/board/freeboard.do");
-			form.submit();
-		});
+	    $("#list_btn").on("click", function(e) {
+	        e.preventDefault(); // Prevent default action
+
+	        // Get the category number
+	        let categoryNo = $("#category_no").val();
+
+	        // Determine the URL based on the category number
+	        let actionUrl;
+	        switch (categoryNo) {
+	            case "1":
+	                actionUrl = "/myct/board/noticeboard.do"; // URL for noticeboard
+	                break;
+	            case "2":
+	                actionUrl = "/myct/board/freeboard.do"; // URL for freeboard
+	                break;
+	            case "3":
+	                actionUrl = "/myct/board/qnaboard.do"; // URL for qnaboard
+	                break;
+	            // Add more cases if there are more categories
+	            default:
+	                actionUrl = "/myct/board/freeboard.do"; // Default URL
+	                break;
+	        }
+
+	        form.attr("action", actionUrl);
+	        form.submit();
+	    });
 
 		/* 수정 하기 버튼 */
 		$("#modify_btn").on("click", function(e) {

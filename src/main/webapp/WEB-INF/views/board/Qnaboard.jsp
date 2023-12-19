@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>자유게시판</title>
+<title>문의게시판</title>
 <META name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 <script
@@ -17,7 +17,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
 .container {
@@ -35,21 +35,44 @@
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: center;
-	font-size: 1.2rem;
+    border: 1px solid #e1e1e1;
+    padding: 12px 15px;
+    text-align:center;
+    font-size: 1.2rem;
 }
 
 th {
-	background-color: #f2f2f2;
-	font-weight: 700;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    
+}
+
+td {
+   /*  background-color: #ffffff; */
+    color: #333;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Table header style */
+thead tr {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Zebra striping for rows */
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
 }
 
 .pagination {
@@ -95,20 +118,34 @@ th {
 }
 
 .write-btn-container {
-	text-align: right; /* 버튼을 오른쪽으로 정렬 */
-	margin: 20px 0 20px; /* 상단 여백 추가 */
+    text-align: right;
+    margin: 20px 0;
 }
 
 .write-button {
-	background-color: #4CAF50; /* 버튼 배경색 */
-	color: white; /* 버튼 텍스트 색상 */
-	padding: 10px 20px; /* 패딩 */
-	border: none; /* 테두리 없음 */
-	border-radius: 5px; /* 모서리 둥글게 */
-	cursor: pointer; /* 클릭 가능한 커서 모양 */
-	font-size: 1.0rem; /* 글씨 크기 */
-	margin-bottom: 0px; /* 하단 여백 추가 */
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-decoration: none; /* In case it's an anchor tag */
+    display: inline-block; /* For proper alignment */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.write-button:hover, .write-button:focus {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.write-button:active {
+    background-color: #3d8b40;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 
 
   .pageInfo{
@@ -156,9 +193,12 @@ th {
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<div class="board-title">문의게시판</div>
+			
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
+			 <c:if test="${!empty loginInfo}">
 				<a href="write.do" class="write-button">게시판 등록</a>
+				</c:if>
 			</div>
 
 			<table>
@@ -168,35 +208,42 @@ th {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
-						<th>조회</th>
-						<th>카테고리</th>
+						<th>첨부파일</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list}" var="list">
-					  <c:if test="${list.category_no == 3}">
+					<c:forEach items="${page}" var="vo">
+					  <c:if test="${vo.category_no == 3}">
 						<tr>
-							<td><c:out value="${list.board_no}" /></td>
-							<td><a class="move" href='<c:out value="${list.board_no}"/>'>
-									<c:out value="${list.board_title}" />
-							</a></td>
+							<td><c:out value="${vo.board_no}"/></td>
 							<td>
-							    <c:choose>
-							        <c:when test="${list.member_no == 1}">
-							            kimtest
-							        </c:when>
-							        <c:otherwise>
-							            <c:out value="${list.member_no}" />
-							        </c:otherwise>
-							    </c:choose>
-							</td>
+							<!-- 링크 수정: JavaScript 함수 호출 -->
+                <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
+									<c:out value="${vo.board_title}" />
+									
+									<c:if test="${vo.hasReply}">
+											<span style="color: green;">답변완료</span>
+										</c:if>
+								</a> 
+								</td>
+								<td><c:out value="${vo.member_nickname}" /></td>
 
-							<td><fmt:formatDate pattern="yyyy/MM/dd"
-									value="${list.board_rdate}" /></td>
-							<td><c:out value="${list.board_view}" /></td>
-							<td>자유게시판</td>
-
+								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
+							
+							<td><c:if test="${vo.file_name != null}">
+										<a href="/myct/board/download.do?fileNo=${vo.file_no}">
+										 <img src="/img/ico_star_on.png" alt="첨부파일">
+										</a>
+									</c:if></td>
+									
+									
 						</tr>
+						
+            <c:if test="${board.hasReply}">
+                <tr>
+                    <td colspan="5" style="text-align:center;">답글 등록됨</td>
+                </tr>
+            </c:if>
 						</c:if>
 					</c:forEach>
 
@@ -204,58 +251,13 @@ th {
 				</tbody>
 			</table>
 
-			<div class="search_wrap">
-        <div class="search_area">
-        <select name="type">
-                <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
-                <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
-                <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
-                <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
-                <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
-                <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
-                <option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
-            </select>  
-            <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-            <button>검색</button>
-        </div>
-    </div>   
-
-
-			<div class="pageInfo_wrap" >
-		<div class="pageInfo_area">
-			<ul id="pageInfo" class="pageInfo">
-			
-				<!-- 이전페이지 버튼 -->
-				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
-				</c:if>
-				
-				<!-- 각 번호 페이지 버튼 -->
-				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-    <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-        <a href="${num}">${num}</a>
-    </li>
-</c:forEach>
-
-				
-				<!-- 다음페이지 버튼 -->
-				<c:if test="${pageMaker.next}">
-					<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-				</c:if>	
-				
-			</ul>
-		</div>
-	</div>
+		
 
 			<form id="moveForm" method="get">
-				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
-					<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-					<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-					<input type="hidden" name="type" value="${pageMaker.cri.type }">
+			
 			</form>
+
 		</div>
-
-
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
 
@@ -287,49 +289,20 @@ th {
 
 		});
 
-		let moveForm = $("#moveForm");
 
-		$(".move").on("click", function(e) {
-							e.preventDefault();
-							//moveForm.empty();
-
-							moveForm.append("<input type='hidden' name='board_no' value='"	
-											+ $(this).attr("href") + "'>");
-							moveForm.attr("action", "/myct/board/read.do");
-							moveForm.submit();
-						});
+		function goToDetail(boardNo) {
+	        location.href = '/myct/board/Qnadetail.do?board_no=' + boardNo;
+	    }			    
 
 		$(".pageInfo a").on("click", function(e) {
 
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/myct/board/freeboard.do");
+			moveForm.attr("action", "/myct/board/qnaboard.do");
 			moveForm.submit();
-
 		});
 		
 
-	    $(".search_area button").on("click", function(e){
-	        e.preventDefault();
-	        
-	        let type = $(".search_area select").val();
-	        let keyword = $(".search_area input[name='keyword']").val();
-	        
-	        if(!type){
-	            alert("검색 종류를 선택하세요.");
-	            return false;
-	        }
-	        
-	        if(!keyword){
-	            alert("키워드를 입력하세요.");
-	            return false;
-	        }        
-	        
-	        moveForm.find("input[name='type']").val(type);
-	        moveForm.find("input[name='keyword']").val(keyword);
-	        moveForm.find("input[name='pageNum']").val(1);
-	        moveForm.submit();
-	    });
 	</script>
 </body>
 </html>

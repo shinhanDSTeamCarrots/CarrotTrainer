@@ -2,36 +2,65 @@ package xyz.teamcarrot.myct.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /* 
- * Service´Â Ãß»óÀûÀÎ Á¤ÀÇ¸¦ Á¦°øÇÏ´Â Å¬·¡½ºÀÌ´Ù. ÀÎÅÍÆäÀÌ½º ±¸ÇöÃ¼
- * Å¬¶óÀÌ¾ğÆ® ¿äÃ»À» Ã³¸®ÇÏ°í ÇÊ¿äÇÒ °æ¿ì Mapper¸¦ È£ÃâÇÔ 
- * Service -> Mapper -> ServiceImpl   (SMS ¶ó°í ¼ø¼­¸¦ ¿Ü¿ì¸é ÆíÇØÁø´Ù.)
+ * Serviceï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+ * Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½Ã»ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Mapperï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ 
+ * Service -> Mapper -> ServiceImpl   (SMS ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.)
  * 
  * */
 
 @Service
 public interface BoardService {
 	
-	/*°Ô½ÃÆÇ µî·Ï*/
-	public void enroll(BoardVO board);
 	
-	/* °Ô½ÃÆÇ »èÁ¦ */
+	
+
+	// ê²Œì‹œê¸€ ë“±ë¡
+	public int enroll(BoardVO board, MultipartFile file, HttpServletRequest request);
+	
+	// íŒŒì¼ ì •ë³´ë¥¼ ì €ì¥
+    public int enrollFile(BoardFileVO boardFile);
+	
+	// ê²Œì‹œê¸€ ì‚­ì œ
     public int delete(int board_no);
     
-	/*°Ô½ÃÆÇ ¸ñ·Ï */
+    // ê²Œì‹œê¸€ ëª©ë¡(í˜ì´ì§•X)
 	public List<BoardVO> getList();
 	
-	/*°Ô½ÃÆÇ Á¶È¸*/
+	// ê²Œì‹œê¸€ ëª©ë¡(í˜ì´ì§•O)
+    public List<BoardVO> getListPaging(Criteria cri);
+	
+    // í˜ì´ì§€ ê°€ì ¸ì˜¤ê¸°
 	public BoardVO getPage(int board_no);
 	
-	 /* °Ô½ÃÆÇ ¼öÁ¤ */
+	// ê²Œì‹œê¸€ ìˆ˜ì •
     public int modify(BoardVO board);
     
-    /* °Ô½ÃÆÇ ¸ñ·Ï(ÆäÀÌÂ¡ Àû¿ë) */
-    public List<BoardVO> getListPaging(Criteria cri);
     
-    /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
+    
+    
     public int getTotal(Criteria cri);
+    
+    // ëŒ“ê¸€ ë“±ë¡ ì„œë¹„ìŠ¤
+    public void replyEnroll(ReplyVO reply);
+
+    // íŠ¹ì • ê²Œì‹œê¸€ì˜ ë‹µê¸€ ëª©ë¡ ì¡°íšŒ ì„œë¹„ìŠ¤
+    public List<ReplyVO> getReplies(int board_no);
+    
+ 
+    public int insertReply(ReplyVO reply);
+
+    public void updateHasReplyStatus(int board_no, String status);
+  
+    // ì¡°íšŒìˆ˜
+    public void updateViewCount(int board_no);
+    
+    // ì¶”ì²œìˆ˜ (ë¯¸ì™„ì„±)
+    public int updateRecomCount(int board_no);
+	 
 }

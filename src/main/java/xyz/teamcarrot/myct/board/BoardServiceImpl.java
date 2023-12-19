@@ -1,72 +1,144 @@
 package xyz.teamcarrot.myct.board;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	/* Autowired´Â ÁöÁ¤µÈ Å¬·¡½º(BoardMapper)ÀÇ ºó(Bean)À» ÀÚµ¿À¸·Î ¿¬°áÇØÁÜ
-	 * ½ºÇÁ¸µÄÁÅ×ÀÌ³ÊÀÇ ºó ÄÁÅ×ÀÌ³Ê¿¡ ÁÖÀÔÇØÁØ´Ù´Â ¶æ
-	 * Áï, ½ºÇÁ¸µÀÌ ¾Ë¾Æ¼­ ÀÇÁ¸¼ºÀ» ÁÖÀÔÀ» ÇØÁØ´Ù. DI°¡ ¿©±â¼­ ³ª¿È
-	 * Autowired¸¦ »ç¿ëÇÔÀ¸·Î½á ÄÚµåÀÇ °áÇÕµµ¸¦ ³·Ãß°í ÀÀÁıµµ¸¦ ³ôÀÏ ¼ö ÀÖÀ½
-	 * */
 	
-	/* ºó(Bean)Àº ½±°Ô ¸»ÇØ¼­ Å¬·¡½ºÀÇ °´Ã¼ÀÌ´Ù
-	 * ½ºÇÁ¸µ¿¡ ÀÇÇØ ÀÎ½ºÅÏ½ºÈ­, °ü¸® µÈ´Ù.
-	 * implÀº ÀÎÅÍÆäÀÌ½º ±¸Çö °´Ã¼ÀÌ´Ù.
-	 * */
 	@Autowired
 	private BoardMapper mapper;
 	
-	/* °Ô½ÃÆÇ µî·Ï */
-	@Override
-	public void enroll(BoardVO board) {
-		mapper.enroll(board);
-
-	}
+	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
-	/* °Ô½ÃÆÇ »èÁ¦ */
+	 // ê²Œì‹œê¸€ ë“±ë¡ê³¼ íŒŒì¼ ì •ë³´ ì €ì¥ì„ ìˆ˜í–‰í•˜ëŠ” enroll ë©”ì„œë“œ
+    @Override
+    public int enroll(BoardVO board, MultipartFile file, HttpServletRequest request) {
+        
+     // ë¡œê¹…ìœ¼ë¡œ ê°ì²´ ìƒíƒœ í™•ì¸
+        log.info("Board: " + board);
+        log.info("File: " + file);
+        log.info("Request: " + request);
+        // ê²Œì‹œê¸€ ì •ë³´ ì €ì¥
+        int result = mapper.enroll(board);
+
+        // íŒŒì¼ì´ ìˆëŠ” ê²½ìš°
+        if (file != null && !file.isEmpty()) {
+            // íŒŒì¼ëª… ì¶”ì¶œ ë° ì €ì¥ ê²½ë¡œ ì„¤ì •
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String storedFilename = System.currentTimeMillis() + extension;
+            String uploadPath = request.getServletContext().getRealPath("/upload/board/") + storedFilename;
+
+            // íŒŒì¼ ì €ì¥
+            try {
+                file.transferTo(new File(uploadPath));
+            } catch (Exception e) {
+                e.printStackTrace(); // ì˜¤ë¥˜ ì²˜ë¦¬
+            }
+
+            // BoardFileVO ê°ì²´ ìƒì„± ë° ì •ë³´ ì„¤ì •
+            BoardFileVO boardFile = new BoardFileVO();
+            boardFile.setBoard_no(board.getBoard_no()); // ê²Œì‹œê¸€ ë²ˆí˜¸ ì„¤ì •
+            boardFile.setFile_name(storedFilename); // ì €ì¥ëœ íŒŒì¼ëª… ì„¤ì •
+
+            // íŒŒì¼ ì •ë³´ ë°ì´í„°ë² ì´ìŠ¤ì— ì €ì¥
+            mapper.enrollFile(boardFile);
+        }
+        
+    
+        log.info("Result: " + result); // DB ì‘ì—… ê²°ê³¼ ë¡œê¹…
+        return result;
+    }
+	
+    @Override
+    public int enrollFile(BoardFileVO boardFile) {
+        return mapper.enrollFile(boardFile);
+    }
+    
+	/* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     @Override
     public int delete(int board_no) {
         
         return mapper.delete(board_no);
     }    
 	
-	/*°Ô½ÃÆÇ ¸ñ·Ï*/
-	@Override
-	public List<BoardVO> getList() {
-		
-		return mapper.getList();
-	}
 	
-	/*°Ô½ÃÆÇ Á¶È¸*/
+	
+	/*ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸*/
 	@Override
 	public BoardVO getPage(int board_no) {
 			
 		return mapper.getPage(board_no);
 	}
 	
-	 /* °Ô½ÃÆÇ ¼öÁ¤ */
+	 /* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     @Override
     public int modify(BoardVO board) {
         
         return mapper.modify(board);
     }
     
-    /* °Ô½ÃÆÇ ¸ñ·Ï(ÆäÀÌÂ¡ Àû¿ë) */
+    /* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½) */
     @Override
     public List<BoardVO> getListPaging(Criteria cri) {
         
         return mapper.getListPaging(cri);
     }    
     
-    /* °Ô½Ã¹° ÃÑ °¹¼ö */
+    /*ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½*/
+	@Override
+	public List<BoardVO> getList() {
+		
+		return mapper.getList();
+	}
+    
+    /* ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     @Override
     public int getTotal(Criteria cri) {
         
         return mapper.getTotal(cri);
-    }    
+    } 
+    
+    @Override
+    public void replyEnroll(ReplyVO reply) {
+        mapper.replyEnroll(reply);
+    }
+    
+    @Override
+    public List<ReplyVO> getReplies(int board_no) {
+    		   mapper.updateViewCount(board_no);
+        return mapper.getReplies(board_no);
+    }
+    
+    @Override
+    public int insertReply(ReplyVO reply) {
+        return mapper.insertReply(reply);
+    }
+    
+    @Override
+    public void updateHasReplyStatus(int board_no, String status) {
+        mapper.updateHasReplyStatus(board_no, status);
+    }
+    
+    //ì¡°íšŒìˆ˜
+    @Override
+    public void updateViewCount(int board_no) {
+    	mapper.updateViewCount(board_no);
+    }
+    
+    // ì¶”ì²œìˆ˜ (ë¯¸ì™„ì„±)
+    @Override
+    public int updateRecomCount(int board_no) {
+    	return mapper.updateRecomCount(board_no);
+    }
 }

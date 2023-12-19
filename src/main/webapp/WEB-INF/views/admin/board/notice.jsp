@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,9 +45,11 @@
     cursor: pointer;
     text-decoration: none;
   }
-  .delete-btn {
+  .delete-btn{
     background-color: #f44336;
   }
+  
+  
   .buttons {
     text-align: right;
     margin-bottom: 10px;
@@ -53,6 +57,8 @@
   th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3) {
     text-align: center;
   }
+  
+  
 </style>
 <script>
 function deleteRow(btn) {
@@ -68,31 +74,111 @@ function deleteRow(btn) {
     	
     	<div class="notice-table">
   <div class="buttons">
-    <button class="write-btn" onclick="writeNotice()"><a href="noticeWrite.do" class="write-button">글쓰기</a></button>
+    <button class="write-btn" onclick="writeNotice()">
+   		 <a href="write.do" class="write-button">게시판 등록</a>
+    </button>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>공지사항</th>
-        <th>제목</th>
-        <th>삭제</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>공지사항입니다.</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>공지사항입니다.</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-      <!-- 추가 행은 여기에... -->
-    </tbody>
-  </table>
-</div>
-    	</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>권한</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${page}" var="vo">
+						<c:if test="${vo.category_no == 1}">
+							<tr>
+								<td><c:out value="${vo.board_no}" /></td>
+								<td>
+									<!-- 링크 수정: JavaScript 함수 호출 --> <a href="javascript:void(0);"
+									onclick="goToDetail(${vo.board_no});"> <c:out
+											value="${vo.board_title}" /> <c:if test="${vo.hasReply}">
+											<span style="color: green;">답변완료</span>
+										</c:if>
+								</a>
+								</td>
+								<td><c:out value="${vo.member_nickname}" /></td>
+
+								<td><fmt:formatDate pattern="yyyy/MM/dd"
+										value="${vo.board_rdate}" /></td>
+
+								<td>
+									<div class="btn_wrap">
+										 <button class="delete-btn" id="modify_btn" onclick="deleteRow(this)">수정</button>
+									     <button class="delete-btn" id="delete_btn" onclick="deleteBoard(${vo.board_no})">삭제</button>
+									</div>
+								</td>
+
+
+							</tr>
+
+							<c:if test="${board.hasReply}">
+								<tr>
+									<td colspan="5" style="text-align: center;">답글 등록됨</td>
+								</tr>
+							</c:if>
+						</c:if>
+					</c:forEach>
+
+					<!-- 추가 게시물 행을 여기에 추가 -->
+				</tbody>
+			</table>
+		</div>
+
+		<form id="infoForm" action="/board/modify" method="get">
+			<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
+			<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
+		</form>
+		
+		
+ 	</div>
+
+<script>
+		let form = $("#infoForm"); // 페이지 이동 form(리스트 페이지 이동, 조회 페이지 이동)
+		let mForm = $("#modifyForm"); // 페이지 데이터 수정 from
+
+		
+
+		$("#modify_btn").on("click", function(e){
+			form.attr("action", "/myct/board/modify.do");
+			form.submit();
+		});	
+	
+	
+	    /* $("#delete_btn").on("click", function(e){	
+	        form.attr("action", "/myct/board/delete.do");
+	        form.attr("method", "post");
+	        form.submit();
+	    });
+	    
+	    
+	    
+	    function deleteBoard(boardNo) {
+	    	if(confirm("게시글을 삭제하시겠습니까?") {
+	    		$.ajax({
+	    			url: 'myct/board/delete.do',
+	    			type: 'POST',
+	    			data: {board_no: boardNo},
+	    			success: function(response) {
+	    				if(response === 'success') {
+	    					alert("게시글 삭제되었습니다.");
+	    					$("#row-" + boardNo).remove();
+	    				} else {
+	    				alert("게시글 삭제에 실패했습니다.");
+	    			}
+	    		},
+	    		
+	    		error: function() {
+	    			alert("게시글 삭제 중 오류 발생"');
+	    		  }
+	    		});
+	    	}
+	    } 
+	</script>
 </body>
 </html>
