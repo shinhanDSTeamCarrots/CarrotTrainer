@@ -23,4 +23,5 @@ public interface ReviewMapper {
 	int dislikeReview(@Param("review_no")int review_no, @Param("member_no")int member_no);
 	void goodsTableUpdate(@Param("goods_no")int goods_no);
 	Map<String, Object> selectListData(@Param("goods_no") int goods_no);
+	ReviewVO getSpecificReview(@Param("review_no") int review_no);
 }

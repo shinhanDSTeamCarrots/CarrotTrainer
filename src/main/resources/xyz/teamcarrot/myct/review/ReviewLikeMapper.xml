@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.review.ReviewLikeMapper">
+	<delete id="deleteReviewLike" parameterType="int">
+		DELETE FROM tb_review_like
+		WHERE review_no = #{review_no}
+		  AND member_no = #{member_no}
+	</delete>
+	<insert id="insertReviewLike" parameterType="int">
+		INSERT INTO tb_review_like (review_no, member_no)
+		VALUES (#{review_no}, #{member_no})
+	</insert>
+</mapper>
