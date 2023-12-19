@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.member.MemberMapper">
 	<select id="dupId" resultType="Integer" parameterType="String">
-		SELECT COUNT(*) FROM tb_member WHERE member_id = #{member_id}
+		SELECT
+		COUNT(*) FROM tb_member WHERE member_id = #{member_id}
 	</select>
 	<!-- 회원가입 시 아이디 중복 -->
 	<insert id="regist"
@@ -29,21 +30,24 @@
 		resultType="xyz.teamcarrot.myct.member.MemberVO"
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
 		SELECT * FROM tb_member WHERE member_id=#{member_id};
-		<!--member_pw = #{member_pw}-->
+		<!--member_pw = #{member_pw} -->
 	</select>
-	<update id="updateLoginFailCount" parameterType="xyz.teamcarrot.myct.member.MemberVO">
-        UPDATE tb_member
-        SET member_loginFailCnt = #{member.member_loginFailCnt}
-        WHERE member_id = #{member.member_id}
-    </update>
-    <update id="updateLoginBlocked" parameterType="xyz.teamcarrot.myct.member.MemberVO">
-    UPDATE tb_member
-    SET member_loginBlocked = 1
-    WHERE member_id = #{member.member_id}
-</update>
+	<update id="updateLoginFailCount"
+		parameterType="xyz.teamcarrot.myct.member.MemberVO">
+		UPDATE tb_member
+		SET member_loginFailCnt = #{member.member_loginFailCnt}
+		WHERE member_id = #{member.member_id}
+	</update>
+	<update id="updateLoginBlocked"
+		parameterType="xyz.teamcarrot.myct.member.MemberVO">
+		UPDATE tb_member
+		SET member_loginBlocked = 1
+		WHERE member_id = #{member.member_id}
+	</update>
 	<delete id="deleteMember">
 		DELETE FROM tb_member
-		WHERE member_id=#{member_id} AND member_pw = SHA2(#{member_pw}, 256);
+		WHERE member_id=#{member_id} AND
+		member_pw = SHA2(#{member_pw}, 256);
 	</delete>
 
 	<select id="detail"
@@ -53,19 +57,21 @@
 	</select>
 	<update id="update"
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
-		UPDATE tb_member 
-		SET	member_name = #{member_name},
-			member_nickname = #{member_nickname},
-			member_pw = SHA2(#{member_pw}, 256),
-			member_hp = #{member_hp},
-			member_email = #{member_email},
-			member_addr = #{member_addr},
-			member_addrDetail = #{member_addrDetail}
+		UPDATE tb_member
+		SET member_name = #{member_name},
+		member_nickname = #{member_nickname},
+		member_pw = SHA2(#{member_pw}, 256),
+		member_hp = #{member_hp},
+		member_email = #{member_email},
+		member_addr = #{member_addr},
+		member_addrDetail = #{member_addrDetail}
 		WHERE member_no = #{member_no};
 	</update>
 	<!-- 20231214 추가: 비밀번호 오류 5회 초과시 접속 차단 위해 -->
-	<select id="findByUsername" resultType="xyz.teamcarrot.myct.member.MemberVO">
-        SELECT * FROM tb_member WHERE member_id = #{member_id}
-    </select>
+	<select id="findByUsername"
+		resultType="xyz.teamcarrot.myct.member.MemberVO">
+		SELECT * FROM tb_member WHERE member_id = #{member_id}
+	</select>
+
 
 </mapper>

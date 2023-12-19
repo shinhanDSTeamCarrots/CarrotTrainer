@@ -68,12 +68,13 @@
 							</tr>
 
 						</tbody>
-						<input type="checkbox" name="loginSave" id="loginSave"/> 로그인 정보 저장
+						<input type="checkbox" name="loginSave" id="loginSave" /> 로그인 정보
+						저장
 					</table>
 					<div class="loginSuccess">
 						<input type="submit" value="로그인" onclick="return loginCheck();">
 					</div>
-					
+
 				</div>
 			</div>
 		</form>

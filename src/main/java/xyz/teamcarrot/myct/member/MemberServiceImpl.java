@@ -2,6 +2,7 @@ package xyz.teamcarrot.myct.member;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -87,20 +88,20 @@ public class MemberServiceImpl implements MemberService {
 		mapper.updateLoginFailCount(member);
 		Integer loginFailCount = (Integer) sess.getAttribute("loginFail");
 		if (loginFailCount == null) {
-	        loginFailCount = 0;
-	    }
+			loginFailCount = 0;
+		}
 		sess.setAttribute("loginFail", 1);
 	}
-	
+
 	public void updateLoginBlocked(MemberVO member, HttpSession sess) {
 		mapper.updateLoginBlocked(member);
-		
+
 		Integer loginBlocked = (Integer) sess.getAttribute("loginBlocked");
-		if(loginBlocked ==null) {
+		if (loginBlocked == null) {
 			loginBlocked = 0;
-		}		    
-		sess.setAttribute("loginBlocked", loginBlocked+1);
-		
+		}
+		sess.setAttribute("loginBlocked", loginBlocked + 1);
+
 	}
 
 }

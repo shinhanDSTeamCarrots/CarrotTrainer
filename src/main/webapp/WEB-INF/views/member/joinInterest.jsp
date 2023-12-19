@@ -13,10 +13,10 @@
 	<script src="js/script.js"></script>
 <script>
 
-function joinDone() {
+/*function joinDone() {
     // btn 클래스를 가진 모든 요소를 선택
     const buttons = document.querySelectorAll('.btn');
-
+	const selectedInterests = [];
     // 초록색인 버튼의 개수를 세기 위한 변수
     let greenCount = 0;
 
@@ -24,6 +24,8 @@ function joinDone() {
     buttons.forEach(button => {
         if (button.style.backgroundColor === 'green') {
             greenCount++;
+            const interestId = button.id.replace('body','');
+            selectedInterests.push(interestId);
         }
     });
 
@@ -31,8 +33,38 @@ function joinDone() {
     if (greenCount === 0) {
         alert('최소 하나의 항목을 선택하세요.');
     } else {
-        alert('회원 가입을 축하해요!')
+        saveInterest(selectedInterests);
         //데이터 저장&홈페이지로 이동시키는 방법 생각하기
+    }
+}*/
+
+function joinDone() {
+    const buttons = document.querySelectorAll('.btn');
+    const selectedButtons = [];
+
+    buttons.forEach(button => {
+        if (button.style.backgroundColor === 'green') {
+            selectedButtons.push(button.id);
+        }
+    });
+
+    if (selectedButtons.length === 0) {
+        alert('최소 하나의 항목을 선택하세요.');
+    } else {
+        // Ajax를 사용하여 서버에 선택된 버튼 정보 전송
+        $.ajax({
+            type: 'POST',
+            url: 'insertInterest.do', // 실제 서버의 URL로 변경
+            contentType: 'application/json',
+            data: JSON.stringify({ selectedButtons: selectedButtons }),
+            success: function (response) {
+                alert('회원 가입을 축하해요!');
+                // 원하는 동작 수행
+            },
+            error: function (error) {
+                console.error('에러 발생:', error);
+            }
+        });
     }
 }
 
@@ -135,7 +167,7 @@ function changeColor(button) {
     		<div class = "menu">
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>    				
-    				<form name="frm" id="frm" action="join2.do" method="get">
+    				<form name="frm" id="frm" action="interestregist.do" method="get">
     				<div class="btn-container">
     					<a href="javascript:;" class="btn" id = "body1" onclick="changeColor(this)">눈</a>
     					<a href="javascript:;" class="btn" id = "body2" onclick="changeColor(this)">귀</a>
