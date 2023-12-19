@@ -1,7 +1,7 @@
 package xyz.teamcarrot.myct.healthInfo;
 
 public interface BodyInfoService {
-	//tb_body_info 테이블 > "로그인이 되었을 때", 나이, 신장 등 입력
+	//tb_body_info 테이블 > 나이, 신장 등 입력
 	boolean insertBodyInfo(BodyInfoVO vo);
 	BodyInfoVO selectBodyInfo(int member_no);
 	int updateBodyInfo(BodyInfoVO vo);
