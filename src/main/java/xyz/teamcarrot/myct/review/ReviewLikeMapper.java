@@ -1,15 +1,16 @@
 /* Created:		23.12.01
- * Author:		Àü¼º¿í
- * Description:	¸®ºäÁÁ¾Æ¿ä mapper ¼±¾ð
+ * Author:		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * Description:	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½ mapper ï¿½ï¿½ï¿½ï¿½
  * Edited:		-
  * (c) Copyright by TeamCarrot
  */
 package xyz.teamcarrot.myct.review;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ReviewLikeMapper {
-	void insertReviewLike(int member_no,int review_no);
-	void deleteReviewLike(int member_no, int review_no);
+	void insertReviewLike(@Param("member_no") int member_no,@Param("review_no") int review_no);
+	void deleteReviewLike(@Param("member_no")int member_no, @Param("review_no") int review_no);
 }
