@@ -23,6 +23,9 @@
 		var mem_no = "${sessionScope.loginInfo.member_no}";
 		let goods_no="${item.goods_no}";
 		let option_no=$("#selectedoption :selected").val();
+		if (!option_no) {
+	        option_no = 0;
+	    }
 		console.log("${pageContext.request.contextPath}/cart/add");
 		console.log("option_no: "+option_no);
 		if(mem_no!=""){
@@ -40,6 +43,12 @@
 						alert("장바구니에 상품이 담겼습니다");
 						
 					}
+					var str="장바구니로 이동하시겠습니까?";
+					if(confirm(str)){
+						window.location.href="${pageContext.request.contextPath}/cart";
+					}else{
+							
+					}
 				},
 				error:function(data){
 		        	alert("처리하지 못하였습니다.");
@@ -47,16 +56,16 @@
 			});
 		}
 		else{
-			alert("로그인이 필요한 서비스입니다!");
+			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
+			if(confirm(str)){
+				window.location.href="${pageContext.request.contextPath}/member/login.do";
+			}else{
+					
+			}
 			
 		}
 		
-		var str="장바구니로 이동하시겠습니까?";
-		if(confirm(str)){
-			window.location.href="${pageContext.request.contextPath}/cart";
-		}else{
-			
-		}
+		
 	}
 	
 	</script>
@@ -120,7 +129,7 @@
 						            </c:if>
 						        </c:forEach>
 							</select>
-						</c:if>
+						</c:if>					
 					</div>
 					<div class="btns">	
 						<button class="cartbtn" onclick="cartbtn()">장바구니</button>

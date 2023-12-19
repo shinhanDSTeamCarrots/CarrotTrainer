@@ -4,8 +4,8 @@
 
 	<!-- 회원별 장바구니 목록보기 -->
 	<select id="cartList" resultType="xyz.teamcarrot.myct.cart.CartVO">
-		SELECT *,(g.price+o.price_updown) AS final_price FROM tb_cart c
-		LEFT JOIN tb_goods g ON c.goods_no=g.goods_no
+		SELECT *,g.price + IFNULL(o.price_updown,0) AS final_price FROM tb_cart c
+		INNER JOIN tb_goods g ON c.goods_no=g.goods_no
 		LEFT JOIN tb_goods_option o ON c.option_no=o.option_no
 		WHERE c.member_no=#{c.member_no}
 		ORDER BY c.cart_add_date DESC
@@ -13,8 +13,16 @@
 	
 	<!-- 장바구니 추가 -->
 	<insert id="insert" parameterType="xyz.teamcarrot.myct.cart.CartVO">
-		INSERT INTO tb_cart (goods_count, cart_add_date, goods_no, member_no, option_no)
-		VALUES (#{goods_count}, NOW(), #{goods_no}, #{member_no}, #{option_no})
+		INSERT INTO tb_cart (goods_count, cart_add_date, goods_no, member_no
+        <if test="option_no != null and option_no != 0">
+            , option_no
+        </if>
+    )
+    	VALUES (#{goods_count}, NOW(), #{goods_no}, #{member_no}
+        <if test="option_no != null and option_no != 0">
+            , #{option_no}
+        </if>
+    )
 	</insert>
 	
 	<!-- 장바구니 담은거 삭제 -->

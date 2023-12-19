@@ -26,14 +26,5 @@ public class GoodsVO {
 	
 	private String category_name;
 	
-	@Override
-    public String toString() {
-        return "GoodsVO{" +
-                "goods_no=" + goods_no +
-                ",category_name=" + category_name +
-                ", goods_name='" + goods_name + '\'' +
-                ", price=" + price +                
-                '}';
-    }
 	
 }
