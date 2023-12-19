@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
 import xyz.teamcarrot.myct.member.MemberVO;
-
+@Slf4j
 @Controller
 public class CartController {
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
@@ -39,9 +41,11 @@ public class CartController {
 		return "/goods/cart";
 	}
 	
-	@PostMapping("/cart/add")
+	@ResponseBody
+	@PostMapping("cart/add")
     public String addToCart(Model model, HttpServletRequest request, CartVO cart) {
         HttpSession sess=request.getSession();
+        log.info("cart: "+cart.toString());
         MemberVO login = (MemberVO)sess.getAttribute("loginInfo");
 		cart.setMember_no(login.getMember_no());
         int r = service.addToCart(cart, request);
@@ -50,7 +54,7 @@ public class CartController {
         	model.addAttribute("msg","장바구니에 정상적으로 담겼습니다");
         	//model.addAttribute("url", )
         }
-        return "goods/alert";
+        return "goods/cart";
     }
 	
 	@PostMapping("/cart/remove/{cartNo}")

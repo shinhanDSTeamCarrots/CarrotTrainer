@@ -39,37 +39,54 @@
 		    	<div class="each_cartitem">
 		    		<ul>
 						<c:forEach items="${cartList}" var="cartList">
+						<div class="title-division-line"></div>
 						<li>
-							<div clas="cartNo">
-								${cartList.cart_no}
-							</div>
+						<div class="eachItem">
 							<div class="goodsImg">
-								
+								<img id="cartgoodsImg" src="/myct/img/goods/${cartList.image }.jpg"/>
 							</div>
-							
-							<div class="goodsOption">
-								${cartList.option_no}
+							<div class="itemInfo">
+								<div class="goodsName">
+									${cartList.goods_name}
+								</div>	
+								<div class="optionInfo">
+									<c:if test="${not empty cartList.option_no}">
+										<div class="goodsOption">
+											선택옵션 : ${cartList.option_name}
+										</div>
+										<div class="rightalign">
+											<div class="itemCnt">
+												${cartList.goods_count}
+											</div>
+											<div class="itemPrice">
+												${cartList.final_price}원
+											</div>
+										</div>
+									</c:if>
+								</div>
 							</div>
-							<div class="itemCnt">
-								${cartList.goods_count}
-							</div>
-							<div class="itemPrice">
-								${cartList.final_price}
-							</div>
-						</li>
+						</div>
+						</li>						
 						</c:forEach>
 	   				</ul>	    	
 		    	</div>	    
 		    </div>
 		    
 		    
-		    <div class="title-division-line"></div>
+		    <div class="totalprice-division-line"></div>
 		    
 		    <!-- 총 가격 합산 -->
 			<div class="totalPrice">
-			
+				<c:forEach items="${cartList}" var="cartList">
+					<c:set var="totalPrice" value="${totalPrice + cartList.final_price}" />
+					<c:set var="totalDeliveryfee" value="${totalDeliveryfee + cartList.delivery_fee }"/>
+				</c:forEach>
+				<div class="priceText">
+					<div class="calc">주문금액 ${totalPrice }원 + 배송비 ${totalDeliveryfee }원  = </div>
+					<div class="totalpurchase"> 총 결제금액 ${totalPrice + totalDeliveryfee }원</div>
+				</div>
 			</div>	 
-		    
+		    <div class="title-division-line"></div>
 		    
 		    <!-- 결제하기 버튼 -->
 		    <div class="purchaseButton">

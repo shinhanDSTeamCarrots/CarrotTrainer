@@ -28,7 +28,7 @@
 	<update id="update" parameterType="xyz.teamcarrot.myct.cart.CartVO">
         UPDATE tb_cart
         SET goods_count = #{goods_count}
-        set option_no=#{option_no}
+        	,option_no=#{option_no}
         WHERE cart_no = #{cart_no}
     </update>
 	

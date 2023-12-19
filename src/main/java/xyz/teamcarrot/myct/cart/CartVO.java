@@ -13,6 +13,11 @@ public class CartVO {
 	private int member_no;
 	private int option_no;
 	
+	
+	/* 장바구니 리스트에서 띄울때 필요한 값 */
+	private String image;
+	private String goods_name;
+	private String option_name;
 	private int final_price;
-
+	private int delivery_fee;
 }
