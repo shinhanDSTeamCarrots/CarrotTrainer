@@ -13,8 +13,8 @@ public class HealthDicServiceImpl implements HealthDicService {
 	HealthDicMapper mapper;
 	
 	@Override
-	public List<Map<String, Object>> getHealthDic(){
-		List<Map<String, Object>> healthDicList = mapper.healthDic();
+	public List<Map<String, Object>> getHealthDic(String healthName){
+		List<Map<String, Object>> healthDicList = mapper.healthDic(healthName);
 		//총 개수
 		int totalCount = healthDicList.size();
 		

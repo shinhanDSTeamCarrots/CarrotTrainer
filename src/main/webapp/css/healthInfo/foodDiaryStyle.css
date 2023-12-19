@@ -53,6 +53,7 @@
 	flex-direction: row;
 	margin: 20px;
 	margin-bottom: 40px;
+	justify-content: center;
 }
 .foodDiary-food-result-image {
 	width: 50%;

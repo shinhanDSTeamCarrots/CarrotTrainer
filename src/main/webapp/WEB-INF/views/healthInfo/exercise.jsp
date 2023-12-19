@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -27,7 +28,7 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="search-place">
-						<div id="search-box"><input type="text" name="healthName" value=""></div>
+						<div id="search-box"><input type="text" id="healthName" name="healthName"></div>
 						<div id="search-text"><p>검색</p></div>
 					</div>
 					<div class="detail-division-line"></div>

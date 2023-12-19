@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.healthInfo.HealthDicMapper">
+	<!-- 검색 -->
+	<sql id="search">
+		<where>
+			<if test="healthName != null and healthName != ''">
+				health LIKE '%${healthName}%'
+			</if>
+		</where>
+	</sql>
 	<!-- 운동 정보 -->
-	<select id="healthDic" resultType="hashmap">
+	<select id="healthDic" resultType="hashmap" parameterType="String">
 		SELECT health_dic_no as no, health, met FROM tb_health_dic
+		<include refid="search"/>
 	</select>
 	
 	<!-- 음식 정보 -->
