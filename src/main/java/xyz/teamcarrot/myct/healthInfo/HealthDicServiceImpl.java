@@ -14,7 +14,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 	HealthDicMapper mapper;
 	
 	@Override
-	public List<Map<String, Object>> getHealthDic(String healthName, int kg, int minute){
+	public List<Map<String, Object>> getHealthDic(String healthName, double kg, int minute){
 		Map<String, Object> healthDic = new HashMap<>();
 		
 		//총 개수

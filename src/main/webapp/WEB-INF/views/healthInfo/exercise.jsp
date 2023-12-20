@@ -46,9 +46,9 @@
 		                <c:if test="${ }">
 		                    <p class="list-title-text">검색 결과</p>
 		                </c:if>
+		                
+		                <button class="select" type="submit" onclick="">선택</button>
 		                --%>
-		                <button class="select" id="popupBtn" type="submit" onclick="">선택</button>
-		                <%-- 선택이 1개 일때, popup버튼 활성화  --%>
 		            </div>
 					<div class="list-division-line">
 						<img>
@@ -71,11 +71,11 @@
 							</c:if>
 							 --%>
 							<c:forEach var="healthDic" items="${healthDic}">
-								<tr class="item-division-line">
+								<tr class="health-info" data-no="${healthDic.no }">
 								<%--
 									<td style="text-align: center;"><button type="button" id="healthCheck" name="healthCheck" value="${healthDic.no }"></button></td>
 									--%>
-									<td><input type="checkbox" class="healthCheck" name="healthCheck" value="${healthDic.no }"></td>
+									<td><input type="checkbox" class="healthCheck" name="healthCheck" ></td>
 									<td class="health">${healthDic.health }</td>
 									<td class="calorie">${healthDic.calorie }kcal/hr</td>
 								</tr>
@@ -99,16 +99,30 @@
 					<div class="healthInfo">
 						<div id="healthInfo-text">
 							<p>
-								총 <span class="sql-text">00</span>분 운동 진행
+								총 <span class="sql-text" id="total-exerciseTime">00</span>분 운동 진행
 							</p>
 							<p>
-								<span class="sql-text">000</span>kcal 소비
+								<span class="sql-text" id="total-calTime">000</span>kcal 소비
 							</p>
 						</div>
 						<div id="healthInfo-graph"></div>
-						<div class="healthInfo-select"></div>
+						<div class="healthInfo-cart"></div>
+						<!-- healthInfo-cart에 들어가는 자바스크립트 입력 코드
+						<div class="healthInfo-select">
+							<div class="healthInfo-detail">
+								<div class="bookmark">별</div>
+								<div class="healthInfo-name">
+									<div class="healthInfo-name-text">걷기</div>
+									<div class="healthInfo-name-time">60분</div>
+								</div>
+								<div class="healthInfo-cals">124kcal</div>
+								<div class="healthInfo-del">-</div>
+							</div>
+							<div class="detail-division-line"></div>
+						</div>
+						 -->
 					</div>
-					<button class="select-info" type="submit" onclick="">기록 완료</button>
+					<button class="select-info" type="submit" onclick="">기록하기</button>
 					<%-- 이미 입력 값이 없으면
 	                <c:if test="${ }}">
 	                    <button class="select-info" type="submit" onclick="">기록 완료</button>

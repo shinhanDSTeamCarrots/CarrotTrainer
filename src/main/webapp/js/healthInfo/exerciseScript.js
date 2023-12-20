@@ -1,11 +1,77 @@
 $(function() {
 	$("#search-text").click(function() {
-		search(70, 60)
+		search(70, 60);
 	});
+	//운동 클릭 시, 장바구니로 이동
+	$(".health-info").click(function() {
+		cartMove.call(this);
+		calculateTotal();
+	});
+	//장바구니에 있는 운동 클릭 시, 모달 팝업
+	$(".healthInfo-name").click(function() {
+		// 받은 데이터로 모달 내용 생성
+		console.log("gg")
+		
+	});
+	
+	
+	
+	//검색 함수 - 검색 완료 시, 페이지 리로드
 	function search(kg, minute) {
     	location.href = "/myct/exercise?healthName=" + $('#healthName').val() + "&kg=" + kg + "&minute=" + minute
     }
-    
+    //클릭 시, 진행 운동 목록으로 이동 함수
+    function cartMove() {
+    	//값 확인
+    	console.log($(this).data("no"));
+		console.log($(this).children(".health").text());
+		console.log($(this).children(".calorie").text().replace('kcal/hr', ''));
+		
+		let no = $(this).data("no");
+		let health = $(this).children(".health").text();
+		let minute = 60; //기본값
+		let calorie = $(this).children(".calorie").text().replace('kcal/hr', '');
+		
+		// 받은 데이터로 목록 생성
+    	const healthInfoSelect = $('<div class="healthInfo-select"></div>');
+    	
+    	const healthInfoDetail = $('<div class="healthInfo-detail"></div>');
+    	healthInfoDetail.append('<div class="bookmark">별</div>'); //즐겨찾기 이미지
+	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + health + '</div><div class="healthInfo-name-time">' + minute + '분</div></div>');
+	    healthInfoDetail.append('<div class="healthInfo-cals">' + calorie + 'kcal</div>');
+	    healthInfoDetail.append('<div class="healthInfo-del">-</div>');  //빼기 이미지
+	    
+	    healthInfoSelect.append(healthInfoDetail);
+	    healthInfoSelect.append('<div class="detail-division-line"></div>');
+
+        $('.healthInfo-cart').append(healthInfoSelect);
+    }
+    //클릭 시, 진행 운동 계산 함수
+    function calculateTotal() {
+	    let totalMinute = 0;
+	    let totalCalorie = 0;
+	
+	    $('.healthInfo-detail').each(function() {
+	        const minuteText = $(this).find('.healthInfo-name-time').text();
+	        const calorieText = $(this).find('.healthInfo-cals').text();
+	
+	        // 분 추출
+	        const minute = parseInt(minuteText.replace('분', ''));
+	        // 칼로리 추출
+	        const calorie = parseInt(calorieText.replace('kcal', ''));
+	
+	        // 누적
+	        totalMinute += minute;
+	        totalCalorie += calorie;
+	    });
+	
+	    console.log('Total Minute:', totalMinute);
+	    console.log('Total Calorie:', totalCalorie);
+	    
+	    //기존 값에 입력
+	    $("#total-exerciseTime").text(totalMinute);
+		$("#total-calTime").text(totalCalorie);
+	}
     
 	// 참고: 목록에 데이터 추가하는 함수(ajax사용할 경우)
     function displayList(data) {
@@ -26,4 +92,6 @@ $(function() {
             tbody.append(row);
         }
     }
+    
+    
 });
