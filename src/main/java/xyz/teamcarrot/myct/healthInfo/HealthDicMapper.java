@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface HealthDicMapper {
-	List<Map<String, Object>> healthDic(String healthName);
+	List<Map<String, Object>> healthDic(Map<String, Object> map);
 }

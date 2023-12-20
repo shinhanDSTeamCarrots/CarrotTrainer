@@ -4,14 +4,16 @@
 	<!-- 검색 -->
 	<sql id="search">
 		<where>
-			<if test="healthName != null and healthName != ''">
+			<if test="healthName != null or healthName != ''">
 				health LIKE '%${healthName}%'
 			</if>
 		</where>
 	</sql>
 	<!-- 운동 정보 -->
-	<select id="healthDic" resultType="hashmap" parameterType="String">
-		SELECT health_dic_no as no, health, met FROM tb_health_dic
+	<select id="healthDic" resultType="java.util.Map" parameterType="map">
+		SELECT health_dic_no as no, health, met
+			, CAST(ROUND(((met * (3.5 * #{kg} * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
+		FROM tb_health_dic
 		<include refid="search"/>
 	</select>
 	

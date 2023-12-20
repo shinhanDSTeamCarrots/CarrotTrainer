@@ -1,5 +1,6 @@
 package xyz.teamcarrot.myct.healthInfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +14,21 @@ public class HealthDicServiceImpl implements HealthDicService {
 	HealthDicMapper mapper;
 	
 	@Override
-	public List<Map<String, Object>> getHealthDic(String healthName){
-		List<Map<String, Object>> healthDicList = mapper.healthDic(healthName);
+	public List<Map<String, Object>> getHealthDic(String healthName, int kg, int minute){
+		Map<String, Object> healthDic = new HashMap<>();
+		
 		//총 개수
-		int totalCount = healthDicList.size();
+		//int totalCount = healthDicList.size();
 		
-		int kg = 70;
-		int minute = 60;
+		healthDic.put("healthName", healthName);
+		healthDic.put("kg", kg);
+		healthDic.put("minute", minute);
 		
-		for (Map<String, Object> healthDic : healthDicList) {
-			Object meValue = healthDic.get("met");
-			int calorie = (int)Math.round(((double)meValue * (3.5 * kg * minute))/1000 * 5);
-			healthDic.put("calorie", calorie);
-		}
+		//mapper.healthDic()을 호출할 때 필요한 정보를 담은 맵을 전달
+		List<Map<String, Object>> healthDicList = mapper.healthDic(healthDic);
+		//칼로리 값
+		System.out.println(healthDicList.get(0).get("calorie"));
+		
 		return healthDicList;
 	}
 }

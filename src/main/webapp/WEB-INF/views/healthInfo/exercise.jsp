@@ -56,7 +56,7 @@
 					</div>
 					<div class="list-result">
 						<table class="healthDic-list">
-							<tbody>
+							<tbody id="healthTbody">
 							<colgroup>
 								<col width="10%" />
 								<col width="70%" />
@@ -72,11 +72,12 @@
 							 --%>
 							<c:forEach var="healthDic" items="${healthDic}">
 								<tr class="item-division-line">
+								<%--
 									<td style="text-align: center;"><button type="button" id="healthCheck" name="healthCheck" value="${healthDic.no }"></button></td>
-									<%--
-									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>--%>
-									<td id="health" style="text-align: left;">${healthDic.health }</td>
-									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal/hr</td>
+									--%>
+									<td><input type="checkbox" class="healthCheck" name="healthCheck" value="${healthDic.no }"></td>
+									<td class="health">${healthDic.health }</td>
+									<td class="calorie">${healthDic.calorie }kcal/hr</td>
 								</tr>
 							</c:forEach>
 							</tbody>
