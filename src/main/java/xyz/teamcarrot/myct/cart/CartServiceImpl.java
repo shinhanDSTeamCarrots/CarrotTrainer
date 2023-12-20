@@ -1,6 +1,8 @@
 package xyz.teamcarrot.myct.cart;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,13 +28,23 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-	public void removeFromCart(int cartNo) {
-		mapper.delete(cartNo);
+	public void removeFromCart(List<Integer> cartNos) {
+		mapper.deleteSelected(cartNos);
 	}
 	
 	@Override
     public void updateCart(CartVO cart) {
         mapper.update(cart);
     }
-
+	
+	@Override
+	public boolean checkCart(int mem_no, int goods_no) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("mem_no",mem_no);
+		paramMap.put("goods_no",goods_no);
+		
+		int count=mapper.existInCart(paramMap);	
+		return count>0;
+	}
+	
 }

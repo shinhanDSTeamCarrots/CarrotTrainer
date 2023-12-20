@@ -1,6 +1,7 @@
 package xyz.teamcarrot.myct.cart;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,9 +15,12 @@ public interface CartMapper {
 	int insert(CartVO cart);
 
 	//장바구니 삭제	
-	int delete(int cartNo);
+	void deleteSelected(List<Integer> cartNos);
 	
 	//장바구니 수정
 	int update(CartVO cart);
+	
+	//장바구니에 존재 여부 확인
+	int existInCart(Map<String, Object> paramMap);
 	
 }

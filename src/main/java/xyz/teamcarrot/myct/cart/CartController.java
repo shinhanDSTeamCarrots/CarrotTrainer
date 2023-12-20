@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,18 +53,31 @@ public class CartController {
         if (r>0) {
         	model.addAttribute("cmd","move");
         	model.addAttribute("msg","장바구니에 정상적으로 담겼습니다");
-        	//model.addAttribute("url", )
+        	return "T";
         }
-        return "goods/cart";
+        else {
+        	//안담길경우 
+        	return "F";
+        }
+    }
+	@ResponseBody
+	@PostMapping("/cart/remove")
+    public void removeFromCart(@RequestParam List<Integer> cartNos) {
+        service.removeFromCart(cartNos);
     }
 	
-	@PostMapping("/cart/remove/{cartNo}")
-    public void removeFromCart(@PathVariable int cartNo) {
-        service.removeFromCart(cartNo);
-    }
-	
-	@PostMapping("/cart/update")
+	@PostMapping("cart/update")
     public void updateCart(@RequestBody CartVO cart) {
         service.updateCart(cart);
     }
+	
+	@ResponseBody
+	@PostMapping("cart/check")
+	public String checkCart(@RequestParam int mem_no, @RequestParam int goods_no) {
+		boolean existsInCart = service.checkCart(mem_no, goods_no);
+		return existsInCart ? "EXIST" : "NOT_EXIST";
+	}
+
 }
+
+

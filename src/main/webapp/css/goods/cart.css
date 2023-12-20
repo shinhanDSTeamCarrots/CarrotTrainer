@@ -55,6 +55,14 @@
 	height:20px;
 }
 
+
+.selectItem{
+	width:15px;
+	height:100%;
+	line-height: 100%;
+	margin-right:20px;
+}
+
 /*구분선*/
 
 .title-division-line {
@@ -93,6 +101,7 @@
 	display:flex;
     flex-direction:row;
     margin:20px;
+    margin-left:10px;
     width:100%;
 }
 .goodsName{

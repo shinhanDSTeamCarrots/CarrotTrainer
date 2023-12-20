@@ -18,54 +18,72 @@
 	<script>
 	function cartbtn(){
 		//로그인 여부 확인
-		//로그인 돼있으면 장바구니에 담기
+		//로그인 여부확인 -> 장바구니 존재 여부확인 -> 장바구니에 담기
 		//안돼있으면 로그인이 필요한 서비스입니다 (로그인 창으로 이동하시겠습니까?)
 		var mem_no = "${sessionScope.loginInfo.member_no}";
 		let goods_no="${item.goods_no}";
 		let option_no=$("#selectedoption :selected").val();
+		//옵션이 없는 상품의 경우
 		if (!option_no) {
 	        option_no = 0;
 	    }
 		console.log("${pageContext.request.contextPath}/cart/add");
 		console.log("option_no: "+option_no);
+		//로그인 여부 확인후
 		if(mem_no!=""){
 			//ajax호출
+			//장바구니에 이미 담긴 상품인지 확인
 			$.ajax({
 				type:"POST",
-				url:"${pageContext.request.contextPath}/cart/add",
+				url:"${pageContext.request.contextPath}/cart/check",
 				data:{mem_no:mem_no,
 					goods_no:goods_no,
-					option_no:option_no,
-					goods_count:1},
+					},
+				//이미 담긴 상품이면 장바구니로 이동
 				success:function(result){
-					if(result=="T"){
-						console.log(result);
-						alert("장바구니에 상품이 담겼습니다");
-						
-					}
-					var str="장바구니로 이동하시겠습니까?";
-					if(confirm(str)){
-						window.location.href="${pageContext.request.contextPath}/cart";
+					if(result=="EXIST"){							
+						var str="이미 장바구니에 담긴 상품입니다. 장바구니로 이동하시겠습니까?";
+						if(confirm(str)){
+							window.location.href="${pageContext.request.contextPath}/cart";
+						}
+					//장바구니에 안담겨있을시 장바구니 추가
 					}else{
-							
+						$.ajax({
+							type:"POST",
+							url:"${pageContext.request.contextPath}/cart/add",
+							data:{
+								mem_no:mem_no,
+								goods_no:goods_no,
+								option_no:option_no,
+								goods_count:1
+							},
+							success:function(data){
+								console.log(data);
+								if(data=="T"){																		
+									var str="장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?";
+									console.log(str);
+									if(confirm(str)){
+										
+										window.location.href="${pageContext.request.contextPath}/cart";
+									}
+								}
+							},
+							error:function(data){
+					        	alert("처리하지 못하였습니다.");
+							}
+						});
 					}
 				},
 				error:function(data){
-		        	alert("처리하지 못하였습니다.");
+					alert("처리하지 못하였습니다.");
 				}
 			});
-		}
-		else{
+		}else{
 			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
 			if(confirm(str)){
 				window.location.href="${pageContext.request.contextPath}/member/login.do";
-			}else{
-					
-			}
-			
-		}
-		
-		
+			}		
+		}		
 	}
 	
 	</script>
