@@ -87,6 +87,13 @@
 	font-size: 10px;
 	font-weight: 700;
 }
+/* 버튼 */
+#healthCheck {
+	width: 20px;
+	height: 20px;
+	background-color: #CEDEBD;
+}
+
 
 /*----------------
 	진행 운동 목록
@@ -136,6 +143,7 @@
 	background-color: #435334;
 	color: #FAF1E4;
 }
+
 /*--------------
 	메인 글씨
 --------------*/
@@ -150,6 +158,100 @@
 	font-size: 18px;
 	font-weight: 700;
 	height: 40px;
+}
+
+
+/*-----------
+	모달팝업
+-----------*/
+#modalWrap {
+	position: fixed; /* 고정된 위치에 배치 */
+	z-index: 1; /* 다른 요소들보다 위에 위치하도록 하는데, 숫자가 크면 위에 놓이게 됨 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,0.4);
+	display: none; /* 이벤트 발생 시, 띄우게하기 위함 */
+  	justify-content: center;
+  	align-items: center;
+}
+/* 모달 팝업 */
+#modalBody {
+	width: 700px;
+	height: 500px;
+	padding: 30px 30px;
+	margin: 0 auto;
+	border: 1px solid #777;
+	background-color: #FAF1E4;
+	border-radius: 10px;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+/* 모달 메인 */
+#modalBody-content {
+	margin: 40px 60px;
+}
+/* 제목 */
+#modalBody-title {
+	margin-bottom : 10px;
+}
+#modalBody-title-text {
+	color: #435334;
+	font-size: 30px;
+	font-weight: 700;
+	margin-bottom : 5px;
+}
+/* 메인 내용 */
+#modalBody-main {
+	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	margin: 30px;
+}
+.modalBody-result {
+	display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+.modalBody-text {
+	width: 40%;
+}
+.modalBody-input {
+	width: 60%;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+/* 글씨 */
+.modalBody-text {
+	font-size: 20px;
+	font-weight: 700;
+}
+/* 버튼 */
+/* 닫기 버튼 */
+#closeBtn {
+	float:right;
+	font-weight: bold;
+	color: #777;
+	font-size:25px;
+	cursor: pointer;
+}
+#closeBtn:hover {
+	color: #435334;
+}
+/* 입력 버튼 */
+#modalBody-button > button {
+	background-color: #CEDEBD;
+	font-size: 15px;
+	font-weight: 700;
+	width: 100%;
+	height: 50px;
+}
+#modalBody-button > button:hover {
+	background-color: #435334;
+	color: #FAF1E4;
 }
 
 /*-----------

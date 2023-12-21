@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.healthInfo.BodyInfoMapper">
+	<!-- bmi 정보 입력 -->
+	<insert id="insertBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
+		INSERT INTO tb_body_info (
+			body_info_date, age, height, weight, gender, target_weight, exercise_mass
+			, bmi, target_calorie, target_carbs, target_protein, target_fat, target_sugar
+			, member_no
+		) VALUES (
+			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{target_weight}, #{exercise_mass}
+			, #{bmi}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
+			, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="body_info_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- bmi 정보 불러오기 -->
+	<select id="selectBodyInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
+		SELECT * FROM tb_body_info WHERE member_no = #{member_no};
+	</select>
+	<!-- bmi 정보 수정 -->
+	<update id="updateBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
+		UPDATE tb_body_info
+		SET age = #{age}
+			, height = #{height}
+			, weight = #{weight}
+			, gender = #{gender}
+			, target_weight = #{target_weight}
+			, exercise_mass = #{exercise_mass}
+			, bmi = #{bmi}
+			, target_calorie = #{target_calorie}
+			, target_carbs = #{target_carbs}
+			, target_protein = #{target_protein}
+			, target_fat = #{target_fat}
+			, target_sugar = #{target_sugar}
+		WHERE body_info_no = #{body_info_no};
+	</update>
+	
+	<!-- 오늘의 상태 정보 입력 -->
+	<insert id="insertBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		INSERT INTO tb_body_change (
+			regist_date, weight, muscle_mass, fat_mass, member_no
+		) VALUES (
+			NOW(), #{weight}, #{muscle_mass}, #{fat_mass}, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="body_change_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 오늘의 상태 정보 불러오기 -->
+	<select id="selectBodyChange" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		SELECT * FROM tb_body_change WHERE member_no = #{member_no} AND regist_date = CURDATE();
+	</select>
+	<!-- 오늘의 상태 정보 수정 -->
+	<update id="updateBodyChange" parameterType="xyz.teamcarrot.myct.healthInfo.BodyChangeVO">
+		UPDATE tb_body_change
+		SET weight = #{weight}
+			, muscle_mass = #{muscle_mass}
+			, fat_mass = #{fat_mass}
+		WHERE body_change_no = #{body_change_no} AND regist_date = CURDATE();
+	</update>
+	<!-- 오늘의 상태 정보 삭제 -->
+	<delete id="deleteBodyChange" parameterType="int">
+		delete from tb_body_change WHERE body_change_no = #{body_change_no}
+	</delete>
+</mapper>

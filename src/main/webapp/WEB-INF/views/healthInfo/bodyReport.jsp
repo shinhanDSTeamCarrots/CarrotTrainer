@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -12,7 +11,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/bodyReportStyle.css" />
-	<script src="js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 </head>
 <body>
     <div class="wrap">
@@ -21,10 +21,10 @@
     		<div class="bodyReport-title">
 	    		<div class="bodyReport-title-content">
 	    			<p class="bodyReport-title-text">REPORT</p>
-	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary.do'">오늘의 다이어리</button>
+	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
 	    		</div>
 	    		<div class="title-division-line"></div>
-	    		<p class="bodyReport-text">안녕하세요, <span class="sql-text-name">당근</span>님!</p>
+	    		<p class="bodyReport-text">안녕하세요, <span class="sql-text-name"></span>님!</p>
     		</div>
    			<div class="bodyReport-list" id="scroll-event">
    				<ul>

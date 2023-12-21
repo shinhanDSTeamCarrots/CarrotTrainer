@@ -24,17 +24,8 @@ public class GoodsVO {
 	private double goods_rate;
 	private int category_no;
 	
-	private int option_no;
-	private String option_name;
-	private int price_updown;
 	
-	@Override
-    public String toString() {
-        return "GoodsVO{" +
-                "goods_no=" + goods_no +
-                ",option_name=" + option_name +
-                ", goods_name='" + goods_name + '\'' +
-                ", price=" + price +                
-                '}';
-    }
+	private String category_name;
+	
+	
 }

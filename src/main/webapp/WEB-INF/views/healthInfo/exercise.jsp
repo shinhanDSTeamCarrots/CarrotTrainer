@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -12,7 +11,9 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
-	<script src="js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -27,7 +28,7 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="search-place">
-						<div id="search-box"><input type="text" name="healthName" value=""></div>
+						<div id="search-box"><input type="text" id="healthName" name="healthName"></div>
 						<div id="search-text"><p>검색</p></div>
 					</div>
 					<div class="detail-division-line"></div>
@@ -46,7 +47,8 @@
 		                    <p class="list-title-text">검색 결과</p>
 		                </c:if>
 		                --%>
-		                <button class="select" type="submit" onclick="">선택</button>
+		                <button class="select" id="popupBtn" type="submit" onclick="">선택</button>
+		                <%-- 선택이 1개 일때, popup버튼 활성화  --%>
 		            </div>
 					<div class="list-division-line">
 						<img>
@@ -70,7 +72,9 @@
 							 --%>
 							<c:forEach var="healthDic" items="${healthDic}">
 								<tr class="item-division-line">
-									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>
+									<td style="text-align: center;"><button type="button" id="healthCheck" name="healthCheck" value="${healthDic.no }"></button></td>
+									<%--
+									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>--%>
 									<td id="health" style="text-align: left;">${healthDic.health }</td>
 									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal/hr</td>
 								</tr>
@@ -114,6 +118,41 @@
 	                --%>
 				</div>
 			</div>
+			<!-- 모달 팝업 -->
+    		<div id="modalWrap">
+    			<div id="modalContent">
+    			  	<div id="modalBody">
+    			  		<!-- 닫기 버튼 -->
+    			  		<span id="closeBtn">&times;</span>
+    			  		<!-- 팝업 내용 -->
+    			  		<div id="modalBody-content">
+    			  			<div id="modalBody-title">
+    			  				<div id="modalBody-title-text">걷기</div>
+    			  				<div class="title-division-line"></div>
+    			  			</div>
+    			  			<div id="modalBody-main">
+    			  				<div id="modalBody-exercise">
+	    			  				<div class="modalBody-result" id="modalBody-time">
+	    			  					<div class="modalBody-text">운동시간(분)</div>
+	    			  					<div class="modalBody-input">
+		    			  					<div id="minus-button">-</div>
+			    			  				<input id="">
+			    			  				<div id="plus-button">+</div>
+		    			  				</div>
+	    			  				</div>
+	    			  			</div>
+    			  				<div class="modalBody-result" id="modalBody-calorie">
+    			  					<div class="modalBody-text">칼로리(kcal)</div>
+    			  					<div class="modalBody-input"><input id=""></div>
+    			  				</div>
+    			  			</div>
+    			  			<div id="modalBody-button">
+    			  				<button>기록 완료</button>
+    			  			</div>
+    			  		</div>
+    			  	</div>
+    			</div>
+    		</div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>

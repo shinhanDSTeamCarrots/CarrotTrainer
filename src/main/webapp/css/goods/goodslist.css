@@ -93,6 +93,7 @@ a:visited {
 	
 }
 
+
 /* 상품 리스트 */
 .goods_list {
 	width:100%;
@@ -116,15 +117,17 @@ a:visited {
     text-align: center;
 }
 
-.goods_list .goodsImg {
-    /* 상품 이미지 스타일을 추가할 수 있습니다. */
+#goodsImg {
+	width:200px;
+	height:200px;
+	margin:5px;
 }
 
-.goods_list .goodsName {
+.goods_list > ul > li > .goodsName {
     margin-top: 10px;
 }
 
-.goods_list .goodsPrice {
+.goods_list > ul > li > .goodsPrice {
     margin-top: 5px;
     font-weight: bold;
 }
