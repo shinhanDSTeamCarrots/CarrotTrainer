@@ -8,6 +8,9 @@
 	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
@@ -94,7 +97,9 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="date">
-						<p>날짜</p>
+						<!-- autocomplte는 <input> 태그를 클릭했을때 이전 데이터가 뜨는 것을 막기 위해 -->
+						<!-- readonly는 추가해준 이유는 datepicker을 통해 삽입된 날짜 데이터를 사용자가 잘못된 형식으로 수정하지 못하도록 하기 위함 -->
+						<input name="health_date" autocomplete="off" readonly="readonly">
 					</div>
 					<div class="detail-division-line"></div>
 					<div class="healthInfo">

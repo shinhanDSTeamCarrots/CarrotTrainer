@@ -28,9 +28,54 @@ $(function() {
 		console.log("gg")
 		
 	});
+	/*----------
+		캘린더
+	----------*/
+	//일자 설정
+	const config = {
+		dateFormat: 'yy-mm-dd',
+		showOn : "button",
+		buttonText:"날짜 선택",
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNames: ['일','월','화','수','목','금','토'],
+	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	    yearSuffix: '년',
+        changeMonth: true,
+        changeYear: true
+	}
+	//캘린더
+	$( "input[name='health_date']" ).datepicker(config);
+
 	function insertBookmark() {
 		const userName = "${sessionScope.loginInfo}";
 		if (userName) {	//로그인이 되어있을 때
+		    // 클릭한 행에 대한 정보 가져오기
+		    const healthNo = $(this).closest(".health-info".data("no"));
+		    
+		    $.ajax({
+		        url: '/checkBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
+		        method: 'GET',
+		        data: { healthNo: no },
+		        success: function(response) {
+		            const isBookmarked = response.isBookmarked;
+		
+		            if (isBookmarked) {
+		                // 즐겨찾기에 등록된 경우 노란색
+		                $(event.currentTarget).css("color", "gold");
+		            } else {
+		                // 즐겨찾기에 등록되지 않은 경우 기본 색상
+		                $(event.currentTarget).css("color", "default");
+		            }
+		        },
+		        error: function(error) {
+		            console.error('Error checking bookmark:', error);
+		        }
+		    });
+		
 		} else {	//비로그인일 때
 			if(confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")){
 				location.href=(""); //로그인 페이지로 이동

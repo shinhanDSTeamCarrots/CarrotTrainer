@@ -18,6 +18,7 @@ public class ExerciseController {
 	@Autowired
 	HealthDicService service;
 	
+	//리스트 출력
 	@GetMapping("/exercise")
 	public String searchHealthInfo(Model model, HttpSession sess, String healthName,Integer minute) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
@@ -46,20 +47,15 @@ public class ExerciseController {
 				model.addAttribute("healthName", healthName);
 			}
 		}
-
-//		List<Map<String, Object>> bookmarks = service.getbookmarkHealthDic(healthName, member_no, minute);
-//		if(bookmarks.size() != 0) {
-//			model.addAttribute("havebookmark", true);
-//		}else {
-//			model.addAttribute("havebookmark", false);
-//		}
-		
-		
-		
 		//확인
 		System.out.println(healthName);
 		System.out.println(minute);
 
 		return "/healthInfo/exercise";
+	}
+	//즐겨찾기에 있는 운동인지 확인
+	@GetMapping("/checkBookmark")
+	public Boolean checkBookmark(Integer no) {
+		return null;
 	}
 }

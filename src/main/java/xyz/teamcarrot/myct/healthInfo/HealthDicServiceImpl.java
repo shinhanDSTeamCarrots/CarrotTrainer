@@ -13,6 +13,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 	@Autowired
 	HealthDicMapper mapper;
 	
+	//전체 운동 리스트
 	@Override
 	public List<Map<String, Object>> getHealthDic(String healthName, int member_no, int minute){
 		Map<String, Object> healthDic = new HashMap<>();
@@ -31,6 +32,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		
 		return healthDicList;
 	}
+	//즐겨찾기 운동 리스트
 	@Override
 	public List<Map<String, Object>> getbookmarkHealthDic(String healthName, int member_no, int minute){
 		Map<String, Object> healthDic = new HashMap<>();
@@ -47,4 +49,15 @@ public class HealthDicServiceImpl implements HealthDicService {
 
 		return bookmarkHealthDicList;
 	}
+	
+	//북마크 추가
+	@Override
+    public int addBookmark(HealthBookmarkVO vo) {
+		return mapper.addBookmark(vo);
+    }
+    //북마크 삭제
+	@Override
+    public int delBookmark(HealthBookmarkVO vo) {
+		return mapper.delBookmark(vo.getHealth_bookmark_no());
+    }
 }
