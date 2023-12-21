@@ -8,7 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GoodsMapper {
 	//상품 목록
-	List<GoodsVO> list();
+	List<GoodsVO> goodsList(String searchGoods);
+	
 	
 	//카테고리별 상품 목록 
 	List<GoodsVO> getCategoryGoodsList(int category_no);

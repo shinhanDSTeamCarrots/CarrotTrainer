@@ -16,6 +16,28 @@
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    		<div class="qnaHeader">
+    			<h1>상품문의</h1>    		
+	    		<div class="writeQna">
+	    			<button class="writebtn"></button>
+	    		</div>
+	    	</div>
+    		<div class="qnaList">
+    			<table class="qnaTable">
+    				<thead>
+	    				<tr>	    					
+	    					<th>글번호</th>
+	    					<th>제목</th>
+	    					<th>작성자</th>
+	    					<th>작성일</th>	    					
+	    				</tr>
+    				</thead>
+    				<tbody>
+    		
+    				
+    				</tbody>
+    			</table>
+    		</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

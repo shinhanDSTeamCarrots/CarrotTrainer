@@ -9,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GoodsController {
@@ -20,14 +19,17 @@ public class GoodsController {
 	
 		
 	@GetMapping("/goodsList")
-	public String list(Model model) {
-		List<GoodsVO> goodsList=service.goodsList();
+	public String list(Model model, @RequestParam(name="search_goods", required=false) String searchGoods) {
+		List<GoodsVO> goodsList;	
+		
+		goodsList=service.goodsList(searchGoods);		
 		model.addAttribute("goodsList", goodsList);
 		
-		// 콘솔에 출력
-        /*for (GoodsVO goods : goodsList) {
+		logger.info(searchGoods);
+        for (GoodsVO goods : goodsList) {
             logger.info("{}", goods);
-        }*/		
+        }
+        	
 		return "/goods/goodsList";
 	}
 

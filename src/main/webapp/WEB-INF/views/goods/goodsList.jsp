@@ -48,10 +48,12 @@
 		   		
 		   		<!-- 검색창 -->
 		   		<div class="search_wrap">
-		   			<div class="search_area">
-		   				<input type="text" name="search_goods" value=""> 
-		    			<button id="search">검색</button>
-		    		</div>
+		   			<form method="get" name="searchForm" id="searchForm" action="${pageContext.request.contextPath}/goodsList">
+			   			<div class="search_area">
+			   				<input type="text" name="search_goods" value="${search_goods}" title="검색어 입력"> 
+			    			<input type="submit" id="search" value="검색" title="검색">
+			    		</div>
+			    	</form>
 		   		</div>		
 	    	</div>	   		
 		   	

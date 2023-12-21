@@ -11,13 +11,18 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Autowired
 	private GoodsMapper mapper;
-
+	
+	
 	@Override
-	//goodsList(안에 들어와야함)
-	public List<GoodsVO> goodsList() {
-		List<GoodsVO> goodsList = mapper.list();
+	public List<GoodsVO> goodsList(String searchGoods) {
+		List<GoodsVO> goodsList = mapper.goodsList(searchGoods);
 		return goodsList;
 	}
+	/*@Override
+	public List<GoodsVO> searchGoodsList(String searchGoods) {
+		List<GoodsVO> searchGoodsList = mapper.searchGoodsList(searchGoods);
+		return searchGoodsList;
+	}*/
 	
 	@Override
 	public List<GoodsVO> getCategoryGoodsList(int category_no){
@@ -36,5 +41,7 @@ public class GoodsServiceImpl implements GoodsService {
 		List<GoodsOptionVO> goodsOptions = mapper.goodsOption(goods_no);
 		return goodsOptions;
 	}
+
+	
 
 }

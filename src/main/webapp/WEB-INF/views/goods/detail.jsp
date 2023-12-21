@@ -86,6 +86,23 @@
 		}		
 	}
 	
+	
+	//문의 작성 버튼 클릭시 폼 나타나기
+	
+	$(document).ready(function(){
+		$(".writeform").hide();
+		
+		$(".writebtn").on("click",function(){
+			$(."writeform").slideDown();
+		});
+		
+		$(".closebtn").on("click",function(){
+			$(".writeform").slideUp();
+		});
+	});
+	
+	
+	
 	</script>
 	
 </head>
@@ -110,13 +127,13 @@
 		    	<!-- 상품 카테고리명 & 검색창 -->
 		   		<h1><c:out value="${item.category_name }"/></h1>
 		
-		   		<!-- 검색창 -->
+		   		<!-- 검색창 
 		   		<div class="search_wrap">
 		   			<div class="search_area">
 		   				<input type="text" name="search_goods" value=""> 
 		    			<button id="search">검색</button>
 		    		</div>
-		   		</div>
+		   		</div>-->
 		    </div>
 		    
 		    <!-- 상품 디테일 페이지 -->
@@ -186,10 +203,43 @@
 					<p>전체 리뷰</p>
 					<jsp:include page="/review/shoppingReview.do?goods_no=${item.goods_no }"/>
 				</div>
-				<div class="itemDetailQna" id="detailQna">
-					<p>전체 문의</p>
-				</div>
-			
+				
+				
+				
+				<!-- 상 품 문 의 -->
+				<div class="itemDetailQna" id="detailQna">						
+		    		<h3 class="sub_title">상품문의</h3>
+		    		<div class="qnaList">
+		    			<table class="qnaTable">
+		    			<p><span><strong>총 ${map.count }개</strong></span></p>
+		    			<button class="writebtn"></button>
+		    			<div class="writeform">
+		    			</div>
+		    				<thead>
+			    				<tr>	    					
+			    					<th>글번호</th>
+			    					<th>제목</th>
+			    					<th>작성자</th>
+			    					<th>작성일</th>	    					
+			    				</tr>
+		    				</thead>
+		    				<tbody>
+		    				<c:if test="${empty qna}">
+		    					<tr>
+		    						<td class="none" colspan="4">등록된 문의가 없습니다</td>
+		    					</tr>	    					
+		    				</c:if>
+		    				<c:forEach var="qna" items="${qna }">
+		    					<tr>
+		    						<td class="no">${qna.inquiry_no }</td>
+		    						<td class="title">${qna.title }</td>
+		    						<td class="writer">${qna.member_id }</td>
+		    						<td class="date">${qna.inquiry_date }</td>
+		    				</c:forEach>
+		    				</tbody>
+		    			</table>
+		    		</div>
+				</div>			
 			</div>
 		   
     	</div>
