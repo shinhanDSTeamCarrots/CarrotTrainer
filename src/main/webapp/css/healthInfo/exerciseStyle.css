@@ -89,6 +89,10 @@
 }
 .health-info {
 	border-top: 1px solid #D9D9D9;
+	cursor: pointer;
+}
+.health-info:hover {
+	background-color: #FAF8ED;
 }
 .health-info > td {
 	padding: 10 0px;
@@ -97,13 +101,21 @@
 .health-info > td.health {
 	text-align: left;
 }
-/* 버튼 */
-#healthCheck {
-	width: 20px;
-	height: 20px;
-	background-color: #CEDEBD;
+.empty-healthlist {
+	padding: 250px;
+	text-align: center;
 }
-
+/*-------
+	별
+--------*/
+.bookmark {
+  font-size: 23px;
+  line-height: 1;
+  color: #D9D9D9;
+}
+.bookmark:hover {
+  color: gold;
+}
 
 /*----------------
 	진행 운동 목록
@@ -174,7 +186,6 @@
 	font-weight: 700;
 	height: 40px;
 }
-
 
 /*-----------
 	모달팝업

@@ -37,18 +37,15 @@
 				<!-- 목록 -->
 				<div class="list">
 					<div class="list-title">
-						<p class="list-title-text">목록</p>
-						<%-- 로그인 했을 때,
-		                <c:if test="${ }">
+		                <c:if test="${null ne healthName}"> <!-- 검색 -->
+		                    <p class="list-title-text">검색 목록</p>
+		                </c:if>
+		                <c:if test="${null eq healthName && empty loginInfo}"> <!-- 비로그인 && 미검색 -->
+		                    <p class="list-title-text">목록</p>
+		                </c:if>
+		                <c:if test="${null eq healthName && !empty loginInfo}"> <!-- 로그인 && 미검색 -->
 		                    <p class="list-title-text">즐겨찾기 목록</p>
 		                </c:if>
-		                검색하면 (검색결과부터 구현)
-		                <c:if test="${ }">
-		                    <p class="list-title-text">검색 결과</p>
-		                </c:if>
-		                
-		                <button class="select" type="submit" onclick="">선택</button>
-		                --%>
 		            </div>
 					<div class="list-division-line">
 						<img>
@@ -57,29 +54,33 @@
 					<div class="list-result">
 						<table class="healthDic-list">
 							<tbody id="healthTbody">
-							<colgroup>
-								<col width="10%" />
-								<col width="70%" />
-								<col width="20%" />
-							</colgroup>
-							<%-- 즐찾목록있으면 > 없으면 전체
-		               		<c:if test="">
+							<!-- 로그인 -->
+							<c:if test="${null ne healthName && empty healthDic}"> <!-- 목록 없음 -->
+								<colgroup>
+									<col width="100%" />
+								</colgroup>
+	               				<tr><td class="empty-healthlist">검색 결과가 없습니다.</td></tr>	
 							</c:if>
-							-->
-							검색하면
-							<c:if test="">
+							<c:if test="${!empty loginInfo && empty healthDic}"> <!-- 로그인 && 목록 없음 -->
+								<colgroup>
+									<col width="100%" />
+								</colgroup>
+	               				<tr><td class="empty-healthlist">즐겨찾기 목록이 없습니다.</td></tr>	
 							</c:if>
-							 --%>
-							<c:forEach var="healthDic" items="${healthDic}">
-								<tr class="health-info" data-no="${healthDic.no }">
-								<%--
-									<td style="text-align: center;"><button type="button" id="healthCheck" name="healthCheck" value="${healthDic.no }"></button></td>
-									--%>
-									<td><input type="checkbox" class="healthCheck" name="healthCheck" ></td>
-									<td class="health">${healthDic.health }</td>
-									<td class="calorie">${healthDic.calorie }kcal/hr</td>
-								</tr>
-							</c:forEach>
+							<c:if test="${!empty healthDic}">
+								<colgroup>
+									<col width="10%" />
+									<col width="70%" />
+									<col width="20%" />
+								</colgroup>
+								<c:forEach var="healthDic" items="${healthDic}">
+									<tr class="health-info" data-no="${healthDic.no }">
+										<td class="bookmark">&#9733;</td>
+										<td class="health">${healthDic.health }</td>
+										<td class="calorie">${healthDic.calorie }kcal/hr</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -120,9 +121,9 @@
 							</div>
 							<div class="detail-division-line"></div>
 						</div>
-						 -->
+						-->
 					</div>
-					<button class="select-info" type="submit" onclick="">기록하기</button>
+					<button class="select-info" type="submit">기록하기</button>
 					<%-- 이미 입력 값이 없으면
 	                <c:if test="${ }}">
 	                    <button class="select-info" type="submit" onclick="">기록 완료</button>

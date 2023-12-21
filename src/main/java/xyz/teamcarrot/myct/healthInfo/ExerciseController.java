@@ -1,9 +1,16 @@
 package xyz.teamcarrot.myct.healthInfo;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import xyz.teamcarrot.myct.member.MemberVO;
 
 @Controller
 public class ExerciseController {
@@ -11,30 +18,48 @@ public class ExerciseController {
 	@Autowired
 	HealthDicService service;
 	
-	/*
-	//기본 목록 불러오기
 	@GetMapping("/exercise")
-	public String exercise(Model model) {
-		model.addAttribute("healthDic", service.getHealthDic("", 70, 60));
-		return "/healthInfo/exercise";
-	}
-
-	//검색 결과 불러오기
-	@ResponseBody
-	@GetMapping("/getHealthDic")
-	public List<Map<String, Object>> searchWord(@RequestParam String healthName,@RequestParam int kg,@RequestParam int minute) {
-		return service.getHealthDic(healthName, kg, minute);
-	}*/
-	@GetMapping("/exercise")
-	public String searchHealthInfo(Model model,String healthName,Integer kg,Integer minute) {
-		if(kg==null && minute==null ) {
-			kg=70;
+	public String searchHealthInfo(Model model, HttpSession sess, String healthName,Integer minute) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		//member_no 확인용
+		int member_no = -1;
+		if(mem != null) {
+			member_no = mem.getMember_no();
+		}
+		
+		if(minute == null ) {
 			minute=60;
 		}
+		
+		//기능별 분리
+		if(mem == null) { 	//비로그인
+			model.addAttribute("healthDic", service.getHealthDic(healthName, member_no, minute));
+			model.addAttribute("healthName", healthName);
+		}else {
+			if(healthName == null) {
+				//로그인 && 검색 안함 -> 즐찾
+				List<Map<String, Object>> bookmarks = service.getbookmarkHealthDic(healthName, member_no, minute);
+				model.addAttribute("healthDic", bookmarks);
+			}else {
+				//로그인 && 검색함 -> 일반 검색
+				model.addAttribute("healthDic", service.getHealthDic(healthName, member_no, minute));
+				model.addAttribute("healthName", healthName);
+			}
+		}
+
+//		List<Map<String, Object>> bookmarks = service.getbookmarkHealthDic(healthName, member_no, minute);
+//		if(bookmarks.size() != 0) {
+//			model.addAttribute("havebookmark", true);
+//		}else {
+//			model.addAttribute("havebookmark", false);
+//		}
+		
+		
+		
+		//확인
 		System.out.println(healthName);
-		System.out.println(kg);
 		System.out.println(minute);
-		model.addAttribute("healthDic", service.getHealthDic(healthName, kg, minute));
+
 		return "/healthInfo/exercise";
 	}
 }

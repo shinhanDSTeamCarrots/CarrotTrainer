@@ -3,7 +3,7 @@
 //유저 name
 $(function() {
 	updateUserName();
-
+	
     function updateUserName() {
     	const userName = "${sessionScope.loginInfo.member_name}";
     	if (userName) {	//로그인이 되어있을 때
