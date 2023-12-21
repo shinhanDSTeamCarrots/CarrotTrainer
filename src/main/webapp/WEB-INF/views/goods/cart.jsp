@@ -101,6 +101,32 @@
 	    }
 	});
 	
+	
+	//결제하기 버튼 클릭시 결제창에 넘겨주기
+	$(".purchase").click(function(){
+		var selectedItems = $(".each_cartitem input[type='checkbox']:checked");
+        if (selectedItems.length > 0) {
+            var selectedCartNos = [];
+            selectedItems.each(function () {
+                selectedCartNos.push($(this).val());
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/pay/cart",
+                traditional: true, // 배열전송을 위한 설정
+                data: { cartNos: selectedCartNos },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                }
+            });
+        } else {
+            alert("선택된 상품이 없습니다.");
+        }
+    });
+	
 	</script>
 	
 </head>
@@ -182,7 +208,7 @@
 		    
 		    <!-- 결제하기 버튼 -->
 		    <div class="purchaseButton">
-		    	<button class="purchase" onclick="location.href='${page.Context.request.contextPath}'">결제하기</button>
+		    	<button class="purchase">결제하기</button>
 		    </div>
 		    
 	    
