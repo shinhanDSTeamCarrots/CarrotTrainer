@@ -21,6 +21,11 @@ public class MemberServiceImpl implements MemberService {
 	public boolean dupId(String id) {
 		return mapper.dupId(id) > 0 ? true : false;
 	}
+	
+	@Override
+	public boolean dupNickname(String nickname) {
+		return mapper.dupNickname(nickname) > 0 ? true : false;
+	}
 
 	@Override
 	public boolean regist(MemberVO vo) {
@@ -84,23 +89,17 @@ public class MemberServiceImpl implements MemberService {
 
 	// 20231214 추가
 	@Override
-	public void updateLoginFailCount(MemberVO member, HttpSession sess) {
+	public void updateLoginFailCount(MemberVO member) {
 		mapper.updateLoginFailCount(member);
-		Integer loginFailCount = (Integer) sess.getAttribute("loginFail");
-		if (loginFailCount == null) {
-			loginFailCount = 0;
+		//Integer loginFailCount = (Integer) sess.getAttribute("loginFail");
+		//if (loginFailCount == null) {
+			//loginFailCount = 0;
 		}
-		sess.setAttribute("loginFail", 1);
-	}
+		//sess.setAttribute("loginFail", 1);
+	
 
-	public void updateLoginBlocked(MemberVO member, HttpSession sess) {
+	public void updateLoginBlocked(MemberVO member) {
 		mapper.updateLoginBlocked(member);
-
-		Integer loginBlocked = (Integer) sess.getAttribute("loginBlocked");
-		if (loginBlocked == null) {
-			loginBlocked = 0;
-		}
-		sess.setAttribute("loginBlocked", loginBlocked + 1);
 
 	}
 

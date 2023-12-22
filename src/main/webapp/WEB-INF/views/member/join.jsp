@@ -68,6 +68,42 @@
 					});
 				});
 	})
+	
+	$(function() {
+		$("#nicknameCheck").click(
+				function() {					
+					$.ajax({
+						url : 'nicknameCheck.do',
+						data : {
+							nickname : $('#member_nickname').val()
+						},
+						success : function(res) {
+							console.log(res);
+							if (res == 'true') {
+								// 중복된 아이디
+								$("#nicknameCheckMessage").text('닉네임이 중복되었습니다.').css(
+										'color', 'red');
+								$("#member_nickname").val('');
+								$("#member_nickname").focus();
+							} else {
+								// 사용 가능한 아이디
+								$("#nicknameCheckMessage").text('사용 가능한 닉네임입니다.')
+										.css('color', 'green');
+							}
+						}
+					});
+				});
+	})
+	
+	function validateId(){
+		var id = document.getElementById("member_id").value;
+		var isValid = id.length>=5 || id.length<=20;
+		if(isValid){
+			document.getElementById("error-id").style.display = "none";
+		} else{
+			document.getElementById("error-id").style.display = "block";
+		}
+	}
 
 	function validatePw() {
 		var pw = document.getElementById("member_pw").value;
@@ -120,7 +156,7 @@
 	function zipcode() {
 		new daum.Postcode({
 			oncomplete : function(data) {
-
+				var roadAddr = data.roadAddress;
 				var extraRoadAddr = ''; // 참고 항목 변수
 
 				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
@@ -151,12 +187,9 @@
 	justify-content: center;
 	height: 1600px;
 	text-align: center;
+	position: relative;
+	float: right;
 }
-
-.menu {
-	text-align: center;
-}
-
 table.reg tbody tr th {
 	margin-bottom: 10px;
 	text-align: center;
@@ -177,105 +210,120 @@ table.reg tbody tr td input {
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<div class="menu">
-				<h1 class="title">회원가입</h1>
-				<a href="joinOath.do">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
-				<form name="frm" id="frm" action="regist.do" method="post">
-					<table class="reg">
-						<caption>회원가입</caption>
-						<colgroup>
-							<col width="20%" />
-							<col width="*" />
-						<tbody>
-							<tr>
-								<th>아이디</th>
-								<td><input type="text" name="member_id" id="member_id"
-									placeholder="5자 이상 20자 미만" style="float: left;"
-									oninput="validateId()"> <a href="javascript:;"
-									style="float: left; width: auto; clear: none;" id="idCheck">중복확인</a>
+				<div class="registry">
+					<h1 class="title">회원가입</h1>
+					<a href="joinOath.do">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
+				</div>
+				<div class="infos">
+					<form name="frm" id="frm" action="regist.do" method="post">
+						<table class="reg">
+							<caption>회원가입</caption>
+							<colgroup>
+								<col width="20%" />
+								<col width="*" />
+							<tbody>
+								<tr>
+									<th>아이디</th>
+									<td><input type="text" name="member_id" id="member_id"
+										placeholder="5자 이상 20자 미만" style="float: left;"
+										oninput="validateId()"> <a href="javascript:;"
+										style="float: left; width: auto; clear: none;" id="idCheck">중복확인</a>
 
-								</td>
-							</tr>
-							<tr>
-								<th></th>
-								<td><span id="idCheckMessage"></span></td>
-							</tr>
-							<tr>
-								<th>비밀번호</th>
-								<td><input type="password" name="member_pw" id="member_pw"
-									style="float: left;" placeholder="영문, 숫자, 특수문자 포함 8자 이상"
-									oninput="validatePw()">
-									<div id="error-pw" class="error-pw" style="display: none;">입력값이
-										올바르지 않습니다.</div></td>
-							</tr>
-							<tr>
-								<th></th>
-								<td><span id="passwordCheckMessage"></span></td>
-							</tr>
-							<tr>
-								<th>비밀번호 확인</th>
-								<td><input type="password" name="member_pwCheck"
-									id="member_pwCheck" style="float: left;"
-									oninput="validatePwCheck()">
-									<div id="error-pwCheck" class="error-pwCheck"
-										style="display: none;">비밀번호를 다시 확인해 주세요.</div></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input type="text" name="member_email"
-									id="member_email" style="float: left;"></td>
-							</tr>
-							<tr>
-								<th>생년월일</th>
-								<td><input type="text" name="member_birthday"
-									id="member_birthday" style="float: left;"
-									placeholder="YYYYMMDD 형식으로 입력" oninput="validateBirthday()"></td>
-							</tr>
-							<tr>
-								<th>이름</th>
-								<td><input type="text" name="member_name" id="member_name"
-									style="float: left;"></td>
-							</tr>
-							<tr>
-								<th>닉네임</th>
-								<td><input type="text" name="member_nickname"
-									id="member_nickname" style="float: left;"
-									placeholder="10자 미만으로 입력" oninput="validateNickname()">
-								<div id="error-nickname" class="error-nickname"
-										style="display: none;">입력값이 올바르지 않습니다.</div></td>
-							</tr>
-							<tr>
-								<th>핸드폰</th>
-								<td><input type="text" name="member_hp" id="member_hp"
-									style="float: left;" placeholder="'-'표시 생략"
-									oninput="validatePhoneNumber()">
-									<div id="error-hp" class="error-hp" style="display: none;">입력값이
-										올바르지 않습니다.</div></td>
+									</td>
+								</tr>
+								<tr>
+									<th></th>
+									<td><div id="error-id" class="error-message" style="display: none;">입력값이
+											올바르지 않습니다.</div><span id="idCheckMessage"></span></td>
+								</tr>
+								<tr>
+									<th>비밀번호</th>
+									<td><input type="password" name="member_pw" id="member_pw"
+										style="float: left;" placeholder="영문, 숫자, 특수문자 포함 8자 이상"
+										oninput="validatePw()">
+										
+								</tr>
+								<tr>
+									<th></th>
+									<td><div id="error-pw" class="error-message" style="display: none;">입력값이
+											올바르지 않습니다.</div></td>
+								</tr>
+								<tr>
+									<th>비밀번호 확인</th>
+									<td><input type="password" name="member_pwCheck"
+										id="member_pwCheck" style="float: left;"
+										oninput="validatePwCheck()">
+										</td>
+								</tr>
+								<tr>
+									<th></th>
+									<td><div id="error-pwCheck" class="error-message"
+											style="display: none;">비밀번호를 다시 확인해 주세요.</div><span id="passwordCheckMessage"></span></td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td><input type="text" name="member_email"
+										id="member_email" style="float: left;"></td>
+								</tr>
+								<tr>
+									<th>생년월일</th>
+									<td><input type="text" name="member_birthday"
+										id="member_birthday" style="float: left;"
+										placeholder="YYYYMMDD 형식으로 입력" oninput="validateBirthday()"></td>
+								</tr>
+								<tr>
+									<th>이름</th>
+									<td><input type="text" name="member_name" id="member_name"
+										style="float: left;"></td>
+								</tr>
+								<tr>
+									<th>닉네임</th>
+									<td><input type="text" name="member_nickname"
+										id="member_nickname" style="float: left;"
+										placeholder="10자 미만으로 입력" oninput="validateNickname()">
+										<a href="javascript:;"
+										style="float: left; width: auto; clear: none;" id="nicknameCheck">중복확인</a></td>
+										
+											
+								</tr>
+								<tr>
+									<th></th>
+									<td><div id="error-nickname" class="error-message"
+											style="display: none;">입력값이 올바르지 않습니다.</div><span id="nicknameCheckMessage"></span></td>
+								</tr>
+								<tr>
+									<th>핸드폰</th>
+									<td><input type="text" name="member_hp" id="member_hp"
+										style="float: left;" placeholder="'-'표시 생략"
+										oninput="validatePhoneNumber()">
+										<div id="error-hp" class="error-message" style="display: none;">입력값이
+											올바르지 않습니다.</div></td>
 
-							</tr>
-							<tr>
-								<th rowspan="3">*주소</th>
-								<td><input type="text" name="zipcode" id="zipcode" value=""
-									maxlength="6" style="float: left;" readonly> <a
-									href="javascript:zipcode();"
-									style="float: left; width: auto; clear: none;">우편번호</a></td>
-							</tr>
-							<tr>
-								<td><input type="text" name="member_addr" id="member_addr"
-									value="" maxlength="15" style="float: left;" readonly></td>
-							</tr>
-							<tr>
-								<td><input type="text" name="member_addrDetail"
-									id="member_addrDetail" value="" maxlength="15"
-									style="float: left;"></td>
-							</tr>
-						</tbody>
-					</table>
-					<input type="submit" value="다음" onclick="return infoSave()" />
-				</form>
+								</tr>
+								<tr>
+									<th rowspan="3">주소</th>
+									<td><input type="text" name="zipcode" id="zipcode"
+										value="" maxlength="6" style="float: left;" readonly>
+										<a href="javascript:zipcode();"
+										style="float: left; width: auto; clear: none;">우편번호</a></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="member_addr" id="member_addr"
+										value="" maxlength="15" style="float: left;" readonly></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="member_addrDetail"
+										id="member_addrDetail" value="" maxlength="15"
+										style="float: left;"></td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="submit" value="다음" onclick="return infoSave()" />
+					</form>
+				</div>
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
-
 </body>
 </html>

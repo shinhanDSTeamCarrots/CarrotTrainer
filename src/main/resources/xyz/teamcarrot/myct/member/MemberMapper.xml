@@ -29,8 +29,11 @@
 	<select id="login"
 		resultType="xyz.teamcarrot.myct.member.MemberVO"
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
-		SELECT * FROM tb_member WHERE member_id=#{member_id};
-		<!--member_pw = #{member_pw} -->
+		SELECT * FROM tb_member WHERE member_id = #{member_id} AND
+		member_pw = #{member_pw}
+		
+		<!-- member_pw = #{member_pw} -->
+		<!-- 패스워드 부분 주석 해제: 로그인 메소드 부분 어떻게 바꿀지 생각하기 -->
 	</select>
 	<update id="updateLoginFailCount"
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
@@ -49,6 +52,10 @@
 		WHERE member_id=#{member_id} AND
 		member_pw = SHA2(#{member_pw}, 256);
 	</delete>
+	<select id="dupNickname" resultType="Integer" parameterType="String">
+		SELECT
+		COUNT(*) FROM tb_member WHERE member_nickname = #{member_nickname}
+	</select>
 
 	<select id="detail"
 		resultType="xyz.teamcarrot.myct.member.MemberVO" parameterType="int">

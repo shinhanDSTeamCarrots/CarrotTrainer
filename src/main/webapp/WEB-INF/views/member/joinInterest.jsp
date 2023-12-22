@@ -13,30 +13,7 @@
 	<script src="js/script.js"></script>
 <script>
 
-/*function joinDone() {
-    // btn 클래스를 가진 모든 요소를 선택
-    const buttons = document.querySelectorAll('.btn');
-	const selectedInterests = [];
-    // 초록색인 버튼의 개수를 세기 위한 변수
-    let greenCount = 0;
 
-    // 각 버튼에 대해 반복
-    buttons.forEach(button => {
-        if (button.style.backgroundColor === 'green') {
-            greenCount++;
-            const interestId = button.id.replace('body','');
-            selectedInterests.push(interestId);
-        }
-    });
-
-    // 초록색인 버튼이 하나도 없을 경우 알림창 띄우기
-    if (greenCount === 0) {
-        alert('최소 하나의 항목을 선택하세요.');
-    } else {
-        saveInterest(selectedInterests);
-        //데이터 저장&홈페이지로 이동시키는 방법 생각하기
-    }
-}*/
 
 function joinDone() {
     const buttons = document.querySelectorAll('.btn');
@@ -54,12 +31,11 @@ function joinDone() {
         // Ajax를 사용하여 서버에 선택된 버튼 정보 전송
         $.ajax({
             type: 'POST',
-            url: 'insertInterest.do', // 실제 서버의 URL로 변경
+            url: 'interestRegist.do', 
             contentType: 'application/json',
             data: JSON.stringify({ selectedButtons: selectedButtons }),
             success: function (response) {
                 alert('회원 가입을 축하해요!');
-                // 원하는 동작 수행
             },
             error: function (error) {
                 console.error('에러 발생:', error);
@@ -84,6 +60,31 @@ function changeColor(button) {
 
 </script>
 <style>
+
+
+		#body{
+                    display: inline-block;
+                    outline: 0;
+                    cursor: pointer;
+                    padding: 5px 16px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    vertical-align: middle;
+                    border: 1px solid;
+                    border-radius: 6px;
+                    color: #ffffff;
+                    background-color: #2ea44f;
+                    border-color: #1b1f2326;
+                    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+                    transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+                    transition-property: color, background-color, border-color;
+                    :hover {
+                        background-color: #2c974b;
+                        border-color: #1b1f2326;
+                        transition-duration: 0.1s;
+                    }
+             }   
     /*******나중에 컨테이너 부분 수정해야 함(지금 내용은 임시책)*******/
     /*	.container{
 		    display: flex;
@@ -130,31 +131,15 @@ function changeColor(button) {
         margin-bottom: 100px;
     }
 
-    .btn {
-       
-       margin-right: 150px;
-       margin-left : 150px;
-       border-style: solid;
-       width : 200px;
-       height: 100px;
-       
-       
-       border-color: black;
-       background-color:white;
-       border-radius: 30%;
-       
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  
     
     .doneButton{
     	font-size: 40px;
     }
     .btn:hover {
-            background-color: green; /* 마우스를 올렸을 때 색상 변경 */
+            background-color: green; 
         }
-    /* 클릭했을 때 초록색 되는 방법, 초록색인 버튼 값만 데이터에 저장하는 방법 생각 */         
+             
      
     </style>
     	
@@ -169,15 +154,15 @@ function changeColor(button) {
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>    				
     				<form name="frm" id="frm" action="interestregist.do" method="get">
     				<div class="btn-container">
-    					<a href="javascript:;" class="btn" id = "body1" onclick="changeColor(this)">눈</a>
-    					<a href="javascript:;" class="btn" id = "body2" onclick="changeColor(this)">귀</a>
-    					<a href="javascript:;" class="btn" id = "body3" onclick="changeColor(this)">간</a>
-    				</div>
-    				<div class="btn-container">
-    					<a href="javascript:;" class="btn" id = "body4" onclick="changeColor(this)">기관지</a>
-    					<a href="javascript:;" class="btn" id = "body5" onclick="changeColor(this)">위</a>
-    					<a href="javascript:;" class="btn" id = "body6" onclick="changeColor(this)">장</a>
-    				</div>    						
+    					<input type = "checkbox" name = "1" id ="body" >눈
+    					<input type = "checkbox" name ="2" id ="body">귀
+    					<input type = "checkbox" name = "3" id ="body" >간
+    					<input type = "checkbox" name = "4" id ="body" >기관지
+    					<input type = "checkbox" name = "5" id ="body" >위
+    					<input type = "checkbox" name = "6" id ="body" >장
+                    </div>
+                    
+          				
     				</form>
     				<div class = "doneButton">
     					<a href="javascript:;" onclick="joinDone();">가입</a>

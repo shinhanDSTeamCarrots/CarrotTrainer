@@ -16,9 +16,14 @@ public interface MemberService {
 	MemberVO detail(MemberVO vo);
 
 	boolean deleteMember(String member_id, String member_pw);
+	
+	boolean dupNickname(String nickname);
 
-	void updateLoginFailCount(MemberVO member, HttpSession sess);
+	//void updateLoginFailCount(MemberVO member, HttpSession sess);
+	
+	void updateLoginFailCount(MemberVO member);
 
-	void updateLoginBlocked(MemberVO member, HttpSession sess);
+	//void updateLoginBlocked(MemberVO member, HttpSession sess);
+	void updateLoginBlocked(MemberVO member);
 
 }

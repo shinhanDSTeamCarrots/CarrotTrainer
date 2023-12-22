@@ -16,6 +16,8 @@ public interface MemberMapper {
 	int update(MemberVO vo);
 	
 	int deleteMember(@Param("member_id") String member_id, @Param("member_pw") String member_pw);
+
+	int dupNickname(String nickname);
 	
 	MemberVO findByUsername(String member_id);
 

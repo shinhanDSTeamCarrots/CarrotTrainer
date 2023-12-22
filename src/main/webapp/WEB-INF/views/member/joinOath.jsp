@@ -15,6 +15,20 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
 <script src="js/script.js"></script>
+<!-- 카카오 로그인 -->
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        Kakao.init('script앱키 입력');
+        Kakao.isInitialized();
+    });
+
+    function loginWithKakao() {
+        Kakao.Auth.authorize({ 
+        redirectUri: 'http://localhost:8090/kakao_callback' 
+        }); // 등록한 리다이렉트uri 입력
+    }
+</script>
 <script
 	src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
 	charset="utf-8"></script>
@@ -37,6 +51,11 @@
 		<a id="naverIdLogin_loginButton" href="javascript:;"> <span>네이버
 				로그인</span>
 		</a>
+		<div class="kakao">
+			<img src="${pageContext.request.contextPath}/myct/src/main/webapp/img/kakaoRegister.png"
+			alt = "카카오가입"
+				onclick="loginWithKakao()">
+		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>

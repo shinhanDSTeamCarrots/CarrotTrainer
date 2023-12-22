@@ -27,6 +27,11 @@
 			$("#member_pw").focus();
 			return false;
 		}
+
+		if ($("#loginSave").is(":checked")) {
+
+		}
+
 		$("#board").submit();
 	}
 </script>
@@ -42,6 +47,20 @@
 	/* 추가: 수직 가운데 정렬 */
 	height: 1600px;
 }
+
+.loginInfoSave {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+
+.loginSuccess {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -50,8 +69,9 @@
 		<form action="login.do" method="post" id="board" name="board">
 			<div class="container">
 				<div class="menu">
-					<h1 class="login">로그인</h1>
+
 					<table class="reg">
+
 						<caption>회원가입</caption>
 						<colgroup>
 							<col width="20%" />
@@ -66,15 +86,15 @@
 								<th>비밀번호</th>
 								<td><input type="password" name="member_pw" id="member_pw"></td>
 							</tr>
-
 						</tbody>
-						<input type="checkbox" name="loginSave" id="loginSave" /> 로그인 정보
-						저장
 					</table>
+					<div class="loginInfoSave">
+						<input type="checkbox" name="loginSave" id="loginSave">로그인 정보 저장
+						<!-- 로그인정보 저장 방법: 강사님한테 물어봐도 아직 모르겠음... 더 얼른 생각해야, 토큰 이용 방식 어떻게? -->
+					</div>
 					<div class="loginSuccess">
 						<input type="submit" value="로그인" onclick="return loginCheck();">
 					</div>
-
 				</div>
 			</div>
 		</form>
