@@ -122,7 +122,7 @@
 		<div class="container">
 
 
-			<form action="/myct/board/insert.do" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
+			<form action="/myct/board/insert" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
 
 
 				<div class="form-group">

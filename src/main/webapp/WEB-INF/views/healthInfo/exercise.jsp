@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
@@ -9,10 +8,15 @@
 	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
-	<script src="js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -27,7 +31,7 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="search-place">
-						<div id="search-box"><input type="text" name="healthName" value=""></div>
+						<div id="search-box"><input type="text" id="healthName" name="healthName"></div>
 						<div id="search-text"><p>검색</p></div>
 					</div>
 					<div class="detail-division-line"></div>
@@ -36,17 +40,15 @@
 				<!-- 목록 -->
 				<div class="list">
 					<div class="list-title">
-						<p class="list-title-text">목록</p>
-						<%-- 로그인 했을 때,
-		                <c:if test="${ }">
+		                <c:if test="${null ne healthName}"> <!-- 검색 -->
+		                    <p class="list-title-text">검색 목록</p>
+		                </c:if>
+		                <c:if test="${null eq healthName && empty loginInfo}"> <!-- 비로그인 && 미검색 -->
+		                    <p class="list-title-text">목록</p>
+		                </c:if>
+		                <c:if test="${null eq healthName && !empty loginInfo}"> <!-- 로그인 && 미검색 -->
 		                    <p class="list-title-text">즐겨찾기 목록</p>
 		                </c:if>
-		                검색하면 (검색결과부터 구현)
-		                <c:if test="${ }">
-		                    <p class="list-title-text">검색 결과</p>
-		                </c:if>
-		                --%>
-		                <button class="select" type="submit" onclick="">선택</button>
 		            </div>
 					<div class="list-division-line">
 						<img>
@@ -54,27 +56,34 @@
 					</div>
 					<div class="list-result">
 						<table class="healthDic-list">
-							<tbody>
-							<colgroup>
-								<col width="10%" />
-								<col width="70%" />
-								<col width="20%" />
-							</colgroup>
-							<%-- 즐찾목록있으면 > 없으면 전체
-		               		<c:if test="">
+							<tbody id="healthTbody">
+							<!-- 로그인 -->
+							<c:if test="${null ne healthName && empty healthDic}"> <!-- 목록 없음 -->
+								<colgroup>
+									<col width="100%" />
+								</colgroup>
+	               				<tr><td class="empty-healthlist">검색 결과가 없습니다.</td></tr>	
 							</c:if>
-							-->
-							검색하면
-							<c:if test="">
+							<c:if test="${!empty loginInfo && empty healthDic}"> <!-- 로그인 && 목록 없음 -->
+								<colgroup>
+									<col width="100%" />
+								</colgroup>
+	               				<tr><td class="empty-healthlist">즐겨찾기 목록이 없습니다.</td></tr>	
 							</c:if>
-							 --%>
-							<c:forEach var="healthDic" items="${healthDic}">
-								<tr class="item-division-line">
-									<td style="text-align: center;"><input type="checkbox" id="cb" name="healthCheck" value="${healthDic.no }"></td>
-									<td id="health" style="text-align: left;">${healthDic.health }</td>
-									<td id="calorie" style="text-align: center;">${healthDic.calorie }kcal/hr</td>
-								</tr>
-							</c:forEach>
+							<c:if test="${!empty healthDic}">
+								<colgroup>
+									<col width="10%" />
+									<col width="70%" />
+									<col width="20%" />
+								</colgroup>
+								<c:forEach var="healthDic" items="${healthDic}">
+									<tr class="health-info" data-no="${healthDic.no }">
+										<td class="bookmark">&#9733;</td>
+										<td class="health">${healthDic.health }</td>
+										<td class="calorie">${healthDic.calorie }kcal/hr</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -88,22 +97,38 @@
 					</div>
 					<div class="title-division-line"></div>
 					<div class="date">
-						<p>날짜</p>
+						<!-- autocomplte는 <input> 태그를 클릭했을때 이전 데이터가 뜨는 것을 막기 위해 -->
+						<!-- readonly는 추가해준 이유는 datepicker을 통해 삽입된 날짜 데이터를 사용자가 잘못된 형식으로 수정하지 못하도록 하기 위함 -->
+						<input name="health_date" autocomplete="off" readonly="readonly">
 					</div>
 					<div class="detail-division-line"></div>
 					<div class="healthInfo">
 						<div id="healthInfo-text">
 							<p>
-								총 <span class="sql-text">00</span>분 운동 진행
+								총 <span class="sql-text" id="total-exerciseTime">00</span>분 운동 진행
 							</p>
 							<p>
-								<span class="sql-text">000</span>kcal 소비
+								<span class="sql-text" id="total-calTime">000</span>kcal 소비
 							</p>
 						</div>
 						<div id="healthInfo-graph"></div>
-						<div class="healthInfo-select"></div>
+						<div class="healthInfo-cart"></div>
+						<!-- healthInfo-cart에 들어가는 자바스크립트 입력 코드
+						<div class="healthInfo-select">
+							<div class="healthInfo-detail">
+								<div class="bookmark">별</div>
+								<div class="healthInfo-name">
+									<div class="healthInfo-name-text">걷기</div>
+									<div class="healthInfo-name-time">60분</div>
+								</div>
+								<div class="healthInfo-cals">124kcal</div>
+								<div class="healthInfo-del">-</div>
+							</div>
+							<div class="detail-division-line"></div>
+						</div>
+						-->
 					</div>
-					<button class="select-info" type="submit" onclick="">기록 완료</button>
+					<button class="select-info" type="submit">기록하기</button>
 					<%-- 이미 입력 값이 없으면
 	                <c:if test="${ }}">
 	                    <button class="select-info" type="submit" onclick="">기록 완료</button>
@@ -114,6 +139,41 @@
 	                --%>
 				</div>
 			</div>
+			<!-- 모달 팝업 -->
+    		<div id="modalWrap">
+    			<div id="modalContent">
+    			  	<div id="modalBody">
+    			  		<!-- 닫기 버튼 -->
+    			  		<span id="closeBtn">&times;</span>
+    			  		<!-- 팝업 내용 -->
+    			  		<div id="modalBody-content">
+    			  			<div id="modalBody-title">
+    			  				<div id="modalBody-title-text">걷기</div>
+    			  				<div class="title-division-line"></div>
+    			  			</div>
+    			  			<div id="modalBody-main">
+    			  				<div id="modalBody-exercise">
+	    			  				<div class="modalBody-result" id="modalBody-time">
+	    			  					<div class="modalBody-text">운동시간(분)</div>
+	    			  					<div class="modalBody-input">
+		    			  					<div id="minus-button">-</div>
+			    			  				<input id="">
+			    			  				<div id="plus-button">+</div>
+		    			  				</div>
+	    			  				</div>
+	    			  			</div>
+    			  				<div class="modalBody-result" id="modalBody-calorie">
+    			  					<div class="modalBody-text">칼로리(kcal)</div>
+    			  					<div class="modalBody-input"><input id=""></div>
+    			  				</div>
+    			  			</div>
+    			  			<div id="modalBody-button">
+    			  				<button>기록 완료</button>
+    			  			</div>
+    			  		</div>
+    			  	</div>
+    			</div>
+    		</div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>

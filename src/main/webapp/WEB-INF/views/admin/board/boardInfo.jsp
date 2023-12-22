@@ -153,7 +153,7 @@ a:hover {
 			<h1>관리자 게시판관리</h1>
 			<div class="buttons">
 				<button class="write-btn" onclick="writeNotice()">
-					<a href="write.do" class="write-button">게시판 등록</a>
+					<a href="write" class="write-button">게시판 등록</a>
 
 				</button>
 
@@ -310,7 +310,7 @@ a:hover {
 	        $("#category_no").val(categoryNo);
 
 	        
-	        form.attr("action", "/myct/board/modify.do");
+	        form.attr("action", "/myct/board/modify");
 	        form.submit();
 	    }
 
@@ -322,7 +322,7 @@ a:hover {
 	            var categoryNo = $("#row-" + boardNo).data("category-no");
 
 	            $.ajax({
-	                url: '/myct/board/delete.do',
+	                url: '/myct/board/delete',
 	                type: 'POST',
 	                data: {
 	                    board_no: boardNo,
@@ -352,7 +352,7 @@ a:hover {
 
 	        if (confirm("선택한 게시글을 삭제하시겠습니까?")) {
 	            $.ajax({
-	                url: '/myct/board/deleteSelected.do',
+	                url: '/myct/board/deleteSelected',
 	                type: 'POST',
 	                data: { board_nos: selectedBoards },
 	                success: function(response) {
@@ -386,7 +386,7 @@ a:hover {
 	       
 	        $("#board_no").val(boardNo);
 	        $("#category_no").val(categoryNo);
-	        form.attr("action", "/myct/board/modify.do");
+	        form.attr("action", "/myct/board/modify");
 	        form.submit();
 	    }
 
@@ -396,7 +396,7 @@ a:hover {
 
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/myct/board/boardInfo.do");
+			moveForm.attr("action", "/myct/board/boardInfo");
 			moveForm.submit();
 
 		});

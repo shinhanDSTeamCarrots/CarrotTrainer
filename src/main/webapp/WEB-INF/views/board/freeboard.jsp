@@ -171,7 +171,7 @@ th {
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
 			<c:if test="${!empty loginInfo }">
-				<a href="write.do" class="write-button">게시판 등록</a>
+				<a href="write" class="write-button">게시판 등록</a>
 				</c:if>
 			</div>
 
@@ -311,7 +311,7 @@ th {
 	
 						
 						  function ViewCount(boardNo) {
-							 window.location.href = '/myct/board/freedetail.do?board_no=' + boardNo;
+							 window.location.href = '/myct/board/freedetail?board_no=' + boardNo;
 					
 					    }
 
@@ -321,7 +321,7 @@ th {
 
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/myct/board/freeboard.do");
+			moveForm.attr("action", "/myct/board/freeboard");
 			moveForm.submit();
 
 		});

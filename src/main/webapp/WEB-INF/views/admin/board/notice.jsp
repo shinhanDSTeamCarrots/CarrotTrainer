@@ -70,7 +70,7 @@
     		<h1>관리자 공지사항</h1>
   <div class="buttons">
     <button class="write-btn" onclick="writeNotice()">
-   		 <a href="write.do" class="write-button">게시판 등록</a>
+   		 <a href="write" class="write-button">게시판 등록</a>
    		
     </button>
      
@@ -164,7 +164,7 @@
 	        $("#category_no").val(categoryNo);
 
 	        
-	        form.attr("action", "/myct/board/modify.do");
+	        form.attr("action", "/myct/board/modify");
 	        form.submit();
 	    }
 
@@ -176,7 +176,7 @@
 	            var categoryNo = $("#row-" + boardNo).data("category-no");
 
 	            $.ajax({
-	                url: '/myct/board/delete.do',
+	                url: '/myct/board/delete',
 	                type: 'POST',
 	                data: {
 	                    board_no: boardNo,
@@ -206,7 +206,7 @@
 
 	        if (confirm("선택한 게시글을 삭제하시겠습니까?")) {
 	            $.ajax({
-	                url: '/myct/board/deleteSelected.do',
+	                url: '/myct/board/deleteSelected',
 	                type: 'POST',
 	                contentType: 'application/json', 
 	                data: JSON.stringify({ board_nos: selectedBoards }), 
@@ -243,7 +243,7 @@
 	        
 	        $("#board_no").val(boardNo);
 	        $("#category_no").val(categoryNo);
-	        form.attr("action", "/myct/board/modify.do");
+	        form.attr("action", "/myct/board/modify");
 	        form.submit();
 	    }
 
