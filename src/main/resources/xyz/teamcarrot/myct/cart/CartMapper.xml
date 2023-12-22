@@ -2,26 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.cart.CartMapper">
 
-	<select id="getlist" resultType="xyz.teamcarrot.myct.cart.CartVO">
-		SELECT *,(g.price+o.price_updown) AS final_price FROM tb_cart c
+	<!-- 회원별 장바구니 목록보기 -->
+	<select id="cartList" resultType="xyz.teamcarrot.myct.cart.CartVO">
+		SELECT *,g.price + IFNULL(o.price_updown,0) AS final_price FROM tb_cart c
 		INNER JOIN tb_goods g ON c.goods_no=g.goods_no
-		INNER JOIN tb_goods_option o ON c.option_no=o.option_no
+		LEFT JOIN tb_goods_option o ON c.option_no=o.option_no
+		WHERE c.member_no=#{c.member_no}
+		ORDER BY c.cart_add_date DESC
 	</select>
 	
-	<insert id="insert" parameterType="xyz.teamcarrot.myct.cart.CartVO">
-		INSERT INTO tb_cart (goods_count, cart_add_date, goods_no, member_no, option_no)
-		VALUES (#{goods_count}, #{cart_add_date}, #{goods_no}, #{member_no}, #{option_no})
+	<!-- 장바구니 추가 -->
+	<insert id="insert" parameterType="xyz.teamcarrot.myct.cart.CartVO">		
+		INSERT INTO tb_cart (goods_count, cart_add_date, goods_no, member_no
+        <if test="option_no != null and option_no != 0">
+            , option_no
+        </if>
+    )
+    	VALUES (#{goods_count}, NOW(), #{goods_no}, #{member_no}
+        <if test="option_no != null and option_no != 0">
+            , #{option_no}
+        </if>
+    )
 	</insert>
 	
-	<delete id="delete" parameterType="xyz.teamcarrot.myct.cart.CartVO">
+	<!-- 장바구니 담은거 중 선택한거 삭제 -->
+	<delete id="deleteSelected" parameterType="java.util.List">
 		DELETE FROM tb_cart
-		WHERE cart_no = #{cart_no}
+		WHERE cart_no IN
+		<foreach collection="list" item="cartNo" open="(" separator="," close=")">
+			#{cartNo}
+		</foreach>
 	</delete>
 	
+	
+	<!-- 장바구니 상품 수정 -->
 	<update id="update" parameterType="xyz.teamcarrot.myct.cart.CartVO">
         UPDATE tb_cart
         SET goods_count = #{goods_count}
+        	,option_no=#{option_no}
         WHERE cart_no = #{cart_no}
     </update>
+	
+	<!-- 장바구니에 이미 담겼는지 확인 -->
+	<select id="existInCart" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM tb_cart
+		WHERE member_no=#{mem_no}
+		AND goods_no=#{goods_no}
+	</select>
+	
 	
 </mapper>
