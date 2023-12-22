@@ -75,7 +75,7 @@ public class MemberController {
 				model.addAttribute("msg", "아이디나 비밀번호가 틀립니다." + "(로그인 실패 횟수: " + loginFail + "/5)");
 				model.addAttribute("cmd", "back");			
 			}
-			return "member/alert";
+			return "common/alert";
 		} else {
 			sess.setAttribute("loginInfo", login);
 			return "redirect:/";			
