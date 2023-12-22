@@ -2,27 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.board.BoardMapper">
 
-<!-- namespace 속성 값을 앞에서 생성하고 작성한 Mapper 인터페이스의 경로를 포함하는 인터페이스의 이름을 작성
-	MyBatis가 Mapper 인터페이스와 XML을 인터페이스 이람과 namespace 속성값을 가지고 판단하기 때문에 이 부분은 매우 중요하다 !!
- -->
+	<!-- namespace 속성 값을 앞에서 생성하고 작성한 Mapper 인터페이스의 경로를 포함하는 인터페이스의 이름을 작성 MyBatis가 
+		Mapper 인터페이스와 XML을 인터페이스 이람과 namespace 속성값을 가지고 판단하기 때문에 이 부분은 매우 중요하다 !! -->
 
-	
-	<!-- 게시판 등록 -->
-	<insert id="enroll" parameterType="xyz.teamcarrot.myct.board.BoardVO">
-	    insert into tb_board(member_no, board_title, board_content, category_no) 
-	    values (#{member_no}, #{board_title}, #{board_content}, #{category_no})
+
+	<insert id="enroll"
+		parameterType="xyz.teamcarrot.myct.board.BoardVO"
+		useGeneratedKeys="true" keyProperty="board_no">
+		INSERT INTO tb_board (member_no, board_title, board_content, category_no)
+		VALUES (#{member_no}, #{board_title}, #{board_content},
+		#{category_no})
 	</insert>
 
-	<!-- 게시판 삭제 -->
-    <delete id="delete">
-        delete from tb_board where board_no = #{board_no}
-    </delete>
 
-	<!-- 게시판 목록 -->
-	<select id="getList"
-		resultType="xyz.teamcarrot.myct.board.BoardVO">
-		select * from tb_board
-	</select>
+	<!-- 첨부파일 정보 저장 -->
+	<insert id="enrollFile"
+		parameterType="xyz.teamcarrot.myct.board.BoardFileVO">
+		INSERT INTO tb_board_file (file_name, board_no)
+		VALUES (#{file_name}, #{board_no})
+	</insert>
+
+
+	<!-- 게시판 삭제 -->
+	<delete id="delete">
+		delete from tb_board where board_no = #{board_no}
+	</delete>
+
+	<!-- 게시판 다중선택 삭제 -->
+	<delete id="deleteSelected" parameterType="java.util.List">
+		DELETE FROM tb_board
+		WHERE board_no IN
+		<foreach item="boardNo" collection="boardNos" open="("
+			separator="," close=")">
+			#{boardNo}
+		</foreach>
+	</delete>
+
+	<!-- 게시글의 답변 상태 업데이트 -->
+	<update id="updateHasReplyStatus">
+		UPDATE tb_board
+		SET has_reply = #{status}
+		WHERE board_no = #{board_no}
+	</update>
+
+	<!-- 게시판 조회수 -->
+	<update id="updateViewCount">
+		update tb_board set board_view = board_view + 1 where board_no = #{board_no}
+	</update>
+
+	<!-- 게시판 추천수 -->
+	<update id="updateRecomCount">
+		update tb_board_recom set hit_count = hit_count + 1 where board_no =
+		#{board_no}
+	</update>
+
+	<!-- 댓글 등록 -->
+	<insert id="insertReply"
+		parameterType="xyz.teamcarrot.myct.board.ReplyVO">
+		INSERT INTO tb_board_reply (board_no, reply_content, member_no)
+		VALUES (#{board_no}, #{reply_content}, #{member_no})
+	</insert>
 
 	<!-- 게시판 조회 -->
 	<select id="getPage"
@@ -36,60 +75,98 @@
 		update tb_board set board_title = #{board_title}, board_content =
 		#{board_content} where board_no = #{board_no}
 	</update>
-	
-	
-	
-	
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM tb_board_reply
+		WHERE reply_no = #{replyId}
+	</delete>
+
+	<!-- 댓글 등록 -->
+	<insert id="reply"
+		parameterType="xyz.teamcarrot.myct.board.BoardVO">
+		insert into tb_board(member_no, board_title, board_content, category_no)
+		values (#{member_no}, #{board_title}, #{board_content},
+		#{category_no})
+	</insert>
+
+	<!-- 특정 게시글의 답글 목록을 조회 -->
+	<select id="getReplies"
+		resultType="xyz.teamcarrot.myct.board.ReplyVO">
+		SELECT * FROM tb_board_reply WHERE board_no = #{board_no} ORDER BY
+		reply_rdate DESC
+	</select>
+
 	<!-- 검색 조건문 -->
-    <sql id="criteria">
-        <trim prefix="where (" suffix=")" prefixOverrides="OR">
-            <foreach collection="typeArr" item="type">
-                <trim prefix="OR">
-                    <choose>
-                        <when test="type == 'T'.toString()">
-                            board_title like concat('%',#{keyword},'%') 
-                        </when>
-                        <when test="type == 'C'.toString()">
-                            board_content like concat('%',#{keyword},'%') 
-                        </when>
-                        <when test="type == 'W'.toString()">
-                            member_no like concat('%',#{keyword},'%' )
-                        </when>
-                    </choose>
-                </trim>
-            </foreach>	
-        </trim>
-    
-    </sql>
-	
-	
-	<!-- MySQL-->
-    <!-- 게시물 목록(페이징) -->
-    <select id="getListPaging" resultType="xyz.teamcarrot.myct.board.BoardVO">
-    
-        select * from (
-                select board_no, board_title, board_rdate, board_view, board_content, category_no, member_no
-                from tb_board 
-                 <if test="keyword != null">
-                    where board_title like concat('%',#{keyword},'%' )
-                </if>
-                order by board_no desc) as T1 
-     	
-        limit #{skip},#{amount}
-    
-    </select>
-	
-	 <!-- 게시물 총 개숫 -->
-    <select id="getTotal" resultType="int">
-    
-        select count(*) from tb_board
-        <if test="keyword != null">
-       
-            <!-- MySQL -->
-            where board_title like concat('%',#{keyword},'%')
-        
-        </if>
-    
-    </select>
-	
+	<sql id="criteria">
+		<trim prefix="where (" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							board_title like concat('%',#{keyword},'%')
+						</when>
+						<when test="type == 'C'.toString()">
+							board_content like concat('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							member_no like concat('%',#{keyword},'%' )
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+
+	<!-- 게시물 목록(페이징) -->
+	<select id="getListPaging"
+		resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select * from (
+		select b.board_no, b.board_title, b.board_rdate, b.board_view,
+		b.board_content, b.category_no, m.member_nickname
+		from tb_board b
+		join tb_member m on b.member_no = m.member_no
+		<if test="keyword != null">
+			where board_title like concat('%',#{keyword},'%' )
+		</if>
+		order by board_no desc) as T1
+
+		limit #{skip},#{amount}
+	</select>
+
+	<!-- 게시판 목록 -->
+	<select id="getList"
+		resultType="xyz.teamcarrot.myct.board.BoardVO">
+		select
+		b.*,
+		(CASE
+		WHEN EXISTS (SELECT 1 FROM tb_board_reply WHERE board_no = b.board_no)
+		THEN 'true'
+		ELSE 'false'
+		END) AS hasReply,
+		m.member_nickname,
+		bf.file_name,
+		bf.file_no,
+		(CASE WHEN (SELECT COUNT(*) FROM tb_board_reply WHERE board_no =
+		b.board_no) > 0 THEN 'YES' ELSE 'NO' END) as isAnswered
+		from
+		tb_board b
+		join
+		tb_member m on b.member_no = m.member_no
+		left join
+		tb_board_file bf on b.board_no = bf.board_no
+		ORDER BY
+		(b.board_no = 71) DESC
+	</select>
+
+	<!-- 게시물 총 개수 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from tb_board
+		<if test="keyword != null">
+			where board_title like concat('%',#{keyword},'%')
+		</if>
+	</select>
+
 </mapper>
