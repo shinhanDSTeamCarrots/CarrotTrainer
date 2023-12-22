@@ -176,11 +176,7 @@ th {
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
 			<c:if test="${!empty loginInfo }">
-<<<<<<< Upstream, based on branch 'giwoong' of https://github.com/shinhanDSTeamCarrots/CarrotTrainer.git
-				<a href="write" class="write-button">게시판 등록</a>
-=======
-				<a href="write.do" class="write-button">게시글 등록</a>
->>>>>>> 66a6c14 머지 용 커밋
+				<a href="write" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 
