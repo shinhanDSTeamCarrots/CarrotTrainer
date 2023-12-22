@@ -54,6 +54,10 @@ th {
     font-weight: bold;
     
 }
+.title-column {
+    text-align: left;
+}
+
 
 td {
    /*  background-color: #ffffff; */
@@ -216,16 +220,16 @@ tbody tr:nth-child(odd) {
 					  <c:if test="${vo.category_no == 3}">
 						<tr>
 							<td><c:out value="${vo.board_no}"/></td>
-							<td>
-							<!-- 링크 수정: JavaScript 함수 호출 -->
+							<td class="title-column">
+								
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
 									<c:out value="${vo.board_title}" />
 									
 									<c:if test="${vo.hasReply}">
-											<span style="color: green;">답변완료</span>
+											<span style="color: #ff3d71;">[답변완료]</span>
 										</c:if>
 								</a> 
-								</td>
+							</td>
 								<td><c:out value="${vo.member_nickname}" /></td>
 
 								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
@@ -234,9 +238,7 @@ tbody tr:nth-child(odd) {
 										<a href="/myct/board/download.do?fileNo=${vo.file_no}">
 										 <img src="/img/ico_star_on.png" alt="첨부파일">
 										</a>
-									</c:if></td>
-									
-									
+									</c:if></td>					
 						</tr>
 						
             <c:if test="${board.hasReply}">
@@ -247,7 +249,7 @@ tbody tr:nth-child(odd) {
 						</c:if>
 					</c:forEach>
 
-					<!-- 추가 게시물 행을 여기에 추가 -->
+			
 				</tbody>
 			</table>
 

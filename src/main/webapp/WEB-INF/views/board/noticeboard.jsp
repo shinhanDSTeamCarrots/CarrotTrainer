@@ -43,11 +43,15 @@
 
     th, td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 10px;
         text-align: center;
         font-size: 1.2rem;
     }
-
+	
+	.title-column {
+    text-align: left;
+}
+	
     th {
         background-color: #f2f2f2;
         font-weight: 700;
@@ -141,8 +145,8 @@
 					  <c:if test="${vo.category_no == 1}">
 						<tr>
 							<td><c:out value="${vo.board_no}"/></td>
-							<td>
-							<!-- 링크 수정: JavaScript 함수 호출 -->
+							<td class="title-column">
+							
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
 									<c:out value="${vo.board_title}" />
 									
@@ -172,7 +176,7 @@
 						</c:if>
 					</c:forEach>
 
-					<!-- 추가 게시물 행을 여기에 추가 -->
+					
 				</tbody>
 			</table>
 

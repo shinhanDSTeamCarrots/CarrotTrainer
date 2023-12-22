@@ -55,12 +55,19 @@ public interface BoardService {
  
     public int insertReply(ReplyVO reply);
 
-    public void updateHasReplyStatus(int board_no, String status);
+   
   
     // 조회수
     public void updateViewCount(int board_no);
     
     // 추천수 (미완성)
     public int updateRecomCount(int board_no);
-	 
+    
+    public void deleteSelectedBoards(List<Integer> boardNos);
+    
+    // 댓글 삭제
+    public int deleteReply(int reply_no);
+    
+    // 답변 (미완성)
+    public void updateHasReplyStatus(int board_no, boolean status); 
 }

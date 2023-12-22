@@ -17,7 +17,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 <script src="/myct/smarteditor2-2.8.2.3/js/HuskyEZCreator.js"></script>
 </head>
@@ -146,7 +146,7 @@
     <input type="hidden" name="member_no" value="<%= member.getMember_no() %>">
     <input type="text" value="<%= member.getMember_nickname() %>" readonly>
 <% } else { %>
-    <!-- 로그인하지 않은 경우의 처리 -->
+
 <% } %>
 
 
@@ -170,9 +170,6 @@
                     <button>등록</button>
                 </div>
 			</form>
-
-
-
 
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>

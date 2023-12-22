@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>자유게시판</title>
+<title>관리자 게시판관리</title>
 <META name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 <script
@@ -14,99 +16,415 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
-  .admin-table {
-    margin: 0 auto;
-    width: 60%; /* 또는 원하는 너비 */
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  .delete-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-</style>
-<script>
-function deleteRow(btn) {
-  // 해당 버튼이 속한 행을 찾아서 삭제
-  var row = btn.parentElement.parentElement;
-  row.remove();
+body {
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	background-color: #f4f4f4;
 }
-</script>
+
+.container {
+	max-width: 1200px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.notice-table {
+	margin: 20px auto;
+	width: 60%;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed; /* 컬럼 너비 고정 */
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: center;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.delete-btn, .write-btn {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.delete-btn {
+	background-color: #f44336;
+}
+
+.Private-btn {
+	background-color: #6d58a6;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.buttons {
+	text-align: right;
+	margin-bottom: 10px;
+}
+
+th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3) {
+	text-align: center;
+}
+
+.pageInfo {
+	list-style: none;
+	display: inline-block;
+	margin: 50px 0 0 400px;
+}
+
+.pageInfo li {
+	float: left;
+	font-size: 20px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.active {
+	background-color: #cdd5ec;
+}
+
+.search_area {
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 0px;
+}
+
+.search_area input {
+	height: 30px;
+	width: 250px;
+}
+
+.search_area button {
+	width: 100px;
+	height: 36px;
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	font-size: 1.3rem; /* 버튼 글씨 크기 조정 */
+}
+
+.search_area select {
+	height: 35px;
+}
+</style>
+
 <body>
-	 <div class="wrap">
-    	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <div class="admin-table">
-  <table>
-    <thead>
-      <tr>
-        <th>체크박스</th>
-        <th>카테고리</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회</th>
-        <th>삭제</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>분류1</td>
-        <td>게시글 제목</td>
-        <td>작성자명</td>
-        <td>2023-12-03</td>
-        <td>100</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-      <!-- 추가 행은 여기에... -->
-       <tr>
-        <td><input type="checkbox"></td>
-        <td>분류1</td>
-        <td>게시글 제목</td>
-        <td>작성자명</td>
-        <td>2023-12-03</td>
-        <td>100</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-       <tr>
-        <td><input type="checkbox"></td>
-        <td>분류1</td>
-        <td>게시글 제목</td>
-        <td>작성자명</td>
-        <td>2023-12-03</td>
-        <td>100</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-       <tr>
-        <td><input type="checkbox"></td>
-        <td>분류1</td>
-        <td>게시글 제목</td>
-        <td>작성자명</td>
-        <td>2023-12-03</td>
-        <td>100</td>
-        <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-		
+	<div class="wrap">
+		<%@ include file="/WEB-INF/views/common/header.jsp"%>
+
+		<div class="container">
+
+			<h1>관리자 게시판관리</h1>
+			<div class="buttons">
+				<button class="write-btn" onclick="writeNotice()">
+					<a href="write.do" class="write-button">게시판 등록</a>
+
+				</button>
+
+				<button onclick="deleteSelectedBoards()" class="write-btn">선택
+					삭제</button>
+				<button onclick="modifySelectedBoard()" class="write-btn">선택
+					수정</button>
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>선택</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>권한</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${page}" var="vo">
+
+						<tr id="row-${vo.board_no}" data-category-no="${vo.category_no}">
+
+							<td><input type="checkbox" class="board-checkbox"
+								data-board-no="${vo.board_no}"
+								data-category-no="${vo.category_no}" /></td>
+
+							<td><c:choose>
+									<c:when test="${vo.category_no == 1}">공지사항</c:when>
+									<c:when test="${vo.category_no == 2}">자유게시판</c:when>
+									<c:when test="${vo.category_no == 3}">문의게시판</c:when>
+									<c:otherwise>기타</c:otherwise>
+								</c:choose></td>
+
+							<td>
+								 <a href="javascript:void(0);"
+								onclick="goToDetail(${vo.board_no});"> <c:out
+										value="${vo.board_title}" /> <c:if test="${vo.hasReply}">
+										<span style="color: green;">답변완료</span>
+									</c:if>
+							</a>
+							</td>
+							<td><c:out value="${vo.member_nickname}" /></td>
+
+							<td><fmt:formatDate pattern="yyyy/MM/dd"
+									value="${vo.board_rdate}" /></td>
+
+							<td>
+								<div class="btn_wrap">
+									<button class="Private-btn" data-board-no="${vo.board_no}"
+										data-category-no="${vo.category_no}"
+										onclick="modifyBoard(this)">비공개</button>
+
+									<button class="delete-btn"
+										onclick="deleteBoard(${vo.board_no})">삭제</button>
+								</div>
+							</td>
+
+
+						</tr>
+
+						<c:if test="${board.hasReply}">
+							<tr>
+								<td colspan="5" style="text-align: center;">답글 등록됨</td>
+							</tr>
+						</c:if>
+
+					</c:forEach>
+
+					
+				</tbody>
+			</table>
+		</div>
+
+		<div class="search_wrap">
+			<div class="search_area">
+				<select name="type">
+					<option value=""
+						<c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
+					<option value="T"
+						<c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+					<option value="C"
+						<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+					<option value="W"
+						<c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+					<option value="TC"
+						<c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목
+						+ 내용</option>
+					<option value="TW"
+						<c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목
+						+ 작성자</option>
+					<option value="TCW"
+						<c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목
+						+ 내용 + 작성자</option>
+				</select> <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
+				<button>검색</button>
+			</div>
+		</div>
+
+
+		<div class="pageInfo_wrap">
+			<div class="pageInfo_area">
+				<ul id="pageInfo" class="pageInfo">
+
+					<!-- 이전페이지 버튼 -->
+					<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn previous"><a
+							href="${pageMaker.startPage-1}">Previous</a></li>
+					</c:if>
+
+					<!-- 각 번호 페이지 버튼 -->
+					<c:forEach var="num" begin="${pageMaker.startPage}"
+						end="${pageMaker.endPage}">
+						<li
+							class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+							<a href="${num}">${num}</a>
+						</li>
+					</c:forEach>
+
+
+					<!-- 다음페이지 버튼 -->
+					<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a
+							href="${pageMaker.endPage + 1 }">Next</a></li>
+					</c:if>
+
+				</ul>
+			</div>
+		</div>
+
+		<form id="moveForm" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+			<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		</form>
 	</div>
+
+	</div>
+
+	<script>
+		let form = $("#infoForm");
+		let mForm = $("#modifyForm"); 
+	    
+	    function modifyBoard(button) {
+	        
+	        var boardNo = $(button).data("board-no");
+	        var categoryNo = $(button).data("category-no");
+
+	       
+	        $("#board_no").val(boardNo);
+	        $("#category_no").val(categoryNo);
+
+	        
+	        form.attr("action", "/myct/board/modify.do");
+	        form.submit();
+	    }
+
+	    
+	    
+	    function deleteBoard(boardNo) {
+	        if(confirm("게시글을 삭제하시겠습니까?")) {
+	            // category_no 가져오기
+	            var categoryNo = $("#row-" + boardNo).data("category-no");
+
+	            $.ajax({
+	                url: '/myct/board/delete.do',
+	                type: 'POST',
+	                data: {
+	                    board_no: boardNo,
+	                    category_no: categoryNo
+	                },
+	                success: function(response) {
+	                    alert("삭제 되었습니다.");
+	                    location.reload(); 
+	                },
+	                error: function() {
+	                    alert("게시글 삭제 중 오류 발생");
+	                }
+	            });
+	        }
+	    }
+	    
+	  	/* 다중 선택 삭제 (미완성) */
+	    function deleteSelectedBoards() {
+	        var selectedBoards = $(".board-checkbox:checked").map(function() {
+	            return $(this).data("board-no");
+	        }).get();
+
+	        if (selectedBoards.length === 0) {
+	            alert("삭제할 게시글을 선택하세요.");
+	            return;
+	        }
+
+	        if (confirm("선택한 게시글을 삭제하시겠습니까?")) {
+	            $.ajax({
+	                url: '/myct/board/deleteSelected.do',
+	                type: 'POST',
+	                data: { board_nos: selectedBoards },
+	                success: function(response) {
+	                    if(response === 'success') {
+	                        alert("게시글이 삭제되었습니다.");
+	                        location.reload();  
+	                    } else {
+	                        alert("게시글 삭제에 실패했습니다.");
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    alert("게시글 삭제 중 오류 발생: " + xhr.responseText);
+	                }
+	            });
+	        }
+	    }
+
+
+
+	    function modifySelectedBoard() {
+	        var selectedBoards = $(".board-checkbox:checked");
+
+	        if (selectedBoards.length !== 1) {
+	            alert("수정할 게시글을 하나만 선택하세요.");
+	            return;
+	        }
+
+	        var boardNo = selectedBoards.data("board-no");
+	        var categoryNo = selectedBoards.data("category-no");
+
+	       
+	        $("#board_no").val(boardNo);
+	        $("#category_no").val(categoryNo);
+	        form.attr("action", "/myct/board/modify.do");
+	        form.submit();
+	    }
+
+	    
+
+		$(".pageInfo a").on("click", function(e) {
+
+			e.preventDefault();
+			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+			moveForm.attr("action", "/myct/board/boardInfo.do");
+			moveForm.submit();
+
+		});
+		
+
+	    $(".search_area button").on("click", function(e){
+	        e.preventDefault();
+	        
+	        let type = $(".search_area select").val();
+	        let keyword = $(".search_area input[name='keyword']").val();
+	        
+	        if(!type){
+	            alert("검색 종류를 선택하세요.");
+	            return false;
+	        }
+	        
+	        if(!keyword){
+	            alert("키워드를 입력하세요.");
+	            return false;
+	        }        
+	        
+	        moveForm.find("input[name='type']").val(type);
+	        moveForm.find("input[name='keyword']").val(keyword);
+	        moveForm.find("input[name='pageNum']").val(1);
+	        moveForm.submit();
+	    });
+
+
+	</script>
 </body>
 </html>

@@ -1,7 +1,8 @@
-		<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 </head>
 <style>
@@ -33,105 +34,110 @@ body {
 	background: #f9f9f9; /* 배경색 추가 */
 	border-radius: 10px; /* 테두리 둥글게 */
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-}	
+}
 
-.input_wrap{
+.input_wrap {
 	padding: 5px 20px;
 }
-label{
-    display: block;
-    margin: 10px 0;
-    font-size: 20px;	
+
+label {
+	display: block;
+	margin: 10px 0;
+	font-size: 20px;
 }
-input{
+
+input {
 	padding: 5px;
-    font-size: 17px;
+	font-size: 17px;
 }
-textarea{
+
+textarea {
 	width: 600px;
-    height: 200px;
-    font-size: 15px;
-    padding: 10px;
-}
-.btn{
-  	display: inline-block;
-    font-size: 20px;
-    padding: 6px 12px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    font-weight: 600;
-    width: 140px;
-    height: 41px;
-    line-height: 39px;
-    text-align : center;
-    margin-left : 30px;
-    cursor : pointer;
-}
-.btn_wrap{
-	padding-left : 80px;
-	margin-top : 50px;
+	height: 200px;
+	font-size: 15px;
+	padding: 10px;
 }
 
-  /* 댓글 섹션 스타일링 */
-        .comment-section {
-            margin-top: 40px;
-            background: #f7f7f7;
-            border: 1px solid #e1e1e1;
-            border-radius: 4px;
-            padding: 20px;
-        }
+.btn {
+	display: inline-block;
+	font-size: 20px;
+	padding: 6px 12px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	font-weight: 600;
+	width: 140px;
+	height: 41px;
+	line-height: 39px;
+	text-align: center;
+	margin-left: 30px;
+	cursor: pointer;
+}
 
-        .comment-input {
-            width: calc(100% - 20px);
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 10px;
-            resize: none;
-        }
+.btn_wrap {
+	padding-left: 80px;
+	margin-top: 50px;
+}
 
-        .comment-submit {
-            width: 100%;
-            padding: 10px 0;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+/* 댓글 섹션 스타일링 */
+.comment-section {
+	margin-top: 40px;
+	background: #f7f7f7;
+	border: 1px solid #e1e1e1;
+	border-radius: 4px;
+	padding: 20px;
+}
 
-        .comment-list {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+.comment-input {
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 10px;
+	margin-bottom: 10px;
+	resize: none;
+}
 
-        .comment-list li {
-            background: white;
-            border-bottom: 1px solid #e1e1e1;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 8px;
-        }
+.comment-submit {
+	width: 100%;
+	padding: 10px 0;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
 
-        .comment {
-            color: #555;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.comment-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
 
-        .comment-author {
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 5px;
-        }
+.comment-list li {
+	background: white;
+	border-bottom: 1px solid #e1e1e1;
+	padding: 10px;
+	border-radius: 4px;
+	margin-top: 8px;
+}
 
-        .comment-date {
-            font-size: 12px;
-            color: #999;
-            margin-top: 10px;
-        }
+.comment {
+	color: #555;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.comment-author {
+	font-weight: bold;
+	color: #000;
+	margin-bottom: 5px;
+}
+
+.comment-date {
+	font-size: 12px;
+	color: #999;
+	margin-top: 10px;
+}
 
 /* 추가적인 스타일링이 필요한 경우 여기에 작성 */
 </style>
@@ -139,50 +145,52 @@ textarea{
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-		 <div class="input_wrap">
-		<label>게시판 카테고리</label>
-		<c:choose>
-			<c:when test="${pageInfo.category_no == 1 }">
-				<input name="category_no" readonly="readonly" value="공지사항">
-			</c:when>
-			<c:when test="${pageInfo.category_no == 2 }">
-				<input name="category_no" readonly="readonly" value="자유게시판">
-			</c:when>
-			<c:when test="${pageInfo.category_no == 3 }">
-				<input name="category_no" readonly="readonly" value="문의게시판">
-			</c:when>
-		</c:choose>
-	</div> 
 			<div class="input_wrap">
-		<label>게시판 번호</label>
-		<input name="board_no" readonly="readonly" value='<c:out value="${pageInfo.board_no}"/>' >
-	</div>
-	<div class="input_wrap">
-		<label>게시판 제목</label>
-		<input name="board_title" readonly="readonly" value='<c:out value="${pageInfo.board_title}"/>' >
-	</div>
-	<%-- <div class="input_wrap">
+				<label>게시판 카테고리</label>
+				<c:choose>
+					<c:when test="${pageInfo.category_no == 1 }">
+						<input name="category_no" readonly="readonly" value="공지사항">
+					</c:when>
+					<c:when test="${pageInfo.category_no == 2 }">
+						<input name="category_no" readonly="readonly" value="자유게시판">
+					</c:when>
+					<c:when test="${pageInfo.category_no == 3 }">
+						<input name="category_no" readonly="readonly" value="문의게시판">
+					</c:when>
+				</c:choose>
+			</div>
+			<div class="input_wrap">
+				<label>게시판 번호</label> <input name="board_no" readonly="readonly"
+					value='<c:out value="${pageInfo.board_no}"/>'>
+			</div>
+			<div class="input_wrap">
+				<label>게시판 제목</label> <input name="board_title" readonly="readonly"
+					value='<c:out value="${pageInfo.board_title}"/>'>
+			</div>
+			<%-- <div class="input_wrap">
 		<label>추천수</label>
 		<input name="board_recom" readonly="readonly" value='<c:out value="${pageInfo.hit_count}"/>' >
 	</div> --%>
-	<div class="input_wrap">
-		<label>게시판 내용</label>
-		<textarea rows="3" name="board_content" readonly="readonly"><c:out value="${pageInfo.board_content}"/></textarea>
-	</div>
-	
-	
-	
-		
-	<div class="btn_wrap">
-		 <a class="btn" id="list_btn">조회 페이지</a> 
-		<a class="btn" id="modify_btn">수정 하기</a>
-		<a class="btn" id="reply_btn" href="<c:url value='/board/qnareply.do?board_title=${pageInfo.board_title}' />">답변</a>
-		<a class="btn" id="recom_btn" href="javascript:void(0);" onclick="RecomCount(${list.board_no});">추천</a>
-	</div>
-	
-	 <!-- 댓글 섹션 시작 -->
-            <div class="comment-section">
-                <c:if test="${!empty loginInfo}">
+			<div class="input_wrap">
+				<label>게시판 내용</label>
+				<textarea rows="3" name="board_content" readonly="readonly"><c:out
+						value="${pageInfo.board_content}" /></textarea>
+			</div>
+
+
+
+
+			<div class="btn_wrap">
+				<a class="btn" id="list_btn">조회 페이지</a> <a class="btn"
+					id="modify_btn">수정 하기</a> <a class="btn" id="reply_btn"
+					href="<c:url value='/board/qnareply.do?board_title=${pageInfo.board_title}' />">답변</a>
+				<a class="btn" id="recom_btn" href="javascript:void(0);"
+					onclick="RecomCount(${list.board_no});">추천</a>
+			</div>
+
+			<!-- 댓글 섹션 시작 -->
+			<div class="comment-section">
+				<c:if test="${!empty loginInfo}">
 					<!-- 로그인한 사용자에게만 답글 입력 영역 표시 -->
 					<div class="reply-input-area">
 						<textarea class="comment-input" rows="3"
@@ -215,44 +223,47 @@ textarea{
 
 				</ul>
 			</div>
-            <!-- 댓글 섹션 끝 -->
-        </div>
-
-	<form id="infoForm" action="/board/modify" method="get">
-		<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
-		<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
-		<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-		<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
-		<input type="hidden" name="type" value="${cri.type }">
-		<input type="hidden" name="keyword" value="${cri.keyword }"> 
-	</form>	
-	
+			<!-- 댓글 섹션 끝 -->
 		</div>
+
+		<form id="infoForm" action="/board/modify" method="get">
+			<input type="hidden" id="board_no" name="board_no"
+				value='<c:out value="${pageInfo.board_no}"/>'> <input
+				type="hidden" id="category_no" name="category_no"
+				value='<c:out value="${pageInfo.category_no}"/>'> <input
+				type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+			<input type="hidden" name="amount"
+				value='<c:out value="${cri.amount}"/>'> <input type="hidden"
+				name="type" value="${cri.type }"> <input type="hidden"
+				name="keyword" value="${cri.keyword }">
+		</form>
+
+	</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
-	
+
 	<script>
 	let form = $("#infoForm");
 
 	$("#list_btn").on("click", function(e) {
-	    e.preventDefault(); // 기본 이벤트 방지
+	    e.preventDefault(); 
 
-	    let categoryNo = $("#category_no").val(); // category_no 값을 가져옴
+	    let categoryNo = $("#category_no").val(); 
 	    let actionUrl;
 
 	    // category_no에 따라 URL 설정
 	    switch (categoryNo) {
 	        case "1":
-	            actionUrl = "/myct/board/noticeboard.do"; // 공지사항 게시판 URL
+	            actionUrl = "/myct/board/noticeboard.do"; 
 	            break;
 	        case "2":
-	            actionUrl = "/myct/board/freeboard.do"; // 자유게시판 URL
+	            actionUrl = "/myct/board/freeboard.do"; 
 	            break;
 	        case "3":
-	            actionUrl = "/myct/board/qnaboard.do"; // 문의게시판 URL
+	            actionUrl = "/myct/board/qnaboard.do"; 
 	            break;
 	        default:
-	            actionUrl = "/myct/board/freeboard.do"; // 기본값으로 자유게시판 URL 설정
+	            actionUrl = "/myct/board/freeboard.do"; 
 	            break;
 	    }
 
@@ -276,7 +287,7 @@ textarea{
 	            	
 	                if(response === 'success') {
 	                	 alert("추천이 완료되었습니다.");
-	                	 location.reload();  // 현재 페이지 새로고침
+	                	 location.reload();  
 	                } else {
 	                    alert('조회수 증가에 실패했습니다.');
 	                }
@@ -313,31 +324,31 @@ textarea{
 	}
 
 	$(document).ready(function() {
-	    // 특정 게시글을 클릭할 때 댓글 목록을 불러오기
+	  
 	    $(".move").click(function(e) {
 	        e.preventDefault();
 	        var boardNo = $(this).attr("href");
 	        loadComments(boardNo);
 	    });
 
-	    // 댓글 등록 로직
+	  
 	    $(".comment-submit").click(function() {
-	        var boardNo = $("#board_no").val(); // 게시글 번호
-	        var commentContent = $(".comment-input").val(); // 댓글 내용
+	        var boardNo = $("#board_no").val(); 
+	        var commentContent = $(".comment-input").val(); 
 	        var data = {
-	            board_no: boardNo, // 'board_no' 필드에 매핑
-	            reply_content: commentContent // 'reply_content' 필드에 매핑
+	            board_no: boardNo, 
+	            reply_content: commentContent 
 	        };
 
 	        $.ajax({
-	            url: "/myct/board/insertReply.do", // Controller URL
+	            url: "/myct/board/insertReply.do", 
 	            type: "POST",
 	            data: data,
 	            success: function(response) {
 	                if(response === "success") {
 	                    alert("댓글이 등록되었습니다.");
-	                    /* window.location.href = "/myct/board/freeboard.do";  */ // 성공 시 Qnaboard로 리디렉션
-	                    location.reload();  // 현재 페이지 새로고침
+	                   
+	                    location.reload();  
 	                } else {
 	                    alert("댓글 등록에 실패했습니다.");
 	                }

@@ -24,39 +24,39 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int enroll(BoardVO board, MultipartFile file, HttpServletRequest request) {
         
-     // 로깅으로 객체 상태 확인
+   
         log.info("Board: " + board);
         log.info("File: " + file);
         log.info("Request: " + request);
-        // 게시글 정보 저장
+        
         int result = mapper.enroll(board);
 
-        // 파일이 있는 경우
+     
         if (file != null && !file.isEmpty()) {
-            // 파일명 추출 및 저장 경로 설정
+          
             String originalFilename = file.getOriginalFilename();
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             String storedFilename = System.currentTimeMillis() + extension;
             String uploadPath = request.getServletContext().getRealPath("/upload/board/") + storedFilename;
 
-            // 파일 저장
+           
             try {
                 file.transferTo(new File(uploadPath));
             } catch (Exception e) {
-                e.printStackTrace(); // 오류 처리
+                e.printStackTrace(); 
             }
 
-            // BoardFileVO 객체 생성 및 정보 설정
+           
             BoardFileVO boardFile = new BoardFileVO();
-            boardFile.setBoard_no(board.getBoard_no()); // 게시글 번호 설정
-            boardFile.setFile_name(storedFilename); // 저장된 파일명 설정
+            boardFile.setBoard_no(board.getBoard_no()); 
+            boardFile.setFile_name(storedFilename); 
 
-            // 파일 정보 데이터베이스에 저장
+          
             mapper.enrollFile(boardFile);
         }
         
     
-        log.info("Result: " + result); // DB 작업 결과 로깅
+        log.info("Result: " + result); 
         return result;
     }
 	
@@ -125,10 +125,7 @@ public class BoardServiceImpl implements BoardService {
         return mapper.insertReply(reply);
     }
     
-    @Override
-    public void updateHasReplyStatus(int board_no, String status) {
-        mapper.updateHasReplyStatus(board_no, status);
-    }
+    
     
     //조회수
     @Override
@@ -140,5 +137,23 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int updateRecomCount(int board_no) {
     	return mapper.updateRecomCount(board_no);
+    }
+    
+    @Override
+    public void deleteSelectedBoards(List<Integer> boardNos) {	
+    	
+        mapper.deleteSelected(boardNos);
+    }
+    
+    @Override
+	public int deleteReply(int reply_no) {
+		return mapper.deleteReply(reply_no);
+	}
+    
+    
+    // 답변 상태
+    @Override
+    public void updateHasReplyStatus(int board_no, boolean status) {
+        mapper.updateHasReplyStatus(board_no, status);
     }
 }

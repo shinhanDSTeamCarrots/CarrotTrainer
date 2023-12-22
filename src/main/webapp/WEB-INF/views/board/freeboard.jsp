@@ -48,14 +48,18 @@ table {
 }
 
 th, td {
-  padding: 20px; 
+  padding: 10px; 
   text-align: center;
   border-bottom: 1px solid #ddd;
   font-size: 1.4rem; 
 }
 
+.title-column {
+    text-align: left;
+}
+
 th {
-  background-color: #4CAF50;
+  background-color: #faa04b;
   color: white;
 }
 
@@ -180,7 +184,7 @@ th {
 						<th>작성일</th>
 						<th>조회</th>
 						<th>카테고리</th>
-						<th>추천수<th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -194,7 +198,7 @@ th {
 							</a>
 							</td> --%>
 							
-								 <td>
+								<td class="title-column">
 								<a class="move" href="javascript:void(0);" onclick="ViewCount(${list.board_no});">
 										<c:out value="${list.board_title}" />
 								</a></td> 
@@ -204,7 +208,7 @@ th {
 									value="${list.board_rdate}" /></td>
 							<td><c:out value="${list.board_view}" /></td>
 							<td>자유게시판</td>
-							<td>111</td>
+						
 
 						</tr>
 						</c:if>
@@ -304,43 +308,11 @@ th {
 		
 		
 		 let moveForm = $("#moveForm");
-	  	 
-	  
-
-		/*  $(".move").on("click", function(e) {
-							e.preventDefault();
-							//moveForm.empty();
-
-							moveForm.append("<input type='hidden' name='board_no' value='"	
-											+ $(this).attr("href") + "'>");
-							moveForm.attr("action", "/myct/board/freedetail.do");
-							moveFo rm.submit();
-						});    */
+	
 						
 						  function ViewCount(boardNo) {
 							 window.location.href = '/myct/board/freedetail.do?board_no=' + boardNo;
-							 
-							 
-					        
-					      /*  $.ajax({
-					            url: '/myct/board/updateViewCount',
-					            type: 'POST',
-					            data: { board_no: boardNo },
-					            success: function(response) {
-					            	console.log("AJAX response:", response);
-					                if(response === 'success') {
-					        
-					                   window.location.href = '/myct/board/freedetail.do?board_no=' + boardNo;
-					                } else {
-					                    alert('조회수 증가에 실패했습니다.');
-					                }
-					            },
-					            error: function(xhr, status, error) {
-					                console.error("Error incrementing view count");
-				
-					            }
-					        });
-					        */
+					
 					    }
 
 		

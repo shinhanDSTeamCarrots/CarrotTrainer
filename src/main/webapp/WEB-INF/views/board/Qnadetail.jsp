@@ -16,7 +16,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 </head>
 <style>
@@ -39,6 +39,18 @@ body {
 
 .input_wrap {
     margin-bottom: 20px;
+     color: rgb(0, 0, 0);
+                    font-size: 16px;
+                    font-weight: 400;
+            transition: all .2s ease;
+                    :hover{
+                        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
+                    }
+                    :focus{
+                        background: #fff;
+                        outline: 0;
+                        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
+                    }
 }
 
 label {
@@ -159,8 +171,10 @@ textarea {
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-		 <div class="input_wrap">
+		
 		<label>게시판 카테고리</label>
+		 <div class="input_wrap">
+		
 		<c:choose>
 			<c:when test="${pageInfo.category_no == 1 }">
 				<input name="category_no" readonly="readonly" value="공지사항">
@@ -173,16 +187,19 @@ textarea {
 			</c:when>
 		</c:choose>
 	</div> 
+	
+	<label>게시판 번호</label>
 			<div class="input_wrap">
-		<label>게시판 번호</label>
+		
 		<input name="board_no" readonly="readonly" value='<c:out value="${pageInfo.board_no}"/>' >
 	</div>
-	<div class="input_wrap">
-		<label>게시판 제목</label>
+	<label>게시판 제목</label>
+	<div class="input_wrap">		
 		<input name="board_title" readonly="readonly" value='<c:out value="${pageInfo.board_title}"/>' >
 	</div>
+	
+	<label>게시판 내용</label>
 	<div class="input_wrap">
-		<label>게시판 내용</label>
 		<textarea rows="3" name="board_content" readonly="readonly"><c:out value="${pageInfo.board_content}"/></textarea>
 	</div>
 	
@@ -200,7 +217,7 @@ textarea {
                
 
 				<c:if test="${!empty loginInfo}">
-					<!-- 로그인한 사용자에게만 답글 입력 영역 표시 -->
+				
 					<div class="reply-input-area">
 						<textarea class="comment-input" rows="3"
 							placeholder="댓글을 입력하세요..."></textarea>
@@ -226,6 +243,10 @@ textarea {
 									<fmt:formatDate value="${reply.reply_rdate}"
 										pattern="yyyy-MM-dd HH:mm:ss" />
 								</p>
+								<!-- 현재 로그인한 사용자가 댓글 작성자와 동일한 경우, 삭제 버튼 표시 -->
+								<c:if test="${loginInfo.member_no == reply.member_no}">
+									<button class="delete-comment" data-reply-id="${reply.reply_no}">삭제</button>
+								</c:if>
 							</div>
 						</c:forEach>
 					</c:if>
@@ -248,24 +269,24 @@ textarea {
 	let form = $("#infoForm");
 
 	$("#list_btn").on("click", function(e) {
-	    e.preventDefault(); // 기본 이벤트 방지
+	    e.preventDefault();
 
-	    let categoryNo = $("#category_no").val(); // category_no 값을 가져옴
+	    let categoryNo = $("#category_no").val(); 
 	    let actionUrl;
 
-	    // category_no에 따라 URL 설정
+	   
 	    switch (categoryNo) {
 	        case "1":
-	            actionUrl = "/myct/board/noticeboard.do"; // 공지사항 게시판 URL
+	            actionUrl = "/myct/board/noticeboard.do"; 
 	            break;
 	        case "2":
-	            actionUrl = "/myct/board/freeboard.do"; // 자유게시판 URL
+	            actionUrl = "/myct/board/freeboard.do";
 	            break;
 	        case "3":
-	            actionUrl = "/myct/board/qnaboard.do"; // 문의게시판 URL
+	            actionUrl = "/myct/board/qnaboard.do";
 	            break;
 	        default:
-	            actionUrl = "/myct/board/freeboard.do"; // 기본값으로 자유게시판 URL 설정
+	            actionUrl = "/myct/board/freeboard.do"; 
 	            break;
 	    }
 
@@ -284,7 +305,7 @@ textarea {
 	// AJAX를 사용하여 특정 게시글의 댓글 목록을 불러오는 함수
 	function loadComments(boardNo) {
 	    $.ajax({
-	        url: "/myct/board/getReplies.do", // Controller URL to get replies
+	        url: "/myct/board/getReplies.do", 
 	        type: "GET",
 	        data: { board_no: boardNo },
 	        success: function(replies) {
@@ -305,31 +326,31 @@ textarea {
 	}
 
 	$(document).ready(function() {
-	    // 특정 게시글을 클릭할 때 댓글 목록을 불러오기
+	   
 	    $(".move").click(function(e) {
 	        e.preventDefault();
 	        var boardNo = $(this).attr("href");
 	        loadComments(boardNo);
 	    });
 
-	    // 댓글 등록 로직
+	  
 	    $(".comment-submit").click(function() {
-	        var boardNo = $("#board_no").val(); // 게시글 번호
-	        var commentContent = $(".comment-input").val(); // 댓글 내용
+	        var boardNo = $("#board_no").val();
+	        var commentContent = $(".comment-input").val(); 
 	        var data = {
-	            board_no: boardNo, // 'board_no' 필드에 매핑
-	            reply_content: commentContent // 'reply_content' 필드에 매핑
+	            board_no: boardNo, 
+	            reply_content: commentContent 
 	        };
 
 	        $.ajax({
-	            url: "/myct/board/insertReply.do", // Controller URL
+	            url: "/myct/board/insertReply.do", 
 	            type: "POST",
 	            data: data,
 	            success: function(response) {
 	                if(response === "success") {
 	                    alert("댓글이 등록되었습니다.");
-	                   /*  window.location.href = "/myct/board/qnaboard.do"; */ // 성공 시 Qnaboard로 리디렉션
-	                   location.reload(); // 현재 페이지 새로고침
+	                  
+	                   location.reload(); 
 	                } else {
 	                    alert("댓글 실패");
 	                }
@@ -340,8 +361,33 @@ textarea {
 	        });
 	    });
 	});
+	
+	
+	
+	 $(document).ready(function() {
+	    $(".delete-comment").click(function() {
+	        var replyId = $(this).data("reply-id");
 
-
+	        if (confirm("댓글을 삭제하시겠습니까?")) {
+	            $.ajax({
+	                url: "/myct/board/replydelete.do", 
+	                type: "POST",
+	                data: { reply_id: replyId },
+	                success: function(response) {
+	                    if(response === "success") {
+	                        alert("댓글이 삭제되었습니다.");
+	                        location.reload(); 
+	                    } else {
+	                        alert("댓글 삭제 실패");
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    alert("오류 발생");
+	                }
+	            });
+	        }
+	    });
+	}); 
 
 
 </script>

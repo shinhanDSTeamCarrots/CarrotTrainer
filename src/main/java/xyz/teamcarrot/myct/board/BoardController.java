@@ -1,4 +1,4 @@
-	package xyz.teamcarrot.myct.board;
+package xyz.teamcarrot.myct.board;
 
 import java.util.HashMap;
 
@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,185 +40,257 @@ public class BoardController {
 	private BoardService bservice;
 	@Autowired
 	private MemberService mservcie;
-	
 
-
-	/* �Խ��� ��� ������ ����(����¡ ����) */
+	// 자유게시판 리스트 출력
 	@GetMapping("/freeboard.do")
-	public String boardListGET(Model model, Criteria cri,  HttpServletRequest request, HttpSession session) {
-		
+	public String boardListGET(Model model, Criteria cri, HttpServletRequest request, HttpSession session) {
+
 		log.info("freeboardListGET");
 
-		
 		model.addAttribute("list", bservice.getListPaging(cri));
-		int total = bservice.getTotal(cri);	
+		int total = bservice.getTotal(cri);
 
 		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
-		
+
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-		if(member != null) {
+		if (member != null) {
 			model.addAttribute("member", member);
 		}
 		return "board/freeboard";
 	}
-	
-	/* �����Խ��� ��ȸ */
+
+	// 자유게시판 게시글 조회
 	@GetMapping("/freedetail.do")
-	public String boardGetPageGET(int board_no, Model model, HttpSession session , Criteria cri ) {
+	public String boardGetPageGET(int board_no, Model model, HttpSession session, Criteria cri) {
 		BoardVO board = bservice.getPage(board_no);
 		log.info("test: " + board.getBoard_no());
-		 model.addAttribute("cri", cri);
-		 model.addAttribute("pageInfo", board);
+		model.addAttribute("cri", cri);
+		model.addAttribute("pageInfo", board);
 
-		 	int result = bservice.updateRecomCount(board_no);
-		 	model.addAttribute("resultList", result);
-		 	
-	        // 해당 게시글의 답글 목록 조회
-	        List<ReplyVO> replies = bservice.getReplies(board_no);
-	        model.addAttribute("replyList", replies);
-	    
-	        // 로그인한 사용자 정보 확인
-	        MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-	        if (member != null) {
-	            // 로그인한 사용자 정보를 모델에 추가
-	            model.addAttribute("loginMember", member);
-	        }
+		int result = bservice.updateRecomCount(board_no);
+		model.addAttribute("resultList", result);
+
+		// 해당 게시글의 답글 목록 조회
+		List<ReplyVO> replies = bservice.getReplies(board_no);
+		model.addAttribute("replyList", replies);
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("loginMember", member);
+		}
 
 		return "board/freedetail";
 	}
-			
+	
+	// (관리자 페이지) 자유게시판 게시글 관리
+	@GetMapping("/board/boardInfo.do")
+	public String boardInfo(Model model, HttpSession session, Criteria cri) {
+
+		model.addAttribute("page", bservice.getListPaging(cri));
+		int total = bservice.getTotal(cri);
+
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			model.addAttribute("member", member);
+		}
+		return "admin/board/boardInfo";
+	}
+	
+	
+	// 문의게시판 리스트 출력
 	@GetMapping("/qnaboard.do")
 	public String QnaboardList(Model model, HttpSession session, HttpServletRequest request) {
-	    log.info("QnaboardListGET");
-	   
+		log.info("QnaboardListGET");
 
-	    // 게시판 목록을 모델에 추가
-	    model.addAttribute("page", bservice.getList());
+		// 게시판 목록을 모델에 추가
+		model.addAttribute("page", bservice.getList());
 
-	    // 로그인한 사용자의 정보가 세션에 있는지 확인
-	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-	    if (member != null) {
-	        // 로그인한 상태인 경우, 모델에 로그인 정보 추가
-	        model.addAttribute("member", member);
-	    }
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("member", member);
+		}
 
-	    return "board/Qnaboard";
+		return "board/Qnaboard";
+	}
+
+	// 문의게시판 게시글 조회와 답글 목록을 조회
+	@GetMapping("/Qnadetail.do")
+	public String boardDetail(int board_no, Model model, HttpSession session) {
+		
+		BoardVO board = bservice.getPage(board_no);
+		model.addAttribute("pageInfo", board);
+
+		
+		List<ReplyVO> replies = bservice.getReplies(board_no);
+		model.addAttribute("replyList", replies);
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("loginMember", member);
+		}
+
+		return "board/Qnadetail";
 	}
 	
-	// 게시글 상세 페이지와 답글 목록을 조회하는 메서드
-    @GetMapping("/Qnadetail.do")
-    public String boardDetail(int board_no, Model model, HttpSession session) {
-        // 게시글 상세 정보 조회
-        BoardVO board = bservice.getPage(board_no);
-        model.addAttribute("pageInfo", board);
-     
-        // 해당 게시글의 답글 목록 조회
-        List<ReplyVO> replies = bservice.getReplies(board_no);
-        model.addAttribute("replyList", replies);
+	// (관리자 페이지) 문의게시판 게시글 관리
+	@GetMapping("/board/qna.do")
+	public String qna(Model model, HttpSession session, HttpServletRequest request) {
+		log.info("QnaboardListGET");
 
-        // 로그인한 사용자 정보 확인
-        MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-        if (member != null) {
-            // 로그인한 사용자 정보를 모델에 추가
-            model.addAttribute("loginMember", member);
-        }
-
-        return "board/Qnadetail";
-    }
-    
-    @GetMapping("/noticeboard.do")
+		model.addAttribute("page", bservice.getList());
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("member", member);
+		}
+		return "admin/board/qna";
+	}
+	
+	// 공지사항 게시글 리스트 출력
+	@GetMapping("/noticeboard.do")
 	public String noticeboard(Model model, HttpSession session, HttpServletRequest request) {
-    	
-    	// 게시판 목록을 모델에 추가
-	    model.addAttribute("page", bservice.getList());
 
-	    // 로그인한 사용자의 정보가 세션에 있는지 확인
-	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-	    if (member != null) {
-	        // 로그인한 상태인 경우, 모델에 로그인 정보 추가
-	        model.addAttribute("noticeMember", member);
-	    }
+		
+		model.addAttribute("page", bservice.getList());
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("noticeMember", member);
+		}
 		return "board/noticeboard";
 	}
-    
-    @GetMapping("/board/notice.do")
-	public String notice( Model model, HttpSession session, HttpServletRequest request ) {
-		
 	
-		// 게시판 목록을 모델에 추가
-	    model.addAttribute("page", bservice.getList());
+	// (관리자 페이지) 공지사항 게시글 관리 
+	@GetMapping("/board/notice.do")
+	public String notice(Model model, HttpSession session, HttpServletRequest request) {
+
 		
-		 // 로그인한 사용자의 정보가 세션에 있는지 확인
-	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-	    if (member != null) {
-	        // 로그인한 상태인 경우, 모델에 로그인 정보 추가
-	        model.addAttribute("adminMember", member);
-	    }
+		model.addAttribute("page", bservice.getList());
+
 		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("adminMember", member);
+		}
+
 		return "admin/board/notice";
 	}
+
+	/* 다중 선택 삭제(미완성) */
+//    @PostMapping("/deleteSelected.do")
+//    @ResponseBody
+//    public ResponseEntity<?> deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
+//        try {
+//            bservice.deleteSelectedBoards(boardNos);
+//            return ResponseEntity.ok("success");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
+//        }
+//    }
 	
-	@GetMapping("/board/noticeWrite.do")
-	public String noticeWrite() {
-		
-		return "admin/board/noticeWrite";
+	// 다중 선택 제거
+	@PostMapping("/deleteSelected.do")
+	@ResponseBody
+	public String deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
+		try {
+			bservice.deleteSelectedBoards(boardNos);
+			return "success";
+		} catch (Exception e) {
+			
+			return "fail";
+		}
 	}
-    
-    @PostMapping("/updateViewCount")
-    public String ViewCount(int board_no, Model model, BoardVO board) {
-    	bservice.updateViewCount(board_no);
-    
-    	log.info("조회수 테스트 성공");
-    	return "success";
-    }
-    
-    
-    // 추천수 (미완성)
-    @PostMapping("/updateRecomCount")
-    @ResponseBody
-    public String RecomCount(int board_no, Model model, BoardRecomVO boardrecom) {
-    	bservice.updateRecomCount(board_no);
-    	log.info("추천수 테스트 성공");
-    	return "success";	
-    }
 	
+	// 조회수 
+	@PostMapping("/updateViewCount")
+	public String ViewCount(int board_no, Model model, BoardVO board) {
+		bservice.updateViewCount(board_no);
+
+		log.info("조회수 테스트 성공");
+		return "success";
+	}
+
+	// 추천수 (미완성)
+	@PostMapping("/updateRecomCount")
+	@ResponseBody
+	public String RecomCount(int board_no, Model model, BoardRecomVO boardrecom) {
+		bservice.updateRecomCount(board_no);
+		log.info("추천수 테스트 성공");
+		return "success";
+	}
+	
+	// 댓글 등록
 	@PostMapping("/insertReply.do")
 	@ResponseBody
 	public String insertReply(ReplyVO reply, HttpSession session) {
-	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-	
-	    if (member != null) {
-	        // setMember_no()를 사용하여 회원 번호를 설정
-	        reply.setMember_no(member.getMember_no());
-	        
-	        
-	        
-	        log.info("댓글 등록을 시도합니다. 댓글 내용: {}", reply.getReply_content()); // 댓글 등록 시도 로그
-            int replyresult = bservice.insertReply(reply);
-            log.info("댓글 등록 결과: {}", replyresult > 0 ? "성공" : "실패"); // 댓글 등록 결과 로그
-          
-	        return replyresult > 0 ? "success" : "fail";
-	    }
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 
-	    return "notLoggedIn"; // 로그인하지 않은 사용자에 대한 처리
+		if (member != null) {
+			
+			reply.setMember_no(member.getMember_no());
+			
+			log.info("댓글 등록을 시도합니다. 댓글 내용: {}", reply.getReply_content());
+			int replyresult = bservice.insertReply(reply);
+			
+			log.info("댓글 등록 결과: {}", replyresult > 0 ? "성공" : "실패"); 
+
+			return replyresult > 0 ? "success" : "fail";
+		}
+		
+		return "notLoggedIn"; 
 	}
 
+	// 댓글 삭제 
+	@ResponseBody
+	@PostMapping("/replydelete.do")
+	public String replyDeletePOST(ReplyVO replyvo, @RequestParam("reply_id") int reply_no) {
+		try {
+			bservice.deleteReply(reply_no);
+			return "success";
+		} catch (Exception e) {
+			log.error(e.toString());
+			return "fail";
+		}
+	}
 
-	 // 특정 게시글의 댓글 목록을 반환하는 메서드
-    @GetMapping("/getReplies.do")
-    @ResponseBody
-    public List<ReplyVO> getRepliesForBoard(@RequestParam("board_no") int boardNo) {
-        return bservice.getReplies(boardNo);
-    }
+	// 특정 게시글의 댓글 목록을 반환
+	@GetMapping("/getReplies.do")
+	@ResponseBody
+	public List<ReplyVO> getRepliesForBoard(@RequestParam("board_no") int boardNo) {
+		return bservice.getReplies(boardNo);
+	}
 
 	@GetMapping("/qnareply.do")
 	public String Qnareply(Model model) {
 		return "board/Qnareply";
 	}
 
-		
-						
+	@GetMapping("/cancel.do")
+	public String boardCancleGET(int category_no, int board_no, Model model) {
+
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticedetail.do";
+		case 2:
+			return "redirect:/board/freedetail.do";
+		case 3:
+			return "redirect:/board/Qnadetail.do";
+		default:
+			return "redirect:/";
+		}
+	}
 
 	/* �Խ��� ��� ������ ���� */
 	@GetMapping("/write.do")
@@ -228,45 +302,45 @@ public class BoardController {
 
 	/* �Խ��� ��� */
 	@PostMapping("/insert.do")
-	public String boardEnrollPOST(
-			@RequestParam("file") MultipartFile file,  HttpSession session, BoardVO board, RedirectAttributes rttr, HttpServletRequest request) {
-		
+	public String boardEnrollPOST(@RequestParam("file") MultipartFile file, HttpSession session, BoardVO board,
+			RedirectAttributes rttr, HttpServletRequest request) {
+
 		log.info("BoardVO : " + board);
 		session = request.getSession();
-		MemberVO login = (MemberVO)session.getAttribute("loginInfo");
+		MemberVO login = (MemberVO) session.getAttribute("loginInfo");
 		board.setMember_no(login.getMember_no());
 
 		bservice.enroll(board, file, request);
 		rttr.addFlashAttribute("result", "enrol success");
-	    switch (board.getCategory_no()) {
-	        case 1:
-	            return "redirect:/board/noticeboard.do";
-	        case 2:
-	            return "redirect:/board/freeboard.do";
-	        case 3:
-	            return "redirect:/board/qnaboard.do";
-	        default:
-	            return "redirect:/";
-	    }
-	}	
+		switch (board.getCategory_no()) {
+		case 1:
+			return "redirect:/board/noticeboard.do";
+		case 2:
+			return "redirect:/board/freeboard.do";
+		case 3:
+			return "redirect:/board/qnaboard.do";
+		default:
+			return "redirect:/";
+		}
+	}
 
 	/* ������ ���� */
 	@PostMapping("/delete.do")
 	public String boardDeletePOST(int board_no, int category_no, RedirectAttributes rttr) {
-	    bservice.delete(board_no);
-	    rttr.addFlashAttribute("result", "delete success");
+		bservice.delete(board_no);
+		rttr.addFlashAttribute("result", "delete success");
 
-	    // category_no에 따른 리디렉션 처리
-	    switch (category_no) {
-	        case 1:
-	            return "redirect:/board/noticeboard.do";
-	        case 2:
-	            return "redirect:/board/freeboard.do";
-	        case 3:
-	            return "redirect:/board/qnaboard.do";
-	        default:
-	            return "redirect:/"; // 기본값
-	    }
+		
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticeboard.do";
+		case 2:
+			return "redirect:/board/freeboard.do";
+		case 3:
+			return "redirect:/board/qnaboard.do";
+		default:
+			return "redirect:/"; // 기본값
+		}
 	}
 
 	/* ���� ������ �̵� */
@@ -280,52 +354,48 @@ public class BoardController {
 
 	/* ������ ���� */
 	@PostMapping("/modify.do")
-	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr) {
+	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr, int category_no) {
 
 		bservice.modify(board);
 
 		rttr.addFlashAttribute("result", "modify success");
 
-		return "redirect:/board/freeboard.do";
+	
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticeboard.do";
+		case 2:
+			return "redirect:/board/freeboard.do";
+		case 3:
+			return "redirect:/board/qnaboard.do";
+		default:
+			return "redirect:/"; 
+		}
 
 	}
-	
-	@GetMapping("/board/boardInfo.do")
-	public String boardInfo() {
-		
-		return "admin/board/boardInfo";
-	}
-	
-	
-	
-	@GetMapping("/board/qna.do")
-	public String qna() {
-		
-		return "admin/board/qna";
-	}
-	
+
 	@GetMapping("/board/qnaReply.do")
 	public String qnaReply() {
-		
+
 		return "admin/board/qnaReply";
 	}
-	
+
 	@GetMapping("/news/adminNews.do")
 	public String adminNews() {
-		
+
 		return "admin/news/adminNews";
 	}
-	
+
 	@GetMapping("/news/adminWrite.do")
 	public String adminWrite() {
-		
+
 		return "admin/news/adminWrite";
 	}
-	
+
 	@GetMapping("/mypage/main.do")
 	public String main() {
-		
+
 		return "mypage/main";
 	}
-	
+
 }
