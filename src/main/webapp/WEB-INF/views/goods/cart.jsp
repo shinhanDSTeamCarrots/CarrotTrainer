@@ -118,6 +118,7 @@
                 data: { cartNos: selectedCartNos },
                 success: function (result) {
                     console.log(result);
+                    window.location.href = "${pageContext.request.contextPath}/pay/cart";
                 },
                 error: function (result) {
                 }

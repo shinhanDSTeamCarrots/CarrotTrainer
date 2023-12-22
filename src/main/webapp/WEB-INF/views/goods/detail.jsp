@@ -254,16 +254,36 @@
 				<div class="itemDetailQna" id="detailQna">						
 		    		<div class="qnaHeader">
 			    		<h1 class="sub_title">상품문의</h1>
-			    		<p class="qnaCnt"><span>총 ${map.count }개</span></p>
+			    		<p class="qnaCnt"><span>총 개</span></p>
 			    		<button class="writebtn">작성하기</button>
 		    		</div>
 		    		<div class="qnaList">
 		    			<table class="qnaTable">
 		
 		    			<!-- 문의하기 작성 폼 -->
-		    			<div class="writeform">
-		    				
-		    			</div>
+		    			<form action="insert" method="post" class="writeform">
+		    				<div class="qnawriter">
+		    					<p>작성자</p>
+		    					<input type="text" value="${qna.member_id }" readonly>
+		    				</div>
+		    				<div class="qnacate">
+		    					<p>문의 유형</p>
+		    					<select name="inquiry_type">
+		    						<option value="0">상품</option>
+		    						<option value="1">배송</option>
+		    						<option value="2">환불</option>
+		    						<option value="3">기타</option>
+		    					</select>
+		    				</div>
+		    				<div class="qnatitle">
+		    					<p>제목</p>
+		    					<input type="text" name="title">
+		    				</div>
+		    				<div class="qnacontent">
+		    					<p>문의 내용</p>
+		    					<input type="text" name="content">
+		    				</div>
+		    			</form>
 		    				<thead>
 			    				<tr>	    					
 			    					<th>글번호</th>
