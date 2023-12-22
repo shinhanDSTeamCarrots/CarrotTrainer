@@ -11,6 +11,7 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	//운동
 	//tb_health_diary 테이블
+	@Override
 	public int insertExInfo(HealthDiaryVO vo) {
 		return mapper.insertExInfo(vo);
 	}

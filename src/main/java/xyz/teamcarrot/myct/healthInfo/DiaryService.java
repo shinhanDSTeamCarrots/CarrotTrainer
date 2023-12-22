@@ -16,7 +16,7 @@ public interface DiaryService {
 	int deleteFoodDiary(FoodDiaryVO vo);
 	//tb_food_diary_info 테이블
 	int insertFoodInfo(FoodDiaryInfoVO vo);
-	FoodDiaryInfoVO selectFoodInfo(FoodDiaryInfoVO vo);;
+	FoodDiaryInfoVO selectFoodInfo(FoodDiaryInfoVO vo);
 	int updateFoodInfo(FoodDiaryInfoVO vo);
 	int deleteFoodInfo(FoodDiaryInfoVO vo);
 }
