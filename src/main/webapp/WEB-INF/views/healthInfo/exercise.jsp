@@ -78,9 +78,10 @@
 								</colgroup>
 								<c:forEach var="healthDic" items="${healthDic}">
 									<tr class="health-info" data-no="${healthDic.no }">
-										<td class="bookmark">&#9733;</td>
+										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};">&#9733;</td>
 										<td class="health">${healthDic.health }</td>
 										<td class="calorie">${healthDic.calorie }kcal/hr</td>
+										<script>console.log(${healthDic.bookmarkNo})</script>
 									</tr>
 								</c:forEach>
 							</c:if>

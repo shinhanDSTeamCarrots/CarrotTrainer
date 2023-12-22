@@ -16,9 +16,15 @@ $(function() {
 
 	  // 클릭 시, 로그인이 되어있을 때, db에 저장
 	  console.log($(this).closest(".health-info").data("no"));
-	  insertBookmark();
+	  
 	  //이미 등록되어있는 지 확인 > 등록되어있으면 색상 변경 안함/없으면 등록
 	  //등록 시, 확인 컨펌창 띄우기(?즐찾할거니 정말 뺼거니?)
+	  /*
+	  if(){
+	  	addBookmark()
+	  } else {
+	  	delBookmark();
+	  }*/
 	  
 	});
 	
@@ -49,7 +55,11 @@ $(function() {
 	}
 	//캘린더
 	$( "input[name='health_date']" ).datepicker(config);
-
+	
+	/*-------------
+		북마크 함수
+	-------------*/
+	/*
 	function insertBookmark() {
 		const userName = "${sessionScope.loginInfo}";
 		if (userName) {	//로그인이 되어있을 때
@@ -57,18 +67,18 @@ $(function() {
 		    const healthNo = $(this).closest(".health-info".data("no"));
 		    
 		    $.ajax({
-		        url: '/checkBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
+		        url: '/checkBookmark',
 		        method: 'GET',
-		        data: { healthNo: no },
-		        success: function(response) {
-		            const isBookmarked = response.isBookmarked;
+		        data: JSON.stringify({ no : healthNo }),
+		        success: function(res) {
+		            const isBookmarked = res.isBookmarked;
 		
 		            if (isBookmarked) {
 		                // 즐겨찾기에 등록된 경우 노란색
 		                $(event.currentTarget).css("color", "gold");
 		            } else {
 		                // 즐겨찾기에 등록되지 않은 경우 기본 색상
-		                $(event.currentTarget).css("color", "default");
+		                $(event.currentTarget).css("color", "");
 		            }
 		        },
 		        error: function(error) {
@@ -81,8 +91,43 @@ $(function() {
 				location.href=(""); //로그인 페이지로 이동
 			}
 		}
+	}*/
+	function addBookmark() {
+	    // 클릭한 행에 대한 정보 가져오기
+	    const healthNo = $(this).closest(".health-info".data("no"));
+	    
+	    $.ajax({
+	        url: '/insertBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
+	        method: 'POST',
+	        data: JSON.stringify({ no : healthNo }),
+	        success: function(res) {
+	        	// 삭제 성공 시 처리
+            	console.log('북마크 추가 성공:', res);
+            	$(event.currentTarget).css("color", "gold");
+	        },
+	        error: function(error) {
+	            console.error('북마크 추가 실패:', error);
+	        }
+	    });
 	}
-	
+	function delBookmark() {
+	    // 클릭한 행에 대한 정보 가져오기
+	    const healthNo = $(this).closest(".health-info".data("no"));
+	    
+	    $.ajax({
+	        url: '/deleteBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
+	        method: 'POST',
+	        data: JSON.stringify({ no : healthNo }),
+	        success: function(res) {
+	        	// 삭제 성공 시 처리
+            	console.log('북마크 삭제 성공:', res);
+            	$(event.currentTarget).css("color", "");
+	        },
+	        error: function(error) {
+	            console.error('북마크 삭제 실패:', error);
+	        }
+	    });
+	}
 	
 	//검색 함수 - 검색 완료 시, 페이지 리로드
 	function search(minute) {

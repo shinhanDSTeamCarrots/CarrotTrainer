@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import xyz.teamcarrot.myct.member.MemberVO;
 
@@ -53,9 +56,16 @@ public class ExerciseController {
 
 		return "/healthInfo/exercise";
 	}
-	//즐겨찾기에 있는 운동인지 확인
-	@GetMapping("/checkBookmark")
-	public Boolean checkBookmark(Integer no) {
-		return null;
+
+	@ResponseBody
+	@PostMapping("/insertBookmark")
+	public int addBookmark(@RequestParam HealthBookmarkVO vo) {
+		System.out.println(vo.getHealth_dic_no());
+		return service.addBookmark(vo);
+	}
+	@ResponseBody
+	@PostMapping("/deleteBookmark")
+	public int delBookmark(@RequestParam Integer no) {
+		return service.delBookmark(no);
 	}
 }
