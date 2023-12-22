@@ -42,7 +42,7 @@ public class BoardController {
 	private MemberService mservcie;
 
 	// 자유게시판 리스트 출력
-	@GetMapping("/freeboard.do")
+	@GetMapping("/freeboard")
 	public String boardListGET(Model model, Criteria cri, HttpServletRequest request, HttpSession session) {
 
 		log.info("freeboardListGET");
@@ -61,7 +61,7 @@ public class BoardController {
 	}
 
 	// 자유게시판 게시글 조회
-	@GetMapping("/freedetail.do")
+	@GetMapping("/freedetail")
 	public String boardGetPageGET(int board_no, Model model, HttpSession session, Criteria cri) {
 		BoardVO board = bservice.getPage(board_no);
 		log.info("test: " + board.getBoard_no());
@@ -86,7 +86,7 @@ public class BoardController {
 	}
 	
 	// (관리자 페이지) 자유게시판 게시글 관리
-	@GetMapping("/board/boardInfo.do")
+	@GetMapping("/board/boardInfo")
 	public String boardInfo(Model model, HttpSession session, Criteria cri) {
 
 		model.addAttribute("page", bservice.getListPaging(cri));
@@ -104,7 +104,7 @@ public class BoardController {
 	
 	
 	// 문의게시판 리스트 출력
-	@GetMapping("/qnaboard.do")
+	@GetMapping("/qnaboard")
 	public String QnaboardList(Model model, HttpSession session, HttpServletRequest request) {
 		log.info("QnaboardListGET");
 
@@ -122,7 +122,7 @@ public class BoardController {
 	}
 
 	// 문의게시판 게시글 조회와 답글 목록을 조회
-	@GetMapping("/Qnadetail.do")
+	@GetMapping("/Qnadetail")
 	public String boardDetail(int board_no, Model model, HttpSession session) {
 		
 		BoardVO board = bservice.getPage(board_no);
@@ -143,7 +143,7 @@ public class BoardController {
 	}
 	
 	// (관리자 페이지) 문의게시판 게시글 관리
-	@GetMapping("/board/qna.do")
+	@GetMapping("/board/qna")
 	public String qna(Model model, HttpSession session, HttpServletRequest request) {
 		log.info("QnaboardListGET");
 
@@ -158,7 +158,7 @@ public class BoardController {
 	}
 	
 	// 공지사항 게시글 리스트 출력
-	@GetMapping("/noticeboard.do")
+	@GetMapping("/noticeboard")
 	public String noticeboard(Model model, HttpSession session, HttpServletRequest request) {
 
 		
@@ -172,7 +172,7 @@ public class BoardController {
 	}
 	
 	// (관리자 페이지) 공지사항 게시글 관리 
-	@GetMapping("/board/notice.do")
+	@GetMapping("/board/notice")
 	public String notice(Model model, HttpSession session, HttpServletRequest request) {
 
 		
@@ -189,7 +189,7 @@ public class BoardController {
 	}
 
 	/* 다중 선택 삭제(미완성) */
-//    @PostMapping("/deleteSelected.do")
+//    @PostMapping("/deleteSelected")
 //    @ResponseBody
 //    public ResponseEntity<?> deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
 //        try {
@@ -201,7 +201,7 @@ public class BoardController {
 //    }
 	
 	// 다중 선택 제거
-	@PostMapping("/deleteSelected.do")
+	@PostMapping("/deleteSelected")
 	@ResponseBody
 	public String deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
 		try {
@@ -232,7 +232,7 @@ public class BoardController {
 	}
 	
 	// 댓글 등록
-	@PostMapping("/insertReply.do")
+	@PostMapping("/insertReply")
 	@ResponseBody
 	public String insertReply(ReplyVO reply, HttpSession session) {
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
@@ -254,7 +254,7 @@ public class BoardController {
 
 	// 댓글 삭제 
 	@ResponseBody
-	@PostMapping("/replydelete.do")
+	@PostMapping("/replydelete")
 	public String replyDeletePOST(ReplyVO replyvo, @RequestParam("reply_id") int reply_no) {
 		try {
 			bservice.deleteReply(reply_no);
@@ -266,34 +266,34 @@ public class BoardController {
 	}
 
 	// 특정 게시글의 댓글 목록을 반환
-	@GetMapping("/getReplies.do")
+	@GetMapping("/getReplies")
 	@ResponseBody
 	public List<ReplyVO> getRepliesForBoard(@RequestParam("board_no") int boardNo) {
 		return bservice.getReplies(boardNo);
 	}
 
-	@GetMapping("/qnareply.do")
+	@GetMapping("/qnareply")
 	public String Qnareply(Model model) {
 		return "board/Qnareply";
 	}
 
-	@GetMapping("/cancel.do")
+	@GetMapping("/cancel")
 	public String boardCancleGET(int category_no, int board_no, Model model) {
 
 		switch (category_no) {
 		case 1:
-			return "redirect:/board/noticedetail.do";
+			return "redirect:/board/noticedetail";
 		case 2:
-			return "redirect:/board/freedetail.do";
+			return "redirect:/board/freedetail";
 		case 3:
-			return "redirect:/board/Qnadetail.do";
+			return "redirect:/board/Qnadetail";
 		default:
 			return "redirect:/";
 		}
 	}
 
 	/* �Խ��� ��� ������ ���� */
-	@GetMapping("/write.do")
+	@GetMapping("/write")
 	public String boardEnrollGET() {
 
 		log.info("�Խ��� ��� ������ ����");
@@ -301,7 +301,7 @@ public class BoardController {
 	}
 
 	/* �Խ��� ��� */
-	@PostMapping("/insert.do")
+	@PostMapping("/insert")
 	public String boardEnrollPOST(@RequestParam("file") MultipartFile file, HttpSession session, BoardVO board,
 			RedirectAttributes rttr, HttpServletRequest request) {
 
@@ -314,18 +314,18 @@ public class BoardController {
 		rttr.addFlashAttribute("result", "enrol success");
 		switch (board.getCategory_no()) {
 		case 1:
-			return "redirect:/board/noticeboard.do";
+			return "redirect:/board/noticeboard";
 		case 2:
-			return "redirect:/board/freeboard.do";
+			return "redirect:/board/freeboard";
 		case 3:
-			return "redirect:/board/qnaboard.do";
+			return "redirect:/board/qnaboard";
 		default:
 			return "redirect:/";
 		}
 	}
 
 	/* ������ ���� */
-	@PostMapping("/delete.do")
+	@PostMapping("/delete")
 	public String boardDeletePOST(int board_no, int category_no, RedirectAttributes rttr) {
 		bservice.delete(board_no);
 		rttr.addFlashAttribute("result", "delete success");
@@ -333,18 +333,18 @@ public class BoardController {
 		
 		switch (category_no) {
 		case 1:
-			return "redirect:/board/noticeboard.do";
+			return "redirect:/board/noticeboard";
 		case 2:
-			return "redirect:/board/freeboard.do";
+			return "redirect:/board/freeboard";
 		case 3:
-			return "redirect:/board/qnaboard.do";
+			return "redirect:/board/qnaboard";
 		default:
 			return "redirect:/"; // 기본값
 		}
 	}
 
 	/* ���� ������ �̵� */
-	@GetMapping("/modify.do")
+	@GetMapping("/modify")
 	public String boardModifyGET(int board_no, Model model/* , Criteria cri */) {
 
 		model.addAttribute("pageInfo", bservice.getPage(board_no));
@@ -353,7 +353,7 @@ public class BoardController {
 	}
 
 	/* ������ ���� */
-	@PostMapping("/modify.do")
+	@PostMapping("/modify")
 	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr, int category_no) {
 
 		bservice.modify(board);
@@ -363,36 +363,36 @@ public class BoardController {
 	
 		switch (category_no) {
 		case 1:
-			return "redirect:/board/noticeboard.do";
+			return "redirect:/board/noticeboard";
 		case 2:
-			return "redirect:/board/freeboard.do";
+			return "redirect:/board/freeboard";
 		case 3:
-			return "redirect:/board/qnaboard.do";
+			return "redirect:/board/qnaboard";
 		default:
 			return "redirect:/"; 
 		}
 
 	}
 
-	@GetMapping("/board/qnaReply.do")
+	@GetMapping("/board/qnaReply")
 	public String qnaReply() {
 
 		return "admin/board/qnaReply";
 	}
 
-	@GetMapping("/news/adminNews.do")
+	@GetMapping("/news/adminNews")
 	public String adminNews() {
 
 		return "admin/news/adminNews";
 	}
 
-	@GetMapping("/news/adminWrite.do")
+	@GetMapping("/news/adminWrite")
 	public String adminWrite() {
 
 		return "admin/news/adminWrite";
 	}
 
-	@GetMapping("/mypage/main.do")
+	@GetMapping("/mypage/main")
 	public String main() {
 
 		return "mypage/main";

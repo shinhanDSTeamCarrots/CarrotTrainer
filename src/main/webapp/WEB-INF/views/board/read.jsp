@@ -116,12 +116,12 @@ textarea{
 	
 	$("#list_btn").on("click", function(e){
 		form.find("#board_no").remove();
-		form.attr("action", "/myct/board/freeboard.do");
+		form.attr("action", "/myct/board/freeboard");
 		form.submit();
 	});
 	
 	$("#modify_btn").on("click", function(e){
-		form.attr("action", "/myct/board/modify.do");
+		form.attr("action", "/myct/board/modify");
 		form.submit();
 	});	
 </script>

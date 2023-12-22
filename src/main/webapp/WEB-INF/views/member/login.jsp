@@ -66,7 +66,7 @@
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
-		<form action="login.do" method="post" id="board" name="board">
+		<form action="login" method="post" id="board" name="board">
 			<div class="container">
 				<div class="menu">
 

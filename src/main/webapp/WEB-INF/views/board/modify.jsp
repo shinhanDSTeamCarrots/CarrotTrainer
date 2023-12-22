@@ -88,7 +88,7 @@ textarea {
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 
-			<form id="modifyForm" action="/myct/board/modify.do" method="post">
+			<form id="modifyForm" action="/myct/board/modify" method="post">
 			
 				<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>	
 					
@@ -114,14 +114,14 @@ textarea {
 				</div>
 				
 			</form>
-			<form id="infoForm" action="/myct/board/modify.do" method="get">
+			<form id="infoForm" action="/myct/board/modify" method="get">
 				<input type="hidden" id="board_no" name="board_no"
 					value='<c:out value="${pageInfo.board_no}"/>'>
 					<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
 				
 			</form>
 			
-			<form id="cancleForm" action="/myct/board/cancle.do" method="get">
+			<form id="cancleForm" action="/myct/board/cancle" method="get">
 							<div class="btn_wrap">
 						 <a class="btn" id="cancel_btn">수정 취소</a>
 						 </div>
@@ -149,17 +149,17 @@ textarea {
 	        let actionUrl;
 	        switch (categoryNo) {
 	            case "1":
-	                actionUrl = "/myct/board/noticeboard.do"; 
+	                actionUrl = "/myct/board/noticeboard"; 
 	                break;
 	            case "2":
-	                actionUrl = "/myct/board/freeboard.do"; 
+	                actionUrl = "/myct/board/freeboard"; 
 	                break;
 	            case "3":
-	                actionUrl = "/myct/board/qnaboard.do"; 
+	                actionUrl = "/myct/board/qnaboard"; 
 	                break;
 	          
 	            default:
-	                actionUrl = "/myct/board/freeboard.do"; 
+	                actionUrl = "/myct/board/freeboard"; 
 	                break;
 	        }
 
@@ -184,16 +184,16 @@ textarea {
 		    let actionUrl;
 		    switch (categoryNo) {
 		        case "1":
-		            actionUrl = `/myct/board/noticedetail.do?board_no=${boardNo}`; 
+		            actionUrl = `/myct/board/noticedetail?board_no=${boardNo}`; 
 		            break;
 		        case "2":
-		            actionUrl = `/myct/board/freedetail.do?board_no=${boardNo}`; 
+		            actionUrl = `/myct/board/freedetail?board_no=${boardNo}`; 
 		            break;
 		        case "3":
-		            actionUrl = `/myct/board/Qnadetail.do?board_no=${boardNo}`; 
+		            actionUrl = `/myct/board/Qnadetail?board_no=${boardNo}`; 
 		            break;
 		        default:
-		            actionUrl = `/myct/board/freedetail.do?board_no=${boardNo}`; 
+		            actionUrl = `/myct/board/freedetail?board_no=${boardNo}`; 
 		            break;
 		    }
 
@@ -204,7 +204,7 @@ textarea {
 		
 		 /* 삭제 버튼 */
 	    $("#delete_btn").on("click", function(e){	
-	        form.attr("action", "/myct/board/delete.do");
+	        form.attr("action", "/myct/board/delete");
 	        form.attr("method", "post");
 	        form.submit();
 	    });

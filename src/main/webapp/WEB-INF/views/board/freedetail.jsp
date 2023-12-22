@@ -183,7 +183,7 @@ textarea {
 			<div class="btn_wrap">
 				<a class="btn" id="list_btn">조회 페이지</a> <a class="btn"
 					id="modify_btn">수정 하기</a> <a class="btn" id="reply_btn"
-					href="<c:url value='/board/qnareply.do?board_title=${pageInfo.board_title}' />">답변</a>
+					href="<c:url value='/board/qnareply?board_title=${pageInfo.board_title}' />">답변</a>
 				<a class="btn" id="recom_btn" href="javascript:void(0);"
 					onclick="RecomCount(${list.board_no});">추천</a>
 			</div>
@@ -254,16 +254,16 @@ textarea {
 	    // category_no에 따라 URL 설정
 	    switch (categoryNo) {
 	        case "1":
-	            actionUrl = "/myct/board/noticeboard.do"; 
+	            actionUrl = "/myct/board/noticeboard"; 
 	            break;
 	        case "2":
-	            actionUrl = "/myct/board/freeboard.do"; 
+	            actionUrl = "/myct/board/freeboard"; 
 	            break;
 	        case "3":
-	            actionUrl = "/myct/board/qnaboard.do"; 
+	            actionUrl = "/myct/board/qnaboard"; 
 	            break;
 	        default:
-	            actionUrl = "/myct/board/freeboard.do"; 
+	            actionUrl = "/myct/board/freeboard"; 
 	            break;
 	    }
 
@@ -273,7 +273,7 @@ textarea {
 
 	
 	$("#modify_btn").on("click", function(e){
-		form.attr("action", "/myct/board/modify.do");
+		form.attr("action", "/myct/board/modify");
 		form.submit();
 	});	
 	
@@ -303,7 +303,7 @@ textarea {
 	// AJAX를 사용하여 특정 게시글의 댓글 목록을 불러오는 함수
 	function loadComments(boardNo) {
 	    $.ajax({
-	        url: "/myct/board/getReplies.do", 
+	        url: "/myct/board/getReplies", 
 	        type: "GET",
 	        data: { board_no: boardNo },
 	        success: function(replies) {
@@ -341,7 +341,7 @@ textarea {
 	        };
 
 	        $.ajax({
-	            url: "/myct/board/insertReply.do", 
+	            url: "/myct/board/insertReply", 
 	            type: "POST",
 	            data: data,
 	            success: function(response) {

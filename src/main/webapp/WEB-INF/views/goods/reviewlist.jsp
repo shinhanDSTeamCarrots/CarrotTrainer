@@ -12,7 +12,7 @@
 	var mem_no = "${sessionScope.loginInfo.member_no}";
 	
 	function alignTypeBtnClicked(alignType) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
+		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+alignType;
 		href += "&page_no=1"
@@ -20,7 +20,7 @@
 	}
 
 	function PageBtnClicked(pagecnt) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
+		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+"${map.alignType}";
 		href += "&page_no="+pagecnt;
@@ -34,7 +34,7 @@
 			//ajax 호출하고
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/like.do",
+				url: "${pageContext.request.contextPath}/review/like",
 				data: {mem_no: mem_no,
 					   review_no: review_no},
 				success: function(data){
@@ -65,7 +65,7 @@
 			//ajax 호출하고
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/dislike.do",
+				url: "${pageContext.request.contextPath}/review/dislike",
 				data: {mem_no: mem_no,
 					   review_no: review_no},
 				success: function(data){
@@ -88,7 +88,7 @@
 		
 	}
 	function onEditBtnClicked(review_no){
-		let href = "${pageContext.request.contextPath}"+ "/review/modify.do?";
+		let href = "${pageContext.request.contextPath}"+ "/review/modify?";
 		href += "review_no="+review_no;
 		location.replace(href);		
 	}
@@ -99,7 +99,7 @@
 			//리뷰 삭제 실행 후 리로드
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/delete.do",
+				url: "${pageContext.request.contextPath}/review/delete",
 				data: {review_no: review_no},
 				success: function(data){
 					if(data == "T"){
