@@ -23,8 +23,10 @@
            		</c:when>
            		<c:otherwise>
 	                <div class="login">
-	               		<a href="${pageContext.request.contextPath}/member/login">마이페이지</a> |
-	                    <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
+	                	<a href="${pageContext.request.contextPath}/cart">
+	                    <img id="carticon" src="${pageContext.request.contextPath}/img/cart.jpg">장바구니</a> |
+	               		<a href="${pageContext.request.contextPath}/member/login.do">마이페이지</a> |
+	                    <a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>s
 	                </div>
            		</c:otherwise>
            		</c:choose>
@@ -59,11 +61,11 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">쇼핑</a>
+                    <a href="${pageContext.request.contextPath}/goodsList">쇼핑</a>
                     <ul class="depth2">
-                        <li><a href="${pageContext.request.contextPath}/chickenList">닭가슴살</a></li>
-                        <li><a href="#">도시락</a></li>
-                        <li><a href="#">샐러드</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/1">닭가슴살</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/2">도시락</a></li>
+                        <li><a href="${pageContext.request.contextPath}/goodsList/3">샐러드</a></li>
                     </ul>
                 </li>
             </ul>

@@ -19,4 +19,5 @@ public interface ReviewService {
 	int deleteReview(int reviewno);
 	void likeReview(int review_no, int member_no);
 	void dislikeReview(int review_no, int member_no);
+	ReviewVO getSpecificReview(int review_no);
 }

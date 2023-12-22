@@ -17,40 +17,52 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
 .container {
-	width: 100%; /* 컨테이너의 너비를 100%로 설정 */
-	max-width: 1200px; /* 최대 너비를 600px로 설정하여 요소들의 너비를 줄임 */
-	margin: 50px auto; /* 상하 마진을 0으로, 좌우 마진을 auto로 설정하여 중앙 정렬 */
-	padding: 20px; /* 내부 여백 */
-	box-sizing: border-box; /* padding을 포함한 너비로 계산 */
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .board-title {
-	font-size: 2.4rem;
-	font-weight: 700;
-	margin-bottom: 10px;
+  font-size: 2.4rem;
+  color: #4CAF50;
+  margin-bottom: 20px;
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 10px;
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th, td {
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: center;
-	font-size: 1.2rem;
+  padding: 10px; 
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.4rem; 
+}
+
+.title-column {
+    text-align: left;
 }
 
 th {
-	background-color: #f2f2f2;
-	font-weight: 700;
+  background-color: #faa04b;
+  color: white;
 }
+
 
 .pagination {
 	margin-top: 20px;
@@ -114,7 +126,7 @@ th {
   .pageInfo{
       list-style : none;
       display: inline-block;
-    margin: 50px 0 0 100px;      
+    margin: 50px 0 0 400px;      
   }
   .pageInfo li{
       float: left;
@@ -158,7 +170,9 @@ th {
 			<div class="board-title">자유게시판</div>
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
-				<a href="write.do" class="write-button">게시판 등록</a>
+			<c:if test="${!empty loginInfo }">
+				<a href="write" class="write-button">게시판 등록</a>
+				</c:if>
 			</div>
 
 			<table>
@@ -170,6 +184,7 @@ th {
 						<th>작성일</th>
 						<th>조회</th>
 						<th>카테고리</th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -177,24 +192,23 @@ th {
 					  <c:if test="${list.category_no == 2}">
 						<tr>
 							<td><c:out value="${list.board_no}" /></td>
-							<td><a class="move" href='<c:out value="${list.board_no}"/>'>
+							<%--  <td>
+							<a class="move" href='<c:out value="${list.board_no}"/>'>
 									<c:out value="${list.board_title}" />
-							</a></td>
-							<td>
-							    <c:choose>
-							        <c:when test="${list.member_no == 1}">
-							            kimtest
-							        </c:when>
-							        <c:otherwise>
-							            <c:out value="${list.member_no}" />
-							        </c:otherwise>
-							    </c:choose>
-							</td>
+							</a>
+							</td> --%>
+							
+								<td class="title-column">
+								<a class="move" href="javascript:void(0);" onclick="ViewCount(${list.board_no});">
+										<c:out value="${list.board_title}" />
+								</a></td> 
+								<td><c:out value="${list.member_nickname}" /></td>
 
 							<td><fmt:formatDate pattern="yyyy/MM/dd"
 									value="${list.board_rdate}" /></td>
 							<td><c:out value="${list.board_view}" /></td>
 							<td>자유게시판</td>
+						
 
 						</tr>
 						</c:if>
@@ -209,9 +223,9 @@ th {
         <select name="type">
                 <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
                 <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+                <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>                
                 <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
-                <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
-                <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
+                <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>           
                 <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
                 <option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
             </select>  
@@ -250,7 +264,7 @@ th {
 
 
 
-	
+
 			<form id="moveForm" method="get">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
@@ -262,6 +276,7 @@ th {
 
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
+	
 
 	<script>
 		$(document).ready(function() {
@@ -290,24 +305,23 @@ th {
 			}
 
 		});
+		
+		
+		 let moveForm = $("#moveForm");
+	
+						
+						  function ViewCount(boardNo) {
+							 window.location.href = '/myct/board/freedetail?board_no=' + boardNo;
+					
+					    }
 
-		let moveForm = $("#moveForm");
-
-		$(".move").on("click", function(e) {
-							e.preventDefault();
-							//moveForm.empty();
-
-							moveForm.append("<input type='hidden' name='board_no' value='"	
-											+ $(this).attr("href") + "'>");
-							moveForm.attr("action", "/myct/board/read.do");
-							moveForm.submit();
-						});
+		
 
 		$(".pageInfo a").on("click", function(e) {
 
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/myct/board/freeboard.do");
+			moveForm.attr("action", "/myct/board/freeboard");
 			moveForm.submit();
 
 		});

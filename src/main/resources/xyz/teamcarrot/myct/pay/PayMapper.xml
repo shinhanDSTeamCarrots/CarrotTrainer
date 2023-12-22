@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.pay.PayMapper">
+
+	<select id="getCartGoods" parameterType="map" resultType="xyz.teamcarrot.myct.pay.BuyGoodsVO">
+		SELECT 	C.cart_no
+			  , @ROWNUM:=@ROWNUM+1 AS rownum
+			  , C.goods_no
+		      ,	NVL(C.option_no,0) AS option_no
+		      , C.goods_count AS goods_cnt
+		      , G.goods_name AS goods_name
+		      ,	NVL(O.option_name,"") AS option_name
+		      , G.price AS goods_price
+		      , NVL(O.price_updown,0) AS option_price
+	          ,	((NVL(G.price,0) + NVL(O.price_updown,0)) * NVL(C.goods_count,0)) AS goods_final_price
+	          , G.image AS goods_thumnail
+		FROM tb_cart AS C
+				JOIN (SELECT @ROWNUM:=-1) AS R
+				LEFT JOIN	tb_goods AS G
+							ON G.goods_no = C.goods_no
+				LEFT JOIN 	tb_goods_option AS O
+							ON O.option_no = C.option_no
+		WHERE C.member_no = #{member_no}
+			  AND
+			  C.cart_no IN
+			  <foreach collection="list" item="cart_no" open="(" close=")" separator=",">
+			  		#{cart_no}
+			  </foreach>
+	</select>
+	
+	<select id="getGoods" parameterType="map" resultType="xyz.teamcarrot.myct.pay.BuyGoodsVO">
+		SELECT 	0 AS cart_no
+			  , @ROWNUM:=@ROWNUM+1 AS rownum
+			  , G.goods_no
+		      ,	NVL(O.option_no,0) AS option_no
+		      , #{goods_cnt} AS goods_cnt
+		      , G.goods_name AS goods_name
+		      ,	NVL(O.option_name,"") AS option_name
+		      , G.price AS goods_price
+		      , NVL(O.price_updown,0) AS option_price
+	          ,	((NVL(G.price,0) + NVL(O.price_updown,0)) * NVL(#{goods_cnt},0)) AS goods_final_price
+	          , G.image AS goods_thumnail
+		FROM	tb_goods AS G
+				LEFT JOIN 	tb_goods_option AS O
+							ON O.option_no = #{option_no}
+		WHERE 	G.goods_no = #{goods_no}
+	</select>
+	
+	
+	
+	<select id="getAddressList" parameterType="int" resultType="map">
+		SELECT 
+			  AD.place_no AS place_no
+			, @ROWNUM:=@ROWNUM+1 AS rownum
+			, AD.place_name AS place_name
+			, AD.receive_name AS recevier_name
+			, AD.receive_hp AS phone
+			, AD.receive_addr AS addr1
+			, AD.receive_addr2 AS addr2
+			, AD.receive_zipcode AS zipcode
+			, NVL(AD.postman_notice,"안전하게 와주세요!") AS notice
+			FROM tb_address AS AD
+				JOIN (SELECT @ROWNUM:=-1) AS R
+				LEFT JOIN tb_member AS M
+									ON M.member_no = AD.member_no
+		WHERE AD.member_no = #{member_no}
+	</select>
+	
+	<select id="getMemberMileage" parameterType="int" resultType="int">
+		SELECT
+			  NVL(member_mileage, 0) AS mileage
+		FROM tb_member
+		WHERE member_no = #{member_no}
+	</select>
+	<insert id="insertOrderMain" parameterType="xyz.teamcarrot.myct.pay.PayDataDTO">
+		INSERT INTO tb_order
+		 ( member_no
+		 , purchase_div
+		 , purchase_val
+		 , purchase_state
+		 , receiver_nm
+		 , recevier_post
+		 , recevier_addr
+		 , receiver_addr_detail
+		 , receiver_phone
+		 , purchase_price
+		 , purchase_mileage
+		 , postman_notice )
+		
+		VALUES (
+		   #{member_no}
+		 , #{purchase_div}
+		 , #{payStr};
+		 , 0
+		 , #{recevier_name}
+		 , #{zipcode}
+		 , #{addr1}
+		 , #{addr2}
+		 , #{phone}
+		 , #{pay_price}
+		 , #{mileage}
+		 , #{notice}		
+		)
+	
+		<selectKey keyProperty="order_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertOrderDetail" parameterType="xyz.teamcarrot.myct.pay.BuyGoodsVO">
+		INSERT INTO tb_order_detail
+			( order_no
+			, goods_no
+			<if test="option_no != 0">
+			, option_no
+			</if>
+			, goods_cnt
+			, deliver_state
+			, purchase_price
+			)
+		VALUES
+			( #{order_no}
+			, #{goods_no}
+			<if test="option_no != 0">
+			, #{option_no}
+			</if>
+			, #{goods_cnt}
+			, 0
+			, #{goods_final_price}
+			)
+		<selectKey keyProperty="detail_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+</mapper>

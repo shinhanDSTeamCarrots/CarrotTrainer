@@ -3,31 +3,59 @@ package xyz.teamcarrot.myct.board;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BoardMapper {
-	/*°Ô½ÃÆÇ µî·Ï*/
-	public void enroll(BoardVO board);
 	
-	/* °Ô½ÃÆÇ »èÁ¦ */
+	
+	
+	// ê²Œì‹œê¸€ ë“±ë¡ (ì™„ì„±)
+	public int enroll(BoardVO board);
+	
+	// íŒŒì¼ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” ë©”ì„œë“œ ì¶”ê°€ (ì™„ì„±)
+    public int enrollFile(BoardFileVO boardFile);
+	
+	// ê²Œì‹œê¸€ ì‚­ì œ (ì™„ì„±)
     public int delete(int board_no);
 	
-	/*°Ô½ÃÆÇ ¸ñ·Ï*/
+	// ê²Œì‹œê¸€ ëª©ë¡(í˜ì´ì§•X) (ì™„ì„±)
 	public List<BoardVO> getList();
 
-	/* °Ô½ÃÆÇ ¸ñ·Ï(ÆäÀÌÂ¡ Àû¿ë) 
-	 * List·Î ¼±¾ğÇÑ ÀÌÀ¯´Â ¹è¿­ÀÇ °æ¿ì Å©±â°¡ 10°³·Î Á¤ÇØÁ³´Ù¸é, 10°³¸¦ ÃÊ°úÇÏ´Â °ªÀ» ´ãÀ» ¼ö ¾ø´Âµ¥
-	 * List´Â 10°³ÀÇ Å©±â·Î ¼³Á¤ÇØµµ 11¹øÂ° °ªÀ» ÀúÀåÇÒ ¶§ µ¿ÀûÀ¸·Î ±× Å©±â°¡ Ä¿Áø´Ù.*/
+	// ê²Œì‹œë¬¼ ëª©ë¡(í˜ì´ì§•) (ì™„ì„±)
     public List<BoardVO> getListPaging(Criteria cri);
 	
-	/*°Ô½ÃÆÇ Á¶È¸*/
+	// í˜ì´ì§€ ê°€ì ¸ì˜¤ê¸° (ì™„ì„±)
 	public BoardVO getPage(int board_no);
 	
-	/*°Ô½ÃÆÇ ¼öÁ¤*/
+	// ê²Œì‹œê¸€ ìˆ˜ì • (ì™„ì„±)
 	public int modify(BoardVO board);	
 	
-    /* °Ô½ÃÆÇ ÃÑ °¹¼ö */
+    // ê²Œì‹œê¸€ ì´ ê°¯ìˆ˜ (ì™„ì„±)
     public int getTotal(Criteria cri);
     
+    // ëŒ“ê¸€ ë“±ë¡ ë©”ì„œë“œ (ì™„ì„±)
+    public void replyEnroll(ReplyVO reply);
+
+    // íŠ¹ì • ê²Œì‹œê¸€ì˜ ë‹µê¸€ ëª©ë¡ ì¡°íšŒ ë©”ì„œë“œ (ì™„ì„±)
+    public List<ReplyVO> getReplies(int board_no);
+    
+    // ëŒ“ê¸€ ë“±ë¡ (ì™„ì„±)
+    public int insertReply(ReplyVO reply);
+    
+    // ì¡°íšŒìˆ˜ (ì™„ì„±)
+    public void updateViewCount(int board_no);
+    
+    // ì¶”ì²œìˆ˜ (ë¯¸ì™„ì„±)
+    public int updateRecomCount(int board_no);
+    
+    // ë‹¤ì¤‘ ì„ íƒ (ë¯¸ì™„ì„±)
+    public void deleteSelected(List<Integer> boardNos);
+    
+    // ëŒ“ê¸€ ì‚­ì œ (ì™„ì„±)
+    public int deleteReply(int replyId);
+    
+    // ë‹µë³€ ìƒíƒœ (ì™„ì„±)
+    public void updateHasReplyStatus(int board_no, boolean status);
     
 }

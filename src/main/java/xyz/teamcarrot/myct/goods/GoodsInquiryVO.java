@@ -18,4 +18,6 @@ public class GoodsInquiryVO {
 	private int admin_no;
 	private String reply_content;
 	private int is_secret;
+	
+	private String member_id;
 }

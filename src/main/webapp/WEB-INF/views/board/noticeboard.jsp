@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>자유게시판</title>
+<title>공지사항</title>
 <META name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 <script
@@ -14,7 +16,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
  .container {
@@ -41,11 +43,15 @@
 
     th, td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 10px;
         text-align: center;
         font-size: 1.2rem;
     }
-
+	
+	.title-column {
+    text-align: left;
+}
+	
     th {
         background-color: #f2f2f2;
         font-weight: 700;
@@ -115,82 +121,114 @@
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-            <div class="board-title">공지사항</div>
+			<div class="board-title">공지사항</div>
+			
+			<!-- 글쓰기 버튼 추가 -->
+			<div class="write-btn-container">
+			 <c:if test="${!empty loginInfo}">
+				<a href="write" class="write-button">게시판 등록</a>
+				</c:if>
+			</div>
 
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                        <th>조회</th>
-                        <th>추천</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1003</td>
-                        <td> <a href="read.do">글 이동</a></td>
-                        <td>홍길동</td>
-                        <td>2023-01-01</td>
-                        <td>100</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>1004</td>
-                        <td>두 번째 게시물 제목</td>
-                        <td>이순신</td>
-                        <td>2023-01-02</td>
-                        <td>150</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <td>1005</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                   <tr>
-                        <td>1006</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>1007</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <!-- 추가 게시물 행을 여기에 추가 -->
-                </tbody>
-            </table>
+			<table>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>첨부파일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${page}" var="vo">
+					  <c:if test="${vo.category_no == 1}">
+						<tr>
+							<td><c:out value="${vo.board_no}"/></td>
+							<td class="title-column">
+							
+                <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
+									<c:out value="${vo.board_title}" />
+									
+									<c:if test="${vo.hasReply}">
+											<span style="color: green;">답변완료</span>
+										</c:if>
+								</a> 
+								</td>
+								<td><c:out value="${vo.member_nickname}" /></td>
 
-            <div class="pagination">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-            </div>
+								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
+							
+							<td><c:if test="${vo.file_name != null}">
+										<a href="/myct/board/download?fileNo=${vo.file_no}">
+										 <img src="/img/ico_star_on.png" alt="첨부파일">
+										</a>
+									</c:if></td>
+									
+									
+						</tr>
+						
+            <c:if test="${board.hasReply}">
+                <tr>
+                    <td colspan="5" style="text-align:center;">답글 등록됨</td>
+                </tr>
+            </c:if>
+						</c:if>
+					</c:forEach>
 
-            <div class="search-container">
-                <input type="text" class="search-input">
-                <button class="search-button">검색</button>
-            </div>
-        </div>
+					
+				</tbody>
+			</table>
 
-
+			<form id="moveForm" method="get">
+			
+			</form>
+		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+
+			let result = '<c:out value="${result}"/>';
+
+			checkAlert(result);
+
+			function checkAlert(result) {
+
+				if (result === '') {
+					reutrn;
+				}
+
+				if (result === "enrol success") {
+					alert("등록이 완료되었습니다.");
+				}
+
+				if (result === "modify success") {
+					alert("수정이 완료되었습니다.");
+				}
+
+				if (result === "delete success") {
+					alert("삭제가 완료되었습니다.");
+				}
+			}
+
+		});
+
+
+		function goToDetail(boardNo) {
+	        location.href = '/myct/board/Qnadetail?board_no=' + boardNo;
+	    }			    
+
+		$(".pageInfo a").on("click", function(e) {
+
+			e.preventDefault();
+			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+			moveForm.attr("action", "/myct/board/qnaboard");
+			moveForm.submit();
+		});
+		
+
+	</script>
 </body>
 </html>
