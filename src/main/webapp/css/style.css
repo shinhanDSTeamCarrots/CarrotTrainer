@@ -68,6 +68,12 @@ a:visited {
     top : 0;
     color: #435334;
     font-weight: bold;
+    display:flex;
+    flex-direction:row;
+}
+#carticon{
+	width:20px;
+	height:20px;
 }
 .menu {
     width:1200px;
