@@ -32,7 +32,7 @@ public class CartController {
 		 MemberVO login = (MemberVO)session.getAttribute("loginInfo");
 		 // 세션이 비어있거나 로그인되어 있지 않으면 로그인 페이지로 리다이렉트 ( 로그인해야 장바구니 표시가 보일거긴 함)
 	     if (login == null) {
-	        return "redirect:/member/login.do";
+	        return "redirect:/member/login";
 	    }
 	     int member_no = login.getMember_no();
 

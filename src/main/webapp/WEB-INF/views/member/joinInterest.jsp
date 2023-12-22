@@ -31,7 +31,7 @@ function joinDone() {
         // Ajax를 사용하여 서버에 선택된 버튼 정보 전송
         $.ajax({
             type: 'POST',
-            url: 'interestRegist.do', 
+            url: 'interestRegist', 
             contentType: 'application/json',
             data: JSON.stringify({ selectedButtons: selectedButtons }),
             success: function (response) {
@@ -152,7 +152,7 @@ function changeColor(button) {
     		<div class = "menu">
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>    				
-    				<form name="frm" id="frm" action="interestregist.do" method="get">
+    				<form name="frm" id="frm" action="interestregist" method="get">
     				<div class="btn-container">
     					<input type = "checkbox" name = "1" id ="body" >눈
     					<input type = "checkbox" name ="2" id ="body">귀

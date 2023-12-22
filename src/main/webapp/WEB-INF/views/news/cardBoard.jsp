@@ -120,7 +120,7 @@
         <div class="cards-container">
             <!-- 여러 카드를 반복적으로 표시 -->
             <div class="card">
-                <div class="card-image"><a href="/myct/healthnews/cardread.do">웰니스 뉴스</a></div>
+                <div class="card-image"><a href="/myct/healthnews/cardread">웰니스 뉴스</a></div>
                 <div class="card-title">제목: 타이틀1</div>
                 <div class="card-author">작성자:</div>
             </div>

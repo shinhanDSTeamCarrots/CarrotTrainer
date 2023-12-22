@@ -222,7 +222,7 @@ tbody tr:nth-child(odd) {
 	
 			<div class="write-btn-container">
 			 <c:if test="${!empty loginInfo}">
-				<a href="write.do" class="write-button">게시판 등록</a>
+				<a href="write" class="write-button">게시판 등록</a>
 				</c:if>
 			</div>
 
@@ -298,7 +298,7 @@ tbody tr:nth-child(odd) {
 	            var categoryNo = $("#row-" + boardNo).data("category-no");
 
 	            $.ajax({
-	                url: '/myct/board/delete.do',
+	                url: '/myct/board/delete',
 	                type: 'POST',
 	                data: {
 	                    board_no: boardNo,
@@ -316,7 +316,7 @@ tbody tr:nth-child(odd) {
 	    }
 		
 	    function goToQnaDetail(boardNo) {
-            location.href = '/myct/board/Qnadetail.do?board_no=' + boardNo;
+            location.href = '/myct/board/Qnadetail?board_no=' + boardNo;
         }
     	</script>
 </body>

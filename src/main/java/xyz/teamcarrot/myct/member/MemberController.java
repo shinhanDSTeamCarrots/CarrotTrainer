@@ -25,31 +25,31 @@ public class MemberController {
 	private MemberService memberService;
 	// 객체를 자동으로 생성해 주는 역할
 
-	@GetMapping("/member/join.do")
+	@GetMapping("/member/join")
 	public String test() {
 		return "member/join";
 	}
 
 	@ResponseBody
-	@GetMapping("/member/idCheck.do")
+	@GetMapping("/member/idCheck")
 	public String idCheck(@RequestParam String id) {
 		boolean r = memberService.dupId(id);
 		return String.valueOf(r);
 	}
 
-	@PostMapping("/member/regist.do")
+	@PostMapping("/member/regist")
 	public String regist(MemberVO vo) {
 		memberService.regist(vo);
 		return "member/joinInterest";
 	}
 	
-	@GetMapping("/member/login.do")
+	@GetMapping("/member/login")
 	public String login() {
 		return "member/login";
 	}
 	
 	
-	@PostMapping("/member/login.do")
+	@PostMapping("/member/login")
 	public String loginProcess(MemberVO vo, HttpSession sess, Model model,
 			@RequestParam("member_id") String member_id, 
 			@RequestParam("member_pw") String member_pw) {
@@ -70,7 +70,7 @@ public class MemberController {
 			if ((Integer)sess.getAttribute("loginFail") >= 4) {
 				model.addAttribute("msg", "로그인 시도 가능 횟수를 초과하였습니다. 비밀번호 찾기를 먼저 해주세요.");
 				model.addAttribute("cmd", "move");
-				model.addAttribute("url", "memberFind.do");
+				model.addAttribute("url", "memberFind");
 			} else {
 				model.addAttribute("msg", "아이디나 비밀번호가 틀립니다." + "(로그인 실패 횟수: " + loginFail + "/5)");
 				model.addAttribute("cmd", "back");			
@@ -83,28 +83,28 @@ public class MemberController {
 		
 	}
 
-	@GetMapping("/member/logout.do")
+	@GetMapping("/member/logout")
 	public String logout(Model model, HttpSession sess) {
 		sess.removeAttribute("loginInfo");
 		return "redirect:/"; // home.jsp 파일이랑 연결됨
 	}
 	
-	@GetMapping("/member/joinAgree.do")
+	@GetMapping("/member/joinAgree")
 	public String joinAgree() {
 		return "member/joinAgree";
 	}
 
-	@GetMapping("/member/joinOath.do")
+	@GetMapping("/member/joinOath")
 	public String test4() {
 		return "member/joinOath";
 	}
 
-	@GetMapping("/member/memberDel.do")
+	@GetMapping("/member/memberDel")
 	public String deleteMember() {
 		return "member/memberDel";
 	}
 
-	@RequestMapping(value = "/member/memberDel.do", method = { RequestMethod.POST })
+	@RequestMapping(value = "/member/memberDel", method = { RequestMethod.POST })
 	public String deleteMember(@RequestParam("member_id") String member_id, @RequestParam("member_pw") String member_pw,
 			Model model, HttpSession sess) {
 		// 비밀번호 일치 여부 확인 및 회원 삭제
@@ -123,29 +123,29 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/member/nicknameCheck.do")
+	@GetMapping("/member/nicknameCheck")
 	public String nicknameCheck(@RequestParam String nickname) {
 		boolean r = memberService.dupNickname(nickname);
 		return String.valueOf(r);
 	}
 
-	@GetMapping("/member/memberEdit.do")
+	@GetMapping("/member/memberEdit")
 	public String memberEdit() {
 		return "member/memberEdit";
 	}
 
-	@PostMapping("/member/memberEdit.do")
+	@PostMapping("/member/memberEdit")
 	public String memberEdit2(HttpSession sess, Model model) {
 		MemberVO uv = (MemberVO) sess.getAttribute("loginInfo");
 		model.addAttribute("vo", memberService.detail(uv));
 		return "redirect:/";
 	}
 
-	@PostMapping("/member/update.do")
+	@PostMapping("/member/update")
 	public String update(@RequestParam("member_no") int member_no, MemberVO vo, Model model) {
 		int r = memberService.update(vo);
 		String msg = "";
-		String url = "edit.do";
+		String url = "edit";
 		if (r > 0) {
 			msg = "정상적으로 수정되었습니다.";
 		} else {
@@ -157,7 +157,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/member/memberFind.do")
+	@GetMapping("/member/memberFind")
 	public String test7() {
 		return "member/memberFind";
 	}

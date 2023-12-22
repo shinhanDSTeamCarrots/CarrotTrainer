@@ -81,7 +81,7 @@
 		}else{
 			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
 			if(confirm(str)){
-				window.location.href="${pageContext.request.contextPath}/member/login.do";
+				window.location.href="${pageContext.request.contextPath}/member/login";
 			}		
 		}		
 	}
@@ -125,7 +125,7 @@
 		}else{
 			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
 			if(confirm(str)){
-				window.location.href="${pageContext.request.contextPath}/member/login.do";
+				window.location.href="${pageContext.request.contextPath}/member/login";
 			}		
 		}		
 	}
@@ -245,7 +245,7 @@
 				</div>
 				<div class="itemDetailReview" id="detailReview">
 					<p>전체 리뷰</p>
-					<jsp:include page="/review/shoppingReview.do?goods_no=${item.goods_no }"/>
+					<jsp:include page="/review/shoppingReview?goods_no=${item.goods_no }"/>
 				</div>
 				
 				

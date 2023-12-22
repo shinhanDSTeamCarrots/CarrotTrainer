@@ -13,14 +13,14 @@ public class HealthNewsController {
 	 */
 
 	
-	@GetMapping("/healthnews/cardboard.do")
+	@GetMapping("/healthnews/cardboard")
 	public String cardboard(Model model) {
 		
 		return "news/cardBoard";
 	}
 	
 	/*
-	 * @GetMapping("/healthnews/cardread.do/{id}") public String
+	 * @GetMapping("/healthnews/cardread/{id}") public String
 	 * cardread(@PathVariable("id") int id, Model model) {
 	 * model.addAttribute("news", healthNewsService.getNewsById(id)); return
 	 * "news/cardRead"; }

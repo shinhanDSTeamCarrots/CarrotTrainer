@@ -47,7 +47,7 @@
 				function() {
 					dupCheckNumber++;
 					$.ajax({
-						url : 'idCheck.do',
+						url : 'idCheck',
 						data : {
 							id : $('#member_id').val()
 						},
@@ -73,7 +73,7 @@
 		$("#nicknameCheck").click(
 				function() {					
 					$.ajax({
-						url : 'nicknameCheck.do',
+						url : 'nicknameCheck',
 						data : {
 							nickname : $('#member_nickname').val()
 						},
@@ -212,10 +212,10 @@ table.reg tbody tr td input {
 			<div class="menu">
 				<div class="registry">
 					<h1 class="title">회원가입</h1>
-					<a href="joinOath.do">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
+					<a href="joinOath">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
 				</div>
 				<div class="infos">
-					<form name="frm" id="frm" action="regist.do" method="post">
+					<form name="frm" id="frm" action="regist" method="post">
 						<table class="reg">
 							<caption>회원가입</caption>
 							<colgroup>
