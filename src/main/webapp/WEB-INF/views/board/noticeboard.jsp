@@ -19,103 +19,150 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
- .container {
-    width: 100%; /* 컨테이너의 너비를 100%로 설정 */
-    max-width: 1200px; /* 최대 너비를 600px로 설정하여 요소들의 너비를 줄임 */
-    margin: 50px auto; /* 상하 마진을 0으로, 좌우 마진을 auto로 설정하여 중앙 정렬 */
-    padding: 20px; /* 내부 여백 */
-    box-sizing: border-box; /* padding을 포함한 너비로 계산 */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f4f4f4;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
+.board-title {
+  font-size: 2.4rem;
+  color: #4CAF50;
+  margin-bottom: 20px;
+   font-weight: bold;
+}
 
-    .board-title {
-        font-size: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
+th, td {
+  padding: 10px; 
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.4rem; 
+  
+}
 
-    th, td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
-        font-size: 1.2rem;
-    }
-	
-	.title-column {
+.title-column {
     text-align: left;
 }
-	
-    th {
-        background-color: #f2f2f2;
-        font-weight: 700;
-    }
 
-    .pagination {
-        margin-top: 20px;
-        text-align: center;
-    }
 
-    .pagination span {
-        margin: 0 5px;
-        cursor: pointer;
-        font-size: 25px;
-    }
+th {
+  background-color: #faa04b;
+  color: white;
+}
 
-    .search-container {
-        text-align: right;
-        margin-top: 20px;
-    }
+
+.pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.pagination span {
+	margin: 0 5px;
+	cursor: pointer;
+	font-size: 25px;
+}
+
+.search-container {
+	text-align: right;
+	margin-top: 20px;
+}
 
 .search-input {
-    padding: 10px 15px; /* 입력창 내부 여백을 좌우로 제공 */
-    font-size: 1.6rem; /* 입력창 글씨 크기 조정 */
-    border: 1px solid #ddd; /* 테두리 스타일 조정 */
-    margin-right: 8px; /* 입력창과 검색버튼 사이의 간격 조정 */
-    width: 300px; /* 입력창 너비 조정 */
-    height: 48px; /* 입력창 높이 조정 */
-    vertical-align: middle; /* 입력창을 수직 중앙에 위치시키기 위함 */
+	padding: 10px 15px; /* 입력창 내부 여백을 좌우로 제공 */
+	font-size: 1.6rem; /* 입력창 글씨 크기 조정 */
+	border: 1px solid #ddd; /* 테두리 스타일 조정 */
+	margin-right: 8px; /* 입력창과 검색버튼 사이의 간격 조정 */
+	width: 300px; /* 입력창 너비 조정 */
+	height: 48px; /* 입력창 높이 조정 */
+	vertical-align: middle; /* 입력창을 수직 중앙에 위치시키기 위함 */
 }
 
 .search-button {
-    background-color: #4CAF50; /* 버튼 배경색 */
-    color: white; /* 버튼 텍스트 색상 */
-    padding: 0 20px; /* 버튼 내부 여백을 좌우로만 제공 */
-    border: none; /* 테두리 없음 */
-    border-radius: 5px; /* 모서리 둥글게 */
-    cursor: pointer; /* 클릭 가능한 커서 모양 */	
-    font-size: 1.6rem; /* 버튼 글씨 크기 조정 */
-    height: 38px; /* 버튼 높이 조정 */
-    line-height: 38px; /* 버튼의 높이에 맞춰 line-height 설정 */
-    text-align: center; /* 텍스트를 버튼의 중앙으로 정렬 */
-    display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
-    vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
-    white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	padding: 0 20px; /* 버튼 내부 여백을 좌우로만 제공 */
+	border: none; /* 테두리 없음 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	cursor: pointer; /* 클릭 가능한 커서 모양 */
+	font-size: 1.6rem; /* 버튼 글씨 크기 조정 */
+	height: 38px; /* 버튼 높이 조정 */
+	line-height: 38px; /* 버튼의 높이에 맞춰 line-height 설정 */
+	text-align: center; /* 텍스트를 버튼의 중앙으로 정렬 */
+	display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
+	vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
+	white-space: nowrap; /* 텍스트를 한 줄로 유지 */
 }
 
-    
-    .write-btn-container {
-    text-align: right; /* 버튼을 오른쪽으로 정렬 */
-    margin-top: 20px; /* 상단 여백 추가 */
+.write-btn-container {
+	text-align: right; /* 버튼을 오른쪽으로 정렬 */
+	margin: 20px 0 20px; /* 상단 여백 추가 */
 }
 
 .write-button {
-    background-color: #4CAF50; /* 버튼 배경색 */
-    color: white; /* 버튼 텍스트 색상 */
-    padding: 10px 20px; /* 패딩 */
-    border: none; /* 테두리 없음 */
-    border-radius: 5px; /* 모서리 둥글게 */
-    cursor: pointer; /* 클릭 가능한 커서 모양 */
-    font-size: 1.0rem; /* 글씨 크기 */
-    margin-bottom: 0px; /* 하단 여백 추가 */
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	padding: 10px 20px; /* 패딩 */
+	border: none; /* 테두리 없음 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	cursor: pointer; /* 클릭 가능한 커서 모양 */
+	font-size: 1.0rem; /* 글씨 크기 */
+	margin-bottom: 0px; /* 하단 여백 추가 */
 }
-    
+
+
+  .pageInfo{
+      list-style : none;
+      display: inline-block;
+    margin: 50px 0 0 400px;      
+  }
+  .pageInfo li{
+      float: left;
+    font-size: 20px;
+    margin-left: 18px;
+    padding: 7px;
+    font-weight: 500;
+  }
+ a:link {color:black; text-decoration: none;}
+ a:visited {color:black; text-decoration: none;}
+ a:hover {color:black; text-decoration: underline;}
+   .active{
+      background-color: #cdd5ec;
+  }
+  
+  .search_area{
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 0px;
+  }
+  .search_area input{
+      height: 30px;
+    width: 250px;
+  }
+  .search_area button{
+     width: 100px;
+    height: 36px;
+    background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	font-size: 1.3rem; /* 버튼 글씨 크기 조정 */
+  }
+  
+  .search_area select {
+  	height: 35px;
+  }
 </style>
 <body>
 	<div class="wrap">
@@ -126,14 +173,18 @@
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
 			 <c:if test="${!empty loginInfo}">
+<<<<<<< Upstream, based on branch 'giwoong' of https://github.com/shinhanDSTeamCarrots/CarrotTrainer.git
 				<a href="write" class="write-button">게시판 등록</a>
+=======
+				<a href="write.do" class="write-button">게시글 등록</a>
+>>>>>>> 66a6c14 머지 용 커밋
 				</c:if>
 			</div>
 
 			<table>
 				<thead>
 					<tr>
-						<th>번호</th>
+					
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
@@ -144,7 +195,7 @@
 					<c:forEach items="${page}" var="vo">
 					  <c:if test="${vo.category_no == 1}">
 						<tr>
-							<td><c:out value="${vo.board_no}"/></td>
+						
 							<td class="title-column">
 							
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">

@@ -19,6 +19,9 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
+
+
+
   .notice-table {
     margin: 20px auto;
     width: 60%;

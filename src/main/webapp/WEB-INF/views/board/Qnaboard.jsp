@@ -20,64 +20,50 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
 .container {
-	width: 100%; /* 컨테이너의 너비를 100%로 설정 */
-	max-width: 1200px; /* 최대 너비를 600px로 설정하여 요소들의 너비를 줄임 */
-	margin: 50px auto; /* 상하 마진을 0으로, 좌우 마진을 auto로 설정하여 중앙 정렬 */
-	padding: 20px; /* 내부 여백 */
-	box-sizing: border-box; /* padding을 포함한 너비로 계산 */
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .board-title {
-	font-size: 2.4rem;
-	font-weight: 700;
-	margin-bottom: 10px;
+  font-size: 2.4rem;
+  color: #4CAF50;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th, td {
-    border: 1px solid #e1e1e1;
-    padding: 12px 15px;
-    text-align:center;
-    font-size: 1.2rem;
+  padding: 10px; 
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.4rem; 
+}
+
+.title-column {
+    text-align: left;
+    font-weight: bold;
 }
 
 th {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
-    
-}
-.title-column {
-    text-align: left;
+  background-color: #faa04b;
+  color: white;
 }
 
-
-td {
-   /*  background-color: #ffffff; */
-    color: #333;
-}
-
-/* Hover effect for table rows */
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Table header style */
-thead tr {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Zebra striping for rows */
-tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
 
 .pagination {
 	margin-top: 20px;
@@ -122,40 +108,26 @@ tbody tr:nth-child(odd) {
 }
 
 .write-btn-container {
-    text-align: right;
-    margin: 20px 0;
+	text-align: right; /* 버튼을 오른쪽으로 정렬 */
+	margin: 20px 0 20px; /* 상단 여백 추가 */
 }
 
 .write-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    text-decoration: none; /* In case it's an anchor tag */
-    display: inline-block; /* For proper alignment */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	padding: 10px 20px; /* 패딩 */
+	border: none; /* 테두리 없음 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	cursor: pointer; /* 클릭 가능한 커서 모양 */
+	font-size: 1.0rem; /* 글씨 크기 */
+	margin-bottom: 0px; /* 하단 여백 추가 */
 }
-
-.write-button:hover, .write-button:focus {
-    background-color: #45a049;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.write-button:active {
-    background-color: #3d8b40;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
 
 
   .pageInfo{
       list-style : none;
       display: inline-block;
-    margin: 50px 0 0 100px;      
+    margin: 50px 0 0 400px;      
   }
   .pageInfo li{
       float: left;
@@ -196,7 +168,7 @@ tbody tr:nth-child(odd) {
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-			<div class="board-title">문의게시판</div>
+			<div class="board-title">문의게시판💭</div>
 			
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
@@ -208,7 +180,7 @@ tbody tr:nth-child(odd) {
 			<table>
 				<thead>
 					<tr>
-						<th>번호</th>
+					
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
@@ -219,7 +191,7 @@ tbody tr:nth-child(odd) {
 					<c:forEach items="${page}" var="vo">
 					  <c:if test="${vo.category_no == 3}">
 						<tr>
-							<td><c:out value="${vo.board_no}"/></td>
+						
 							<td class="title-column">
 								
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
