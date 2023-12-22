@@ -16,7 +16,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 </head>
 <style>
@@ -89,6 +89,9 @@ textarea {
 		<div class="container">
 
 			<form id="modifyForm" action="/myct/board/modify.do" method="post">
+			
+				<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>	
+					
 				<div class="input_wrap">
 					<label>게시판 번호</label> <input name="board_no" readonly="readonly"
 						value='<c:out value="${pageInfo.board_no}"/>'>
@@ -107,32 +110,62 @@ textarea {
 					<a class="btn" id="list_btn">목록 페이지</a>
 					 <a class="btn" id="modify_btn">수정 완료</a>
 					  <a class="btn" id="delete_btn">삭제</a> 
-					 <a class="btn" id="cancel_btn">수정 취소</a>
+					
 				</div>
 				
 			</form>
 			<form id="infoForm" action="/myct/board/modify.do" method="get">
 				<input type="hidden" id="board_no" name="board_no"
 					value='<c:out value="${pageInfo.board_no}"/>'>
-					<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-					<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
-					<input type="hidden" name="type" value="${cri.type }">
-					<input type="hidden" name="keyword" value="${cri.keyword }"> 
+					<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
+				
 			</form>
+			
+			<form id="cancleForm" action="/myct/board/cancle.do" method="get">
+							<div class="btn_wrap">
+						 <a class="btn" id="cancel_btn">수정 취소</a>
+						 </div>
+					<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
+					<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
+			</form>
+			
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 
 	<script>
-		let form = $("#infoForm"); // 페이지 이동 form(리스트 페이지 이동, 조회 페이지 이동)
-		let mForm = $("#modifyForm"); // 페이지 데이터 수정 from
+		let form = $("#infoForm");
+		let mForm = $("#modifyForm"); 
+		let cForm = $("#cancleForm");
 
-		/* 목록 페이지 이동 버튼 */
-		$("#list_btn").on("click", function(e) {
-			form.find("#board_no").remove();
-			form.attr("action", "/myct/board/freeboard.do");
-			form.submit();
-		});
+		
+	    $("#list_btn").on("click", function(e) {
+	        e.preventDefault(); 
+
+	      
+	        let categoryNo = $("#category_no").val();
+
+	       
+	        let actionUrl;
+	        switch (categoryNo) {
+	            case "1":
+	                actionUrl = "/myct/board/noticeboard.do"; 
+	                break;
+	            case "2":
+	                actionUrl = "/myct/board/freeboard.do"; 
+	                break;
+	            case "3":
+	                actionUrl = "/myct/board/qnaboard.do"; 
+	                break;
+	          
+	            default:
+	                actionUrl = "/myct/board/freeboard.do"; 
+	                break;
+	        }
+
+	        form.attr("action", actionUrl);
+	        form.submit();
+	    });
 
 		/* 수정 하기 버튼 */
 		$("#modify_btn").on("click", function(e) {
@@ -142,9 +175,32 @@ textarea {
 
 		/* 취소 버튼 */
 		$("#cancel_btn").on("click", function(e) {
-			form.attr("action", "/myct/board/read.do");
-			form.submit();
+		    e.preventDefault(); 
+
+		    let boardNo = $("#cancleForm").find("input[name='board_no']").val();
+		    let categoryNo = $("#cancleForm").find("input[name='category_no']").val();
+
+		  
+		    let actionUrl;
+		    switch (categoryNo) {
+		        case "1":
+		            actionUrl = `/myct/board/noticedetail.do?board_no=${boardNo}`; 
+		            break;
+		        case "2":
+		            actionUrl = `/myct/board/freedetail.do?board_no=${boardNo}`; 
+		            break;
+		        case "3":
+		            actionUrl = `/myct/board/Qnadetail.do?board_no=${boardNo}`; 
+		            break;
+		        default:
+		            actionUrl = `/myct/board/freedetail.do?board_no=${boardNo}`; 
+		            break;
+		    }
+
+		    cForm.attr("action", actionUrl);
+		    cForm.submit();
 		});
+
 		
 		 /* 삭제 버튼 */
 	    $("#delete_btn").on("click", function(e){	

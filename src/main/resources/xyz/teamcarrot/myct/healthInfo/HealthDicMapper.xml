@@ -4,16 +4,53 @@
 	<!-- 검색 -->
 	<sql id="search">
 		<where>
-			<if test="healthName != null and healthName != ''">
+			<if test="healthName != null or healthName != ''">
 				health LIKE '%${healthName}%'
 			</if>
 		</where>
 	</sql>
 	<!-- 운동 정보 -->
-	<select id="healthDic" resultType="hashmap" parameterType="String">
-		SELECT health_dic_no as no, health, met FROM tb_health_dic
+	<select id="healthDic" resultType="java.util.Map" parameterType="map">
+		SELECT health_dic_no AS no, health
+			, CAST(ROUND(((met * (3.5 * NVL(bodyInfo.weight,70) * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
+		FROM tb_health_dic
+			LEFT JOIN tb_body_info bodyInfo
+			ON bodyInfo.member_no = #{member_no}
 		<include refid="search"/>
 	</select>
+	
+	<!-- 운동 즐겨찾기 검색 -->
+	<select id="bookmarkHealthDic" resultType="java.util.Map" parameterType="map">
+		SELECT dic.health_dic_no AS no, dic.health, bookmark.health_bookmark_no
+			, CAST(ROUND(((met * (3.5 * NVL(bodyInfo.weight,70) * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
+		FROM tb_health_dic dic 
+			LEFT JOIN tb_health_bookmark bookmark
+			ON dic.health_dic_no = bookmark.health_dic_no
+			LEFT JOIN tb_body_info bodyInfo
+			ON bodyInfo.member_no = #{member_no}
+		WHERE bookmark.member_no = #{member_no}
+		<if test="healthName != null or healthName != ''">
+			AND health LIKE '%${healthName}%'
+		</if>
+	</select>
+	<!-- 운동 즐겨찾기 추가 -->
+	<insert id="addBookmark" parameterType="xyz.teamcarrot.myct.healthInfo.HealthBookmarkVO">
+		INSERT INTO tb_health_bookmark (
+			health_dic_no, member_no
+		) VALUES (
+			#{health_dic_no}, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="health_bookmark_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 운동 즐겨찾기 삭제 -->
+	<delete id="delBookmark" parameterType="int">
+		DELETE FROM tb_health_bookmark WHERE health_bookmark_no = #{health_bookmark_no}
+	</delete>
+	
+	
 	
 	<!-- 음식 정보 -->
 </mapper>

@@ -49,7 +49,7 @@ public class CartController {
         log.info("cart: "+cart.toString());
         MemberVO login = (MemberVO)sess.getAttribute("loginInfo");
 		cart.setMember_no(login.getMember_no());
-        int r = service.addToCart(cart, request);
+        int r = service.addToCart(cart);
         if (r>0) {
         	model.addAttribute("cmd","move");
         	model.addAttribute("msg","장바구니에 정상적으로 담겼습니다");

@@ -22,7 +22,7 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-	public int addToCart(CartVO cart, HttpServletRequest request) {
+	public int addToCart(CartVO cart) {
 		int r = mapper.insert(cart);
 		return r;
 	}
