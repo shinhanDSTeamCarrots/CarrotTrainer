@@ -36,7 +36,7 @@ public class ReviewController {
 	
 	//AJAX 로 변환 필요?
 	//쇼핑몰 상품 리뷰 리스트
-	@GetMapping("review/shoppingReview.do")
+	@GetMapping("review/shoppingReview")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
 		logger.warn("review/shopping start");
 		int goods_no;
@@ -114,7 +114,7 @@ public class ReviewController {
 	}
 	
 	//내가 쓴 리뷰 보기
-	@GetMapping("review/myreview.do")
+	@GetMapping("review/myreview")
 	public ModelAndView MyReview(HttpSession session) {
 		//********************************************Ư�� ������ �ۼ��� ���� ����Ʈ
 		ModelAndView mav = new ModelAndView();
@@ -124,7 +124,7 @@ public class ReviewController {
 	}
 	
 	//리뷰 작성 페이지
-	@GetMapping("review/write.do")
+	@GetMapping("review/write")
 	public ModelAndView Write(HttpServletRequest request, HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
 		
@@ -158,7 +158,7 @@ public class ReviewController {
 	
 	
 	//리뷰 수정
-	@GetMapping("review/modify.do")
+	@GetMapping("review/modify")
 	public ModelAndView Modify(HttpServletRequest request, HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
 
@@ -187,7 +187,7 @@ public class ReviewController {
 	
 	
 	//리뷰 작성 후 쇼핑몰 연결
-	@PostMapping("review/write.do")
+	@PostMapping("review/write")
 	public String AfterWrite( HttpSession session,@RequestParam Map<String, String> formData, HttpServletRequest req) {
 		ReviewVO vo;
 		vo = new ReviewVO();
@@ -217,7 +217,7 @@ public class ReviewController {
 	
 	//리뷰 삭제
 	@ResponseBody
-	@PostMapping("review/delete.do")
+	@PostMapping("review/delete")
 	public String Delete(HttpServletRequest request, @RequestParam int review_no) {
 		try {
 			service.deleteReview(review_no);
@@ -231,7 +231,7 @@ public class ReviewController {
 	
 	//리뷰 좋아요
 	@ResponseBody
-	@PostMapping("review/like.do")
+	@PostMapping("review/like")
 	public String Like(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no ) {
 		try {
 			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);
@@ -251,7 +251,7 @@ public class ReviewController {
 	
 	//리뷰 좋아요 취소함
 	@ResponseBody
-	@PostMapping("review/dislike.do")
+	@PostMapping("review/dislike")
 	public String Dislike(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no) {
 		try {
 			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);

@@ -7,3 +7,4 @@ public class BoardCategoryVO {
 	private int category_no;
 	private String category_name;
 }
+	

@@ -18,7 +18,7 @@
 	<string>상품이미지</string>
 </div>
 <hr>
-<form action="${pageContext.request.contextPath}/review/write.do" method="post" class="reviewForm form" onsubmit="OnSubmit()" id="reviewForm">
+<form action="${pageContext.request.contextPath}/review/write" method="post" class="reviewForm form" onsubmit="OnSubmit()" id="reviewForm">
 	<div>
 		<%-- 이미지 --%>
 		<input type="file" onchange="toBase64(event)" id="review_file" class="reviewFile_Btn" accept="image/*"/>

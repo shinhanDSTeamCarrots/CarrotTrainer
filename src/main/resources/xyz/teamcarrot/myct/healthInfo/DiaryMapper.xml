@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.healthInfo.DiaryMapper">
+	<!-- 운동 정보 입력 -->
+	<insert id="insertExInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		INSERT INTO tb_health_diary (
+			health_name, health_calorie, health_time, health_date, member_no 
+		) VALUES (
+			#{health_name}, #{health_calorie}, #{health_time}, NOW(), #{member_no}
+		)
+		<!-- tb_health_diary 테이블 키 값 -->
+		<selectKey keyProperty="health_diary_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 운동 정보 불러오기 -->
+	<select id="selectExInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		SELECT * FROM tb_health_diary WHERE member_no = #{member_no} AND health_diary_no = #{health_diary_no};
+	</select>
+	<!-- 운동 정보 수정 -->
+	<update id="updateExInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		UPDATE tb_health_diary
+		SET health_name = #{health_name}
+			, health_calorie = #{health_calorie}
+			, health_time = #{health_time}
+			, health_date = #{health_date}
+		WHERE health_diary_no = #{health_diary_no};
+	</update>
+	<!-- 운동 정보 삭제 -->
+	<delete id="deleteExInfo" parameterType="int">
+		DELETE FROM tb_health_diary WHERE health_diary_no = #{health_diary_no}
+	</delete>
+	
+	
+	<!-- 식단 다이어리 입력 -->
+	<insert id="insertFoodDiary" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
+		INSERT INTO tb_food_diary (
+			food_diary_date, intake_date, intake_time, image, total_calorie, total_carbs, total_protein, total_fat, total_sugar, total_salt, member_no
+		) VALUES (
+			NOW(), #{intake_date}, #{intake_time}, #{image}, #{total_calorie}, #{total_carbs}, #{total_protein}, #{total_fat}, #{total_sugar}, #{total_salt}, #{member_no}
+		)
+		<!-- tb_health_diary 테이블 키 값 -->
+		<selectKey keyProperty="food_diary_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 식단 다이어리 불러오기 -->
+	<select id="selectFoodDiary" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
+		SELECT * FROM tb_food_diary WHERE food_diary_no = #{food_diary_no} AND member_no = #{member_no};
+	</select>
+	<!-- 식단 다이어리 수정 -->
+	<update id="updateFoodDiary" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
+		UPDATE tb_food_diary
+		SET intake_date = #{intake_date}
+			, intake_time = #{intake_time}
+			, image = #{image}
+			, total_calorie = #{total_calorie}
+			, total_carbs = #{total_carbs}
+			, total_protein = #{total_protein}
+			, total_fat = #{total_fat}
+			, total_sugar = #{total_sugar}
+			, total_salt = #{total_salt}
+		WHERE food_diary_no = #{food_diary_no};
+	</update>
+	<!-- 식단 다이어리 삭제 -->
+	<delete id="deleteFoodDiary" parameterType="int">
+		DELETE FROM tb_food_diary WHERE food_diary_no = #{food_diary_no}
+	</delete>
+	
+	<!-- 식단 정보 입력 -->
+	<insert id="insertFoodInfo" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryInfoVO">
+		INSERT INTO tb_food_diary_info (
+			food_name, food_gram, food_unit, food_calorie, food_carbs, food_protein, food_fat, food_sugar, food_salt, food_diary_no
+		) VALUES (
+			#{food_name}, #{food_gram}, #{food_unit}, #{food_calorie}, #{food_carbs}, #{food_protein}, #{food_fat}, #{food_sugar}, #{food_salt}, #{food_diary_no}
+		)
+		<!-- tb_health_diary 테이블 키 값 -->
+		<selectKey keyProperty="food_diary_info_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 식단 정보 불러오기 -->
+	<select id="selectFoodInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.FoodDiaryInfoVO">
+		SELECT * FROM tb_food_diary_info WHERE food_diary_no = #{food_diary_no} AND food_diary_info_no = #{food_diary_info_no};
+	</select>
+	<!-- 식단 정보 수정 -->
+	<update id="updateFoodInfo" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryInfoVO">
+		UPDATE tb_food_diary_info
+		SET food_name = #{food_name}
+			, food_gram = #{food_gram}
+			, food_unit = #{food_unit}
+			, food_calorie = #{food_calorie}
+			, food_carbs = #{food_carbs}
+			, food_protein = #{food_protein}
+			, food_fat = #{food_fat}
+			, food_sugar = #{food_sugar}
+			, food_salt = #{food_salt}
+		WHERE food_diary_info_no = #{food_diary_info_no};
+	</update>
+	<!-- 식단 정보 삭제 -->
+	<delete id="deleteFoodInfo" parameterType="int">
+		DELETE FROM tb_food_diary_info WHERE food_diary_info_no = #{food_diary_info_no}
+	</delete>
+</mapper>

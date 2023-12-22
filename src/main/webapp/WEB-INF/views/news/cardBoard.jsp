@@ -10,7 +10,7 @@
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
-	<script src="js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<!-- CKEditor CDN 추가 -->
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -120,7 +120,7 @@
         <div class="cards-container">
             <!-- 여러 카드를 반복적으로 표시 -->
             <div class="card">
-                <div class="card-image"><a href="/myct/healthnews/cardread.do">웰니스 뉴스</a></div>
+                <div class="card-image"><a href="/myct/healthnews/cardread">웰니스 뉴스</a></div>
                 <div class="card-title">제목: 타이틀1</div>
                 <div class="card-author">작성자:</div>
             </div>
