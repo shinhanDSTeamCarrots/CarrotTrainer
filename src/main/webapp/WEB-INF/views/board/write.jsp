@@ -1,6 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="xyz.teamcarrot.myct.member.MemberVO" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +17,9 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
-<!-- CKEditor CDN 추가 -->
-<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
+
+<script src="/myct/smarteditor2-2.8.2.3/js/HuskyEZCreator.js"></script>
 </head>
 <style>
 .container {
@@ -78,72 +80,102 @@
 	height: 400px; /* 위지윅 에디터의 높이를 늘림 */
 }
 </style>
+ <script>
+    var oEditors = [];
+    $(function() {
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "content",
+            sSkinURI: "/myct/smarteditor2-2.8.2.3/SmartEditor2Skin.html",    
+            htParams : {
+                bUseToolbar : true,                // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                bUseVerticalResizer : true,        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                bUseModeChanger : true,            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                fOnBeforeUnload : function(){
+                }
+            }, //boolean
+            fOnAppLoad : function(){
+                //예제 코드
+                //oEditors.getById["contents"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+            },
+            fCreator: "createSEditor2"
+        });
+    })
+    function goSave() {
+    	oEditors.getById['content'].exec('UPDATE_CONTENTS_FIELD',[]);
+    	$("#frm").submit();
+    }
+    
+    function submitForm() {
+        // 스마트에디터 내용을 textarea에 업데이트하는 코드
+        // 예시: oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+        oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+
+        // 폼 제출
+        document.getElementById('writeForm').submit();
+    }
+
+    </script>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 
 
-			<form action="/myct/board/insert.do" method="post">
-				<div class="board-title">자유게시판</div>
-				
-				<div class="form-group">
-    <label for="category_no">카테고리 선택</label>
-    <select name="category_no" id="category_no">
-        <option value="1">공지사항</option>
-        <option value="2">자유게시판</option>
-        <option value="3">문의게시판</option>
-    </select>
-</div>
+			<form action="/myct/board/insert.do" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
 
 
 				<div class="form-group">
-					<label for="member_no">작성자</label> <input type="text" id="title"
-						name="member_no">
+					<label for="category_no">카테고리 선택</label>
+					<select name="category_no" id="category_no">
+						<option value="1">공지사항</option>
+						<option value="2">자유게시판</option>
+						<option value="3">문의게시판</option>
+					</select>
 				</div>
 
 				<div class="form-group">
-					<label for="board_title">글제목</label> <input type="text" id="title"
-						name="board_title">
+					<label for="board_title">글제목</label> 
+					<input type="text" id="title" name="board_title">
 				</div>
+
+				 <div class="form-group">
+                    <label for="member_no">작성자</label>
+                   <% MemberVO member = (MemberVO) session.getAttribute("loginInfo"); %>
+<% if (member != null) { %>
+    <input type="hidden" name="member_no" value="<%= member.getMember_no() %>">
+    <input type="text" value="<%= member.getMember_nickname() %>" readonly>
+<% } else { %>
+
+<% } %>
+
+
+                </div>
 
 				<div class="form-group">
 					<label for="board_content">글 내용</label>
 					<textarea id="content" name="board_content"></textarea>
-					<script>
-						CKEDITOR.replace('content');
-					</script>
+					
 				</div>
-	
+
+				<div class="form-group">
+
+					<label for="file">파일 첨부</label>
+            <input type="file" name="file" id="attach-file" />
+
+				</div>
+
+
 				<div class="form-group">
                     <button>등록</button>
                 </div>
 			</form>
-
-
-			<!-- CKEditor를 활성화하기 위한 스크립트 -->
 
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
 
 
-	<script>
-		CKEDITOR.replace('content');
 
-		// 폼 제출 함수
-		function submitForm() {
-			// 에디터 내용을 textarea에 업데이트
-			CKEDITOR.instances.content.updateElement();
-
-			// 폼 데이터 검증 (필요한 경우)
-
-			// 폼 제출
-			document.getElementById('writeForm').submit();
-		}
-	
-	</script>
-
-	</script>
 </body>
 </html>
