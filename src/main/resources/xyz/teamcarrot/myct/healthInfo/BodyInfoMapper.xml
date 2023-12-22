@@ -65,6 +65,6 @@
 	</update>
 	<!-- 오늘의 상태 정보 삭제 -->
 	<delete id="deleteBodyChange" parameterType="int">
-		delete from tb_body_change WHERE body_change_no = #{body_change_no}
+		DELETE FROM tb_body_change WHERE body_change_no = #{body_change_no}
 	</delete>
 </mapper>

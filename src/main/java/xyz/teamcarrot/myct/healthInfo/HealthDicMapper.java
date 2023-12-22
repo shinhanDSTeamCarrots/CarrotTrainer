@@ -7,5 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface HealthDicMapper {
-	List<Map<String, Object>> healthDic(String healthName);
+	//전체 운동 리스트
+	List<Map<String, Object>> healthDic(Map<String, Object> map);
+	
+	//북마크 운동 리스트
+	List<Map<String, Object>> bookmarkHealthDic(Map<String, Object> map);
+	//북마크 추가
+	int addBookmark(HealthBookmarkVO vo);
+	//북마크 제거
+	int delBookmark(int no);
 }
