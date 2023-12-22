@@ -46,7 +46,7 @@
 						if(confirm(str)){
 							window.location.href="${pageContext.request.contextPath}/cart";
 						}
-					//장바구니에 안담겨있을시 장바구니 추가
+					//장바구니에 안담겨 있을 시 장바구니 추가
 					}else{
 						$.ajax({
 							type:"POST",
@@ -69,13 +69,13 @@
 								}
 							},
 							error:function(data){
-					        	alert("처리하지 못하였습니다.");
+					        	alert("필수 옵션을 선택해 주세요.");
 							}
 						});
 					}
 				},
 				error:function(data){
-					alert("처리하지 못하였습니다.");
+					alert("장바구니 담기 실패ㅜ");
 				}
 			});
 		}else{
@@ -86,6 +86,50 @@
 		}		
 	}
 	
+	//상품상세에서 바로 구매하기 버튼 클릭시
+	function purchasebtn(){
+		var mem_no = "${sessionScope.loginInfo.member_no}";
+		let goods_no="${item.goods_no}";
+		let option_no=$("#selectedoption :selected").val();
+		//옵션이 없는 상품의 경우
+		if (!option_no) {
+	        option_no = 0;
+	    }
+		console.log("option_no: "+option_no);
+		//로그인 여부 확인후
+		if(mem_no!=""){
+			//ajax호출
+			$.ajax({
+				type:"POST",
+				url:"${pageContext.request.contextPath}/pay/pay",
+				data:{
+					mem_no:mem_no,
+					goods_no:goods_no,
+					option_no:option_no,
+					goods_count:1
+				},
+				success:function(data){
+					console.log(data);
+					if(data=="T"){																		
+						var str="구매화면으로 이동하시겠습니까?";
+						console.log(str);
+						if(confirm(str)){							
+							window.location.href="${pageContext.request.contextPath}/pay/pay";
+						}
+					}
+				},
+				error:function(data){
+		        	alert("필수 옵션을 선택해 주세요.");
+				}
+			});
+		}else{
+			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
+			if(confirm(str)){
+				window.location.href="${pageContext.request.contextPath}/member/login.do";
+			}		
+		}		
+	}
+
 	
 	//문의 작성 버튼 클릭시 폼 나타나기
 	
@@ -93,7 +137,7 @@
 		$(".writeform").hide();
 		
 		$(".writebtn").on("click",function(){
-			$(."writeform").slideDown();
+			$(".writeform").slideDown();
 		});
 		
 		$(".closebtn").on("click",function(){
@@ -168,7 +212,7 @@
 					</div>
 					<div class="btns">	
 						<button class="cartbtn" onclick="cartbtn()">장바구니</button>
-						<button class="purchasebtn" onclick="">구매하기</button>						
+						<button class="purchasebtn" onclick="purchaesbtn()">구매하기</button>						
 					</div>			
 				</div>
 			</div>	
@@ -208,12 +252,17 @@
 				
 				<!-- 상 품 문 의 -->
 				<div class="itemDetailQna" id="detailQna">						
-		    		<h3 class="sub_title">상품문의</h3>
+		    		<div class="qnaHeader">
+			    		<h1 class="sub_title">상품문의</h1>
+			    		<p class="qnaCnt"><span>총 ${map.count }개</span></p>
+			    		<button class="writebtn">작성하기</button>
+		    		</div>
 		    		<div class="qnaList">
 		    			<table class="qnaTable">
-		    			<p><span><strong>총 ${map.count }개</strong></span></p>
-		    			<button class="writebtn"></button>
+		
+		    			<!-- 문의하기 작성 폼 -->
 		    			<div class="writeform">
+		    				
 		    			</div>
 		    				<thead>
 			    				<tr>	    					

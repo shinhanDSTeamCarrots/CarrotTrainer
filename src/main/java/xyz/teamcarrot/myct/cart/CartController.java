@@ -64,6 +64,7 @@ public class CartController {
 	@PostMapping("/cart/remove")
     public void removeFromCart(@RequestParam List<Integer> cartNos) {
         service.removeFromCart(cartNos);
+        
     }
 	
 	@PostMapping("cart/update")
