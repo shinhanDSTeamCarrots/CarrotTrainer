@@ -87,41 +87,26 @@
 	}
 	
 	//상품상세에서 바로 구매하기 버튼 클릭시
-	function purchasebtn(){
+	function purchaesbtn(){
 		var mem_no = "${sessionScope.loginInfo.member_no}";
 		let goods_no="${item.goods_no}";
 		let option_no=$("#selectedoption :selected").val();
+		let goods_cnt= 1;
 		//옵션이 없는 상품의 경우
 		if (!option_no) {
 	        option_no = 0;
 	    }
-		console.log("option_no: "+option_no);
+		
 		//로그인 여부 확인후
 		if(mem_no!=""){
-			//ajax호출
-			$.ajax({
-				type:"POST",
-				url:"${pageContext.request.contextPath}/pay/pay",
-				data:{
-					mem_no:mem_no,
-					goods_no:goods_no,
-					option_no:option_no,
-					goods_count:1
-				},
-				success:function(data){
-					console.log(data);
-					if(data=="T"){																		
-						var str="구매화면으로 이동하시겠습니까?";
-						console.log(str);
-						if(confirm(str)){							
-							window.location.href="${pageContext.request.contextPath}/pay/pay";
-						}
-					}
-				},
-				error:function(data){
-		        	alert("필수 옵션을 선택해 주세요.");
-				}
-			});
+			//옵션이 없는 상품이거나 옵션 선택을 한 경우
+			if (option_no==0 || option_no !=="[필수]옵션을선택해주세요"){
+				console.log("option_no: "+option_no);
+				var url="${pageContext.request.contextPath}/pay/pay?=goods_no="+goods_no+"&option_no="+option_no+"&goods_cnt="+goods_cnt;
+				window.location.href=url;
+			}else{
+				alert("필수 옵션을 선택해 주세요.");
+			}
 		}else{
 			var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
 			if(confirm(str)){
@@ -201,7 +186,7 @@
 					<div class="option">
 						<c:if test="${not empty detail}">
 							<select name="selectOption"  id="selectedoption">
-								<option disabled selected> [필수] 옵션을 선택해주세요 </option>
+								<option disabled selected>[필수]옵션을선택해주세요</option>
 								<c:forEach items="${detail}" var="detail">
 						            <c:if test="${not empty detail.option_name}">
 						                <option value="${detail.option_no }">${detail.option_name}	+${detail.price_updown}원</option>
