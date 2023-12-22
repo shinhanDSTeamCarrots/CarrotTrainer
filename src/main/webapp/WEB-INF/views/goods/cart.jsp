@@ -37,6 +37,7 @@
 	        calculateTotalPrice();
 	        // 삭제 버튼의 활성화/비활성화 처리
 	        toggleDeleteButton();
+	        
 	    });
 
 	    function calculateTotalPrice() {
@@ -99,33 +100,25 @@
 	        var selectedItems = $(".each_cartitem input[type='checkbox']:checked");
 	        $("#deleteSelected").prop('disabled', selectedItems.length === 0);
 	    }
-	});
+	    
+	    // 결제하기 버튼 클릭시
+	    $(".purchase").click(function () {
+	        var selectedItems = $(".each_cartitem input[type='checkbox']:checked");
+	        if (selectedItems.length > 0) {
+	            var selectedCartNos = [];
+	            selectedItems.each(function () {
+	                selectedCartNos.push($(this).val());
+	                console.log("선택된 카트 번호: " + selectedCartNos); 
+	           
+	            });
+				var url="${pageContext.request.contextPath}/pay/cart?cartNos=" + selectedCartNos.join(',');
+				window.location.href=url;
+	        }else{
+	        	alert("선택된 상품이 없습니다.");
+	        }
+		});
+		
 	
-	
-	//결제하기 버튼 클릭시 결제창에 넘겨주기
-	$(".purchase").click(function(){
-		var selectedItems = $(".each_cartitem input[type='checkbox']:checked");
-        if (selectedItems.length > 0) {
-            var selectedCartNos = [];
-            selectedItems.each(function () {
-                selectedCartNos.push($(this).val());
-            });
-            
-            $.ajax({
-                type: "POST",
-                url: "${pageContext.request.contextPath}/pay/cart",
-                traditional: true, // 배열전송을 위한 설정
-                data: { cartNos: selectedCartNos },
-                success: function (result) {
-                    console.log(result);
-                    window.location.href = "${pageContext.request.contextPath}/pay/cart";
-                },
-                error: function (result) {
-                }
-            });
-        } else {
-            alert("선택된 상품이 없습니다.");
-        }
     });
 	
 	</script>
