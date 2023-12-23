@@ -2,19 +2,23 @@ package xyz.teamcarrot.myct.pay;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,7 +37,7 @@ import xyz.teamcarrot.myct.member.MemberVO;
 @RequiredArgsConstructor
 public class PayController implements InitializingBean{
 
-
+	@Autowired
 	PayService service;
 	
 	private IamportClient iamportClient;
@@ -51,7 +55,7 @@ public class PayController implements InitializingBean{
 	}
 	
 	@GetMapping("pay/cart")
-	public ModelAndView fromCart(HttpSession sess, HttpServletRequest request, @RequestParam("cartNos") List<Integer> value) {
+	public ModelAndView fromCart(HttpSession sess, HttpServletRequest request, @RequestParam(value ="cartNos") List<Integer> value) {
 		//조건
 		//로그인 체크부터
 		ModelAndView mav = new ModelAndView();
@@ -62,8 +66,9 @@ public class PayController implements InitializingBean{
 			return mav;
 		}
 		
-		
-		
+		//List<Integer> iList = new ArrayList<Integer>();
+		//iList = Arrays.stream(value.split(",")).mapToInt(Integer::valueOf).boxed().collect(Collectors.toList());
+		log.info(value.toString());
 		/*find with cart index*/
 		Map parammap = new HashMap<String,Object>();
 		parammap.put("list", value);
@@ -93,7 +98,8 @@ public class PayController implements InitializingBean{
 		
 		/*to Json Array String*/
 		String jsonStr = xyz.teamcarrot.myct.JsonUtils.getJsonStringFromList(maps);
-		
+
+		System.out.println(jsonStr);
 		mav.addObject("addrList",maps);
 		mav.addObject("addrJsonStr",jsonStr);
 		
@@ -137,7 +143,7 @@ public class PayController implements InitializingBean{
 		
 		/*to Json Array String*/
 		String jsonStr = xyz.teamcarrot.myct.JsonUtils.getJsonStringFromList(maps);
-		
+		System.out.println(jsonStr);
 		mav.addObject("addrList",maps);
 		mav.addObject("addrJsonStr",jsonStr);
 		
@@ -203,12 +209,12 @@ public class PayController implements InitializingBean{
 		
 		return mav;*/
 	}
-	@PostMapping("pay/payComplete")
-	public ModelAndView payComplete(HttpSession sess, HttpServletRequest request, List<BuyGoodsVO> goods, PayDataDTO dto) {
+	@PostMapping(value ="pay/payComplete")
+	public ModelAndView payComplete(HttpSession sess, HttpServletRequest request, PayDataDTO dto) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			MemberVO login = (MemberVO)sess.getAttribute("loginInfo");
-			
+			log.info(dto.toString());
 			dto.setMember_no(login.getMember_no());
 			
 			int purchase_div = 0;
@@ -223,7 +229,22 @@ public class PayController implements InitializingBean{
 			}
 			dto.setPurchase_div(purchase_div);
 			
-			int order = service.insertOrders(goods, dto);
+			String[] goods_no = request.getParameterValues("goods_no");
+			String[] option_no = request.getParameterValues("option_no");
+			String[] goods_cnt = request.getParameterValues("goods_cnt");
+			String[] cart_no = request.getParameterValues("cart_no");
+			List<BuyGoodsVO> list = new ArrayList<>();
+			for (int i=0; i<goods_no.length; i++) {
+				BuyGoodsVO bgvo = new BuyGoodsVO();
+				bgvo.setGoods_no(Integer.parseInt(goods_no[i]));
+				bgvo.setOption_no(Integer.parseInt(option_no[i]));
+				bgvo.setGoods_cnt(Integer.parseInt(goods_cnt[i]));
+				bgvo.setCart_no(Integer.parseInt(cart_no[i]));
+				list.add(bgvo);
+			}
+			
+//			Arrays.stream(goods).
+			int order = service.insertOrders(list, dto);
 			
 			mav.addObject("order", order);
 			
@@ -233,6 +254,8 @@ public class PayController implements InitializingBean{
 		}
 		catch(RuntimeException e) {
 			log.info("주문상품 환불");
+			log.error(e.getMessage());
+			e.printStackTrace();
 			mav.setViewName("pay/payFail");
 		}
 		catch(Exception e) {
@@ -252,7 +275,7 @@ public class PayController implements InitializingBean{
 			return payment;
 		} catch (IamportResponseException e) {
 			System.out.println(e.getMessage());
-			
+			log.error(e.getMessage());
 			switch(e.getHttpStatusCode()) {
 			case 401 :
 				//TODO : 401 Unauthorized 
@@ -267,6 +290,7 @@ public class PayController implements InitializingBean{
 		} catch (IOException e) {
 			//서버 연결 실패
 			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		return null;
 	}

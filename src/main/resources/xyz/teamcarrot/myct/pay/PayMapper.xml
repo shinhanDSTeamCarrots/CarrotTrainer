@@ -41,6 +41,7 @@
 	          ,	((NVL(G.price,0) + NVL(O.price_updown,0)) * NVL(#{goods_cnt},0)) AS goods_final_price
 	          , G.image AS goods_thumnail
 		FROM	tb_goods AS G
+				JOIN (SELECT @ROWNUM:=-1) AS R
 				LEFT JOIN 	tb_goods_option AS O
 							ON O.option_no = #{option_no}
 		WHERE 	G.goods_no = #{goods_no}
@@ -60,7 +61,7 @@
 			, AD.receive_zipcode AS zipcode
 			, NVL(AD.postman_notice,"안전하게 와주세요!") AS notice
 			FROM tb_address AS AD
-				JOIN (SELECT @ROWNUM:=-1) AS R
+				JOIN (SELECT @ROWNUM:=0) AS R
 				LEFT JOIN tb_member AS M
 									ON M.member_no = AD.member_no
 		WHERE AD.member_no = #{member_no}
@@ -79,8 +80,8 @@
 		 , purchase_val
 		 , purchase_state
 		 , receiver_nm
-		 , recevier_post
-		 , recevier_addr
+		 , receiver_post
+		 , receiver_addr
 		 , receiver_addr_detail
 		 , receiver_phone
 		 , purchase_price
@@ -90,7 +91,7 @@
 		VALUES (
 		   #{member_no}
 		 , #{purchase_div}
-		 , #{payStr};
+		 , #{payStr}
 		 , 0
 		 , #{recevier_name}
 		 , #{zipcode}

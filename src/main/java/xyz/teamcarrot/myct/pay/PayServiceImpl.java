@@ -35,6 +35,7 @@ public class PayServiceImpl implements PayService {
 	@Override
 	public int insertOrders(List<BuyGoodsVO> goodsvos, PayDataDTO dto) {
 		try {
+			System.out.println("member_no:"+dto.getMember_no());
 			int orderno = mapper.insertOrderMain(dto);
 			goodsvos.forEach(g -> g.setOption_no(orderno));
 			List<Integer> iList = new ArrayList<Integer>();
