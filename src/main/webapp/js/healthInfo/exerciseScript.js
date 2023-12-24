@@ -14,18 +14,29 @@ $(function() {
 	  // 상위 이벤트 막기
 	  event.stopPropagation(); // 또는 return false; 를 사용 가능
 
-	  // 클릭 시, 로그인이 되어있을 때, db에 저장
+	  //확인용
 	  console.log($(this).closest(".health-info").data("no"));
 	  
-	  //이미 등록되어있는 지 확인 > 등록되어있으면 색상 변경 안함/없으면 등록
-	  //등록 시, 확인 컨펌창 띄우기(?즐찾할거니 정말 뺼거니?)
-	  /*
-	  if(){
-	  	addBookmark()
+	  //세션에서 로그인 정보 불러옴
+	  let loginInfo = sessionStorage.getItem("loginInfo");
+
+	  if(loginInfo){
+	  	//이미 등록되어있는 경우 > 색상이 골드색일 때
+	  	if($(this).css("color") === "gold") {
+	  		if(confirm("즐겨찾기에서 제거하시겠습니까?")) {
+	  			delBookmark();
+	  		}
+	  	} else {
+	  		//등록되어있지 않은 경우
+	  		if(confirm("즐겨찾기에 추가하시겠습니까?")) {
+	  			addBookmark();
+	  		}
+	  	}
 	  } else {
-	  	delBookmark();
-	  }*/
-	  
+	  	if(confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
+	  		window.location.href = "로그인 페이지 URL";
+	  	}
+	  }  
 	});
 	
 	//장바구니에 있는 운동 클릭 시, 모달 팝업
@@ -48,7 +59,7 @@ $(function() {
 	-------------*/
 	function addBookmark() {
 	    // 클릭한 행에 대한 정보 가져오기
-	    const healthNo = $(this).closest(".health-info".data("no"));
+	    const healthNo = $(this).closest(".health-info".data("no")); //가로에 this추가하고 $(this).closest대신 $(event.currentTarget)로 변경??
 	    
 	    $.ajax({
 	        url: '/insertBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
