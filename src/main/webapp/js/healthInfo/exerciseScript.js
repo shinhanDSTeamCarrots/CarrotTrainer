@@ -4,11 +4,13 @@ $(function() {
 	$("#search-text").click(function() {
 		search(60);
 	});
+	
 	//운동 클릭 시, 장바구니로 이동
 	$(".health-info").click(function() {
 		loadCartItems(this);
 		calculateTotal();
 	});
+	
 	//북마크 클릭 시, db에 저장(로그인이 되어있을 경우에만)
 	$(".health-info .bookmark").click(function(event) {
 	  // 상위 이벤트 막기
@@ -42,8 +44,8 @@ $(function() {
 	//장바구니에 있는 운동 클릭 시, 모달 팝업
 	$(".healthInfo-name").click(function() {
 		// 받은 데이터로 모달 내용 생성
-		console.log("gg")
-		
+		// 모달 열기 함수 호출
+    	openModalWithData(healthData);
 	});
 	
 	/*-------------
@@ -224,6 +226,13 @@ $(function() {
 	    //기존 값에 입력
 	    $("#total-exerciseTime").text(totalMinute);
 		$("#total-calTime").text(totalCalorie);
+	}
+	/*--------------------
+		모달 팝업 오픈 함수
+	--------------------*/
+	function openModalWithData(healthData) {
+    	console.log("모달 열기 및 데이터 전달:", healthData);
+    	// 모달 열기 및 내용 생성 로직 추가
 	}
 	
 	/*----------

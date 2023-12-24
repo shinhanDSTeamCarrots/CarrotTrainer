@@ -46,17 +46,100 @@
 .diary-result {
 	display: flex;
 	flex-direction: row;
+	margin-top: 10px;
 	margin-bottom: 20px;
 }
 /*달력*/
 .diary-calendar {
 	width: 40%;
 }
+#calendar {
+    margin-left: auto;
+    margin-right: auto;
+    height: 470px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+#calendar_weekdays div {
+    display: inline-block;
+    vertical-align: top;
+}
+#calendar_content,
+#calendar_weekdays,
+#calendar_header {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    z-index: 10;
+}
+#calendar_weekdays div,
+#calendar_content div {
+    overflow: hidden;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #787878;
+}
+#calendar_content {
+    -webkit-border-radius: 0px 0px 12px 12px;
+    -moz-border-radius: 0px 0px 12px 12px;
+    border-radius: 0px 0px 12px 12px;
+}
+#calendar_content div {
+    float: left;
+}
+#calendar_content div:hover {
+    background-color: #F8F8F8;
+}
+#calendar_content div.blank {
+    background-color: #FFFFFF;
+}
+#calendar_content div.today,
+#calendar_content div.selected-date {
+    background-color: #CEDEBD;
+}
+#calendar_header {
+    width: 100%;
+    display: flex;
+	flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    background-color: #F9B572;
+    -webkit-border-radius: 12px 12px 0px 0px;
+    -moz-border-radius: 12px 12px 0px 0px;
+    border-radius: 12px 12px 0px 0px;
+}
+#calendar_header .month-year {
+    font-size: 1.5em;
+    color: #FAF8ED;
+    font-weight: 600;
+    float: left;
+    width: 70%;
+    margin: auto 0;
+}
+.arrow {
+    font-size: 20px;
+    width: 20px;
+    height: 100%;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 800;
+    color: #FAF8ED;
+}
+.left-arrow {
+    margin-right: 10px;
+}
+.right-arrow {
+    margin-left: 10px;
+}
 /*섭취량관련 내용*/
 .diary-result-text {
 	width: 40%;
 	display: flex;
 	flex-direction: column;
+	margin: auto 40px;
+}
+.diary-result-wrap {
+	margin: 30px;
 }
 .diary-result-main {
 	margin-bottom: 15px;
@@ -66,14 +149,14 @@
 	font-weight: 800;
 }
 .diary-result-main > .detail-division-line {
-	width: 70%;
+	width: 100%;
 	margin: 0;
 }
 .diary-result-main > #diary-result-main-sub {
 	font-size: 20px;
 	font-weight: 700;
 }
-.diary-result-text > .diary-contact-text {
+.diary-result-wrap > .diary-contact-text {
 	display: flex;
 	flex-direction: column;
 }

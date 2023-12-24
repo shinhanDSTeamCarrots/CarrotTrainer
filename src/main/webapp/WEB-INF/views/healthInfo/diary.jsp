@@ -15,6 +15,7 @@
 	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/diaryScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/calendarScript.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -29,29 +30,42 @@
     		<div class="diary-content">
     			<div class="diary-result">
     				<div class="diary-calendar">
-    				</div>
+	    				<div id="calendar">
+	    					<div id="calendar_header">
+	    						<span class="arrow left-arrow">&lt;</span>
+	    						<div class="month-year"></div>
+	    						<span class="arrow right-arrow">&gt;</span>
+	   						</div>
+	   						<div id="calendar_weekdays"></div>
+	   						<div id="calendar_content"></div>
+	 					</div>
+ 					</div>
     				<div class="diary-result-text">
-	    				<div class="diary-result-main">
-	    					<div class="diary-result-main-text">
-		    					<p>총 섭취량 <span class="sql-diary-result-main">1100</span>kcal</p>
-		    					<p>총 활동량 <span class="sql-diary-result-main">50</span>kcal</p>
-	    					</div>
-	    					<div class="detail-division-line"></div>
-	    					<div id="diary-result-main-sub">
-		    					<p>남은 섭취량 <span class="sql-diary-result">200</span>kcal</p>
-		    					<p>오늘의 상태는? 
-			    					<span class="sql-diary-result" id="sql-weight-result">
-				    					<c:if test="${empty bodyChange }">0.0</c:if>
-						                <c:if test="${!empty bodyChange }">${bodyChange.weight }</c:if>
-			    					</span>kg
-		    					</p>
+    					<img src="${pageContext.request.contextPath}/img/carrot_border.png">
+    					<div class="diary-result-wrap">
+		    				<div class="diary-result-main">
+		    					<div class="diary-result-main-text">
+			    					<p>총 섭취량 <span class="sql-diary-result-main">1100</span>kcal</p>
+			    					<p>총 활동량 <span class="sql-diary-result-main">50</span>kcal</p>
+		    					</div>
+		    					<div class="detail-division-line"></div>
+		    					<div id="diary-result-main-sub">
+			    					<p>남은 섭취량 <span class="sql-diary-result">200</span>kcal</p>
+			    					<p>오늘의 상태는? 
+				    					<span class="sql-diary-result" id="sql-weight-result">
+					    					<c:if test="${empty bodyChange }">0.0</c:if>
+							                <c:if test="${!empty bodyChange }">${bodyChange.weight }</c:if>
+				    					</span>kg
+			    					</p>
+		    					</div>
+		    				</div>
+		    				<div class="diary-contact-text">
+		    					<a href="${pageContext.request.contextPath}/foodDiary">오늘의 음식 기록하기 ></a>
+		    					<a href="${pageContext.request.contextPath}/exercise">오늘의 운동 기록하기 ></a>
+		    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
 	    					</div>
 	    				</div>
-	    				<div class="diary-contact-text">
-	    					<a href="${pageContext.request.contextPath}/foodDiary">오늘의 음식 기록하기 ></a>
-	    					<a href="${pageContext.request.contextPath}/exercise">오늘의 운동 기록하기 ></a>
-	    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
-    					</div>
+    					<img src="${pageContext.request.contextPath}/img/carrot_border.png">
     				</div>
     			</div>
     			<div class="diary-comment">
