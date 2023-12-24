@@ -6,7 +6,7 @@ $(function() {
 	});
 	//운동 클릭 시, 장바구니로 이동
 	$(".health-info").click(function() {
-		cartMove.call(this);
+		loadCartItems(this);
 		calculateTotal();
 	});
 	//북마크 클릭 시, db에 저장(로그인이 되어있을 경우에만)
@@ -34,64 +34,18 @@ $(function() {
 		console.log("gg")
 		
 	});
-	/*----------
-		캘린더
-	----------*/
-	//일자 설정
-	const config = {
-		dateFormat: 'yy-mm-dd',
-		showOn : "button",
-		buttonText:"날짜 선택",
-	    prevText: '이전 달',
-	    nextText: '다음 달',
-	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    dayNames: ['일','월','화','수','목','금','토'],
-	    dayNamesShort: ['일','월','화','수','목','금','토'],
-	    dayNamesMin: ['일','월','화','수','목','금','토'],
-	    yearSuffix: '년',
-        changeMonth: true,
-        changeYear: true
-	}
-	//캘린더
-	$( "input[name='health_date']" ).datepicker(config);
+	
+	/*-------------
+		검색 함수
+	-------------*/
+	//검색 완료 시, 페이지 리로드
+	function search(minute) {
+    	location.href = "/myct/exercise?healthName=" + $('#healthName').val();
+    }
 	
 	/*-------------
 		북마크 함수
 	-------------*/
-	/*
-	function insertBookmark() {
-		const userName = "${sessionScope.loginInfo}";
-		if (userName) {	//로그인이 되어있을 때
-		    // 클릭한 행에 대한 정보 가져오기
-		    const healthNo = $(this).closest(".health-info".data("no"));
-		    
-		    $.ajax({
-		        url: '/checkBookmark',
-		        method: 'GET',
-		        data: JSON.stringify({ no : healthNo }),
-		        success: function(res) {
-		            const isBookmarked = res.isBookmarked;
-		
-		            if (isBookmarked) {
-		                // 즐겨찾기에 등록된 경우 노란색
-		                $(event.currentTarget).css("color", "gold");
-		            } else {
-		                // 즐겨찾기에 등록되지 않은 경우 기본 색상
-		                $(event.currentTarget).css("color", "");
-		            }
-		        },
-		        error: function(error) {
-		            console.error('Error checking bookmark:', error);
-		        }
-		    });
-		
-		} else {	//비로그인일 때
-			if(confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")){
-				location.href=(""); //로그인 페이지로 이동
-			}
-		}
-	}*/
 	function addBookmark() {
 	    // 클릭한 행에 대한 정보 가져오기
 	    const healthNo = $(this).closest(".health-info".data("no"));
@@ -128,12 +82,73 @@ $(function() {
 	        }
 	    });
 	}
-	
-	//검색 함수 - 검색 완료 시, 페이지 리로드
-	function search(minute) {
-    	location.href = "/myct/exercise?healthName=" + $('#healthName').val();
+	/*-------------
+		쿠키 함수
+	-------------*/
+	//쿠키에서 모든 쿠키 값들 가져오기 >  페이지 로드 시에 특정 이름으로 시작하는 쿠키들을 찾아서 목록에 추가하는 데 사용
+	function loadCartItems(){
+		let allCookies = document.cookie.split(";");
+		
+		//각 쿠키 반복
+		allCookies.forEach(function(cookie) {
+			let cookieParts = cookie.split("=");
+			let cookieName = cookieParts[0].trim();
+			let cookieValue = cookieParts[1];
+			
+			if (cookieName.startsWith("healthData")) {
+				// 쿠키 값을 JSON으로 파싱
+				let healthData = JSON.parse(cookieValue);
+				
+				//페이지 로드 시에 이전에 저장된 항목들을 목록에 추가
+				addHealthToCart(healthData);
+			}
+		});
+	}
+	//쿠키 설정
+	function setCookie(name, value) {
+	  document.cookie = name + "=" + value + "; path=/";
+	}
+	// 쿠키에서 모든 쿠키 값들 가져오기 > 특정 쿠키의 값을 반환하는 데 주로 사용
+	function getCookie(name) {
+    let cookies = document.cookie.split(';');
+
+    // 찾고자 하는 쿠키 찾기
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        // 쿠키의 이름과 값 분리
+        let cookieParts = cookie.split('=');
+        let cookieName = cookieParts[0];
+
+        // 찾고자 하는 쿠키 이름과 일치하는 경우 해당 쿠키 값 반환
+        if (cookieName === name) {
+            return cookieParts[1];
+        }
     }
-    //클릭 시, 진행 운동 목록으로 이동 함수
+
+    // 해당하는 쿠키를 찾지 못한 경우 null 반환
+    return null;
+	}
+	
+    /*-------------------
+		장바구니 관련 함수
+	-------------------*/
+	//진행 운동 목록 생성 함수
+	function addHealthToCart(healthData) {
+		//받은 데이터로 운동 목록에 값 생성
+    	const healthInfoSelect = $('<div class="healthInfo-select"></div>');
+    	
+    	const healthInfoDetail = $('<div class="healthInfo-detail"></div>');
+    	healthInfoDetail.append('<div class="bookmark">&#9733;</div>'); //즐겨찾기 이미지
+	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + healthData.health + '</div><div class="healthInfo-name-time">' + minute + '분</div></div>');
+	    healthInfoDetail.append('<div class="healthInfo-cals">' +healthData.calorie + 'kcal</div>');
+	    healthInfoDetail.append('<div class="healthInfo-del">-</div>');  //빼기 이미지
+	    
+	    healthInfoSelect.append(healthInfoDetail);
+	    healthInfoSelect.append('<div class="detail-division-line"></div>');
+
+        $('.healthInfo-cart').append(healthInfoSelect);
+	}
+    //클릭 시, 값 확인하여 쿠키에 저장 함수
     function cartMove() {
     	//값 확인
     	console.log($(this).data("no"));
@@ -145,19 +160,33 @@ $(function() {
 		let minute = 60; //기본값
 		let calorie = $(this).children(".calorie").text().replace('kcal/hr', '');
 		
-		// 받은 데이터로 목록 생성
-    	const healthInfoSelect = $('<div class="healthInfo-select"></div>');
-    	
-    	const healthInfoDetail = $('<div class="healthInfo-detail"></div>');
-    	healthInfoDetail.append('<div class="bookmark">&#9733;</div>'); //즐겨찾기 이미지
-	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + health + '</div><div class="healthInfo-name-time">' + minute + '분</div></div>');
-	    healthInfoDetail.append('<div class="healthInfo-cals">' + calorie + 'kcal</div>');
-	    healthInfoDetail.append('<div class="healthInfo-del">-</div>');  //빼기 이미지
-	    
-	    healthInfoSelect.append(healthInfoDetail);
-	    healthInfoSelect.append('<div class="detail-division-line"></div>');
-
-        $('.healthInfo-cart').append(healthInfoSelect);
+		//데이터를 json형태로 묶기
+		let healthData = {
+			no: no,
+			health: health,
+			minute: minute,
+			calorie: calorie
+		};
+		
+		// 쿠키에서 기존 데이터 가져오기
+		let existingData = getCookie("healthData");
+		
+		// 이미 등록된 no인지 확인
+		if (existingData) {
+		    let existingHealthData = JSON.parse(existingData); //JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드
+		
+		    // 이미 등록된 no일 경우 알림 띄우고 종료
+		    if (existingHealthData.no === no) {
+		        alert("이미 등록된 항목입니다.");
+		        return;
+		    }
+		}
+		
+		//json을 문자열로 반환하여 쿠키에 저장
+		setCookie("healthData", JSON.stringify(healthData));
+		
+		//새로운 항목을 장바구니에 추가
+		addHealthToCart(healthData);
     }
     //클릭 시, 진행 운동 계산 함수
     function calculateTotal() {
@@ -185,6 +214,28 @@ $(function() {
 	    $("#total-exerciseTime").text(totalMinute);
 		$("#total-calTime").text(totalCalorie);
 	}
+	
+	/*----------
+		캘린더
+	----------*/
+	//일자 설정
+	const config = {
+		dateFormat: 'yy-mm-dd',
+		showOn : "button",
+		buttonText:"날짜 선택",
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNames: ['일','월','화','수','목','금','토'],
+	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	    yearSuffix: '년',
+        changeMonth: true,
+        changeYear: true
+	}
+	//캘린더
+	$( "input[name='health_date']" ).datepicker(config);
     
 	// 참고: 목록에 데이터 추가하는 함수(ajax사용할 경우)
     function displayList(data) {

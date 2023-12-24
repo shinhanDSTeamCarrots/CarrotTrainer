@@ -20,7 +20,7 @@
 			ON bodyInfo.member_no = #{member_no}
 			LEFT JOIN tb_health_bookmark bookmark
 			ON dic.health_dic_no = bookmark.health_dic_no
-			AND  bookmark.member_no = #{member_no}
+			AND bookmark.member_no = #{member_no}
 		<include refid="search"/>
 	</select>
 	
