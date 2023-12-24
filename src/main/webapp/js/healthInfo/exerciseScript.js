@@ -45,7 +45,51 @@ $(function() {
 	$(".healthInfo-name").click(function() {
 		// 받은 데이터로 모달 내용 생성
 		// 모달 열기 함수 호출
-    	openModalWithData(healthData);
+    	openModal(healthData);
+	});
+	// 숫자 이외의 문자를 제거하고 input에 설정
+	$("#minute").on("input", function () {
+	    var inputValue = $(this).val();
+
+	    $(this).val(inputValue.replace(/[^0-9]/g, ''));
+	});
+	// minus-button 클릭 이벤트
+	$("#minus-button").on("click", function () {
+	    let currentValue = parseInt($("#minute").val());
+	    let enteredCalories = parseInt($("#calorie").val());
+	    
+	    // 값이 숫자인지 확인 후 처리
+	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
+	        $("#minute").val(currentValue - 10);
+	        $("#calorie").val(Math.round(enteredCalories/60*50));
+	        
+	    }
+	});
+	// plus-button 클릭 이벤트
+	$("#plus-button").on("click", function () {
+	    let currentValue = parseInt($("#minute").val());
+	    let enteredCalories = parseInt($("#calorie").val());
+	    
+	    // 값이 숫자인지 확인 후 처리
+	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
+	        $("#minute").val(currentValue + 10);
+	        $("#calorie").val(Math.round(currentValue/60*70));
+	    }
+	});
+	
+	$("#modalBody-button button").click(function() {
+		let healthData = getCookie(healthData);
+		
+	    // 입력된 값 가져오기
+	    let enteredTime = $("#minute").val();
+	    let enteredCalories = $("#calorie").val();
+	    
+	    // healthData에 새로운 값 설정
+	    healthData.minute = enteredTime;
+	    healthData.calorie = enteredCalories;
+	
+	    // 쿠키에 저장
+	    setCookie("healthData", JSON.stringify(healthData));
 	});
 	
 	/*-------------
@@ -152,7 +196,7 @@ $(function() {
     	
     	const healthInfoDetail = $('<div class="healthInfo-detail"></div>');
     	healthInfoDetail.append('<div class="bookmark">&#9733;</div>'); //즐겨찾기 이미지
-	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + healthData.health + '</div><div class="healthInfo-name-time">' + minute + '분</div></div>');
+	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + healthData.health + '</div><div class="healthInfo-name-time">' + healthData.minute + '분</div></div>');
 	    healthInfoDetail.append('<div class="healthInfo-cals">' +healthData.calorie + 'kcal</div>');
 	    healthInfoDetail.append('<div class="healthInfo-del">-</div>');  //빼기 이미지
 	    
@@ -230,9 +274,16 @@ $(function() {
 	/*--------------------
 		모달 팝업 오픈 함수
 	--------------------*/
-	function openModalWithData(healthData) {
+	function openModal(healthData) {
     	console.log("모달 열기 및 데이터 전달:", healthData);
-    	// 모달 열기 및 내용 생성 로직 추가
+    	//쿠키에 저장된 운동관련 값 가져오기
+    	let healthName = healthData.health;
+    	let minute = healthData.minute;
+    	let calorie = healthData.calorie;
+    	
+    	$("#modalBody-title-text").text(healthName);
+    	$("#minute").val(minute);
+    	$("#calorie").val(calorie);
 	}
 	
 	/*----------

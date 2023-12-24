@@ -99,10 +99,11 @@
     			  			<div id="modalBody-main">
     			  				<form id="modalBody-weight" method="post">
 	    			  				<div class="modalBody-result">
+	    			  					<div class="modalBody-input-essential">*</div>
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
 		    			  					<div id="minus-button">-</div>
-			    			  				<input type="text" name="weight" id="weight" value="${bodyChange.weight }">
+			    			  				<input class="modalBody-input-text" type="text" name="weight" id="weight" value="${bodyChange.weight }">
 			    			  				<div id="plus-button">+</div>
 		    			  				</div>
 		    			  			</div>
@@ -110,13 +111,13 @@
 	    			  				<div class="modalBody-result">
 	    			  					<div class="modalBody-text">골격근량(kg)</div>
 		    			  				<div class="modalBody-input">
-		    			  					<input type="text" name="muscle_mass" id="muscle_mass" value="${bodyChange.muscle_mass }">
+		    			  					<input class="modalBody-input-text" type="text" name="muscle_mass" id="muscle_mass" value="${bodyChange.muscle_mass }">
 		    			  				</div>
 		    			  			</div>
 		    			  			<div class="modalBody-result">
 	    			  					<div class="modalBody-text">체지방률(%)</div>
 		    			  				<div class="modalBody-input">
-		    			  					<input type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
+		    			  					<input class="modalBody-input-text" type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
 		    			  				</div>
 		    			  			</div>
 		    			  			<input type="hidden" name="body_change_no" id="body_change_no" value="${bodyChange.body_change_no }">

@@ -149,7 +149,7 @@
     			  		<!-- 팝업 내용 -->
     			  		<div id="modalBody-content">
     			  			<div id="modalBody-title">
-    			  				<div id="modalBody-title-text">걷기</div>
+    			  				<div id="modalBody-title-text"></div>
     			  				<div class="title-division-line"></div>
     			  			</div>
     			  			<div id="modalBody-main">
@@ -158,14 +158,14 @@
 	    			  					<div class="modalBody-text">운동시간(분)</div>
 	    			  					<div class="modalBody-input">
 		    			  					<div id="minus-button">-</div>
-			    			  				<input id="">
+			    			  				<input id="minute">
 			    			  				<div id="plus-button">+</div>
 		    			  				</div>
 	    			  				</div>
 	    			  			</div>
     			  				<div class="modalBody-result" id="modalBody-calorie">
     			  					<div class="modalBody-text">칼로리(kcal)</div>
-    			  					<div class="modalBody-input"><input id=""></div>
+    			  					<div class="modalBody-input"><input id="calorie"></div>
     			  				</div>
     			  			</div>
     			  			<div id="modalBody-button">
