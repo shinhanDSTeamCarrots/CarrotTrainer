@@ -163,25 +163,24 @@ $(function() {
 	}
 	//쿠키 설정
 	function setCookie(name, value) {
-	  document.cookie = name + "=" + value + "; path=/";
+		document.cookie = name + "=" + value + "; path=/";
 	}
 	// 쿠키에서 모든 쿠키 값들 가져오기 > 특정 쿠키의 값을 반환하는 데 주로 사용
 	function getCookie(name) {
-    let cookies = document.cookie.split(';');
-
-    // 찾고자 하는 쿠키 찾기
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        // 쿠키의 이름과 값 분리
-        let cookieParts = cookie.split('=');
-        let cookieName = cookieParts[0];
-
-        // 찾고자 하는 쿠키 이름과 일치하는 경우 해당 쿠키 값 반환
-        if (cookieName === name) {
-            return cookieParts[1];
-        }
-    }
-
+	    let cookies = document.cookie.split(';');
+	
+	    // 찾고자 하는 쿠키 찾기
+	    for (let i = 0; i < cookies.length; i++) {
+	        let cookie = cookies[i].trim();
+	        // 쿠키의 이름과 값 분리
+	        let cookieParts = cookie.split('=');
+	        let cookieName = cookieParts[0];
+	
+	        // 찾고자 하는 쿠키 이름과 일치하는 경우 해당 쿠키 값 반환
+	        if (cookieName === name) {
+	            return cookieParts[1];
+	        }
+	    }
     // 해당하는 쿠키를 찾지 못한 경우 null 반환
     return null;
 	}
