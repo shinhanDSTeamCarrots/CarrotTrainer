@@ -1,13 +1,12 @@
 package xyz.teamcarrot.myct.pay;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import xyz.teamcarrot.myct.cart.CartMapper;
 
@@ -32,12 +31,13 @@ public class PayServiceImpl implements PayService {
 	public int getMemberMileage(int member_no) {
 		return mapper.getMemberMileage(member_no);
 	}
+	@Transactional
 	@Override
 	public int insertOrders(List<BuyGoodsVO> goodsvos, PayDataDTO dto) {
 		try {
 			System.out.println("member_no:"+dto.getMember_no());
 			int orderno = mapper.insertOrderMain(dto);
-			goodsvos.forEach(g -> g.setOption_no(orderno));
+			goodsvos.forEach(g -> g.setOrder_no(orderno));
 			List<Integer> iList = new ArrayList<Integer>();
 			for(BuyGoodsVO bgv : goodsvos) {
 				mapper.insertOrderDetail(bgv);
@@ -56,6 +56,16 @@ public class PayServiceImpl implements PayService {
 	@Override
 	public BuyGoodsVO getGoods(Map map) {
 		return mapper.getGoods(map);
+	}
+
+	@Override
+	public List<OrderDetailVO> getPurchaseDetails(Map map) {
+		return mapper.getPurchaseDetails(map);
+	}
+
+	@Override
+	public OrderVO getPurchaseMain(Map map) {
+		return mapper.getPurchaseMain(map);
 	}
 	
 }

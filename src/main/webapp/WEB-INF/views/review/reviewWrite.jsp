@@ -14,8 +14,8 @@
 <div>
 	<%-- 상품정보 --%>
 	<%--이미지 / 이름 옵션 종류 출력 --%>
-	<strong>상품 명</strong><br>
-	<string>상품이미지</string>
+	<strong>${gData.goods_name }</strong><br>
+	<img alt="상품이미지" src="/myct/img/goods/${gData.image }.jpg"/>
 </div>
 <hr>
 <form action="${pageContext.request.contextPath}/review/write" method="post" class="reviewForm form" onsubmit="OnSubmit()" id="reviewForm">
@@ -24,11 +24,11 @@
 		<input type="file" onchange="toBase64(event)" id="review_file" class="reviewFile_Btn" accept="image/*"/>
 		<c:choose>
 			<c:when test="${mode eq 'm' && not empty ReviewVO.image }">
-				<img alt="상품이미지" id="reviewImage" src="${ReviewVO.blobToImage() }"/>
+				<img alt="리뷰이미지" id="reviewImage" src="${ReviewVO.blobToImage() }"/>
 				<input type="hidden" name="imgstr" id="imageBase64" />
 			</c:when>
 			<c:otherwise>
-				<img alt="상품이미지" id="reviewImage"/>
+				<img alt="리뷰이미지" id="reviewImage"/>
 				<input type="hidden" name="imgstr" id="imageBase64"/>
 			</c:otherwise>
 		</c:choose>

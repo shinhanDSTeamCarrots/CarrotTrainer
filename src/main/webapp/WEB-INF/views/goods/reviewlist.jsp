@@ -26,7 +26,7 @@
 		href += "&page_no="+pagecnt;
 		location.replace(href);
 	}
-	function onLikeClicked(review_no){
+	function onLikeClicked(review_no,e){
 	//로그인 되어있는지 확인
 		//로그인 되어있으면
 		console.log("{"+review_no+"}");
@@ -39,7 +39,8 @@
 					   review_no: review_no},
 				success: function(data){
 					if(data == "T"){
-						alert("좋아요!");
+						$(e).attr("src","${pageContext.request.contextPath}/img/ico_like2.png");
+						$(e).attr("onclick","onLikeCancled("+review_no+",this)");
 					}else if(data =="F"){
 						alert("이미 처리되었습니다.")
 					}else{//F
@@ -57,7 +58,7 @@
 		//안되어있으면
 		//반응 안함
 	}
-	function onLikeCancled(review_no){
+	function onLikeCancled(review_no,e){
 		//로그인 되어있는지 확인
 		//로그인 되어있으면
 		console.log("{"+review_no+"}");
@@ -70,7 +71,8 @@
 					   review_no: review_no},
 				success: function(data){
 					if(data == "T"){
-						alert("좋아요 취소 됨");
+						$(e).attr("src","${pageContext.request.contextPath}/img/ico_like.png");
+						$(e).attr("onclick","onLikeClicked("+review_no+",this)");
 					}else if(data =="D"){
 						alert("이미 처리하였습니다.");
 					}else{//F
@@ -242,11 +244,11 @@
 		        			<c:choose>
 		        				<c:when test="${vo.self_like eq 0 }">
 		        					<%-- 좋아요 안눌렀으면 --%>
-		        					<input type="image" alt="이 리뷰가 좋아요" <%-- src="${pageContext.request.contextPath}/img/ico_like.png"--%> value="좋아용" onclick="onLikeClicked(${vo.review_no})"/>
+		        					<input type="image" alt="이 리뷰가 좋아요"  src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no},this)"/>
 		        				</c:when>
 		        				<c:otherwise>
 		        					<%-- 좋아요 누른 상태면 --%>
-		        					<input type="image" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like_cancle.png" value="취소할래용" onclick="onLikeCancled(${vo.review_no})" />
+		        					<input type="image" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like2.png" onclick="onLikeCancled(${vo.review_no},this)" />
 		        				</c:otherwise>
 		        			</c:choose>
 		        		</c:when>

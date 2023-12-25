@@ -129,8 +129,68 @@
 			, 0
 			, #{goods_final_price}
 			)
-		<selectKey keyProperty="detail_no" order="AFTER" resultType="int">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 	</insert>
+	
+	<select id="getPurchaseDetails" resultType="xyz.teamcarrot.myct.pay.OrderDetailVO" parameterType="map" >
+		SELECT
+			  D.detail_no
+			, D.order_no
+			, D.goods_no
+			, NVL(D.option_no, 0) AS option_no
+			, D.goods_cnt
+			, D.deliver_state
+			, D.purchase_price
+			, D.acception_date
+			, D.tracking_no
+			, NVL(D.admin_no,0) AS admin_no
+			, G.goods_name
+			, NVL(O.option_name, '') AS option_name
+			, NVL(A.admin_name,'') AS admin_name
+		FROM tb_order_detail AS D
+			LEFT JOIN tb_goods AS G
+				ON G.goods_no = D.goods_no
+			LEFT JOIN tb_goods_option AS O
+				ON O.option_no = D.option_no
+			LEFT JOIN tb_admin AS A
+				ON A.admin_no = D.admin_no
+		WHERE 0 = 0
+			<if test="order_no != 0">
+				AND D.order_no = #{order_no}
+			</if>
+	</select>
+	
+		<select id="getPurchaseMain" resultType="xyz.teamcarrot.myct.pay.OrderVO" parameterType="map" >
+		SELECT
+			  O.order_no
+			, O.member_no
+			, O.purchase_date
+			, O.purchase_div
+			, O.purchase_val
+			, O.purchase_state
+			, O.receiver_nm
+			, O.receiver_post
+			, O.receiver_addr
+			, O.receiver_addr_detail
+			, O.receiver_phone
+			, O.purchase_price
+			, NVL(O.purchase_mileage,0) AS purchase_mileage
+			, NVL(O.postman_notice,'') AS postman_notice
+			, NVL(O.thumnail_detail_no,0) AS thumnail_detail_no
+			, NVL(O.refund_reason,'') AS refund_reason
+		FROM tb_order AS O
+			LEFT JOIN 
+		WHERE 0 = 0
+			<if test="order_no != 0">
+				AND O.order_no = #{order_no}
+			</if>
+			<if test="member_no != 0">
+				AND O.member_no = #{member_no}
+			</if>
+			<!-- 일자 검색 추가 -->
+			<if test="purchase_date != null">
+				AND O.member_no = #{member_no}
+			</if>
+	</select>
+	
+	
 </mapper>

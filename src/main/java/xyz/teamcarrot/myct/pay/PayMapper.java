@@ -13,6 +13,8 @@ public interface PayMapper {
 	List<Map<String, Object>> getAddressList(@Param("member_no")int member_no);
 	int getMemberMileage(@Param("member_no")int member_no);
 	int insertOrderMain(PayDataDTO dto);
-	int insertOrderDetail(@Param("goodsVO")BuyGoodsVO goodsvo);
+	int insertOrderDetail(BuyGoodsVO goodsvo);
 	//void updateMainDataThumnail(@Param("order_no")int order_no, @Param("detail_no")int detail_no);
+	List<OrderDetailVO> getPurchaseDetails(Map map);
+	OrderVO getPurchaseMain(Map map);
 }
