@@ -16,4 +16,6 @@ public class BuyGoodsVO {
 	private int option_price;
 	private int goods_cnt;
 	private int order_no;
+	
+	public BuyGoodsVO() {}
 }

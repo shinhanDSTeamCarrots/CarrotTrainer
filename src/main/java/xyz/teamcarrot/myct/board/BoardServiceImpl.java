@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
-	 // 게시글 등록과 파일 정보 저장을 수행하는 enroll 메서드
+	
     @Override
     public int enroll(BoardVO board, MultipartFile file, HttpServletRequest request) {
         
@@ -155,5 +155,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void updateHasReplyStatus(int board_no, boolean status) {
         mapper.updateHasReplyStatus(board_no, status);
+    }
+    
+    @Override
+    public void updatePrivateStatus(int board_no, int board_private) {
+        mapper.updatePrivateStatus(board_no, board_private);
     }
 }

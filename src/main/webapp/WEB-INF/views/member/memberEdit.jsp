@@ -29,6 +29,7 @@ int member_no = vo.getMember_no();
 	function infoSave() {
 		$("#frm").submit();
 	}
+	
 </script>
 </head>
 <body>
@@ -47,9 +48,7 @@ int member_no = vo.getMember_no();
 							<tr>
 								<th>아이디</th>
 								<td><input type="text" name="member_id" id="member_id"
-									value="<%=member_id%>" style="float: left;" readonly>
-
-								</td>
+									value="<%=member_id%>" style="float: left;" readonly></td>
 							</tr>
 							<tr>
 								<th>비밀번호</th>
@@ -79,7 +78,7 @@ int member_no = vo.getMember_no();
 									style="float: left;"></td>
 							</tr>
 							<tr>
-								<th>닉네임</t>>
+								<th>닉네임</th>
 								<td><input type="text" name="member_nickname"
 									id="member_nickname" style="float: left;"></td>
 							</tr>
@@ -109,6 +108,7 @@ int member_no = vo.getMember_no();
 					</table>
 					<input type="submit" value="다음" onclick="return infoSave()" /> <input
 						type="hidden" name="member_no" value="<%=member_no%>" />
+				</div>
 			</form>
 
 			<div class="memberDel">

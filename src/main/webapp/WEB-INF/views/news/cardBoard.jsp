@@ -31,6 +31,24 @@
     margin-bottom: 30px;
 }
 
+.write-btn-container {
+	text-align: right; /* 버튼을 오른쪽으로 정렬 */
+	margin: 20px 0 20px; /* 상단 여백 추가 */
+	
+}
+
+.write-button {
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	padding: 10px 20px; /* 패딩 */
+	border: none; /* 테두리 없음 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	cursor: pointer; /* 클릭 가능한 커서 모양 */
+	font-size: 1.0rem; /* 글씨 크기 */
+	margin-bottom: 0px; /* 하단 여백 추가 */
+	font-weight: 700;
+}
+
 .search-container {
     display: flex; /* Flexbox를 사용하여 인라인으로 정렬 */
     justify-content: flex-end; /* 요소들을 컨테이너의 끝으로 정렬 */
@@ -83,10 +101,18 @@
 }
 
 .card-image {
+
     height: 200px; /* Fixed height for placeholder */
     background-color: #ddd; /* Placeholder color */
     margin-bottom: 15px;
 }
+
+.NewsImg {
+  width: 336px; /* or any other size */
+  height: 200px; /* or any other size */
+  object-fit: cover; /* This will ensure that the aspect ratio is maintained and the image is covered nicely within the dimensions. */
+}
+
 
 .card-title,
 .card-author {
@@ -117,40 +143,30 @@
     </button>
 </div>
 
+<div class="write-btn-container">
+		
+				<a href="write" class="write-button">게시글 등록</a>
+			
+			</div>
+
         <div class="cards-container">
             <!-- 여러 카드를 반복적으로 표시 -->
-            <div class="card">
-                <div class="card-image"><a href="/myct/healthnews/cardread">웰니스 뉴스</a></div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
+            
+            <c:forEach items="${page}" var="vo">
+            	<c:if test="${vo.category_no == 4}">
+          
+				
+				<div class="card">
+                <div class="card-image">
+                	<img class="NewsImg" src="/myct/img/news/cardnews_02.jpg" />
+                </div>
+                <div class="card-title">제목:<c:out value="${vo.board_title}" /></div>
+                <div class="card-author">작성자:<c:out value="${vo.member_nickname}" /></div>
             </div>
-            <!-- 추가 카드 -->
-            <div class="card">
-                <div class="card-image">이미지1</div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
-            </div>
-            <div class="card">
-                <div class="card-image">이미지1</div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
-            </div>
-            <div class="card">
-                <div class="card-image">이미지1</div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
-            </div>
-            <div class="card">
-                <div class="card-image">이미지1</div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
-            </div>
-            <div class="card">
-                <div class="card-image">이미지1</div>
-                <div class="card-title">제목: 타이틀1</div>
-                <div class="card-author">작성자:</div>
-            </div>
-            <!-- ... -->
+           
+            </c:if>
+            </c:forEach>
+            
         </div>
         <div class="pagination">
             <!-- 페이지네이션 -->

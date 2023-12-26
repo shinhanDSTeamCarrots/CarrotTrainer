@@ -17,4 +17,5 @@ public class PayDataDTO {
 	private String buy_method;
 	private int member_no;
 	private int purchase_div;
+	private int order_no;
 }

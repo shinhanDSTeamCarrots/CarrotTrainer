@@ -24,7 +24,7 @@ public class BoardVO {
 
 	private String hasReply; // 답글 유무를 나타내는 필드
 
-	
+	 private int board_private; // 비공개 상태
 
 	
 	public String getHasReply() {
