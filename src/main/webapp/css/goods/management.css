@@ -1,0 +1,159 @@
+.container {
+	width:100%;
+	max-width:1200px;
+	margin : 0 auto;
+	display:flex;
+	flex-direction:column;
+	padding: 20px;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+a:visited {
+	color: #435334;
+}
+
+/* 카테고리명 + 검색창 */
+.gmheader{
+	margin-left:20px;
+	padding:0;
+	float:left;
+	width: 100%;	
+	line-height: 40px;
+	display: flex;
+	flex-direction:row;
+}
+.gmheader h1{
+	margin-left:20px;
+	padding:0;
+	float:left;
+	width: 20%;
+}
+.search_wrap{
+	display: flex;
+	align-items: center;
+	float:left;
+	width: 60%;
+	height:40px;
+	line-height: 40px;
+}
+.search_area{
+	display:flex;
+	align-items: center;
+	width: 100%;
+}
+#search{
+	width: 40px;
+	margin: 5px;
+	font-size:18px;
+	
+}
+
+
+/* 상품 리스트 */
+.gmlist {
+	width:100%;
+    margin-top: 20px;
+    flex_direction:column;
+}
+.gmlist h2{
+	margin: 15px;
+}
+.gmlist ul {	
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.gmlist li {
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+}
+
+#goodsImg {
+	width:40px;
+	height:40px;
+	margin:5px;
+}
+
+/* 등록폼 해더 */
+.goodsHeader{
+	display:flex;
+	flex-direction:row;
+	height:40px;
+	margin-bottom: 20px;
+}
+.goodsCnt{
+	margin-left: 30px;
+	line-height: 40px;
+}
+.sub_title{
+	margin-bottom: 20px;
+}
+.writebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+.writebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+/* 상품 등록폼 */
+.insertForm{
+	width:100%;
+	height:800px;
+	display:flex;
+	flex-direction:column;
+	margin:20px;
+	margin-top:50px;
+}
+
+.insertForm p{
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.insertBtns{
+	margin-top:30px;
+}
+.donebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+
+.donebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+.closebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}

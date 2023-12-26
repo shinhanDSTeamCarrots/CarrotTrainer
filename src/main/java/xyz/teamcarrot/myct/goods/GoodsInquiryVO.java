@@ -19,5 +19,6 @@ public class GoodsInquiryVO {
 	private String reply_content;
 	private int is_secret;
 	
-	private String member_id;
+	private String member_nickname;
+
 }

@@ -43,4 +43,38 @@
 	</select>
 	
 	
+	
+	
+	<!-- 관리자 상품 등록 -->
+	<insert id="goodsInsert" parameterType="xyz.teamcarrot.myct.goods.GoodsVO">
+		INSERT INTO tb_goods (
+			goods_name,
+			price,
+			discount_price,
+			delivery_fee,
+			image,
+			image_detail1,
+			purchase_info,
+			register_date,
+			stock,
+			is_delete,
+			category_no 
+		) VALUES (
+			#{goods_name},
+			#{price},
+			#{discount_price},
+			0,
+			#{image},
+			#{image_detail1},
+			#{purchase_info},
+			NOW(),
+			#{stock},
+			0,
+			#{category_no}
+		)
+		)
+	
+	</insert>
+	
+	
 </mapper>
