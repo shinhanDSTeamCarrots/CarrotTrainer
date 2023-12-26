@@ -25,7 +25,8 @@
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
-		<form name="frm" id="frm" action="regist.do" method="post">
+		<div class = "container">
+		<form name="frm" id="frm" action="userInfo" method="post">
 			<table class="memberList">
 				<colgroup>
 					<col width="80px" />
@@ -64,6 +65,7 @@
 			</table>
 			<input type="submit" value="수정사항 반영" onclick="return infoSave()" />
 		</form>
+		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
 </body>

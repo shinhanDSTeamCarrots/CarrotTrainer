@@ -48,8 +48,7 @@
 		WHERE member_id = #{member.member_id}
 	</update>
 	<delete id="deleteMember">
-		SELECT
-		COUNT(*) FROM tb_member WHERE member_id = #{member_id} AND 
+		DELETE FROM tb_member WHERE member_id = #{member_id} AND 
 		member_pw = #{member_pw}
 		<!-- 임시로 일단(나중에 비밀번호 부분 수정해야함) -->
 	</delete>
