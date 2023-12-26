@@ -55,7 +55,33 @@
 		DELETE FROM tb_health_bookmark WHERE health_bookmark_no = #{health_bookmark_no}
 	</delete>
 	
-	
-	
-	<!-- 음식 정보 -->
+	<!-- 운동 정보 입력 -->
+	<insert id="insertHealthInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		INSERT INTO tb_health_diary (
+			health_name, health_calorie, health_time, health_date, member_no 
+		) VALUES (
+			#{health_name}, #{health_calorie}, #{health_time}, NOW(), #{member_no}
+		)
+		<!-- tb_health_diary 테이블 키 값 -->
+		<selectKey keyProperty="health_diary_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 운동 정보 불러오기 -->
+	<select id="selectHealthInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		SELECT * FROM tb_health_diary WHERE member_no = #{member_no} AND health_diary_no = #{health_diary_no};
+	</select>
+	<!-- 운동 정보 수정 -->
+	<update id="updateHealthInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		UPDATE tb_health_diary
+		SET health_name = #{health_name}
+			, health_calorie = #{health_calorie}
+			, health_time = #{health_time}
+			, health_date = #{health_date}
+		WHERE health_diary_no = #{health_diary_no};
+	</update>
+	<!-- 운동 정보 삭제 -->
+	<delete id="deleteHealthInfo" parameterType="int">
+		DELETE FROM tb_health_diary WHERE health_diary_no = #{health_diary_no}
+	</delete>
 </mapper>

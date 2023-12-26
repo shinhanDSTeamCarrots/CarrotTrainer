@@ -105,15 +105,16 @@
 					<div class="detail-division-line"></div>
 					<div class="healthInfo">
 						<div id="healthInfo-text">
-							<p>
-								총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행
-							</p>
-							<p>
-								<span class="sql-text" id="total-calTime">0</span>kcal 소비
-							</p>
+							<p>총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행</p>
+							<p><span class="sql-text" id="total-calTime">0</span>kcal 소비</p>
 						</div>
 						<div id="healthInfo-graph"></div>
-						<div class="healthInfo-cart"></div>
+						<div class="healthInfo-cart">
+							<input type="hidden" id="health_name" name="health_name">
+							<input type="hidden" id="health_calorie" name="health_calorie">
+							<input type="hidden" id="health_time" name="health_time">
+							<input type="hidden" id="health_date" name="health_date">
+						</div>
 						<!-- healthInfo-cart에 들어가는 자바스크립트 입력 코드
 						<div class="healthInfo-select">
 							<div class="healthInfo-detail">
@@ -129,7 +130,7 @@
 						</div>
 						-->
 					</div>
-					<button class="select-info" type="submit">기록하기</button>
+					<button id="select-info" type="submit">기록하기</button>
 					<%-- 이미 입력 값이 없으면
 	                <c:if test="${ }}">
 	                    <button class="select-info" type="submit" onclick="">기록 완료</button>

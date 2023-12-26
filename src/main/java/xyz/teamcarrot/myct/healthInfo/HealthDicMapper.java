@@ -16,4 +16,10 @@ public interface HealthDicMapper {
 	int addBookmark(HealthBookmarkVO vo);
 	//북마크 제거
 	int delBookmark(int health_bookmark_no);
+	
+	//운동 정보 입력
+	int insertHealthInfo(HealthDiaryVO vo);
+	HealthDiaryVO selectHealthInfo(int no);
+	int updateHealthInfo(HealthDiaryVO vo);
+	int deleteHealthInfo(int no);
 }

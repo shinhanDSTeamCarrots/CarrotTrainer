@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 $(function() {
+	//쿠키 로드 및 계산
     loadCartItems();
     calculateTotal();
     
+    //검색
 	$("#search-text").click(function() {
 		search(60);
 	});
@@ -42,9 +44,25 @@ $(function() {
 	  	}
 	  } else {
 	  	if(confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
-	  		window.location.href="${pageContext.request.contextPath}/member/login";
+	  		location.href="${pageContext.request.contextPath}/member/login";
 	  	}
 	  }  
+	});
+	//입력
+	$("#select-info").click(function(e) {
+		if(confirm("입력하시겠습니까?")) {
+			//쿠키 값 불러와서 input에 저장 후 입력해야 함
+			$("#health_name").val($("#text").text());
+			$("#health_calorie").val($("#text").text());
+			$("#health_time").val($("#text").text());
+			$("#health_date").val($("#text").text());
+			
+			$(".healthInfo-cart").attr("action", "insertHealthInfo");
+			$(".healthInfo-cart").submit();
+		}
+		else {
+			e.preventDefault();
+		}
 	});
 	
 	//장바구니에 있는 운동 클릭 시, 모달 팝업

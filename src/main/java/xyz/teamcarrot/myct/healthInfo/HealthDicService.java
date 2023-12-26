@@ -13,4 +13,10 @@ public interface HealthDicService {
 	int addBookmark(HealthBookmarkVO vo);
 	//북마크 삭제
 	int delBookmark(int health_bookmark_no);
+	
+	//운동 정보 입력
+	boolean insertHealthInfo(HealthDiaryVO vo);
+	HealthDiaryVO selectHealthInfo(int member_no);
+	int updateHealthInfo(HealthDiaryVO vo);
+	int deleteHealthInfo(HealthDiaryVO vo);
 }

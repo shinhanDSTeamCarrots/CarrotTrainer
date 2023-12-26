@@ -60,4 +60,22 @@ public class HealthDicServiceImpl implements HealthDicService {
     public int delBookmark(int health_bookmark_no) {
 		return mapper.delBookmark(health_bookmark_no);
     }
+	
+	//운동 정보 입력
+	@Override
+	public boolean insertHealthInfo(HealthDiaryVO vo) {
+		return mapper.insertHealthInfo(vo) > 0 ? true : false;
+	}
+	@Override
+	public HealthDiaryVO selectHealthInfo(int member_no) {
+		return mapper.selectHealthInfo(member_no);
+	}
+	@Override
+	public int updateHealthInfo(HealthDiaryVO vo) {
+		return mapper.updateHealthInfo(vo);
+	}
+	@Override
+	public int deleteHealthInfo(HealthDiaryVO vo) {
+		return mapper.deleteHealthInfo(vo.getHealth_diary_no());
+	}
 }

@@ -25,7 +25,7 @@ public class ExerciseController {
 	
 	//리스트 출력
 	@GetMapping("/exercise")
-	public String searchHealthInfo(Model model, HttpSession sess, String healthName,Integer minute) {
+	public String searchHealthInfo(Model model, HttpSession sess, String healthName, Integer minute) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		//member_no 확인용
 		int member_no = -1;
@@ -95,5 +95,58 @@ public class ExerciseController {
 			
 			return "common/alert";
 		}
+	}
+	
+	@PostMapping("/insertHealthInfo")
+	public String insertHealthInfo(HealthDiaryVO vo, Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		vo.setMember_no(mem.getMember_no());
+		boolean healthInfo = service.insertHealthInfo(vo);
+		
+		if(healthInfo) {
+			model.addAttribute("cmd", "move");
+			model.addAttribute("msg", "정보가 등록되었습니다!");
+			model.addAttribute("url", "/myct/exercise");
+		} else {
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "정보 등록 실패");
+		}
+		return "/common/alert";
+	}
+	@PostMapping("/updateHealthInfo")
+	public String updateHealthInfo(Model model, HealthDiaryVO vo) {
+		int no = service.updateHealthInfo(vo);
+		
+		String msg = "";
+		String url = "/myct/exercise";
+
+		if(no > 0) {
+			msg = "수정되었습니다.";
+		} else {
+			msg = "수정 오류";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("cmd", "move");
+
+		return "common/alert";
+	}
+	@PostMapping("/deleteHealthInfo")
+	public String deleteHealthInfo(Model model, HealthDiaryVO vo) {
+		int no = service.deleteHealthInfo(vo);
+		
+		String msg = "";
+		String url = "/myct/exercise";
+
+		if(no > 0) {
+			msg = "삭제되었습니다.";
+		} else {
+			msg = "삭제 오류";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		model.addAttribute("cmd", "move");
+
+		return "common/alert";
 	}
 }
