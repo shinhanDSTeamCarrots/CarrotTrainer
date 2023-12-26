@@ -105,12 +105,12 @@
    							<div class="text-fatness">25.00</div>
    						</div>
    					</div>
-   					<div>
+   					<div class="bmi-result-btn">
 						<c:if test="${!empty loginInfo && empty bodyInfo}">
-							<button class="bmi-btn" id="bmi-insertBtn">입력하기</button>
+							<button class="bmi-result-btn-text" id="bmi-insertBtn">입력하기</button>
 						</c:if>
 						<c:if test="${!empty loginInfo && !empty bodyInfo}">
-							<button class="bmi-btn" id="bmi-updateBtn">수정하기</button>
+							<button class="bmi-result-btn-text" id="bmi-updateBtn">수정하기</button>
 						</c:if>
    					</div>
    				</div>

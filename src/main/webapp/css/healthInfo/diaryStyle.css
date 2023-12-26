@@ -284,7 +284,7 @@
     flex-direction: row;
     justify-content: center;
 }
-.modalBody-input-text input[type="text"] {
+.modalBody-input > .modalBody-input-text input[type="text"] {
 	border: none;
 	background: transparent; /* 투명 */
 	border-bottom: 2px solid #99B080;

@@ -121,6 +121,16 @@
 	font-weight: 800;
 	text-align : center;
 }
+.bmi-result-btn {
+	width: 100%;
+	margin: 20px;
+	text-align: center;
+}
+.bmi-result-btn-text {
+	width: 165px;
+	height: 35px;
+	margin: 20px;
+}
 /* 그래프 */
 .bmi-result-data {
 	margin: 0 15%;
