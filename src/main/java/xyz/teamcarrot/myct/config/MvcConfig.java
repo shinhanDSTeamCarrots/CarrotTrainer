@@ -53,7 +53,7 @@ public class MvcConfig implements WebMvcConfigurer{
 	// 정적페이지 설정
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/event/index.do");
+		registry.addViewController("/event/index");
 	}
 	
 	// HikariCP
@@ -108,7 +108,7 @@ public class MvcConfig implements WebMvcConfigurer{
 //	public void addInterceptors(InterceptorRegistry registry) {
 //		// url 설정
 //		registry.addInterceptor(loginIntercepton())
-//						.addPathPatterns("/member/regist.do");
+//						.addPathPatterns("/member/regist");
 //	}
 	
 	// 프로퍼티 설정

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class FoodController {
-	@GetMapping("/food.do")
+	@GetMapping("/food")
 	public String bmi() {
 		return "/healthInfo/food";
 	}

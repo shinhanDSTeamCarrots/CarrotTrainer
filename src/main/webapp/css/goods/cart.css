@@ -1,5 +1,159 @@
+.container {
+	width:100%;
+	max-width:1200px;
+	margin : 0 auto;
+	display:flex;
+	padding: 20px;
+    box-sizing: border-box;
+    flex-direction:column;
+}
+
+/* 장바구니 헤더 */
+.cart_header{
+	background-color: #EDF1D6;
+	display:flex;	
+	flex-direction:row;
+	width:100%;
+	heigth:40px;
+	color:#435334;
+	justify-content: space-between;
+    align-items: center;
+}
+.cart_header > .rightAlign{
+	text-align: right;
+	display:flex;
+	line-height:40px;
+	margin-right:20px;
+}
+.cart_header > h1{
+	line-height: 40px;
+	margin-left: 20px;
+	
+}
+.cart_header > .rightAlign > #cart_subtitle{
+	font-weight: 600;	
+	line-height: 40px;
+	margin-right:20px;
+	
+}
+.cart_header > .rightAlign > #cart_later{
+	font-weight: 400;
+	line-height: 40px;
+}
+
+/* 전체 선택 부분 */
+.select_all{
+	height:30px;
+	margin:10px;
+	line-height:30px;
+	font-size: 16px;
+	font-weight: 450;
+}
+
+.select_all > #deleteSelected > img{
+	width:20px;
+	height:20px;
+}
+
+
+.selectItem{
+	width:15px;
+	height:100%;
+	line-height: 100%;
+	margin-right:20px;
+}
+
+/*구분선*/
+
 .title-division-line {
+	width:1160px;
+	border-top: 1.5px solid #435334;
+	margin : 0 auto;
+}
+
+.totalprice-division-line {
 	width:1160px;
 	border-top: 3px solid #435334;
 	margin : 0 auto;
+}
+.totalPrice{
+	margin: 15px;
+	height:40px;
+	font-size:20px;
+	font-weight:400;
+	display:flex;
+	flex-direction:row;	
+	justify-content: flex-end;
+}
+.priceText{
+	display:flex;
+	flex-direction:row;
+}
+.totalpurchase{
+	margin-left:10px;
+	font-weight: 500;
+}
+
+
+/*장바구니 목록*/
+
+.eachItem{
+	display:flex;
+    flex-direction:row;
+    margin:20px;
+    margin-left:10px;
+    width:100%;
+}
+.goodsName{
+	margin-left:20px;
+	margin-top: 10px;
+	margin-bottom: 30px;
+ 	font-size: 18px;
+ 	font-weight: 500;
+}
+.itemInfo{
+	width:100%;
+}
+.optionInfo{
+	font-size:14px;
+	font-weight: 450;
+	background-color:#EDF1D6;
+	display:flex;
+	flex-direction:row;
+	margin:20px;
+	justify-content: space-between;
+    
+}
+.goodsOption{
+	margin-left: 15px;
+}
+.rightalign{
+	display:flex;
+	flex-direction:row;
+}
+.itemCnt{
+	margin-right: 40px;
+}
+.itemPrice{
+	margin-right: 30px;
+}
+#cartgoodsImg{
+	width: 150px;
+	height: 150px;
+}
+.purchaseButton{
+	margin: 0 auto;
+}
+.purchase{
+	color:#435334;
+	line-height:50px;
+	font-size : 22px;
+	font-weight : bold;
+	text-align : center;
+	width: 200px;
+	height: 50px;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+	margin-top: 50px;
 }

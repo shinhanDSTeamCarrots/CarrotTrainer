@@ -43,13 +43,45 @@
 /*-------------
 	bmi 내용
 -------------*/
-
 .bmi-content {
-	
+	padding: 0 30px;
 }
-.bmi-input-data ul {
+.bmi-input-data > .bmi-input-detail {
 	display: flex;
     flex-direction: row;
+}
+.bmi-input-detail {
+	margin: 10px;
+}
+.bmi-input-detail li {
+	margin: 0 30px 0 0;
+}
+.bmi-input-detail > #title-exercise_mass {
+	margin: 0 10px 0 0;
+}
+.bmi-input-detail > .exercise_mass {
+	margin: 0 6px;
+}
+.bmi-input-detail > .bmi-input-essential {
+	margin: 0;
+	font-size: 25px;
+	color: red;
+}
+.bmi-input-title {
+	font-size: 15px;
+	font-weight: 700;
+}
+.bmi-input-detail input[type="text"] {
+	border: none;
+	background: transparent; /* 투명 */
+	border-bottom: 2px solid #99B080;
+	outline: none; /* 포커스 효과 제거 */
+	margin-top: -10px;
+	width: 100px;
+	height: 30px;
+}
+.bmi-input-detail input[type="text"]:focus {
+	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
 }
 .bmi-input-button > .bmi-btn {
 	width: 15%;
@@ -60,7 +92,27 @@
 /*-------------
 	bmi 결과
 -------------*/
+@keyframes resultOpen {
+	from {
+		opacity: 0;
+	}
 
+	to {
+		opacity: 1;
+	}
+}
+.bmi-result {
+    display: none;
+}
+.bmi-result.show {
+    display: flex;
+    flex-direction: column;
+    animation: resultOpen 0.5s;
+    opacity: 1; /* 투명도 */
+}
+.bmi-result > .detail-division-line {
+	width: 100%;
+}
 .bmi-result-text {
 	padding: 20px;
 }
@@ -68,6 +120,76 @@
 	font-size: 15px;
 	font-weight: 800;
 	text-align : center;
+}
+.bmi-result-btn {
+	width: 100%;
+	margin: 20px;
+	text-align: center;
+}
+.bmi-result-btn-text {
+	width: 165px;
+	height: 35px;
+	margin: 20px;
+}
+/* 그래프 */
+.bmi-result-data {
+	margin: 0 15%;
+}
+.bmi-result-graph {
+	width: 100%;
+	height: 35px;
+	overflow: hidden;
+}
+.bar-container {
+	display: flex;
+	margin: 0 15%;
+	width: 70%;
+	height: 100%;
+}
+.bar-underWeight,
+.bar-nomalWeight,
+.bar-overWeight,
+.bar-fatness {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #435334;
+	font-weight: 700;
+}
+.bar-underWeight {
+	width: 30%;
+	background-color: #9FBB73;
+}
+.bar-nomalWeight {
+	width: 25%;
+	background-color: #F1EB90;
+}
+.bar-overWeight {
+	width: 20%;
+	background-color: #F3B664;
+}
+.bar-fatness {
+	width: 35%;
+	background-color: #EC8F5E;
+}
+.bmi-fixed-data-detail {
+	display: flex;
+	flex-direction: row;
+	margin: 0 0 0 14%;
+	font-weight: 500;
+}
+.text-underWeight {
+	width: 22%;
+}
+.text-nomalWeight {
+	width: 18%;
+}
+.text-overWeight {
+	width: 15%;
+}
+.text-fatness {
+	width: 45%;
 }
 
 /*-------------------
@@ -77,6 +199,10 @@
 	color: #748E63;
 	font-size: 26px;
 	font-weight: 800;
+}
+#result-user-name {
+	color: #748E63;
+	font-size: 22px;
 }
 .sql-result-text {
 	color: #748E63;
