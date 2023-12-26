@@ -136,7 +136,17 @@
 	margin-left: 5px;
 }
 .date {
-	margin: 15px auto -5px 20px;
+	margin: 15px auto -5px 10px;
+}
+select {
+	border: none;
+	background: transparent;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: left;
+	height: auto;
+	padding: none;
+	outline: none;
 }
 /* 총 운동 결과 */
 #healthInfo-text {
@@ -254,6 +264,68 @@
 .modalBody-text {
 	font-size: 20px;
 	font-weight: 700;
+}
+/* 입력값 */
+#minute {
+	border: none;
+	background: transparent; /* 투명 */
+	border-bottom: 2px solid #99B080;
+	outline: none; /* 포커스 효과 제거 */
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center;
+	margin: auto 0;
+}
+#minute:focus {
+	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
+}
+#calorie {
+	border: none;
+	background: transparent; /* 투명 */
+	border-bottom: 2px solid #99B080;
+	outline: none; /* 포커스 효과 제거 */
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center;
+	margin: auto 0;
+}
+/* 버튼 */
+#minus-button {
+	width: 30px;
+	height: 30px;
+	background-color: #D9D9D9;
+	margin: 0 auto;
+	cursor: pointer;
+}
+#minus-button:hover {
+	background-color: #748E63;
+}
+#minus-button > p {
+	font-size: 20px;
+	font-weight: 800;
+	color: #FFFFFF;
+	text-align: center;
+}
+#plus-button {
+	width: 30px;
+	height: 30px;
+	background-color: #D9D9D9;
+	margin: 0 auto;
+	cursor: pointer;
+}
+#plus-button:hover {
+	background-color: #748E63;
+}
+#plus-button > p {
+	font-size: 15px;
+	font-weight: 800;
+	color: #FFFFFF;
+	text-align: center;
+	transform: translate(0%, 20%);
 }
 /* 버튼 */
 /* 닫기 버튼 */

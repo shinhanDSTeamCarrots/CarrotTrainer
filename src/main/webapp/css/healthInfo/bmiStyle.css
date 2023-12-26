@@ -83,6 +83,16 @@
 .bmi-input-detail input[type="text"]:focus {
 	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
 }
+select {
+	border: none;
+	background: transparent;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: left;
+	height: auto;
+	padding: none;
+	outline: none;
+}
 .bmi-input-button > .bmi-btn {
 	width: 15%;
 	height: 35px;

@@ -137,7 +137,17 @@
 	margin-left: 5px;
 }
 .date {
-	margin: 15px auto -5px 20px;
+	margin: 15px auto -5px 10px;
+}
+select {
+	border: none;
+	background: transparent;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: left;
+	height: auto;
+	padding: none;
+	outline: none;
 }
 /* 총 음식 결과 */
 .foodInfo-main-detail {
