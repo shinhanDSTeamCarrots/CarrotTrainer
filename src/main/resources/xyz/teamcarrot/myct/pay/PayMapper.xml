@@ -41,6 +41,7 @@
 	          ,	((NVL(G.price,0) + NVL(O.price_updown,0)) * NVL(#{goods_cnt},0)) AS goods_final_price
 	          , G.image AS goods_thumnail
 		FROM	tb_goods AS G
+				JOIN (SELECT @ROWNUM:=-1) AS R
 				LEFT JOIN 	tb_goods_option AS O
 							ON O.option_no = #{option_no}
 		WHERE 	G.goods_no = #{goods_no}
@@ -60,7 +61,7 @@
 			, AD.receive_zipcode AS zipcode
 			, NVL(AD.postman_notice,"안전하게 와주세요!") AS notice
 			FROM tb_address AS AD
-				JOIN (SELECT @ROWNUM:=-1) AS R
+				JOIN (SELECT @ROWNUM:=0) AS R
 				LEFT JOIN tb_member AS M
 									ON M.member_no = AD.member_no
 		WHERE AD.member_no = #{member_no}
@@ -79,8 +80,8 @@
 		 , purchase_val
 		 , purchase_state
 		 , receiver_nm
-		 , recevier_post
-		 , recevier_addr
+		 , receiver_post
+		 , receiver_addr
 		 , receiver_addr_detail
 		 , receiver_phone
 		 , purchase_price
@@ -90,7 +91,7 @@
 		VALUES (
 		   #{member_no}
 		 , #{purchase_div}
-		 , #{payStr};
+		 , #{payStr}
 		 , 0
 		 , #{recevier_name}
 		 , #{zipcode}
@@ -128,8 +129,88 @@
 			, 0
 			, #{goods_final_price}
 			)
-		<selectKey keyProperty="detail_no" order="AFTER" resultType="int">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 	</insert>
+	
+	<select id="getPurchaseDetails" resultType="xyz.teamcarrot.myct.pay.OrderDetailVO" parameterType="map" >
+		SELECT
+			  D.detail_no
+			, D.order_no
+			, D.goods_no
+			, NVL(D.option_no, 0) AS option_no
+			, D.goods_cnt
+			, D.deliver_state
+			, D.purchase_price
+			, D.acception_date
+			, D.tracking_no
+			, NVL(D.admin_no,0) AS admin_no
+			, G.goods_name
+			, NVL(O.option_name, '') AS option_name
+			, NVL(A.admin_name,'') AS admin_name
+		FROM tb_order_detail AS D
+			LEFT JOIN tb_goods AS G
+				ON G.goods_no = D.goods_no
+			LEFT JOIN tb_goods_option AS O
+				ON O.option_no = D.option_no
+			LEFT JOIN tb_admin AS A
+				ON A.admin_no = D.admin_no
+		WHERE 0 = 0
+			<if test="order_no != 0">
+				AND D.order_no = #{order_no}
+			</if>
+	</select>
+	
+	<select id="getPurchaseMain" resultType="xyz.teamcarrot.myct.pay.OrderVO" parameterType="map" >
+		SELECT
+			  O.order_no
+			, O.member_no
+			, O.purchase_date
+			, O.purchase_div
+			, O.purchase_val
+			, O.purchase_state
+			, O.receiver_nm
+			, O.receiver_post
+			, O.receiver_addr
+			, O.receiver_addr_detail
+			, O.receiver_phone
+			, O.purchase_price
+			, NVL(O.purchase_mileage,0) AS purchase_mileage
+			, NVL(O.postman_notice,'') AS postman_notice
+			, NVL(O.thumnail_detail_no,0) AS thumnail_detail_no
+			, NVL(O.refund_reason,'') AS refund_reason
+		FROM tb_order AS O
+			LEFT JOIN 
+		WHERE 0 = 0
+			<if test="order_no != 0">
+				AND O.order_no = #{order_no}
+			</if>
+			<if test="member_no != 0">
+				AND O.member_no = #{member_no}
+			</if>
+			<!-- 일자 검색 추가 -->
+			<if test="purchase_date != null">
+				AND O.member_no = #{member_no}
+			</if>
+	</select>
+	
+	
+	<update id="updateMemberMileage" parameterType="map">
+		UPDATE	tb_member
+		SET		member_mileage = (SELECT member_mileage + #{mileage_amt} FROM tb_member WHERE member_no = #{member_no})
+		WHERE 	member_no = #{member_no}
+	</update>
+	
+	<insert id="insertMileageLog" parameterType="map">
+		INSERT INTO tb_mileage (
+			member_no
+		  , mileage_change
+		  , mileage_log
+		)
+		VALUES (
+			#{member_no}
+		  , #{mileage_change}
+		  , #{mileage_log}
+		)
+		
+	</insert>
+	
 </mapper>

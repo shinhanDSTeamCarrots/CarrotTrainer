@@ -7,13 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제해줄께</title>
-<script type="text/javascript">
-	var 
-</script>
+<title>결제 진행</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script type="text/javascript">
 	let total_money = ${total_amt};
-	const poststr = "${addrJsonStr}";
+	let poststr = '${addrJsonStr}';
 	let postobj = JSON.parse(poststr);
 	function mileageChange(){
 		let val = $('#mileage').val();
@@ -31,139 +30,38 @@
 			return;
 		}		
 	}
+	console.log(postobj);
 	function OnComboChange(value){
 		let val = value;
 		if(val == 0){
 			$('#place_name').val("기본");
 			$('#recevier_name').val("${sessionScope.loginInfo.member_name}");
 			$('#phone').val("${sessionScope.loginInfo.member_hp}");
-			$('#addr1').val("${sessionScope.loginInfo.addr}");
-			$('#addr2').val("${sessionScope.loginInfo.addrDetail}");
+			$('#addr1').val("${sessionScope.loginInfo.member_addr}");
+			$('#addr2').val("${sessionScope.loginInfo.member_addrDetail}");
 			$('#zipcode').val("");
 			$('#notice').val("부재시 경비실에 부탁드립니다");
 		}else{
 			//postobj
-			$('#place_name').val(postobj[val].place_name);
-			$('#recevier_name').val(postobj[val].recevier_name);
-			$('#phone').val(postobj[val].phone);
-			$('#addr1').val(postobj[val].addr1);
-			$('#addr2').val(postobj[val].addr2);
-			$('#zipcode').val(postobj[val].zipcode);
-			$('#notice').val(postobj[val].notice);
+			$('#place_name').val(postobj[val-1].place_name);
+			$('#recevier_name').val(postobj[val-1].recevier_name);
+			$('#phone').val(postobj[val-1].phone);
+			$('#addr1').val(postobj[val-1].addr1);
+			$('#addr2').val(postobj[val-1].addr2);
+			$('#zipcode').val(postobj[val-1].zipcode);
+			$('#notice').val(postobj[val-1].notice);
 		}
 	}
 	
 
 </script>
-</head>
-<body>
-
-<div>
-<form action="${pageContext.request.contextPath}/pay/payComplete" method="post" id="payform" onsubmit="payformSubmit()">
-	<div>
-	<input type="hidden" name="buy_method" value="${buy_method}" />
-		<h1>구매 정보</h1>
-		<table>
-		<thead>
-			<tr>
-				<th><p>썸네일</p></th>
-				<th><p>상품명</p></th>
-				<th><p>옵션</p></th>
-				<th><p>개수</p></th>
-				<th><p>총금액</p></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="gList" items="${goodsList }">
-			<tr>
-				<td rowspan="2"><img alt="상품 이미지" src=""> </td>
-				<td rowspan="2"><p>${gList.goods_name }</p><input type="hidden" value="${gList.goods_no }" name="goods_no"/></td>
-				<td><p>${gList.option_name }</p><input type="hidden" value="${gList.option_no }" name="option_no"/></td>
-				<td rowspan="2"><p>X${gList.goods_cnt } 개</p><input type="hidden" value="${gList.goods_cnt }" name="goods_cnt"/></td>
-				<td><p>${gList.goods_final_price }원</p></td>
-			</tr>
-			<tr>
-				<td><p>+${gList.option_price }</p> <input type="hidden" name="cart_no" value="${gList.cart_no }" /> </td>
-				<td><p>배달비 0원</p></td>
-			</tr>
-			</c:forEach>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2"></td>
-				<td><strong>총 합계</strong></td>
-				<td><input type="text" value="${total_amt }" class="amountReadOnlyText" readonly></td>
-				<td><strong>원</strong></td>
-			</tr>
-		</tfoot>
-		</table>
-	</div>
-
-
-	<div>
-		<h1>배송 정보</h1>
-		<select id="deliver_combobox" onchange="OnComboChange(this.value)">
-			<option value="0">직접입력</option>
-		<c:forEach var="addr" items="${addrList }">
-			<option value="${addr.rownum }">${addr.place_name }</option>
-		</c:forEach>
-		</select>
-	</div>
-	<div>
-	<table id="deliverTable">
-		<tr>
-			<td><p>배송지 명</p></td>
-			<td><input type="text" id="place_name"/> </td>
-		</tr>
-		<tr>
-			<td><p>수신자 명</p></td>
-			<td><input type="text" id="recevier_name" name="recevier_name"/> </td>
-		</tr>
-		<tr>
-			<td><p>번호</p></td>
-			<td><input type="text" id="phone" name="phone"/> </td>
-		</tr>
-		<tr>
-			<td><p>주소</p></td>
-			<td><input type="text" id="addr1" onclick="" name="addr1" readonly/><br>
-			<input type="text" id="addr2" name="addr2" />
-			</td>
-		</tr>
-		<tr>
-			<td><p>우편번호</p></td>
-			<td><input type="text" id="zipcode" name="zipcode" readonly/> </td>
-		</tr>
-		<tr>
-			<td><p>배송 메시지</p></td>
-			<td><input type="text" id="notice" name="notice"/> </td>
-		</tr>
-	</table>
-	</div>
-	<div id="payInfo">
-		<h1>결제 정보</h1>
-		<%--마일리지 정보 --%>
-		<h2>현재 마일리지</h2>
-		<input type="number" value="${mileage }" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/${mileage }원</p>
-		<%-- 아임포트 --%>
-		<button onclick="kginicis()">KG 이니시스</button>
-		<button onclick="tosspay()">Toss Pay</button>
-		<button onclick="kakaopay()">카카오</button>
-		<button onclick="bankpay()">무통장입금</button>
-		<br><div id="additionalPayInfo"></div>
-	</div>
-</form>
-</div>
-
-
-
-
-
 <script type="text/javascript">
 	let payMethod;
 	let sumittable = false;
 	let pg;
 	let paytype;
 	var payamount;
+	var makeMerchantUid;
 	function valdidateDeliver(){
 		let recevier_nameDom = $('#recevier_name');
 		let phoneDom = $('#phone');
@@ -279,8 +177,8 @@
 		let minutes = today.getMinutes();  // 분
 		let seconds = today.getSeconds();  // 초
 		let milliseconds = today.getMilliseconds();
-		var makeMerchantUid = hours +  minutes + seconds + milliseconds;
-		let orderName = ${title_name};
+		makeMerchantUid = hours +  minutes + seconds + milliseconds;
+		let orderName = "${title_name}";
 		payamount = ${total_amt} - $('#mileage').val();
 
 
@@ -290,7 +188,7 @@
 			merchant_uid: "IMP"+makeMerchantUid,   // 주문번호
 			name: orderName,			   // 상품명
 			amount: payamount,                         // 숫자 타입
-			buyer_email: ${sessionScope.loginInfo.member_email},
+			buyer_email:" ${sessionScope.loginInfo.member_email}",
 			buyer_name: $('#recevier_name').val(),
 			buyer_tel: $('#phone').val(),
 			buyer_addr: $('#addr1').val() + $('#addr2').val(),
@@ -303,8 +201,7 @@
 					type: 'POST',
 					url: '${pageContext.request.contextPath}/pay/validation/' + rsp.imp_uid,
 					data: {
-						userIdNo: res.data,
-						productIds: productIds
+						userIdNo: rsp.data,
 					}
                 }).done(function(data) {
                     if(rsp.paid_amount === data.response.amount){
@@ -320,6 +217,119 @@
 		});
 	}
 </script>
+</head>
+<body>
+
+<div class="wrap">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<form action="${pageContext.request.contextPath}/pay/payComplete" method="post" id="payform" onsubmit="payformSubmit()">
+	<div>
+	<input type="hidden" name="buy_method" value="${buy_method}" />
+		<h1>구매 정보</h1>
+		<table id="goodsTable" class="goodsTable">
+		<thead class="goodsThead">
+			<tr>
+				<th><p>썸네일</p></th>
+				<th><p>상품명</p></th>
+				<th><p>옵션</p></th>
+				<th><p>개수</p></th>
+				<th><p>총금액</p></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="gList" items="${goodsList }">
+			<tr>
+			<c:choose>
+			<c:when test="${not empty gList.goods_thumnail}">
+				<td rowspan="2"><img alt="상품 이미지" src="/myct/img/goods/${gList.goods_thumnail }.jpg" class="goodsImage"> </td>
+			</c:when>
+			<c:otherwise>
+				<td rowspan="2"><div class="emptyGoodsImage"> </td>
+			</c:otherwise>
+			</c:choose>
+				<td rowspan="2"><strong class="goodsName">${gList.goods_name }</p strong><input type="hidden" value="${gList.goods_no }" name="goods_no"/></td>
+				<td><p class="goodsOption">${gList.option_name }</p><input type="hidden" value="${gList.option_no }" name="option_no"/></td>
+				<td rowspan="2"><p class="goodsCnt">X${gList.goods_cnt } 개</p><input type="hidden" value="${gList.goods_cnt }" name="goods_cnt"/></td>
+				<td><p class="goodsFinalPrice">${gList.goods_final_price }원</p></td>
+			</tr>
+			<tr>
+				<td><p class="goodsOptionPrice">+${gList.option_price }</p> <input type="hidden" name="cart_no" value="${gList.cart_no }" /> </td>
+				<td><p class="goodsDeliverPrice">배달비 0원</p></td>
+			</tr>
+			</c:forEach>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2"></td>
+				<td><strong class="goodsAllSumPrice">총 합계</strong></td>
+				<td><input type="text" value="${total_amt }" class="amountReadOnlyText" readonly></td>
+				<td><strong class="goodsAllSumPrice">원</strong></td>
+			</tr>
+		</tfoot>
+		</table>
+	</div>
+
+
+	<div>
+		<h1>배송 정보</h1>
+		<select id="deliver_combobox" onchange="OnComboChange(this.value)" class="deliverCombo">
+			<option value="0">직접입력</option>
+		<c:forEach var="addr" items="${addrList }">
+			<option value="${addr.rownum }">${addr.place_name }</option>
+		</c:forEach>
+		</select>
+	</div>
+	<div>
+	<table id="deliverTable">
+		<tr>
+			<td><p>배송지 명</p></td>
+			<td><input type="text" id="place_name"/> </td>
+		</tr>
+		<tr>
+			<td><p>수신자 명</p></td>
+			<td><input type="text" id="recevier_name" name="recevier_name"/> </td>
+		</tr>
+		<tr>
+			<td><p>번호</p></td>
+			<td><input type="text" id="phone" name="phone"/> </td>
+		</tr>
+		<tr>
+			<td><p>주소</p></td>
+			<td><input type="text" id="addr1" onclick="" name="addr1" readonly/><br>
+			<input type="text" id="addr2" name="addr2" />
+			</td>
+		</tr>
+		<tr>
+			<td><p>우편번호</p></td>
+			<td><input type="text" id="zipcode" name="zipcode" readonly/> </td>
+		</tr>
+		<tr>
+			<td><p>배송 메시지</p></td>
+			<td><input type="text" id="notice" name="notice"/> </td>
+		</tr>
+	</table>
+	</div>
+	<div id="payInfo">
+		<h1>결제 정보</h1>
+		<%--마일리지 정보 --%>
+		<h2>현재 마일리지</h2>
+		<input type="number" value="${mileage }" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/${mileage }원</p>
+		<%-- 아임포트 --%>
+		<input type="button" onclick="kginicis()" class="pay CreditPay"></input>
+		<input type="button" onclick="tosspay()" class="pay TossPay"></input>
+		<input type="button" onclick="kakaopay()" class="pay KakaoPay"></input>
+		<input type="button" onclick="bankpay()" value="무통장입금" class="pay BankPay"/>
+		<br><div id="additionalPayInfo"></div>
+	</div>
+</form>
+</div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+
+
+
+
+
 </body>
 
 </html>
