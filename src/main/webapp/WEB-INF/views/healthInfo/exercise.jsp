@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.jsp"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -77,11 +77,12 @@
 									<col width="20%" />
 								</colgroup>
 								<c:forEach var="healthDic" items="${healthDic}">
-									<tr class="health-info" data-no="${healthDic.no }">
-										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};">&#9733;</td>
+									<tr class="health-info" data-no="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
+										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};"
+											data-color="${healthDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
+										</td>
 										<td class="health">${healthDic.health }</td>
 										<td class="calorie">${healthDic.calorie }kcal/hr</td>
-										<script>console.log(${healthDic.bookmarkNo})</script>
 									</tr>
 								</c:forEach>
 							</c:if>
@@ -106,10 +107,10 @@
 					<div class="healthInfo">
 						<div id="healthInfo-text">
 							<p>
-								총 <span class="sql-text" id="total-exerciseTime">00</span>분 운동 진행
+								총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행
 							</p>
 							<p>
-								<span class="sql-text" id="total-calTime">000</span>kcal 소비
+								<span class="sql-text" id="total-calTime">0</span>kcal 소비
 							</p>
 						</div>
 						<div id="healthInfo-graph"></div>

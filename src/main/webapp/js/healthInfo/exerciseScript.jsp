@@ -1,42 +1,47 @@
-//<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-//<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 $(function() {
+    loadCartItems();
+    calculateTotal();
+    
 	$("#search-text").click(function() {
 		search(60);
 	});
 	
 	//운동 클릭 시, 장바구니로 이동
 	$(".health-info").click(function() {
-		loadCartItems(this);
+		// 쿠키에 저장
+	    cartMove(event);
 		calculateTotal();
 	});
 	
 	//북마크 클릭 시, db에 저장(로그인이 되어있을 경우에만)
-	$(".health-info .bookmark").click(function(event) {
+	$(".bookmark").click(function(event) {
 	  // 상위 이벤트 막기
 	  event.stopPropagation(); // 또는 return false; 를 사용 가능
 
 	  //확인용
-	  console.log($(this).closest(".health-info").data("no"));
+	  console.log("no확인용:",$(this).closest(".health-info").data("no"));
 	  
 	  //세션에서 로그인 정보 불러옴
-	  let loginInfo = sessionStorage.getItem("loginInfo");
+	  const userName = "${sessionScope.loginInfo.member_nickname}";
 
-	  if(loginInfo){
+	  if(userName){
 	  	//이미 등록되어있는 경우 > 색상이 골드색일 때
-	  	if($(this).css("color") === "gold") {
+	  	console.log($(this).data("color"));
+	  	if($(this).data("color") === "gold") {
 	  		if(confirm("즐겨찾기에서 제거하시겠습니까?")) {
-	  			delBookmark();
+	  			delBookmark(event);
 	  		}
 	  	} else {
 	  		//등록되어있지 않은 경우
 	  		if(confirm("즐겨찾기에 추가하시겠습니까?")) {
-	  			addBookmark();
+	  			addBookmark(event);
 	  		}
 	  	}
 	  } else {
 	  	if(confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
-	  		window.location.href = "로그인 페이지 URL";
+	  		window.location.href="${pageContext.request.contextPath}/member/login";
 	  	}
 	  }  
 	});
@@ -45,12 +50,43 @@ $(function() {
 	$(".healthInfo-name").click(function() {
 		// 받은 데이터로 모달 내용 생성
 		// 모달 열기 함수 호출
-    	openModal(healthData);
+    	openModal();
 	});
+	//모달 버튼 누르면 쿠키값 변경
+	$("#modalBody-button button").click(function() {
+		event.stopPropagation();
+		
+		let healthDataString  = getCookie("healthData");
+		
+		// JSON 문자열을 JavaScript 객체로 파싱
+    	let healthData = healthDataString ? JSON.parse(healthDataString) : null;
+		
+		if(healthData){
+		    // 입력된 값 가져오기
+		    let enteredTime = $("#minute").val();
+		    let enteredCalories = $("#calorie").val();
+		    
+		    // healthData에 새로운 값 설정
+		    healthData.minute = enteredTime;
+		    healthData.calorie = enteredCalories;
+		
+		    // 쿠키에 저장
+		    setCookie("healthData",JSON.stringify(healthData));
+		    
+		    $('#modalWrap').css('display', 'none');
+		    
+		    $('.healthInfo-cart').empty();
+		    
+		    loadCartItems();
+	    	calculateTotal();
+    	}
+	});
+	
+	
+	let previousMinuteValue = parseInt($("#minute").val());
 	// 숫자 이외의 문자를 제거하고 input에 설정
 	$("#minute").on("input", function () {
 	    var inputValue = $(this).val();
-
 	    $(this).val(inputValue.replace(/[^0-9]/g, ''));
 	});
 	// minus-button 클릭 이벤트
@@ -60,8 +96,13 @@ $(function() {
 	    
 	    // 값이 숫자인지 확인 후 처리
 	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
-	        $("#minute").val(currentValue - 10);
-	        $("#calorie").val(Math.round(enteredCalories/60*50));
+	        let newMinuteValue = currentValue - 10;
+	        let newCalories = Math.round(enteredCalories / currentValue * newMinuteValue);
+	        
+	        previousMinuteValue = newMinuteValue;
+	        
+	        $("#minute").val(newMinuteValue);
+	        $("#calorie").val(newCalories);
 	        
 	    }
 	});
@@ -72,25 +113,35 @@ $(function() {
 	    
 	    // 값이 숫자인지 확인 후 처리
 	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
-	        $("#minute").val(currentValue + 10);
-	        $("#calorie").val(Math.round(currentValue/60*70));
+	        let newMinuteValue = currentValue + 10;
+	        let newCalories = Math.round(enteredCalories / currentValue * newMinuteValue);
+	        
+	        previousMinuteValue = newMinuteValue;
+	        
+	        $("#minute").val(newMinuteValue);
+	        $("#calorie").val(newCalories);
 	    }
 	});
-	
-	$("#modalBody-button button").click(function() {
-		let healthData = getCookie(healthData);
+	// #minute 값이 변경될 때 이벤트 처리
+	$("#minute").change(function() {
+		let previousValue = previousMinuteValue;
 		
-	    // 입력된 값 가져오기
-	    let enteredTime = $("#minute").val();
-	    let enteredCalories = $("#calorie").val();
+	    // 변경된 #minute 값 가져오기
+	    let enteredTime = parseInt($(this).val());
 	    
-	    // healthData에 새로운 값 설정
-	    healthData.minute = enteredTime;
-	    healthData.calorie = enteredCalories;
-	
-	    // 쿠키에 저장
-	    setCookie("healthData", JSON.stringify(healthData));
+	    // 동적으로 #calorie 값 업데이트
+	    let enteredCalories = calculateCalories(previousValue, enteredTime);
+	    $("#calorie").val(enteredCalories);
 	});
+	
+	function calculateCalories(previousTime, currentTime) {
+	    // #calorie에서 입력된 값 가져오기
+	    let enteredCalories = parseInt($("#calorie").val());
+	    
+	    // 칼로리 계산
+	    let calories = Math.round(enteredCalories / previousTime * currentTime);
+	    return calories;
+	}
 	
 	/*-------------
 		검색 함수
@@ -103,36 +154,36 @@ $(function() {
 	/*-------------
 		북마크 함수
 	-------------*/
-	function addBookmark() {
+	function addBookmark(e) {
 	    // 클릭한 행에 대한 정보 가져오기
-	    const healthNo = $(this).closest(".health-info".data("no")); //가로에 this추가하고 $(this).closest대신 $(event.currentTarget)로 변경??
-	    
+	    const healthNo = $(e.currentTarget).closest(".health-info").data("no");
+	    console.log('healthNo:'+healthNo);
 	    $.ajax({
-	        url: '/insertBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
-	        method: 'POST',
-	        data: JSON.stringify({ no : healthNo }),
+	        url: '${pageContext.request.contextPath}/healthInfo/insertBookmark',
+	        type: 'POST',
+	        data: { health_dic_no : healthNo },
 	        success: function(res) {
 	        	// 삭제 성공 시 처리
             	console.log('북마크 추가 성공:', res);
-            	$(event.currentTarget).css("color", "gold");
+            	$(e.currentTarget).css("color", "gold");
 	        },
 	        error: function(error) {
 	            console.error('북마크 추가 실패:', error);
 	        }
 	    });
 	}
-	function delBookmark() {
+	function delBookmark(e) {
 	    // 클릭한 행에 대한 정보 가져오기
-	    const healthNo = $(this).closest(".health-info".data("no"));
-	    
+	    const bookmarkNo = $(e.currentTarget).closest(".health-info").data("bookmarkno");
+	    console.log('bookmarkNo:'+bookmarkNo);
 	    $.ajax({
-	        url: '/deleteBookmark', // 실제로는 서버의 경로를 지정해야 합니다.
-	        method: 'POST',
-	        data: JSON.stringify({ no : healthNo }),
+	        url: '${pageContext.request.contextPath}/healthInfo/deleteBookmark',
+	        type: 'POST',
+	        data: { health_bookmark_no : bookmarkNo },
 	        success: function(res) {
 	        	// 삭제 성공 시 처리
             	console.log('북마크 삭제 성공:', res);
-            	$(event.currentTarget).css("color", "");
+            	$(e.currentTarget).css("color", "");
 	        },
 	        error: function(error) {
 	            console.error('북마크 삭제 실패:', error);
@@ -194,10 +245,9 @@ $(function() {
     	const healthInfoSelect = $('<div class="healthInfo-select"></div>');
     	
     	const healthInfoDetail = $('<div class="healthInfo-detail"></div>');
-    	healthInfoDetail.append('<div class="bookmark">&#9733;</div>'); //즐겨찾기 이미지
 	    healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + healthData.health + '</div><div class="healthInfo-name-time">' + healthData.minute + '분</div></div>');
 	    healthInfoDetail.append('<div class="healthInfo-cals">' +healthData.calorie + 'kcal</div>');
-	    healthInfoDetail.append('<div class="healthInfo-del">-</div>');  //빼기 이미지
+	    healthInfoDetail.append('<div class="healthInfo-del">-</div>'); //빼기 이미지
 	    
 	    healthInfoSelect.append(healthInfoDetail);
 	    healthInfoSelect.append('<div class="detail-division-line"></div>');
@@ -205,16 +255,16 @@ $(function() {
         $('.healthInfo-cart').append(healthInfoSelect);
 	}
     //클릭 시, 값 확인하여 쿠키에 저장 함수
-    function cartMove() {
+    function cartMove(e) {
     	//값 확인
-    	console.log($(this).data("no"));
-		console.log($(this).children(".health").text());
-		console.log($(this).children(".calorie").text().replace('kcal/hr', ''));
+    	console.log($(e.currentTarget).data("no"));
+		console.log($(e.currentTarget).children(".health").text());
+		console.log($(e.currentTarget).children(".calorie").text().replace('kcal/hr', ''));
 		
-		let no = $(this).data("no");
-		let health = $(this).children(".health").text();
+		let no = $(e.currentTarget).data("no");
+		let health = $(e.currentTarget).children(".health").text();
 		let minute = 60; //기본값
-		let calorie = $(this).children(".calorie").text().replace('kcal/hr', '');
+		let calorie = $(e.currentTarget).children(".calorie").text().replace('kcal/hr', '');
 		
 		//데이터를 json형태로 묶기
 		let healthData = {
@@ -227,19 +277,20 @@ $(function() {
 		// 쿠키에서 기존 데이터 가져오기
 		let existingData = getCookie("healthData");
 		
+		// 기존 데이터가 있으면 파싱
+		let existingHealthData = existingData ? JSON.parse(existingData) : [];
 		// 이미 등록된 no인지 확인
-		if (existingData) {
-		    let existingHealthData = JSON.parse(existingData); //JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드
+	    if (existingHealthData.some(item => item.no === no)) {
+	        alert("이미 등록된 항목입니다.");
+	        return;
+	    }
 		
-		    // 이미 등록된 no일 경우 알림 띄우고 종료
-		    if (existingHealthData.no === no) {
-		        alert("이미 등록된 항목입니다.");
-		        return;
-		    }
-		}
+		// 새로운 항목 추가
+		existingHealthData.push(healthData);
 		
 		//json을 문자열로 반환하여 쿠키에 저장
-		setCookie("healthData", JSON.stringify(healthData));
+		setCookie("healthData", JSON.stringify(existingHealthData));
+		$(e.currentTarget).css("background-color", "#FAF8ED");
 		
 		//새로운 항목을 장바구니에 추가
 		addHealthToCart(healthData);
@@ -248,7 +299,7 @@ $(function() {
     function calculateTotal() {
 	    let totalMinute = 0;
 	    let totalCalorie = 0;
-	
+
 	    $('.healthInfo-detail').each(function() {
 	        const minuteText = $(this).find('.healthInfo-name-time').text();
 	        const calorieText = $(this).find('.healthInfo-cals').text();
@@ -273,16 +324,40 @@ $(function() {
 	/*--------------------
 		모달 팝업 오픈 함수
 	--------------------*/
-	function openModal(healthData) {
+	function openModal() {
+		let healthData = getCookie("healthData");
     	console.log("모달 열기 및 데이터 전달:", healthData);
-    	//쿠키에 저장된 운동관련 값 가져오기
-    	let healthName = healthData.health;
-    	let minute = healthData.minute;
-    	let calorie = healthData.calorie;
     	
-    	$("#modalBody-title-text").text(healthName);
-    	$("#minute").val(minute);
-    	$("#calorie").val(calorie);
+		// 쿠키 확인
+		if (healthData) {
+		    ////쿠키에 저장된 운동관련 값 가져오기
+		    healthData = JSON.parse(healthData);
+		    let healthName = healthData.health;
+		    let minute = healthData.minute;
+		    let calorie = healthData.calorie;
+		
+		    // 모달 내용 채우기
+		    $("#modalBody-title-text").text(healthName);
+		    $("#minute").val(minute);
+		    $("#calorie").val(calorie);
+		
+		    // 모달 열기
+		    $('#modalWrap').css('display', 'flex');
+		} else {
+		    console.log("쿠키에서 건강 데이터를 가져오지 못했습니다.");
+		}
+		
+		// 닫기 버튼 클릭 이벤트 처리
+		$('#closeBtn').click(function () {
+		    $('#modalWrap').css('display', 'none');
+		});
+		
+		// 팝업 외부 클릭 이벤트 처리
+		$('#modalWrap').click(function (e) {
+		    if (e.target === this) {
+		        $(this).css('display', 'none');
+		    }
+		});
 	}
 	
 	/*----------
