@@ -49,12 +49,12 @@ public class MemberController {
 		memberService.regist(vo);
 		return "member/joinInterest";
 	}
+
 	@GetMapping("/member/login")
 	public String login() {
 		return "member/login";
 	}
-	
-	
+
 	@PostMapping("/member/login")
 	public String loginProcess(MemberVO vo, HttpSession sess, Model model,
 			@RequestParam("member_id") String member_id, 
@@ -78,12 +78,8 @@ public class MemberController {
 			} else {
 				model.addAttribute("msg", "차단된 사용자입니다.");
 				model.addAttribute("cmd", "back");
-				return "member/alert";
+				return "common/alert";
 			}
-			return "common/alert";
-		} else {
-			sess.setAttribute("loginInfo", login);
-			return "redirect:/";	
 		}
 		return "redirect:/";
 		/*
@@ -126,6 +122,7 @@ public class MemberController {
 		sess.removeAttribute("loginInfo");
 		return "redirect:/"; // home.jsp 파일이랑 연결됨
 	}
+
 	@GetMapping("/member/joinAgree")
 	public String joinAgree() {
 		return "member/joinAgree";
@@ -209,12 +206,12 @@ public class MemberController {
 	}
 
 	// 20231225
-	@GetMapping("/member/joinInterest.do")
+	@GetMapping("/member/joinInterest")
 	public String memberinterest() {
 		return "member/joinInterest";
 	}
-	
-	@GetMapping("/member/userInfo.do")
+
+	@GetMapping("/member/userInfo")
 	public String userInfo(Model model, MemberVO vo) {
 		model.addAttribute("all", memberService.all(vo));
 		return "member/userInfo";
