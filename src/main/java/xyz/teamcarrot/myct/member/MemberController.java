@@ -1,5 +1,7 @@
 package xyz.teamcarrot.myct.member;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +41,14 @@ public class MemberController {
 
 	@PostMapping("/member/regist")
 	public String regist(MemberVO vo) {
+		try {
+			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		memberService.regist(vo);
 		return "member/joinInterest";
 	}
-	
 	@GetMapping("/member/login")
 	public String login() {
 		return "member/login";
@@ -53,34 +59,66 @@ public class MemberController {
 	public String loginProcess(MemberVO vo, HttpSession sess, Model model,
 			@RequestParam("member_id") String member_id, 
 			@RequestParam("member_pw") String member_pw) {
-		
+		  try {
+        vo.setMember_pw(this.encrypt(vo.getMember_pw()));
+      } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+      }
 		MemberVO login = memberService.login(vo);
-		int loginFail;
-		
-		if(login==null) {			
-			model.addAttribute("msg", "아이디나 비밀번호가 틀립니다.");
-			model.addAttribute("cmd", "back");
-			if(sess.getAttribute("loginFail")==null) {
-				sess.setAttribute("loginFail", 0);
+		if (login == null) {
+			if (vo.getMember_loginFailCnt() == 5) {
+
 			}
-			loginFail = (Integer)sess.getAttribute("loginFail");
-		
-			sess.setAttribute("loginFail", loginFail+1);
-			
-			if ((Integer)sess.getAttribute("loginFail") >= 4) {
-				model.addAttribute("msg", "로그인 시도 가능 횟수를 초과하였습니다. 비밀번호 찾기를 먼저 해주세요.");
-				model.addAttribute("cmd", "move");
-				model.addAttribute("url", "memberFind");
+
+		} else {
+			if (vo.getMember_loginBlocked() == 0) {
+				sess.setAttribute("loginInfo", login);
+				vo.setMember_loginFailCnt(0);
+				return "redirect:/";
 			} else {
-				model.addAttribute("msg", "아이디나 비밀번호가 틀립니다." + "(로그인 실패 횟수: " + loginFail + "/5)");
-				model.addAttribute("cmd", "back");			
+				model.addAttribute("msg", "차단된 사용자입니다.");
+				model.addAttribute("cmd", "back");
+				return "member/alert";
 			}
 			return "common/alert";
 		} else {
 			sess.setAttribute("loginInfo", login);
-			return "redirect:/";			
+			return "redirect:/";	
 		}
-		
+		return "redirect:/";
+		/*
+		 * int loginFail;
+		 * 
+		 * if(login==null) { model.addAttribute("msg", "아이디나 비밀번호가 틀립니다.");
+		 * model.addAttribute("cmd", "back"); if(sess.getAttribute("loginFail")==null) {
+		 * sess.setAttribute("loginFail", 0); } loginFail =
+		 * (Integer)sess.getAttribute("loginFail");
+		 * 
+		 * sess.setAttribute("loginFail", loginFail+1);
+		 * 
+		 * if ((Integer)sess.getAttribute("loginFail") >= 4) { model.addAttribute("msg",
+		 * "로그인 시도 가능 횟수를 초과하였습니다. 비밀번호 찾기를 먼저 해주세요."); model.addAttribute("cmd",
+		 * "move"); model.addAttribute("url", "memberFind.do"); } else {
+		 * model.addAttribute("msg", "아이디나 비밀번호가 틀립니다." + "(로그인 실패 횟수: " + loginFail +
+		 * "/5)"); model.addAttribute("cmd", "back"); } return "member/alert"; } else {
+		 * sess.setAttribute("loginInfo", login); return "redirect:/"; }
+		 */
+
+	}
+
+	public String encrypt(String text) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(text.getBytes());
+
+		return bytesToHex(md.digest());
+	}
+
+	private String bytesToHex(byte[] bytes) {
+		StringBuilder builder = new StringBuilder();
+		for (byte b : bytes) {
+			builder.append(String.format("%02x", b));
+		}
+		return builder.toString();
 	}
 
 	@GetMapping("/member/logout")
@@ -88,14 +126,13 @@ public class MemberController {
 		sess.removeAttribute("loginInfo");
 		return "redirect:/"; // home.jsp 파일이랑 연결됨
 	}
-	
 	@GetMapping("/member/joinAgree")
 	public String joinAgree() {
 		return "member/joinAgree";
 	}
 
 	@GetMapping("/member/joinOath")
-	public String test4() {
+	public String joinOath() {
 		return "member/joinOath";
 	}
 
@@ -104,12 +141,14 @@ public class MemberController {
 		return "member/memberDel";
 	}
 
-	@RequestMapping(value = "/member/memberDel", method = { RequestMethod.POST })
-	public String deleteMember(@RequestParam("member_id") String member_id, @RequestParam("member_pw") String member_pw,
-			Model model, HttpSession sess) {
-		// 비밀번호 일치 여부 확인 및 회원 삭제
-		boolean isDeleted = memberService.deleteMember(member_id, member_pw);
-
+	@PostMapping("/member/memberDel")
+	public String deleteMember(MemberVO vo, Model model, HttpSession sess) {
+		try {
+			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		boolean isDeleted = memberService.deleteMember(vo);
 		if (isDeleted) {
 			// 회원 삭제 성
 			sess.invalidate();
@@ -121,7 +160,7 @@ public class MemberController {
 			return "member/memberDel"; // 실패 시 탈퇴 페이지로 이동 또는 적절한 처리
 		}
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/member/nicknameCheck")
 	public String nicknameCheck(@RequestParam String nickname) {
@@ -141,8 +180,15 @@ public class MemberController {
 		return "redirect:/";
 	}
 
+	@ResponseBody
 	@PostMapping("/member/update")
-	public String update(@RequestParam("member_no") int member_no, MemberVO vo, Model model) {
+	public String update(MemberVO vo, Model model) {
+
+		try {
+			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		int r = memberService.update(vo);
 		String msg = "";
 		String url = "edit";
@@ -160,5 +206,17 @@ public class MemberController {
 	@GetMapping("/member/memberFind")
 	public String test7() {
 		return "member/memberFind";
+	}
+
+	// 20231225
+	@GetMapping("/member/joinInterest.do")
+	public String memberinterest() {
+		return "member/joinInterest";
+	}
+	
+	@GetMapping("/member/userInfo.do")
+	public String userInfo(Model model, MemberVO vo) {
+		model.addAttribute("all", memberService.all(vo));
+		return "member/userInfo";
 	}
 }
