@@ -10,6 +10,9 @@ public interface QnaMapper {
 	//문의 목록
 	List<GoodsInquiryVO> qnaList(int goods_no);
 	
+	
+	int getCntbyGoodsno(int goods_no);
+	
 	//문의 작성
 	int qnaInsert(GoodsInquiryVO qna);
 	

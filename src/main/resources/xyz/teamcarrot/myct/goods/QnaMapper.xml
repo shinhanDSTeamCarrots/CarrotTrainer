@@ -4,17 +4,20 @@
 	
 	<!-- 문의 목록 리스트 -->
 	<select id="qnaList" resultType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
-		SELECT i.*, m.member_id FROM tb_goods_inquiry i
-		INNER JOIN tb_member m ON i.member_no=m.member_no
+		SELECT i.*, m.member_nickname FROM tb_goods_inquiry i
+		INNER JOIN tb_member m ON i.member_no= m.member_no
 		WHERE goods_no=#{goods_no}
-		ORDER BY i.inquiry_no DESC
-		
+		ORDER BY i.inquiry_no DESC		
 	</select>
 	
+	<!-- 상품별 문의 갯수 -->
+	<select id="getCntbyGoodsno" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM tb_goods_inquiry WHERE goods_no=#{goods_no}
+	</select>
 	<!-- 문의 등록 -->
 	<insert id="qnaInsert" parameterType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
 		INSERT INTO tb_goods_inquiry (inquiry_type, title, content, inquiry_date, is_reply, goods_no, member_no,is_secret)
-		VALUES (#{inquiry_type}, #{title}, #{content}, NOW(), 0, #{goods_no}, #{member_no}, #{is_serect})
+		VALUES (#{inquiry_type}, #{title}, #{content}, NOW(), 0, #{goods_no}, #{member_no}, #{is_secret})
 	</insert>
 	
 	

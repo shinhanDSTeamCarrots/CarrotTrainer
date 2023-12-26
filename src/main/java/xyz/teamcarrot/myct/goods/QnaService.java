@@ -5,9 +5,11 @@ import java.util.List;
 public interface QnaService {
 	
 	//문의 목록
-	List<GoodsInquiryVO> qnaList(int goods_no);
+	List<GoodsInquiryVO> getQnaList(int goods_no);
+	
+	int getCntbyGoodsno(int goods_no);
 	
 	//문의 작성
-	int qnaInsert(GoodsInquiryVO qna);
+	int insertQna(GoodsInquiryVO qna);
 
 }
