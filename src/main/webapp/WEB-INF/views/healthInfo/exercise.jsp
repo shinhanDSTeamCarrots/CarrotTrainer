@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.jsp"></script>
 </head>
 <body>

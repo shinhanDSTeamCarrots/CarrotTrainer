@@ -14,4 +14,27 @@ $(function() {
     		$(this).css('display', 'none');
     	}
 	});
+	
+	// minus-button 클릭 이벤트
+	$("#minus-button").on("click", function () {
+	    let currentValue = parseInt($("#weight").val());
+	    
+	    // 값이 숫자인지 확인 후 처리
+	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
+	        let newWeightValue = currentValue - 10;
+
+	        $("#weight").val(newWeightValue);        
+	    }
+	});
+	// plus-button 클릭 이벤트
+	$("#plus-button").on("click", function () {
+	    let currentValue = parseInt($("#weight").val());
+	    
+	    // 값이 숫자인지 확인 후 처리
+	    if (!isNaN(currentValue) && !isNaN(enteredCalories)) {
+	        let newWeightValue = currentValue + 10;
+	
+	        $("#weight").val(newWeightValue);
+	    }
+	});
 });
