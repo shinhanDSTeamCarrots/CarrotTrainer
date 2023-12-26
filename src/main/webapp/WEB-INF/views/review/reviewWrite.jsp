@@ -6,16 +6,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>리뷰 작성</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div>개발자 리뷰 테스트</div>
+<div class="wrap">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div>
 	<%-- 상품정보 --%>
 	<%--이미지 / 이름 옵션 종류 출력 --%>
-	<strong>상품 명</strong><br>
-	<string>상품이미지</string>
+	<strong>${gData.goods_name }</strong><br>
+	<img alt="상품이미지" src="/myct/img/goods/${gData.image }.jpg"/>
 </div>
 <hr>
 <form action="${pageContext.request.contextPath}/review/write" method="post" class="reviewForm form" onsubmit="OnSubmit()" id="reviewForm">
@@ -24,21 +28,17 @@
 		<input type="file" onchange="toBase64(event)" id="review_file" class="reviewFile_Btn" accept="image/*"/>
 		<c:choose>
 			<c:when test="${mode eq 'm' && not empty ReviewVO.image }">
-				<img alt="상품이미지" id="reviewImage" src="${ReviewVO.blobToImage() }"/>
+				<img alt="리뷰이미지" id="reviewImage" src="${ReviewVO.blobToImage() }"/>
 				<input type="hidden" name="imgstr" id="imageBase64" />
 			</c:when>
 			<c:otherwise>
-				<img alt="상품이미지" id="reviewImage"/>
+				<img alt="리뷰이미지" id="reviewImage"/>
 				<input type="hidden" name="imgstr" id="imageBase64"/>
 			</c:otherwise>
 		</c:choose>
 	</div>
 	<div>
 		<%-- 별점. 나중에는 드래그방식이나 클릭으로 --%>
-		<c:if test="${mode eq 'w' }">
-		</c:if>
-		<c:if test="${mode eq 'm' }">
-		</c:if>
 		<c:if test="${mode eq 'w' }">
 			<input id="review_point" type="number" value="1" min="1" max="10" onchange="onChangeVal()" name="point" />
 		</c:if>
@@ -53,6 +53,8 @@
 	<input type="button" value="취소" class="reviewCancle cancle" id="btn_reviewCancle" onclick="OnCancle()"/>
 	<input type="submit" value="등록" class="reviewSubmit submit" id="btn_reviewSubmit"/>
 </form>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+</div>
 
 </body>
 

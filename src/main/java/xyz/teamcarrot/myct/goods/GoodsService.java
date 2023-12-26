@@ -18,4 +18,7 @@ public interface GoodsService {
 	
 	List<GoodsOptionVO> goodsOption(int goods_no);
 	
+	//상품 추가
+	int goodsInsert(GoodsVO goods);
+
 }

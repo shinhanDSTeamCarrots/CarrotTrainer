@@ -2,11 +2,9 @@ package xyz.teamcarrot.myct.pay;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -293,6 +290,37 @@ public class PayController implements InitializingBean{
 			log.error(e.getMessage());
 		}
 		return null;
+	}
+	
+	
+	//자기가 구매한 상품 목록 보여주기
+	@GetMapping("")
+	public ModelAndView myPurchaseData(HttpServletRequest request, HttpSession sess) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		
+		try {
+			MemberVO vo = (MemberVO)sess.getAttribute("loginInfo");
+			
+			
+		}catch(NullPointerException e) {
+			//로그인 하세요 하고 메인페이지로
+			
+		}catch(Exception e) {
+			//무슨 오류인지 모르니 메인페이지로
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return mav;
+		
 	}
 
 	

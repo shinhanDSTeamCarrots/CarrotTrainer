@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class GoodsController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 	@Autowired
-	private GoodsService service;
+	public GoodsService service;
 	
 		
 	@GetMapping("/goodsList")

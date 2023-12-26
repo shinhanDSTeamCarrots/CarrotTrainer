@@ -12,4 +12,6 @@ public interface PayService {
 	int getMemberMileage(int member_no);
 	int insertOrders(List<BuyGoodsVO> goodsvos, PayDataDTO dto);
 	BuyGoodsVO getGoods(Map map);
+	List<OrderDetailVO> getPurchaseDetails(Map map);
+	OrderVO getPurchaseMain(Map map);
 }
