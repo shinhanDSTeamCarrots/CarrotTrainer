@@ -34,5 +34,10 @@ public class QnaServiceImpl implements QnaService {
 		return qnaCnt;
 	}
 
+	@Override
+	public GoodsInquiryVO eachQna(int inquiry_no) {
+		return mapper.eachQna(inquiry_no);
+	}
+
 	
 }

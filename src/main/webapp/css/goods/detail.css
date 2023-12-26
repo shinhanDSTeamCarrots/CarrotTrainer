@@ -380,12 +380,17 @@ a:visited {
 }
 .qnaList{
 	margin-top:20px;
-	height: 300px;
+	height: 100%;
+}
+.qnaList h2{
+	margin:10px;
 }
 .qnaList > .qnaTable > thead{
 	height: 40px;
 }
-
-.qnaTable .none{
+.qnaList > .qnaTable > thead > tr > th{
+	font-size: 16px;
+}
+.qnaTable > #qnaTableBody{
 	text-align: center;
 }

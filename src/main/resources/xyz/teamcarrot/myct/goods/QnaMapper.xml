@@ -3,17 +3,26 @@
 <mapper namespace="xyz.teamcarrot.myct.goods.QnaMapper">
 	
 	<!-- 문의 목록 리스트 -->
-	<select id="qnaList" resultType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
+	<select id="qnaList" parameterType="int" resultType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
 		SELECT i.*, m.member_nickname FROM tb_goods_inquiry i
 		INNER JOIN tb_member m ON i.member_no= m.member_no
 		WHERE goods_no=#{goods_no}
 		ORDER BY i.inquiry_no DESC		
 	</select>
 	
+	<!-- 문의 한개 선택 -->
+	<select id="eachQna" parameterType="int" resultType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
+		SELECT i.*, m.member_nickname FROM tb_goods_inquiry i
+		INNER JOIN tb_member m ON i.member_no= m.member_no
+		WHERE inquiry_no=#{inquiry_no}
+	
+	</select>		
+	
 	<!-- 상품별 문의 갯수 -->
 	<select id="getCntbyGoodsno" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM tb_goods_inquiry WHERE goods_no=#{goods_no}
 	</select>
+	
 	<!-- 문의 등록 -->
 	<insert id="qnaInsert" parameterType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
 		INSERT INTO tb_goods_inquiry (inquiry_type, title, content, inquiry_date, is_reply, goods_no, member_no,is_secret)
