@@ -1,17 +1,34 @@
 package xyz.teamcarrot.myct.board;
 
+import java.util.HashMap;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/* Controller ¾î³ëÅ×ÀÌ¼ÇÀÇ °æ¿ì´Â ÇØ´ç Å¬·¡½º¸¦ ½ºÇÁ¸µÀÇ ºóÀ¸·Î ÀÎ½ÄÇÏ±â À§ÇÔ 
- * RequestMappingÀº /board·Î ½ÃÀÛÇÏ´Â ¸ğµç Ã³¸®¸¦ BoardController°¡ ÇÏµµ·Ï ÁöÁ¤ÇÏ´Â ¿ªÇÒÀ» ÇÑ´Ù.
+import xyz.teamcarrot.myct.member.MemberService;
+import xyz.teamcarrot.myct.member.MemberVO;
+
+/* Controller ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+ * RequestMappingï¿½ï¿½ /boardï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ BoardControllerï¿½ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
  * */
 @Controller
 @RequestMapping("/board/*")
@@ -21,178 +38,364 @@ public class BoardController {
 
 	@Autowired
 	private BoardService bservice;
+	@Autowired
+	private MemberService mservcie;
 
+	// ììœ ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+	@GetMapping("/freeboard")
+	public String boardListGET(Model model, Criteria cri, HttpServletRequest request, HttpSession session) {
 
-	/* °Ô½ÃÆÇ ¸ñ·Ï ÆäÀÌÁö Á¢¼Ó(ÆäÀÌÂ¡ Àû¿ë) */
-	@GetMapping("/freeboard.do")
-	public String boardListGET(Model model, Criteria cri) {
-
-		log.info("boardListGET");
+		log.info("freeboardListGET");
 
 		model.addAttribute("list", bservice.getListPaging(cri));
 		int total = bservice.getTotal(cri);
 
 		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-
 		model.addAttribute("pageMaker", pageMake);
+
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			model.addAttribute("member", member);
+		}
 		return "board/freeboard";
 	}
+
+	// ììœ ê²Œì‹œíŒ ê²Œì‹œê¸€ ì¡°íšŒ
+	@GetMapping("/freedetail")
+	public String boardGetPageGET(int board_no, Model model, HttpSession session, Criteria cri) {
+		BoardVO board = bservice.getPage(board_no);
+		log.info("test: " + board.getBoard_no());
+		model.addAttribute("cri", cri);
+		model.addAttribute("pageInfo", board);
+
+		int result = bservice.updateRecomCount(board_no);
+		model.addAttribute("resultList", result);
+
+		// í•´ë‹¹ ê²Œì‹œê¸€ì˜ ë‹µê¸€ ëª©ë¡ ì¡°íšŒ
+		List<ReplyVO> replies = bservice.getReplies(board_no);
+		model.addAttribute("replyList", replies);
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("loginMember", member);
+		}
+
+		return "board/freedetail";
+	}
 	
+	// (ê´€ë¦¬ì í˜ì´ì§€) ììœ ê²Œì‹œíŒ ê²Œì‹œê¸€ ê´€ë¦¬
+	@GetMapping("/board/boardInfo")
+	public String boardInfo(Model model, HttpSession session, Criteria cri) {
 
-			@GetMapping("/qnaboard.do")
-			public String Qnaboard(Model model, Criteria cri) {
+		model.addAttribute("page", bservice.getListPaging(cri));
+		int total = bservice.getTotal(cri);
+
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			model.addAttribute("member", member);
+		}
+		return "admin/board/boardInfo";
+	}
+	
+	
+	// ë¬¸ì˜ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+	@GetMapping("/qnaboard")
+	public String QnaboardList(Model model, HttpSession session, HttpServletRequest request) {
+		log.info("QnaboardListGET");
+
+		// ê²Œì‹œíŒ ëª©ë¡ì„ ëª¨ë¸ì— ì¶”ê°€
+		model.addAttribute("page", bservice.getList());
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
 			
-				log.info("boardListGET");
+			model.addAttribute("member", member);
+		}
 
-				model.addAttribute("list", bservice.getListPaging(cri));
-				int total = bservice.getTotal(cri);
+		return "board/Qnaboard";
+	}
 
-				PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+	// ë¬¸ì˜ê²Œì‹œíŒ ê²Œì‹œê¸€ ì¡°íšŒì™€ ë‹µê¸€ ëª©ë¡ì„ ì¡°íšŒ
+	@GetMapping("/Qnadetail")
+	public String boardDetail(int board_no, Model model, HttpSession session) {
+		
+		BoardVO board = bservice.getPage(board_no);
+		model.addAttribute("pageInfo", board);
 
-				return "board/Qnaboard";
-			}
+		
+		List<ReplyVO> replies = bservice.getReplies(board_no);
+		model.addAttribute("replyList", replies);
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
 			
+			model.addAttribute("loginMember", member);
+		}
 
-	/* °Ô½ÃÆÇ µî·Ï ÆäÀÌÁö Á¢¼Ó */
-	@GetMapping("/write.do")
+		return "board/Qnadetail";
+	}
+	
+	// (ê´€ë¦¬ì í˜ì´ì§€) ë¬¸ì˜ê²Œì‹œíŒ ê²Œì‹œê¸€ ê´€ë¦¬
+	@GetMapping("/board/qna")
+	public String qna(Model model, HttpSession session, HttpServletRequest request) {
+		log.info("QnaboardListGET");
+
+		model.addAttribute("page", bservice.getList());
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("member", member);
+		}
+		return "admin/board/qna";
+	}
+	
+	// ê³µì§€ì‚¬í•­ ê²Œì‹œê¸€ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
+	@GetMapping("/noticeboard")
+	public String noticeboard(Model model, HttpSession session, HttpServletRequest request) {
+
+		
+		model.addAttribute("page", bservice.getList());
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("noticeMember", member);
+		}
+		return "board/noticeboard";
+	}
+	
+	// (ê´€ë¦¬ì í˜ì´ì§€) ê³µì§€ì‚¬í•­ ê²Œì‹œê¸€ ê´€ë¦¬ 
+	@GetMapping("/board/notice")
+	public String notice(Model model, HttpSession session, HttpServletRequest request) {
+
+		
+		model.addAttribute("page", bservice.getList());
+
+		
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		if (member != null) {
+			
+			model.addAttribute("adminMember", member);
+		}
+
+		return "admin/board/notice";
+	}
+
+	/* ë‹¤ì¤‘ ì„ íƒ ì‚­ì œ(ë¯¸ì™„ì„±) */
+//    @PostMapping("/deleteSelected")
+//    @ResponseBody
+//    public ResponseEntity<?> deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
+//        try {
+//            bservice.deleteSelectedBoards(boardNos);
+//            return ResponseEntity.ok("success");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
+//        }
+//    }
+	
+	// ë‹¤ì¤‘ ì„ íƒ ì œê±°
+	@PostMapping("/deleteSelected")
+	@ResponseBody
+	public String deleteSelectedBoards(@RequestParam("board_nos") List<Integer> boardNos) {
+		try {
+			bservice.deleteSelectedBoards(boardNos);
+			return "success";
+		} catch (Exception e) {
+			
+			return "fail";
+		}
+	}
+	
+	// ì¡°íšŒìˆ˜ 
+	@PostMapping("/updateViewCount")
+	public String ViewCount(int board_no, Model model, BoardVO board) {
+		bservice.updateViewCount(board_no);
+
+		log.info("ì¡°íšŒìˆ˜ í…ŒìŠ¤íŠ¸ ì„±ê³µ");
+		return "success";
+	}
+
+	// ì¶”ì²œìˆ˜ (ë¯¸ì™„ì„±)
+	@PostMapping("/updateRecomCount")
+	@ResponseBody
+	public String RecomCount(int board_no, Model model, BoardRecomVO boardrecom) {
+		bservice.updateRecomCount(board_no);
+		log.info("ì¶”ì²œìˆ˜ í…ŒìŠ¤íŠ¸ ì„±ê³µ");
+		return "success";
+	}
+	
+	// ëŒ“ê¸€ ë“±ë¡
+	@PostMapping("/insertReply")
+	@ResponseBody
+	public String insertReply(ReplyVO reply, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+
+		if (member != null) {
+			
+			reply.setMember_no(member.getMember_no());
+			
+			log.info("ëŒ“ê¸€ ë“±ë¡ì„ ì‹œë„í•©ë‹ˆë‹¤. ëŒ“ê¸€ ë‚´ìš©: {}", reply.getReply_content());
+			int replyresult = bservice.insertReply(reply);
+			
+			log.info("ëŒ“ê¸€ ë“±ë¡ ê²°ê³¼: {}", replyresult > 0 ? "ì„±ê³µ" : "ì‹¤íŒ¨"); 
+
+			return replyresult > 0 ? "success" : "fail";
+		}
+		
+		return "notLoggedIn"; 
+	}
+
+	// ëŒ“ê¸€ ì‚­ì œ 
+	@ResponseBody
+	@PostMapping("/replydelete")
+	public String replyDeletePOST(ReplyVO replyvo, @RequestParam("reply_id") int reply_no) {
+		try {
+			bservice.deleteReply(reply_no);
+			return "success";
+		} catch (Exception e) {
+			log.error(e.toString());
+			return "fail";
+		}
+	}
+
+	// íŠ¹ì • ê²Œì‹œê¸€ì˜ ëŒ“ê¸€ ëª©ë¡ì„ ë°˜í™˜
+	@GetMapping("/getReplies")
+	@ResponseBody
+	public List<ReplyVO> getRepliesForBoard(@RequestParam("board_no") int boardNo) {
+		return bservice.getReplies(boardNo);
+	}
+
+	@GetMapping("/qnareply")
+	public String Qnareply(Model model) {
+		return "board/Qnareply";
+	}
+
+	@GetMapping("/cancel")
+	public String boardCancleGET(int category_no, int board_no, Model model) {
+
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticedetail";
+		case 2:
+			return "redirect:/board/freedetail";
+		case 3:
+			return "redirect:/board/Qnadetail";
+		default:
+			return "redirect:/";
+		}
+	}
+
+	/* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+	@GetMapping("/write")
 	public String boardEnrollGET() {
 
-		log.info("°Ô½ÃÆÇ µî·Ï ÆäÀÌÁö ÁøÀÔ");
+		log.info("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		return "board/write";
 	}
 
-	/* °Ô½ÃÆÇ µî·Ï */
-	@PostMapping("/insert.do")
-	public String boardEnrollPOST(BoardVO board, RedirectAttributes rttr) {
+	/* ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ */
+	@PostMapping("/insert")
+	public String boardEnrollPOST(@RequestParam("file") MultipartFile file, HttpSession session, BoardVO board,
+			RedirectAttributes rttr, HttpServletRequest request) {
 
 		log.info("BoardVO : " + board);
-		
-		/* jsp·Î ºÎÅÍ ¹ŞÀº µ¥ÀÌÅÍ¸¦ DB¿¡ ÀúÀåÇØ¾ßÇÔ. 
-		 * ±×Àú ÆÄ¶ó¹ÌÅÍ ºÎ¿©ÇÏ¿© ³Ñ°ÜÁÖ±â¸¸ ÇÏ¸é µÊ.*/
-		bservice.enroll(board);
-		
-		/* µî·Ï ¼º°ø °æ°íÃ¢ ±¸Çö 
-		 * addFlashAttribute¸¦ ¾´ ÀÌÀ¯´Â ÀÏÈ¸¼ºÀ¸·Î¸¸ µ¥ÀÌÅÍ¸¦ Àü´ŞÇÏ±â À§ÇØ¼­ */
+		session = request.getSession();
+		MemberVO login = (MemberVO) session.getAttribute("loginInfo");
+		board.setMember_no(login.getMember_no());
+
+		bservice.enroll(board, file, request);
 		rttr.addFlashAttribute("result", "enrol success");
-		
-		/* ¸®´ÙÀÌ·ºÆ®¸¦ ¾²´Â ÀÌÀ¯´Â µî·Ï, ¼öÁ¤, »èÁ¦¿Í °°Àº ÀÛ¾÷ÀÌ Ã³¸®°¡ µÈ ÈÄ 
-		 * »õ·Î°íÄ§À» ÅëÇØ ¶È°°Àº ³»¿ëÀ» °è¼Ó ¼­¹ö¿¡ µî·ÏÇÒ ¼ö ¾ø°Ô ÇÏ±â À§ÇÔ
-		 * */
-		// Ä«Å×°í¸® ¹øÈ£¿¡ µû¸¥ ¸®´ÙÀÌ·ºÆ® ¼³Á¤
-	    switch (board.getCategory_no()) {
-	        case 1:
-	            // °øÁö»çÇ×
-	            return "redirect:/board/noticeboard.do";
-	        case 2:
-	            // ÀÚÀ¯°Ô½ÃÆÇ
-	            return "redirect:/board/freeboard.do";
-	        case 3:
-	            // ¹®ÀÇ°Ô½ÃÆÇ
-	            return "redirect:/board/qnaboard.do";
-	        default:
-	            // ±âº» ¸®´ÙÀÌ·ºÆ® (È¤Àº ¿À·ù ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®)
-	            return "redirect:/";
-	    }
-	}	
+		switch (board.getCategory_no()) {
+		case 1:
+			return "redirect:/board/noticeboard";
+		case 2:
+			return "redirect:/board/freeboard";
+		case 3:
+			return "redirect:/board/qnaboard";
+		default:
+			return "redirect:/";
+		}
+	}
 
-	/* ÆäÀÌÁö »èÁ¦ */
-	@PostMapping("/delete.do")
-	public String boardDeletePOST(int board_no, RedirectAttributes rttr) {
-
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+	@PostMapping("/delete")
+	public String boardDeletePOST(int board_no, int category_no, RedirectAttributes rttr) {
 		bservice.delete(board_no);
-
 		rttr.addFlashAttribute("result", "delete success");
 
-		return "redirect:/board/freeboard.do";
+		
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticeboard";
+		case 2:
+			return "redirect:/board/freeboard";
+		case 3:
+			return "redirect:/board/qnaboard";
+		default:
+			return "redirect:/"; // ê¸°ë³¸ê°’
+		}
 	}
 
-	/* °Ô½ÃÆÇ Á¶È¸ */
-	@GetMapping("/read.do")
-	public String boardGetPageGET(int board_no, Model model, Criteria cri) {
-		BoardVO vo = bservice.getPage(board_no);
-		System.out.println("test: " + vo.getBoard_no());
-		model.addAttribute("pageInfo", bservice.getPage(board_no));
-		model.addAttribute("cri", cri);
-		return "board/read";
-	}
-
-	/* ¼öÁ¤ ÆäÀÌÁö ÀÌµ¿ */
-	@GetMapping("/modify.do")
-	public String boardModifyGET(int board_no, Model model, Criteria cri) {
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ */
+	@GetMapping("/modify")
+	public String boardModifyGET(int board_no, Model model/* , Criteria cri */) {
 
 		model.addAttribute("pageInfo", bservice.getPage(board_no));
-		model.addAttribute("cri", cri);
+//		model.addAttribute("cri", cri);
 		return "board/modify";
 	}
 
-	/* ÆäÀÌÁö ¼öÁ¤ */
-	@PostMapping("/modify.do")
-	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr) {
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+	@PostMapping("/modify")
+	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr, int category_no) {
 
 		bservice.modify(board);
 
 		rttr.addFlashAttribute("result", "modify success");
 
-		return "redirect:/board/freeboard.do";
+	
+		switch (category_no) {
+		case 1:
+			return "redirect:/board/noticeboard";
+		case 2:
+			return "redirect:/board/freeboard";
+		case 3:
+			return "redirect:/board/qnaboard";
+		default:
+			return "redirect:/"; 
+		}
 
 	}
-	
-	
-	
-	@GetMapping("/board/noticeboard.do")
-	public String noticeboard() {
 
-		return "board/noticeboard";
-	}
-
-	
-	
-	@GetMapping("/board/boardInfo.do")
-	public String boardInfo() {
-		
-		return "admin/board/boardInfo";
-	}
-	
-	@GetMapping("/board/notice.do")
-	public String notice() {
-		
-		return "admin/board/notice";
-	}
-	
-	@GetMapping("/board/noticeWrite.do")
-	public String noticeWrite() {
-		
-		return "admin/board/noticeWrite";
-	}
-	
-	@GetMapping("/board/qna.do")
-	public String qna() {
-		
-		return "admin/board/qna";
-	}
-	
-	@GetMapping("/board/qnaReply.do")
+	@GetMapping("/board/qnaReply")
 	public String qnaReply() {
-		
+
 		return "admin/board/qnaReply";
 	}
-	
-	@GetMapping("/news/adminNews.do")
+
+	@GetMapping("/news/adminNews")
 	public String adminNews() {
-		
+
 		return "admin/news/adminNews";
 	}
-	
-	@GetMapping("/news/adminWrite.do")
+
+	@GetMapping("/news/adminWrite")
 	public String adminWrite() {
-		
+
 		return "admin/news/adminWrite";
 	}
-	
-	@GetMapping("/mypage/main.do")
+
+	@GetMapping("/mypage/main")
 	public String main() {
-		
+
 		return "mypage/main";
 	}
-	
+
 }

@@ -37,7 +37,7 @@ int member_no = vo.getMember_no();
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<h2 class="title">개인정보 수정</h2>
-			<form name="frm" id="frm" action="update.do" method="post">
+			<form name="frm" id="frm" action="update" method="post">
 				<div class="memberInfo">
 					<table class="reg">
 						<caption>회원가입</caption>
@@ -112,7 +112,7 @@ int member_no = vo.getMember_no();
 			</form>
 
 			<div class="memberDel">
-				<a href="${pageContext.request.contextPath}/member/memberDel.do">회원
+				<a href="${pageContext.request.contextPath}/member/memberDel">회원
 					탈퇴하기</a>
 			</div>
 		</div>

@@ -46,17 +46,100 @@
 .diary-result {
 	display: flex;
 	flex-direction: row;
+	margin-top: 10px;
 	margin-bottom: 20px;
 }
 /*달력*/
 .diary-calendar {
 	width: 40%;
 }
+#calendar {
+    margin-left: auto;
+    margin-right: auto;
+    height: 470px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+#calendar_weekdays div {
+    display: inline-block;
+    vertical-align: top;
+}
+#calendar_content,
+#calendar_weekdays,
+#calendar_header {
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+#calendar_weekdays div,
+#calendar_content div {
+    overflow: hidden;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #787878;
+}
+#calendar_content {
+    -webkit-border-radius: 0px 0px 12px 12px;
+    -moz-border-radius: 0px 0px 12px 12px;
+    border-radius: 0px 0px 12px 12px;
+    cursor: pointer;
+}
+#calendar_content div {
+    float: left;
+}
+#calendar_content div:hover {
+    background-color: #F8F8F8;
+}
+#calendar_content div.blank {
+    background-color: #FFFFFF;
+}
+#calendar_content div.today,
+#calendar_content div.selected-date {
+    background-color: #CEDEBD;
+}
+#calendar_header {
+    width: 100%;
+    display: flex;
+	flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    background-color: #F9B572;
+    -webkit-border-radius: 12px 12px 0px 0px;
+    -moz-border-radius: 12px 12px 0px 0px;
+    border-radius: 12px 12px 0px 0px;
+}
+#calendar_header .month-year {
+    font-size: 1.5em;
+    color: #FAF8ED;
+    font-weight: 600;
+    float: left;
+    width: 70%;
+    margin: auto 0;
+}
+.arrow {
+    font-size: 20px;
+    width: 20px;
+    height: 100%;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 800;
+    color: #FAF8ED;
+}
+.left-arrow {
+    margin-right: 10px;
+}
+.right-arrow {
+    margin-left: 10px;
+}
 /*섭취량관련 내용*/
 .diary-result-text {
 	width: 40%;
 	display: flex;
 	flex-direction: column;
+	margin: auto 40px;
+}
+.diary-result-wrap {
+	margin: 30px;
 }
 .diary-result-main {
 	margin-bottom: 15px;
@@ -66,14 +149,14 @@
 	font-weight: 800;
 }
 .diary-result-main > .detail-division-line {
-	width: 70%;
+	width: 100%;
 	margin: 0;
 }
 .diary-result-main > #diary-result-main-sub {
 	font-size: 20px;
 	font-weight: 700;
 }
-.diary-result-text > .diary-contact-text {
+.diary-result-wrap > .diary-contact-text {
 	display: flex;
 	flex-direction: column;
 }
@@ -118,6 +201,9 @@
 	font-size: 28px;
 }
 /*개인 추천 한마디*/
+#sql-user-name {
+	font-size: 23px;
+}
 .sql-diary-comment {
 	font-size: 23px;
 	color: #748E63;
@@ -125,6 +211,122 @@
 .sql-diary-detail {
 	font-size: 21px;
 	color: red;
+}
+
+/*-----------
+	모달팝업
+-----------*/
+#modalWrap {
+	position: fixed; /* 고정된 위치에 배치 */
+	z-index: 1; /* 다른 요소들보다 위에 위치하도록 하는데, 숫자가 크면 위에 놓이게 됨 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,0.4);
+	display: none; /* 이벤트 발생 시, 띄우게하기 위함 */
+  	justify-content: center;
+  	align-items: center;
+}
+/* 모달 팝업 */
+#modalBody {
+	width: 700px;
+	height: 580px;
+	padding: 30px 30px;
+	margin: 0 auto;
+	border: 1px solid #777;
+	background-color: #FAF1E4;
+	border-radius: 10px;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+/* 모달 메인 */
+#modalBody-content {
+	margin: 40px 60px;
+}
+/* 제목 */
+#modalBody-title {
+	margin-bottom : 10px;
+}
+#modalBody-title-text {
+	color: #435334;
+	font-size: 30px;
+	font-weight: 700;
+	margin-bottom : 5px;
+}
+#modalBody-title > .title-division-line {
+	width: initial;
+	margin: 15px;
+}
+/* 메인 내용 */
+#modalBody-main {
+	background-color: #FFFFFF;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	margin: 30px;
+}
+.modalBody-result {
+	display: flex;
+    flex-direction: row;
+    margin: 25px;
+}
+.modalBody-input-essential {
+	margin: 0;
+	font-size: 25px;
+	color: red;
+}
+.modalBody-text {
+	width: 40%;
+}
+.modalBody-input {
+	width: 60%;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.modalBody-input > .modalBody-input-text input[type="text"] {
+	border: none;
+	background: transparent; /* 투명 */
+	border-bottom: 2px solid #99B080;
+	outline: none; /* 포커스 효과 제거 */
+	margin-top: -10px;
+	width: 100px;
+	height: 30px;
+}
+.modalBody-input-text input[type="text"]:focus {
+	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
+}
+/* 글씨 */
+.modalBody-text {
+	font-size: 20px;
+	font-weight: 700;
+}
+/* 버튼 */
+/* 닫기 버튼 */
+#closeBtn {
+	float:right;
+	font-weight: bold;
+	color: #777;
+	font-size:25px;
+	cursor: pointer;
+}
+#closeBtn:hover {
+	color: #435334;
+}
+/* 입력 버튼 */
+#modalBody-button {
+	display: flex;
+    flex-direction: row;
+}
+#modalBody-button > button {
+	font-size: 15px;
+	width: 100%;
+	height: 50px;
+}
+#modalBody-button > .modalBody-updelBtn {
+	width: 40%;
+	margin: 0 5%;
 }
 
 /*---------

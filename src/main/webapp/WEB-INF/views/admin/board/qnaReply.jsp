@@ -74,7 +74,7 @@
     	
     <div class="container">
   <h1>QnA 답변</h1>
-  <form action="submitAnswer.do" method="post">
+  <form action="submitAnswer" method="post">
     <label for="title">제목</label>
     <!-- 예를 들어 PHP에서 데이터를 불러온다면 아래와 같이 사용할 수 있습니다. -->
     <input type="text" id="title" name="title" readonly value="<?php echo $questionTitle; ?>">

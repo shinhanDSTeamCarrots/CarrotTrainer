@@ -27,19 +27,19 @@ public class MemberController {
 	private MemberService memberService;
 	// 객체를 자동으로 생성해 주는 역할
 
-	@GetMapping("/member/join.do")
+	@GetMapping("/member/join")
 	public String test() {
 		return "member/join";
 	}
 
 	@ResponseBody
-	@GetMapping("/member/idCheck.do")
+	@GetMapping("/member/idCheck")
 	public String idCheck(@RequestParam String id) {
 		boolean r = memberService.dupId(id);
 		return String.valueOf(r);
 	}
 
-	@PostMapping("/member/regist.do")
+	@PostMapping("/member/regist")
 	public String regist(MemberVO vo) {
 		try {
 			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
@@ -49,20 +49,21 @@ public class MemberController {
 		memberService.regist(vo);
 		return "member/joinInterest";
 	}
-
-	@GetMapping("/member/login.do")
+	@GetMapping("/member/login")
 	public String login() {
 		return "member/login";
 	}
-
-	@PostMapping("/member/login.do")
-	public String loginProcess(MemberVO vo, HttpSession sess, Model model) {
-
-		try {
-			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+	
+	
+	@PostMapping("/member/login")
+	public String loginProcess(MemberVO vo, HttpSession sess, Model model,
+			@RequestParam("member_id") String member_id, 
+			@RequestParam("member_pw") String member_pw) {
+		  try {
+        vo.setMember_pw(this.encrypt(vo.getMember_pw()));
+      } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+      }
 		MemberVO login = memberService.login(vo);
 		if (login == null) {
 			if (vo.getMember_loginFailCnt() == 5) {
@@ -79,7 +80,10 @@ public class MemberController {
 				model.addAttribute("cmd", "back");
 				return "member/alert";
 			}
-
+			return "common/alert";
+		} else {
+			sess.setAttribute("loginInfo", login);
+			return "redirect:/";	
 		}
 		return "redirect:/";
 		/*
@@ -117,28 +121,27 @@ public class MemberController {
 		return builder.toString();
 	}
 
-	@GetMapping("/member/logout.do")
+	@GetMapping("/member/logout")
 	public String logout(Model model, HttpSession sess) {
 		sess.removeAttribute("loginInfo");
 		return "redirect:/"; // home.jsp 파일이랑 연결됨
 	}
-
-	@GetMapping("/member/joinAgree.do")
+	@GetMapping("/member/joinAgree")
 	public String joinAgree() {
 		return "member/joinAgree";
 	}
 
-	@GetMapping("/member/joinOath.do")
+	@GetMapping("/member/joinOath")
 	public String joinOath() {
 		return "member/joinOath";
 	}
 
-	@GetMapping("/member/memberDel.do")
+	@GetMapping("/member/memberDel")
 	public String deleteMember() {
 		return "member/memberDel";
 	}
 
-	@PostMapping("/member/memberDel.do")
+	@PostMapping("/member/memberDel")
 	public String deleteMember(MemberVO vo, Model model, HttpSession sess) {
 		try {
 			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
@@ -159,18 +162,18 @@ public class MemberController {
 	}
 
 	@ResponseBody
-	@GetMapping("/member/nicknameCheck.do")
+	@GetMapping("/member/nicknameCheck")
 	public String nicknameCheck(@RequestParam String nickname) {
 		boolean r = memberService.dupNickname(nickname);
 		return String.valueOf(r);
 	}
 
-	@GetMapping("/member/memberEdit.do")
+	@GetMapping("/member/memberEdit")
 	public String memberEdit() {
 		return "member/memberEdit";
 	}
 
-	@PostMapping("/member/memberEdit.do")
+	@PostMapping("/member/memberEdit")
 	public String memberEdit2(HttpSession sess, Model model) {
 		MemberVO uv = (MemberVO) sess.getAttribute("loginInfo");
 		model.addAttribute("vo", memberService.detail(uv));
@@ -178,7 +181,7 @@ public class MemberController {
 	}
 
 	@ResponseBody
-	@PostMapping("/member/update.do")
+	@PostMapping("/member/update")
 	public String update(MemberVO vo, Model model) {
 
 		try {
@@ -188,7 +191,7 @@ public class MemberController {
 		}
 		int r = memberService.update(vo);
 		String msg = "";
-		String url = "edit.do";
+		String url = "edit";
 		if (r > 0) {
 			msg = "정상적으로 수정되었습니다.";
 		} else {
@@ -200,7 +203,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/member/memberFind.do")
+	@GetMapping("/member/memberFind")
 	public String test7() {
 		return "member/memberFind";
 	}

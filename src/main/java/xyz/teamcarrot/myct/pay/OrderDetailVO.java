@@ -12,7 +12,10 @@ public class OrderDetailVO {
 	private int option_no;
 	private int cnt;
 	private int deliver_state;
-	private Timestamp accepttion_date;
+	private Timestamp acception_date;
 	private int tracking_no;
 	private int admin_no;
+	private String goods_name;
+	private String option_name;
+	private String admin_name;
 }

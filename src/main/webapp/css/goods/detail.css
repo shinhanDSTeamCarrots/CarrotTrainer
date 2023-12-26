@@ -1,0 +1,396 @@
+.container {
+	width:100%;
+	max-width:1200px;
+	margin : 0 auto;
+	display:flex;
+	padding: 20px;
+    box-sizing: border-box;
+    flex-direction:column;
+}
+a {
+    text-decoration: none;
+}
+a:visited {
+	color: #435334;
+}
+/* 카테고리 사이드바 */
+.category{
+	width: 20%;
+	margin: 0;
+	height: 40px;
+	float:left;
+}
+.category > ul {
+	background-color:#748E63;
+	font-weight: bold;
+	font-size: 18px;
+    margin:0;
+    padding:0;
+    
+}
+.category > ul > li {
+    list-style: none;
+    border:1px solid #748E63;
+    background-color:#CEDEBD;
+    color:#435334;
+    text-align: center;
+    float:left;
+    width:100%;
+    height:42px;
+    line-height:40px;
+}
+.category > ul > li:hover {
+    background-color:#9EB384;
+}
+
+.depth2 {
+    z-index:10;
+    position: absolute;
+    text-align: center;
+    width:100%;
+    background-color: #CEDEBD;
+    display:none;	
+    border:1px solid #748E63;
+}
+.depth2 > li:hover {
+    background-color:#9EB384;
+}
+
+/* 카테고리명 + 검색창 */
+.goods_header{
+	margin-left:20px;
+	padding:0;
+	float:left;
+	width: 100%;	
+	line-height: 40px;
+	display: flex;
+	flex-direction:row;
+}
+.goods_header h1{
+	margin-left:30px;
+	padding:0;
+	float:left;
+	width: 20%;
+}
+.search_wrap{
+	display: flex;
+	aligh-items: center;
+	float:left;
+	width: 60%;
+	height:40px;
+	line-height: 40px;
+}
+.search_area{
+	display:flex;
+	align-items: center;
+	width: 100%;
+}
+#search{
+	width: 40px;
+	margin: 5px;
+	font-size:18px;	
+}
+
+/* 상품 디테일 페이지 */
+.goodsDetail{
+	width:100%;
+	margin: 10px;
+	display:flex;
+	flex-direction:row;
+}
+.goodsImg{
+	width:45%;
+	float: left;
+}
+#goodsImg {
+	width:400;
+	height:400px;
+	margin:10px;
+}
+.goodsInfo{
+	width:100%;
+	margin: 20px;
+	display:flex;
+	flex-direction:column;
+}
+.goodsInfo > .goodsName > p{
+	font-size : 24px;
+	font-weight: bold;
+	margin: 20px;
+}
+.goodsInfo > .goodsPrice > p{
+	font-size : 24px;
+	font-weight: normal;
+	margin: 20px;
+}
+
+.goodsInfo > .deliveryfee > p{
+	font-size : 18px;
+	font-weight: normal;
+	margin: 20px;
+	
+}
+
+.goodsInfo > .option > select{
+	width:80%;
+	height:30px;
+	margin:20px;
+	font-size:16px;
+}
+
+.btns{
+	width:100%;
+	height:40px;
+	display: flex;
+	flex-direction:row;
+	margin:20px;
+}
+
+
+/* 버튼 */
+.goodsInfo > .btns > .cartbtn{
+	width: 35%;
+	height: 100%;
+	font-size : 18px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+	margin-right:20px;
+}
+.goodsInfo > .btns > .cartbtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+.goodsInfo > .btns > .purchasebtn{
+	width: 35%;
+	height: 100%;
+	font-size : 18px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+.goodsInfo > .btns > .purchasebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+
+
+/* 구분선 */
+.title-division-line {
+	width:100%;
+	border-top: 1.5px solid #435334;
+	margin-left : 20px;
+	margin-right : 20px;
+}
+
+.goods_list > .goodsName {
+    margin: 10px;
+}
+.goods_list > .goodsPrice {
+    margin: 5px;
+    font-weight: bold;
+}
+
+
+
+/* 메뉴바 */
+
+.detailMenu {
+	width:100%;
+    margin: 0 auto;
+    height: 42px;
+}
+.detailMenu > ul {
+	background-color:#9EB384;
+	font-weight: bold;
+	font-size: 15px;
+    margin:0;
+    padding:0;
+}
+.detailMenu > ul > li {
+    list-style: none;
+    border:1px solid #748E63;
+    background-color:#9EB384;
+    color:#435334;
+    text-align: center;
+    float:left;
+    width:25%;
+    height:42px;
+    line-height:40px;
+}
+.detailMenu > ul > li:hover {
+    background-color:#CEDEBD;
+}
+
+
+/* 상품 상세 정보들 */
+.detailMenuContent{
+	width:100%;
+    margin-top: 20px;
+	display: flex;
+	flex-direction:column;
+	
+}
+
+
+.detailMenuContent > .itemDetailImage{
+	text-align: center;
+	margin-bottom: 20px;
+}
+.detailMenuContent > .itemDetailPurchaseInfo{
+	margin-bottom:20px;	
+}
+
+.detailMenuContent > .itemDetailPurchaseInfo > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}
+.detailMenuContent > .itemDetailReview{
+	margin-bottom:20px;	
+}
+
+.detailMenuContent > .itemDetailReview > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}
+.detailMenuContent > .itemDetailQna{
+	margin-bottom:20px;	
+}
+.detailMenuContent > .itemDetailQna > p{
+	font-size:24px;
+	font-weight:bold;
+	text-align:left;
+	margin-bottom:10px;	
+}
+
+
+
+/* 상품문의 */
+.qnaHeader{
+	display:flex;
+	flex-direction:row;
+	height:40px;
+	margin-bottom: 20px;
+}
+.qnaCnt{
+	margin-left: 30px;
+	line-height: 40px;
+}
+.sub_title{
+	margin-bottom: 20px;
+}
+
+.writebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+.writebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+.writeform{
+	width:100%;
+	height:800px;
+	display:flex;
+	flex-direction:column;
+}
+.writeform p{
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.qnawriter{
+	margin:10px;
+}
+.qnacate{
+	margin:10px;
+}
+.qnacate > select{
+	width:80px;
+	height:32px;
+}
+.issecret{
+	margin:10px;
+}
+.qnatitle{
+	margin:10px;
+}
+.qnatitle > .qtitle{
+	width:60%;
+}
+.qnacontent{
+	margin:10px;
+}
+.qnacontent > .qcontent{
+	width:60%;
+	height:300px;
+}
+.qnabtns{
+	margin-top:30px;
+}
+.donebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+
+.donebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+
+.closebtn{
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
+}
+
+.closebtn:hover {
+	background-color: #435334;
+	color: #FAF1E4;
+}
+.qnaList{
+	margin-top:20px;
+	height: 100%;
+}
+.qnaList h2{
+	margin:10px;
+}
+.qnaList > .qnaTable > thead{
+	height: 40px;
+}
+.qnaList > .qnaTable > thead > tr > th{
+	font-size: 16px;
+}
+.qnaTable > #qnaTableBody{
+	text-align: center;
+}

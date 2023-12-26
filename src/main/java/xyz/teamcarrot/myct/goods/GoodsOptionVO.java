@@ -9,4 +9,5 @@ public class GoodsOptionVO {
 	private String option_name;
 	private int price_updown;
 	private int goods_no;
+	private int final_price;
 }

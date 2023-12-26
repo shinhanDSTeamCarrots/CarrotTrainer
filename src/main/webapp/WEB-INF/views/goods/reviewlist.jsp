@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="xyz.teamcarrot.myct.review.ReviewVO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,65 +9,77 @@
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	var memno;
+	var mem_no = "${sessionScope.loginInfo.member_no}";
 	
 	function alignTypeBtnClicked(alignType) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
+		/*let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+alignType;
 		href += "&page_no=1"
-		location.replace(href);
+		location.replace(href);*/
+		getReview(1,alignType);
 	}
 
 	function PageBtnClicked(pagecnt) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview.do?";
+		/*let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+"${map.alignType}";
 		href += "&page_no="+pagecnt;
-		location.replace(href);
+		location.replace(href);*/
+
+		getReview(pagecnt,${map.alignType});
 	}
-	function onLikeClicked(review_no){
+	function onLikeClicked(review_no,e){
 	//로그인 되어있는지 확인
-		let mem_no;
 		//로그인 되어있으면
-		if(true){
+		console.log("{"+review_no+"}");
+		if(mem_no != ""){
 			//ajax 호출하고
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/like.do"
-				data: {member_no: mem_no,
+				url: "${pageContext.request.contextPath}/review/like",
+				data: {mem_no: mem_no,
 					   review_no: review_no},
 				success: function(data){
 					if(data == "T"){
-						//처리 됨
+						$(e).attr("src","${pageContext.request.contextPath}/img/ico_like2.png");
+						$(e).attr("onclick","onLikeCancled("+review_no+",this)");
+					}else if(data =="F"){
+						alert("이미 처리되었습니다.")
 					}else{//F
-						//처리 안됨. 다시 롤백
+						alert("좋아요 처리 안됨");
 					}
 				},
 				error: function(data){
 					alert("처리하지 못하였습니다.");
 				}
 			});
+		}
+		else{
+			alert("로그인 후 이용해주세요!");
 		}
 		//안되어있으면
 		//반응 안함
 	}
-	function onLikeCancled(review_no){
+	function onLikeCancled(review_no,e){
 		//로그인 되어있는지 확인
-		
 		//로그인 되어있으면
-		if(true){
+		console.log("{"+review_no+"}");
+		if(mem_no!=""){
 			//ajax 호출하고
 			$.ajax({
 				type: "POST",
-				url: "${pageContext.request.contextPath}/review/dislike.do"
-				data: {member_no: mem_no,
+				url: "${pageContext.request.contextPath}/review/dislike",
+				data: {mem_no: mem_no,
 					   review_no: review_no},
 				success: function(data){
 					if(data == "T"){
-						//처리 됨
+						$(e).attr("src","${pageContext.request.contextPath}/img/ico_like.png");
+						$(e).attr("onclick","onLikeClicked("+review_no+",this)");
+					}else if(data =="D"){
+						alert("이미 처리하였습니다.");
 					}else{//F
-						//처리 안됨. 다시 롤백
+						alert("처리하지 못하였습니다.");
 					}
 				},
 				error: function(data){
@@ -74,13 +87,14 @@
 				}
 			});
 		}
-		//안되어있으면
-		//반응 안함
+		else{
+			alert("로그인 후 이용해주세요!");
+		}
 		
 	}
 	function onEditBtnClicked(review_no){
-		let href = "${pageContext.request.contextPath}"+ "/review/modify.do?";
-		href += "review_no="+"${review_no}";
+		let href = "${pageContext.request.contextPath}"+ "/review/modify?";
+		href += "review_no="+review_no;
 		location.replace(href);		
 	}
 	function onDeleteBtnClicked(review_no){
@@ -88,6 +102,22 @@
 		let returnVal = confirm('해당 리뷰를 삭제하시겠습니까?');
 		if(returnVal){
 			//리뷰 삭제 실행 후 리로드
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/review/delete",
+				data: {review_no: review_no},
+				success: function(data){
+					if(data == "T"){
+						alert("삭제 완료 됨");
+						//리로드
+					}else{//F
+						alert("처리하지 못하였습니다.");
+					}
+				},
+				error: function(data){
+					alert("처리하지 못하였습니다.");
+				}
+			});
 		}
 		//아무것도 안함
 	}
@@ -97,7 +127,7 @@
     <div>
         <strong>상품리뷰 ${map.total_cnt}건</strong>
     </div>
-	<!-- 정렬 선택 -->
+	<%-- 정렬 선택 --%>
     <ul>
         <li><a onclick="alignTypeBtnClicked('regist_desc')">최신순</a></li>
         <li><a onclick="alignTypeBtnClicked('regist_asc')">오래된순</a></li>
@@ -109,7 +139,7 @@
     </div>
     <ul>
         <c:if test="${map.total_cnt != 0 }">
-    	<!-- 평균 데이터 -->
+    	<%-- 평균 데이터 --%>
     	<li>
     		<div>
     			<p>사용자 평균 평점</p><br>	
@@ -148,11 +178,10 @@
 	    		</ul>
     		</div>
     	</li>
-	        <!-- 실제 데이터 -->
+	        <%-- 실제 데이터 --%>
 	        <c:forEach var="vo" items="${map.list }">
-				        <!-- 위 정보 -->
 		        <li>
-		        	<!-- 평점 -->
+		        	<%-- 평점 --%>
 		        	<div>
 						<c:if test="${vo.point == 1}">
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
@@ -200,27 +229,34 @@
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
 		        		</c:if>
 		        	</div>
+		        	<c:choose>
+		        		<%-- 이미지 출력 --%>
+		        		<c:when test="${not empty vo.image }">
+		        			<img alt="" src="${vo.blobToImage() }">
+		        		</c:when>
+		        		<c:otherwise>
+		        		</c:otherwise>
+		        	</c:choose>
 		        	<p class="nickname">${vo.member_name }</p>
 		        	<br>
 		        	<p>${vo.regist_date }</p>
 		        	<p>${vo.content }</p>
-		        	<br>
 		        	<c:choose>
-		        		<c:when test="${ empty loginVO.member_vo  || vo.member_no ne loginVO.member_no}">
-		        			<!-- 내 글이 아니고 -->
+		        		<c:when test="${ empty sessionScope.loginInfo.member_no  || vo.member_no ne sessionScope.loginInfo.member_no}">
+		        			<%-- 내 글이 아니고 --%>
 		        			<c:choose>
 		        				<c:when test="${vo.self_like eq 0 }">
-		        					<!-- 좋아요 안눌렀으면 -->
-		        					<input type="button" alt="이 리뷰가 좋아요" src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no})"/>
+		        					<%-- 좋아요 안눌렀으면 --%>
+		        					<input type="image" alt="이 리뷰가 좋아요"  src="${pageContext.request.contextPath}/img/ico_like.png" onclick="onLikeClicked(${vo.review_no},this)"/>
 		        				</c:when>
 		        				<c:otherwise>
-		        					<!-- 좋아요 누른 상태면 -->
-		        					<input type="button" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like_cancle.png"" onclick="onLikeCancled(${vo.review_no})" />
+		        					<%-- 좋아요 누른 상태면 --%>
+		        					<input type="image" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like2.png" onclick="onLikeCancled(${vo.review_no},this)" />
 		        				</c:otherwise>
 		        			</c:choose>
 		        		</c:when>
 		        		<c:otherwise>
-		        			<!-- 내 글이면 수정하고  -->
+		        			<%-- 내 글이면 수정하고  --%>
 		        			<input type="button" alt="수정버튼" value="수정" onclick="onEditBtnClicked(${vo.review_no})"/>
 		        			<input type="button" alt="삭제버튼" value="삭제" onclick="onDeleteBtnClicked(${vo.review_no})"/>
 		        		</c:otherwise>
@@ -234,8 +270,7 @@
         </c:if>
     </table>
     <div>
-    <!-- 페이지 -->
-    
+    <%-- 페이지 --%>
         <c:if test="${map.total_cnt > 0 }">
         <c:set var="first_page" value="${map.page / 5 }"></c:set>
         <p>페이지 구현중입니다</p>

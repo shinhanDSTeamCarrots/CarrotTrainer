@@ -38,7 +38,7 @@
     		<div class = "menu">
     			<h2 class = "title">탈퇴하기</h2>
     			<h3 class = "title">아래 칸에 개인정보를 입력하시면 탈퇴됩니다.</h3>
-    			<form name="frm"  id="frm" action="memberDel.do" method="post">
+    			<form name="frm"  id="frm" action="memberDel" method="post">
     				아이디<input type = "text" name = "member_id" id = "member_id">
     				비밀번호<input type = "password" name = "member_pw" id = "member_pw">
     				<h3 class = "title" style = "color:red;">(주의) 탈퇴 시 회원님의 마일리지는 자동으로 소멸되며, 이후 복구할 수 없습니다.</h3> 

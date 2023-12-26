@@ -91,7 +91,7 @@
   <div class="news-container">
   <div class="news-header">
     <h2>건강뉴스 관리</h2>
-    <a href="adminWrite.do" class="write-button">글쓰기</a>
+    <a href="adminWrite" class="write-button">글쓰기</a>
   </div>
   
   <div class="news-grid">

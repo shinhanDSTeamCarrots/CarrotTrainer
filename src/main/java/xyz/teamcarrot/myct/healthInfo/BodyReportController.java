@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class BodyReportController {
-	@GetMapping("/bodyReport.do")
+	@GetMapping("/bodyReport")
 	public String bmi() {
 		return "/healthInfo/bodyReport";
 	}
