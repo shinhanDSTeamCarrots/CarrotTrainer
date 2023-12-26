@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 	@Autowired
@@ -38,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @param: ������ ReviewVO
 	 * @return: ������ Review �� review_no 
 	 */
+	@Transactional
 	@Override
 	public int updateReview(ReviewVO vo) {
 		//���ÿ� ��ǰ������ update
@@ -72,6 +74,7 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @param review_no		���ƿ� �� ����
 	 * @param member_no		���ƿ��� ���
 	 */
+	@Transactional
 	@Override
 	public void likeReview(int review_no, int member_no)throws org.springframework.dao.DuplicateKeyException {
 		likeMapper.insertReviewLike(member_no, review_no);
@@ -82,11 +85,13 @@ public class ReviewServiceImpl implements ReviewService {
 	 * @param review_no		���ƿ��� ����
 	 * @param member_no		���ƿ��� ���
 	 */
+	@Transactional
 	@Override
 	public void dislikeReview(int review_no, int member_no) {
 		likeMapper.deleteReviewLike(member_no, review_no);
-		mapper.dislikeReview(review_no, member_no);
+		mapper.likeReview(review_no, member_no);
 	}
+	
 	@Override
 	public Map<String,Object> selectData(int goods_no){
 		return mapper.selectListData(goods_no);

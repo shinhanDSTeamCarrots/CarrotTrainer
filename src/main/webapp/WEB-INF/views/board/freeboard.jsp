@@ -39,6 +39,7 @@ body {
   font-size: 2.4rem;
   color: #4CAF50;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 table {
@@ -56,6 +57,7 @@ th, td {
 
 .title-column {
     text-align: left;
+  
 }
 
 th {
@@ -104,11 +106,13 @@ th {
 	display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
 	vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
 	white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+	
 }
 
 .write-btn-container {
 	text-align: right; /* 버튼을 오른쪽으로 정렬 */
 	margin: 20px 0 20px; /* 상단 여백 추가 */
+	
 }
 
 .write-button {
@@ -120,6 +124,7 @@ th {
 	cursor: pointer; /* 클릭 가능한 커서 모양 */
 	font-size: 1.0rem; /* 글씨 크기 */
 	margin-bottom: 0px; /* 하단 여백 추가 */
+	font-weight: 700;
 }
 
 
@@ -162,28 +167,30 @@ th {
   .search_area select {
   	height: 35px;
   }
+  
+ 
 </style>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<div class="board-title">자유게시판</div>
-			<!-- 글쓰기 버튼 추가 -->
+			<!-- 글쓰기 버튼 -->
 			<div class="write-btn-container">
 			<c:if test="${!empty loginInfo }">
-				<a href="write" class="write-button">게시판 등록</a>
+				<a href="write" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 
 			<table>
 				<thead>
 					<tr>
-						<th>번호</th>
+						
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회</th>
-						<th>카테고리</th>
+					
 						
 					</tr>
 				</thead>
@@ -191,30 +198,39 @@ th {
 					<c:forEach items="${list}" var="list">
 					  <c:if test="${list.category_no == 2}">
 						<tr>
-							<td><c:out value="${list.board_no}" /></td>
-							<%--  <td>
-							<a class="move" href='<c:out value="${list.board_no}"/>'>
-									<c:out value="${list.board_title}" />
-							</a>
-							</td> --%>
 							
-								<td class="title-column">
-								<a class="move" href="javascript:void(0);" onclick="ViewCount(${list.board_no});">
-										<c:out value="${list.board_title}" />
-								</a></td> 
+							
+					 <td class="title-column">
+                    <c:choose>
+                       
+                        <c:when test="${list.board_private == 1}">
+                            <a href="javascript:void(0);" onclick="alert('비공개 처리 되었습니다.');location.href='/myct/board/freedetail?board_no=${list.board_no}'">
+                            [비공개 처리 되었습니다.]
+                            </a>
+                        </c:when>
+                       
+                        <c:otherwise>
+                            <a href="/myct/board/freedetail?board_no=${list.board_no}">
+                                <c:out value="${list.board_title}" />
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+								
+								
 								<td><c:out value="${list.member_nickname}" /></td>
 
 							<td><fmt:formatDate pattern="yyyy/MM/dd"
 									value="${list.board_rdate}" /></td>
 							<td><c:out value="${list.board_view}" /></td>
-							<td>자유게시판</td>
+							
 						
 
 						</tr>
 						</c:if>
 					</c:forEach>
 
-					<!-- 추가 게시물 행을 여기에 추가 -->
+					
 				</tbody>
 			</table>
 
@@ -230,7 +246,7 @@ th {
                 <option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
             </select>  
             <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-            <button>검색</button>
+            <button>검색🔍</button>
         </div>
     </div>   
 
@@ -239,12 +255,12 @@ th {
 		<div class="pageInfo_area">
 			<ul id="pageInfo" class="pageInfo">
 			
-				<!-- 이전페이지 버튼 -->
+				
 				<c:if test="${pageMaker.prev}">
 					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
 				</c:if>
 				
-				<!-- 각 번호 페이지 버튼 -->
+				
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
     <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
         <a href="${num}">${num}</a>
@@ -252,7 +268,7 @@ th {
 </c:forEach>
 
 				
-				<!-- 다음페이지 버튼 -->
+				
 				<c:if test="${pageMaker.next}">
 					<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
 				</c:if>	

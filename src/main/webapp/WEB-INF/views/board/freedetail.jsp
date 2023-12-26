@@ -22,131 +22,177 @@
 </head>
 <style>
 body {
-	font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 .container {
-	width: 100%;
-	max-width: 800px; /* 컨테이너 너비 증가 */
-	margin: 60px auto; /* 상하 여백 증가 */
-	padding: 40px; /* 내부 패딩 증가 */
-	box-sizing: border-box;
-	background: #f9f9f9; /* 배경색 추가 */
-	border-radius: 10px; /* 테두리 둥글게 */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    width: 100%;
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .input_wrap {
-	padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color:#f9f9f9;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    
 }
 
-label {
-	display: block;
-	margin: 10px 0;
-	font-size: 20px;
+.input_wrap label {
+    flex: 0 0 150px; /* Adjust label width here */
+    margin-right: 20px; /* Spacing between label and input */
 }
 
-input {
-	padding: 5px;
-	font-size: 17px;
-}
-
-textarea {
-	width: 600px;
-	height: 200px;
-	font-size: 15px;
-	padding: 10px;
-}
-
-.btn {
-	display: inline-block;
-	font-size: 20px;
-	padding: 6px 12px;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	font-weight: 600;
-	width: 140px;
-	height: 41px;
-	line-height: 39px;
-	text-align: center;
-	margin-left: 30px;
-	cursor: pointer;
+.input_wrap input {
+    flex: 1; /* Takes the remaining space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .btn_wrap {
-	padding-left: 80px;
-	margin-top: 50px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 20px;
+    border-radius: 4px;
 }
 
-/* 댓글 섹션 스타일링 */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 150px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #06b66c;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    margin-right: 10px;
+
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
 .comment-section {
-	margin-top: 40px;
-	background: #f7f7f7;
-	border: 1px solid #e1e1e1;
-	border-radius: 4px;
-	padding: 20px;
-}
-
-.comment-input {
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 10px;
-	margin-bottom: 10px;
-	resize: none;
-}
-
-.comment-submit {
-	width: 100%;
-	padding: 10px 0;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .comment-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.comment-list li {
-	background: white;
-	border-bottom: 1px solid #e1e1e1;
-	padding: 10px;
-	border-radius: 4px;
-	margin-top: 8px;
+.comment-submit {
+
+                    display: inline-block;
+                    outline: none;
+                    cursor: pointer;
+                    font-weight: 500;
+                    border: 1px solid transparent;
+                    border-radius: 2px;
+                    height: 36px;
+                    line-height: 34px;
+                    font-size: 14px;
+                    color: #ffffff;
+                    background-color: #007c89;
+                    transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
+                    padding: 0 18px;
+                    :hover {
+                        color: #ffffff;
+                        background-color: #006570;
+                    }
+                
 }
 
-.comment {
-	color: #555;
-	font-size: 14px;
-	line-height: 1.5;
+.reply {
+    background: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.reply:hover {
+    background-color: #f3f3f3;
+}
+
+.reply p {
+    margin: 5px 0;
+    color: #333;
 }
 
 .comment-author {
-	font-weight: bold;
-	color: #000;
-	margin-bottom: 5px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.comment-content {
+    color: #555;
 }
 
 .comment-date {
-	font-size: 12px;
-	color: #999;
-	margin-top: 10px;
+    font-size: 0.9em;
+    color: #888;
 }
 
-/* 추가적인 스타일링이 필요한 경우 여기에 작성 */
 </style>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<div class="input_wrap">
-				<label>게시판 카테고리</label>
+				<label>카테고리</label>
+				
+			<c:if test="${pageInfo.board_private == 1}">
+    <script type="text/javascript">
+        alert("비공개 처리된 게시글입니다.");
+        window.history.back(); 
+    </script>
+</c:if>
+			
+				
 				<c:choose>
 					<c:when test="${pageInfo.category_no == 1 }">
 						<input name="category_no" readonly="readonly" value="공지사항">
@@ -159,12 +205,9 @@ textarea {
 					</c:when>
 				</c:choose>
 			</div>
+		
 			<div class="input_wrap">
-				<label>게시판 번호</label> <input name="board_no" readonly="readonly"
-					value='<c:out value="${pageInfo.board_no}"/>'>
-			</div>
-			<div class="input_wrap">
-				<label>게시판 제목</label> <input name="board_title" readonly="readonly"
+				<label>제목</label> <input name="board_title" readonly="readonly"
 					value='<c:out value="${pageInfo.board_title}"/>'>
 			</div>
 			<%-- <div class="input_wrap">
@@ -172,18 +215,28 @@ textarea {
 		<input name="board_recom" readonly="readonly" value='<c:out value="${pageInfo.hit_count}"/>' >
 	</div> --%>
 			<div class="input_wrap">
-				<label>게시판 내용</label>
+				<label>내용</label>
 				<textarea rows="3" name="board_content" readonly="readonly"><c:out
 						value="${pageInfo.board_content}" /></textarea>
 			</div>
-
-
-
+			
+				
 
 			<div class="btn_wrap">
-				<a class="btn" id="list_btn">조회 페이지</a> <a class="btn"
-					id="modify_btn">수정 하기</a> <a class="btn" id="reply_btn"
-					href="<c:url value='/board/qnareply?board_title=${pageInfo.board_title}' />">답변</a>
+			
+					<a class="btn" id="list_btn">조회 페이지</a> 
+					
+				<c:choose>
+    <c:when test="${pageInfo.member_no == loginInfo.member_no }">
+        <a class="btn" id="modify_btn">수정 하기</a>
+    </c:when>
+    
+    <c:otherwise>
+        <!-- 현재 사용자가 작성자가 아니므로 수정 버튼을 표시하지 않음 -->
+    </c:otherwise>
+</c:choose>
+
+				
 				<a class="btn" id="recom_btn" href="javascript:void(0);"
 					onclick="RecomCount(${list.board_no});">추천</a>
 			</div>
@@ -206,17 +259,23 @@ textarea {
 							<div class="reply">
 								<p>
 									작성자:
-									<c:out value="${reply.member_no}" />
+									<c:out value="${reply.member_nickname}" /> 
 								</p>
 								<p>
 									내용:
-									<c:out value="${reply.reply_content}" />
+								<%-- 	<c:out value="${reply.reply_content}" escapeXml="false" /> --%>
+								
+									  <div class="cont">${reply.reply_content }</div>
 								</p>
 								<p>
 									작성일:
 									<fmt:formatDate value="${reply.reply_rdate}"
 										pattern="yyyy-MM-dd HH:mm:ss" />
 								</p>
+								<!-- 현재 로그인한 사용자가 댓글 작성자와 동일한 경우, 삭제 버튼 표시 -->
+								<c:if test="${loginInfo.member_no == reply.member_no}">
+									<button class="delete-comment" data-reply-id="${reply.reply_no}">삭제</button>
+								</c:if>
 							</div>
 						</c:forEach>
 					</c:if>

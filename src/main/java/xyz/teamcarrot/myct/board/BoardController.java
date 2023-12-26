@@ -1,12 +1,27 @@
 package xyz.teamcarrot.myct.board;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -15,6 +30,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +43,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import xyz.teamcarrot.myct.member.MemberService;
 import xyz.teamcarrot.myct.member.MemberVO;
 
-/* Controller ������̼��� ���� �ش� Ŭ������ �������� ������ �ν��ϱ� ���� 
- * RequestMapping�� /board�� �����ϴ� ��� ó���� BoardController�� �ϵ��� �����ϴ� ������ �Ѵ�.
- * */
+
+
+
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
@@ -79,6 +95,8 @@ public class BoardController {
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 		if (member != null) {
 			
+			boolean isOwner = member.getMember_no() == board.getBoard_no();
+			model.addAttribute("isOwnser", isOwner);
 			model.addAttribute("loginMember", member);
 		}
 
@@ -87,13 +105,19 @@ public class BoardController {
 	
 	// (관리자 페이지) 자유게시판 게시글 관리
 	@GetMapping("/board/boardInfo")
-	public String boardInfo(Model model, HttpSession session, Criteria cri) {
+	public String boardInfo(Model model,@RequestParam(value = "page", defaultValue = "1") int page, HttpSession session, Criteria cri) {
 
-		model.addAttribute("page", bservice.getListPaging(cri));
-		int total = bservice.getTotal(cri);
+		// 페이지 정보와 게시판 종류에 관한 Criteria 객체 생성
+	    Criteria criteria = new Criteria(page, 10); // 페이지당 10개의 게시물
 
-		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-		model.addAttribute("pageMaker", pageMake);
+	    // 게시판 목록을 모델에 추가
+	    List<BoardVO> qnaList = bservice.getListPaging(criteria);
+	    model.addAttribute("page", qnaList);
+
+	    // 전체 게시물 수를 기준으로 PageMakerDTO 객체 생성하여 모델에 추가
+	    int total = bservice.getTotal(criteria);
+	    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+	    model.addAttribute("pageMaker", pageMaker);
 
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 		if (member != null) {
@@ -103,23 +127,33 @@ public class BoardController {
 	}
 	
 	
-	// 문의게시판 리스트 출력
 	@GetMapping("/qnaboard")
-	public String QnaboardList(Model model, HttpSession session, HttpServletRequest request) {
-		log.info("QnaboardListGET");
+	public String QnaboardList(Model model, 
+	                           @RequestParam(value = "page", defaultValue = "1") int page,
+	                           HttpSession session) {
 
-		// 게시판 목록을 모델에 추가
-		model.addAttribute("page", bservice.getList());
+	    // 페이지 정보와 게시판 종류에 관한 Criteria 객체 생성
+	    Criteria criteria = new Criteria(page, 10); // 페이지당 10개의 게시물
 
-		
-		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-		if (member != null) {
-			
-			model.addAttribute("member", member);
-		}
+	    // 게시판 목록을 모델에 추가
+	    List<BoardVO> qnaList = bservice.getListPaging(criteria);
+	    model.addAttribute("page", qnaList);
 
-		return "board/Qnaboard";
+	    // 전체 게시물 수를 기준으로 PageMakerDTO 객체 생성하여 모델에 추가
+	    int total = bservice.getTotal(criteria);
+	    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+	    model.addAttribute("pageMaker", pageMaker);
+
+	    // 기타 필요한 정보 (예: 현재 로그인한 사용자 정보)
+	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+	    if (member != null) {
+	        model.addAttribute("member", member);
+	    }
+
+	    return "board/Qnaboard";
 	}
+
+	
 
 	// 문의게시판 게시글 조회와 답글 목록을 조회
 	@GetMapping("/Qnadetail")
@@ -144,10 +178,17 @@ public class BoardController {
 	
 	// (관리자 페이지) 문의게시판 게시글 관리
 	@GetMapping("/board/qna")
-	public String qna(Model model, HttpSession session, HttpServletRequest request) {
+	public String qna(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "searchType", required = false) String searchType, HttpSession session, HttpServletRequest request) {
 		log.info("QnaboardListGET");
+		Criteria criteria = new Criteria(page, 10);
 
-		model.addAttribute("page", bservice.getList());
+		List<BoardVO> notices = bservice.getListPaging(criteria);
+	    int total = bservice.getTotal(criteria);
+
+	    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+
+	    model.addAttribute("page", notices);
+	    model.addAttribute("pageMaker", pageMaker);
 		
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 		if (member != null) {
@@ -157,26 +198,49 @@ public class BoardController {
 		return "admin/board/qna";
 	}
 	
-	// 공지사항 게시글 리스트 출력
-	@GetMapping("/noticeboard")
-	public String noticeboard(Model model, HttpSession session, HttpServletRequest request) {
 
-		
-		model.addAttribute("page", bservice.getList());
-		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+	@GetMapping("/noticeboard")
+	public String noticeboard(Model model, 
+	                          @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "searchType", required = false) String searchType,
+	                          @RequestParam(value = "searchKeyword", required = false) String searchKeyword, HttpSession session) {
+	    Criteria criteria = new Criteria(page, 10);  // 10은 페이지당 게시물 수, 필요에 따라 조정 가능
+	    
+	
+	    criteria.setSearchType(searchType);
+	    criteria.setKeyword(searchKeyword);
+	    
+	    List<BoardVO> notices = bservice.getListPaging(criteria);
+	    int total = bservice.getTotal(criteria);
+
+	    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+
+	    model.addAttribute("page", notices);
+	    model.addAttribute("pageMaker", pageMaker);
+	    
+	    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 		if (member != null) {
 			
 			model.addAttribute("noticeMember", member);
 		}
-		return "board/noticeboard";
+
+	    return "board/noticeboard";
 	}
+
+
 	
 	// (관리자 페이지) 공지사항 게시글 관리 
 	@GetMapping("/board/notice")
-	public String notice(Model model, HttpSession session, HttpServletRequest request) {
+	public String notice(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "searchType", required = false) String searchType, HttpSession session, HttpServletRequest request) {
 
-		
-		model.addAttribute("page", bservice.getList());
+		 Criteria criteria = new Criteria(page, 10); 
+		 
+		 List<BoardVO> notices = bservice.getListPaging(criteria);
+		    int total = bservice.getTotal(criteria);
+
+		    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+
+		    model.addAttribute("page", notices);
+		    model.addAttribute("pageMaker", pageMaker);
 
 		
 		MemberVO member = (MemberVO) session.getAttribute("loginInfo");
@@ -291,16 +355,29 @@ public class BoardController {
 			return "redirect:/";
 		}
 	}
+	
+	@PostMapping("/updatePrivate")
+	@ResponseBody
+	public String updatePrivate(@RequestParam("board_no") int board_no, @RequestParam("board_private") int board_private) {
+		try {
 
-	/* �Խ��� ��� ������ ���� */
+			System.out.println("Updating board: " + board_no + " with private status: " + board_private);
+			bservice.updatePrivateStatus(board_no, board_private);
+			return "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "fail";
+		}
+	}
+
 	@GetMapping("/write")
 	public String boardEnrollGET() {
 
 		log.info("�Խ��� ��� ������ ����");
 		return "board/write";
 	}
+	
 
-	/* �Խ��� ��� */
 	@PostMapping("/insert")
 	public String boardEnrollPOST(@RequestParam("file") MultipartFile file, HttpSession session, BoardVO board,
 			RedirectAttributes rttr, HttpServletRequest request) {
@@ -309,22 +386,26 @@ public class BoardController {
 		session = request.getSession();
 		MemberVO login = (MemberVO) session.getAttribute("loginInfo");
 		board.setMember_no(login.getMember_no());
+		
+
 
 		bservice.enroll(board, file, request);
 		rttr.addFlashAttribute("result", "enrol success");
-		switch (board.getCategory_no()) {
+		switch (board.getCategory_no()) {	
 		case 1:
 			return "redirect:/board/noticeboard";
 		case 2:
 			return "redirect:/board/freeboard";
 		case 3:
 			return "redirect:/board/qnaboard";
+		case 4:
+			return "redirect:/board/cardBoard";
 		default:
 			return "redirect:/";
 		}
 	}
 
-	/* ������ ���� */
+	
 	@PostMapping("/delete")
 	public String boardDeletePOST(int board_no, int category_no, RedirectAttributes rttr) {
 		bservice.delete(board_no);
@@ -343,7 +424,7 @@ public class BoardController {
 		}
 	}
 
-	/* ���� ������ �̵� */
+
 	@GetMapping("/modify")
 	public String boardModifyGET(int board_no, Model model/* , Criteria cri */) {
 
@@ -356,10 +437,13 @@ public class BoardController {
 	@PostMapping("/modify")
 	public String boardModifyPOST(BoardVO board, RedirectAttributes rttr, int category_no) {
 
-		bservice.modify(board);
+		int updateCount = bservice.modify(board);
 
-		rttr.addFlashAttribute("result", "modify success");
-
+	    if(updateCount > 0) {
+	        rttr.addFlashAttribute("result", "modify success");
+	    } else {
+	        rttr.addFlashAttribute("result", "modifyFail");
+	    }
 	
 		switch (category_no) {
 		case 1:
@@ -373,29 +457,20 @@ public class BoardController {
 		}
 
 	}
+	
+	
 
-	@GetMapping("/board/qnaReply")
-	public String qnaReply() {
-
-		return "admin/board/qnaReply";
-	}
-
-	@GetMapping("/news/adminNews")
-	public String adminNews() {
-
-		return "admin/news/adminNews";
-	}
-
-	@GetMapping("/news/adminWrite")
-	public String adminWrite() {
-
-		return "admin/news/adminWrite";
-	}
 
 	@GetMapping("/mypage/main")
 	public String main() {
 
 		return "mypage/main";
+	}
+	
+	@GetMapping("/mypage/myComment")
+	public String replyListGet(ReplyVO reply, Model model) {
+		
+		return "mypage/myCommnet";
 	}
 
 }

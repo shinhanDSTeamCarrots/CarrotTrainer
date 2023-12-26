@@ -11,17 +11,22 @@
 	</sql>
 	<!-- 운동 정보 -->
 	<select id="healthDic" resultType="java.util.Map" parameterType="map">
-		SELECT health_dic_no AS no, health
+		SELECT dic.health_dic_no AS no
+			, dic.health
 			, CAST(ROUND(((met * (3.5 * NVL(bodyInfo.weight,70) * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
-		FROM tb_health_dic
+			, bookmark.health_bookmark_no AS bookmarkNo
+		FROM tb_health_dic dic
 			LEFT JOIN tb_body_info bodyInfo
 			ON bodyInfo.member_no = #{member_no}
+			LEFT JOIN tb_health_bookmark bookmark
+			ON dic.health_dic_no = bookmark.health_dic_no
+			AND bookmark.member_no = #{member_no}
 		<include refid="search"/>
 	</select>
 	
 	<!-- 운동 즐겨찾기 검색 -->
 	<select id="bookmarkHealthDic" resultType="java.util.Map" parameterType="map">
-		SELECT dic.health_dic_no AS no, dic.health, bookmark.health_bookmark_no
+		SELECT dic.health_dic_no AS no, dic.health, bookmark.health_bookmark_no AS bookmarkNo
 			, CAST(ROUND(((met * (3.5 * NVL(bodyInfo.weight,70) * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
 		FROM tb_health_dic dic 
 			LEFT JOIN tb_health_bookmark bookmark

@@ -6,10 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제가 완료되었습니다!</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 </head>
 <body>
+ <div class="wrap">
+   	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<p>결제 번호: ${order }</p>
 	<p>결제가 완료되었습니다!</p>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	</div>
 </body>
 </html>
