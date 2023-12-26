@@ -165,7 +165,7 @@
 	    			  			</div>
     			  				<div class="modalBody-result" id="modalBody-calorie">
     			  					<div class="modalBody-text">칼로리(kcal)</div>
-    			  					<div class="modalBody-input"><input id="calorie"></div>
+    			  					<div class="modalBody-input"><input id="calorie" readonly="readonly"></div>
     			  				</div>
     			  			</div>
     			  			<div id="modalBody-button">
