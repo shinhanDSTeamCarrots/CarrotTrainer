@@ -15,7 +15,7 @@
 
 
 
-function joinDone() {
+/*function joinDone() {
     const buttons = document.querySelectorAll('.btn');
     const selectedButtons = [];
 
@@ -56,7 +56,42 @@ function changeColor(button) {
         // 짝수 번 클릭
         button.style.backgroundColor = 'white';
     }
+}*/
+
+function joinDone() {
+    var checkboxes = document.getElementsByName('body');
+    var selectedValues = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            // checkbox의 name 속성값을 가져와서 배열에 추가
+            selectedValues.push(checkboxes[i].name);
+        }
+    }
+
+    // 배열의 값을 String으로 변환하고 합치기
+    var stringValue = selectedValues.join("");
+    var numValue = parseInt(stringValue, 10);
+    if(stringValue ==""){
+    	alert("최소 하나의 항목을 선택해 주세요.");
+    } else{
+    	$.ajax({
+    		type : 'GET',
+    		url: 'interestRegist',
+    		data: numValue,
+    		success: function(response){
+    			alert('회원 가입을 축하해요!');
+    		},
+            error: function (error) {
+                console.error('에러 발생:', error);
+            }
+    		
+    	});
+    }
+    $("#frm").submit();  
 }
+
+
 
 </script>
 <style>
@@ -151,8 +186,9 @@ function changeColor(button) {
     	<div class="container">
     		<div class = "menu">
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
-    				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>    				
-    				<form name="frm" id="frm" action="interestregist" method="get">
+    				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>  
+    				  				
+    				<form name="frm" id="frm" action="joinInterest" method="get">
     				<div class="btn-container">
     					<input type = "checkbox" name = "1" id ="body" >눈
     					<input type = "checkbox" name ="2" id ="body">귀

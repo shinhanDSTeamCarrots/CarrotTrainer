@@ -58,4 +58,9 @@ public interface BoardMapper {
     // 답변 상태 (완성)
     public void updateHasReplyStatus(int board_no, boolean status);
     
+    // 관리자 페이지에서 비공개 처리(완성), Param을 안쓰면 기능 동작을 안함...
+    public void updatePrivateStatus(@Param("board_no") int board_no, @Param("board_private") int board_private);
+    
+    // 마이페이지 댓글 목록 출력(미완성)
+    public List<ReplyVO> replyList();
 }

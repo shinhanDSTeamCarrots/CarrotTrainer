@@ -10,6 +10,8 @@
 	<div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
+    	
+    	
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

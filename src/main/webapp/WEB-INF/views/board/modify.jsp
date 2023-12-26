@@ -17,68 +17,94 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
-
 </head>
 <style>
 body {
-	font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* Lighter background for overall page */
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 .container {
-	width: 100%;
-	max-width: 800px; /* 컨테이너 너비 증가 */
-	margin: 60px auto; /* 상하 여백 증가 */
-	padding: 40px; /* 내부 패딩 증가 */
-	box-sizing: border-box;
-	background: #f9f9f9; /* 배경색 추가 */
-	border-radius: 10px; /* 테두리 둥글게 */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    box-sizing: border-box;
+    background: #ffffff; /* White background for container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Input Wraps */
 .input_wrap {
-	padding: 5px 20px;
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 20px; /* Added spacing between input fields */
+    gap: 10px; /* Space between label and input */
 }
 
 label {
-	display: block;
-	margin: 10px 0;
-	font-size: 20px;
+    flex: 0 0 130px; /* Adjust the width of the label */
+    margin: 0;
+    font-size: 18px;
+    color: #333;
 }
 
-input {
-	padding: 5px;
-	font-size: 17px;
+input, textarea {
+    flex: 1; /* Input takes up the remaining space */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 textarea {
-	width: 800px;
-	height: 200px;
-	font-size: 15px;
-	padding: 10px;
+    height: 150px; /* Adjusted for better space */
 }
 
-.btn {
-	display: inline-block;
-	font-size: 20px;
-	padding: 6px 12px;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	font-weight: 600;
-	width: 140px;
-	height: 41px;
-	line-height: 39px;
-	text-align: center;
-	margin-left: 30px;
-	cursor: pointer;
-}
-
+/* Button Styles */
 .btn_wrap {
-	padding-left: 80px;
-	margin-top: 50px;
+    display: flex; /* Align buttons in a row */
+    align-items: center;
+    margin-top: 30px; 
+    gap: 10px; /* Space between buttons */
 }
 
-#delete_btn{
-    background-color: #f3e3e7;
+/* ...rest of your button styles... */
+
+
+/* Buttons */
+.btn {
+    font-size: 16px;
+    padding: 10px 20px; /* More padding for a larger clickable area */
+    background-color: #007bff; /* Primary color for buttons */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+    margin-right: 10px; /* Spacing between buttons */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade for hover state */
+}
+
+#delete_btn {
+    background-color: #f44336; /* Red color for delete action */
+}
+
+#delete_btn:hover {
+    background-color: #d32f2f; /* Slightly darker red for hover state */
+}
+
+/* Button Wrapper */
+.btn_wrap {
+    margin-top: 30px; /* More top margin for spacing */
+    padding-left: 0; /* Align buttons with form fields */
 }
 
 /* 추가적인 스타일링이 필요한 경우 여기에 작성 */
@@ -91,27 +117,25 @@ textarea {
 			<form id="modifyForm" action="/myct/board/modify" method="post">
 			
 				<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>	
+				
+				<input type="hidden" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
+				
 					
 				<div class="input_wrap">
-					<label>게시판 번호</label> <input name="board_no" readonly="readonly"
-						value='<c:out value="${pageInfo.board_no}"/>'>
-				</div>
-				<div class="input_wrap">
-					<label>게시판 제목</label> <input name="board_title"
-						value='<c:out value="${pageInfo.board_title}"/>'>
-				</div>
-				<div class="input_wrap">
-					<label>게시판 내용</label>
-					<textarea rows="3" name="board_content"><c:out
-							value="${pageInfo.board_content}" /></textarea>
-				</div>
-
-				<div class="btn_wrap">
-					<a class="btn" id="list_btn">목록 페이지</a>
-					 <a class="btn" id="modify_btn">수정 완료</a>
-					  <a class="btn" id="delete_btn">삭제</a> 
+            <label for="board_title">게시판 제목</label>
+            <input id="board_title" name="board_title" value='<c:out value="${pageInfo.board_title}"/>'>
+        </div>
+        <div class="input_wrap">
+            <label for="board_content">게시판 내용</label>
+            <textarea id="board_content" rows="3" name="board_content"><c:out value="${pageInfo.board_content}"/></textarea>
+        </div>
+        <div class="btn_wrap">
+            <a class="btn" id="list_btn">목록 페이지</a>
+            <a class="btn" id="modify_btn">수정 완료</a>
+            <a class="btn" id="delete_btn">삭제</a>
+      		<a class="btn" id="cancel_btn">수정 취소</a>
 					
-				</div>
+        </div>
 				
 			</form>
 			<form id="infoForm" action="/myct/board/modify" method="get">
@@ -122,9 +146,7 @@ textarea {
 			</form>
 			
 			<form id="cancleForm" action="/myct/board/cancle" method="get">
-							<div class="btn_wrap">
-						 <a class="btn" id="cancel_btn">수정 취소</a>
-						 </div>
+							
 					<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
 					<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
 			</form>
@@ -167,11 +189,11 @@ textarea {
 	        form.submit();
 	    });
 
-		/* 수정 하기 버튼 */
-		$("#modify_btn").on("click", function(e) {
-			
-			mForm.submit();
-		});
+	    /* 수정 완료 버튼 */
+	    $("#modify_btn").on("click", function(e) {
+	       
+	        mForm.submit();  // 수정 폼 제출
+	    });
 
 		/* 취소 버튼 */
 		$("#cancel_btn").on("click", function(e) {
@@ -184,7 +206,7 @@ textarea {
 		    let actionUrl;
 		    switch (categoryNo) {
 		        case "1":
-		            actionUrl = `/myct/board/noticedetail?board_no=${boardNo}`; 
+		            actionUrl = `/myct/board/Qnadetail?board_no=${boardNo}`; 
 		            break;
 		        case "2":
 		            actionUrl = `/myct/board/freedetail?board_no=${boardNo}`; 
