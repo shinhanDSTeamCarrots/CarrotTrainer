@@ -395,9 +395,30 @@
 		    		<div class="qnaHeader">
 						<h1 class="sub_title">상품문의</h1>
 						<p class="qnaCnt"><span>총 개</span></p>
-						<button class="writebtn">작성하기</button>
+						
 					</div>
-					<!-- 문의하기 작성 폼 -->
+					
+				 	<div class="qnaList">
+				 		<h2>문의목록</h2>	
+				  		<table class="qnaTable">
+							<thead>
+								<tr>	    					
+									<th>글번호</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>	    					
+								</tr>
+							</thead>
+							<tbody id="qnaTableBody">
+								
+							
+							</tbody>
+				 		</table>
+					</div>
+					
+					<button class="writebtn">작성하기</button>
+					
+					<!-- 문의하기 작성 폼 -->					
 					<form action="${pageContext.request.contextPath}/detail/qnaInsert" method="post" class="writeform" onsubmit="return false;">
 						<input type="hidden" name="goods_no" value="${item.goods_no}" />
 						<div class="qnawriter">
@@ -433,23 +454,6 @@
 							<button class="closebtn">취소</button>
 						</div>
 					</form>
-				 	<div class="qnaList">
-				 		<h2>문의목록</h2>	
-				  		<table class="qnaTable">
-							<thead>
-								<tr>	    					
-									<th>글번호</th>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>작성일</th>	    					
-								</tr>
-							</thead>
-							<tbody id="qnaTableBody">
-							
-							
-							</tbody>
-				 		</table>
-					</div>
 				</div>			
 			</div>		   
     	</div>
