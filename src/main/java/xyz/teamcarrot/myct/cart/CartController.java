@@ -33,7 +33,7 @@ public class CartController {
 		 // 세션이 비어있거나 로그인되어 있지 않으면 로그인 페이지로 리다이렉트 ( 로그인해야 장바구니 표시가 보일거긴 함)
 	     if (login == null) {
 	        return "redirect:/member/login";
-	    }
+	     }
 	     int member_no = login.getMember_no();
 
 	    // 회원번호에 해당하는 장바구니 목록을 가져와 모델에 추가
@@ -63,8 +63,7 @@ public class CartController {
 	@ResponseBody
 	@PostMapping("/cart/remove")
     public void removeFromCart(@RequestParam List<Integer> cartNos) {
-        service.removeFromCart(cartNos);
-        
+        service.removeFromCart(cartNos);       
     }
 	
 	@PostMapping("cart/update")

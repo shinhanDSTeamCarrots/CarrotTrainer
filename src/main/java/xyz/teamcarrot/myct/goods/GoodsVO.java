@@ -24,7 +24,8 @@ public class GoodsVO {
 	private double goods_rate;
 	private int category_no;
 	
-	
+	private int price_updown;
+
 	private String category_name;
 	
 	
