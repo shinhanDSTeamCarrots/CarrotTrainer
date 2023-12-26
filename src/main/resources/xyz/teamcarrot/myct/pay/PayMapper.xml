@@ -159,7 +159,7 @@
 			</if>
 	</select>
 	
-		<select id="getPurchaseMain" resultType="xyz.teamcarrot.myct.pay.OrderVO" parameterType="map" >
+	<select id="getPurchaseMain" resultType="xyz.teamcarrot.myct.pay.OrderVO" parameterType="map" >
 		SELECT
 			  O.order_no
 			, O.member_no
@@ -192,5 +192,25 @@
 			</if>
 	</select>
 	
+	
+	<update id="updateMemberMileage" parameterType="map">
+		UPDATE	tb_member
+		SET		member_mileage = (SELECT member_mileage + #{mileage_amt} FROM tb_member WHERE member_no = #{member_no})
+		WHERE 	member_no = #{member_no}
+	</update>
+	
+	<insert id="insertMileageLog" parameterType="map">
+		INSERT INTO tb_mileage (
+			member_no
+		  , mileage_change
+		  , mileage_log
+		)
+		VALUES (
+			#{member_no}
+		  , #{mileage_change}
+		  , #{mileage_log}
+		)
+		
+	</insert>
 	
 </mapper>

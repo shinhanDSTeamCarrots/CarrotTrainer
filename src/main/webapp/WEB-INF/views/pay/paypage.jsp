@@ -7,7 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제해줄께</title>
+<title>결제 진행</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script type="text/javascript">
 	let total_money = ${total_amt};
 	let poststr = '${addrJsonStr}';
@@ -218,13 +220,14 @@
 </head>
 <body>
 
-<div>
+<div class="wrap">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <form action="${pageContext.request.contextPath}/pay/payComplete" method="post" id="payform" onsubmit="payformSubmit()">
 	<div>
 	<input type="hidden" name="buy_method" value="${buy_method}" />
 		<h1>구매 정보</h1>
-		<table>
-		<thead>
+		<table id="goodsTable" class="goodsTable">
+		<thead class="goodsThead">
 			<tr>
 				<th><p>썸네일</p></th>
 				<th><p>상품명</p></th>
@@ -236,24 +239,31 @@
 		<tbody>
 			<c:forEach var="gList" items="${goodsList }">
 			<tr>
-				<td rowspan="2"><img alt="상품 이미지" src=""> </td>
-				<td rowspan="2"><p>${gList.goods_name }</p><input type="hidden" value="${gList.goods_no }" name="goods_no"/></td>
-				<td><p>${gList.option_name }</p><input type="hidden" value="${gList.option_no }" name="option_no"/></td>
-				<td rowspan="2"><p>X${gList.goods_cnt } 개</p><input type="hidden" value="${gList.goods_cnt }" name="goods_cnt"/></td>
-				<td><p>${gList.goods_final_price }원</p></td>
+			<c:choose>
+			<c:when test="${not empty gList.goods_thumnail}">
+				<td rowspan="2"><img alt="상품 이미지" src="/myct/img/goods/${gList.goods_thumnail }.jpg" class="goodsImage"> </td>
+			</c:when>
+			<c:otherwise>
+				<td rowspan="2"><div class="emptyGoodsImage"> </td>
+			</c:otherwise>
+			</c:choose>
+				<td rowspan="2"><strong class="goodsName">${gList.goods_name }</p strong><input type="hidden" value="${gList.goods_no }" name="goods_no"/></td>
+				<td><p class="goodsOption">${gList.option_name }</p><input type="hidden" value="${gList.option_no }" name="option_no"/></td>
+				<td rowspan="2"><p class="goodsCnt">X${gList.goods_cnt } 개</p><input type="hidden" value="${gList.goods_cnt }" name="goods_cnt"/></td>
+				<td><p class="goodsFinalPrice">${gList.goods_final_price }원</p></td>
 			</tr>
 			<tr>
-				<td><p>+${gList.option_price }</p> <input type="hidden" name="cart_no" value="${gList.cart_no }" /> </td>
-				<td><p>배달비 0원</p></td>
+				<td><p class="goodsOptionPrice">+${gList.option_price }</p> <input type="hidden" name="cart_no" value="${gList.cart_no }" /> </td>
+				<td><p class="goodsDeliverPrice">배달비 0원</p></td>
 			</tr>
 			</c:forEach>
 		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="2"></td>
-				<td><strong>총 합계</strong></td>
+				<td><strong class="goodsAllSumPrice">총 합계</strong></td>
 				<td><input type="text" value="${total_amt }" class="amountReadOnlyText" readonly></td>
-				<td><strong>원</strong></td>
+				<td><strong class="goodsAllSumPrice">원</strong></td>
 			</tr>
 		</tfoot>
 		</table>
@@ -262,7 +272,7 @@
 
 	<div>
 		<h1>배송 정보</h1>
-		<select id="deliver_combobox" onchange="OnComboChange(this.value)">
+		<select id="deliver_combobox" onchange="OnComboChange(this.value)" class="deliverCombo">
 			<option value="0">직접입력</option>
 		<c:forEach var="addr" items="${addrList }">
 			<option value="${addr.rownum }">${addr.place_name }</option>
@@ -305,14 +315,15 @@
 		<h2>현재 마일리지</h2>
 		<input type="number" value="${mileage }" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/${mileage }원</p>
 		<%-- 아임포트 --%>
-		<input type="button" onclick="kginicis()">KG 이니시스</input>
-		<input type="button" onclick="tosspay()">Toss Pay</input>
-		<input type="button" onclick="kakaopay()">카카오</input>
-		<input type="button" onclick="bankpay()">무통장입금</input>
+		<input type="button" onclick="kginicis()" class="pay CreditPay"><img src="${pageContext.request.contextPath}/img/credit.png" alt="KG 이니시스" ></input>
+		<input type="button" onclick="tosspay()" class="pay TossPay"><img src="${pageContext.request.contextPath}/img/tosspay.png" alt="토스 페이"></input>
+		<input type="button" onclick="kakaopay()" class="pay KakaoPay"><img src="${pageContext.request.contextPath}/img/kakaopay.svg" alt="카카오페이" ></input>
+		<input type="button" onclick="bankpay()" value="무통장입금" class="pay BankPay"/>
 		<br><div id="additionalPayInfo"></div>
 	</div>
 </form>
 </div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 
 

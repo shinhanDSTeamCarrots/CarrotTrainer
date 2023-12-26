@@ -218,7 +218,7 @@ public class ReviewController {
 			service.updateReview(vo);
 		
 		
-		return "redirect:/";
+		return "/detail/"+vo.getGoods_no();
 	}
 	
 	//리뷰 삭제

@@ -130,7 +130,24 @@
 		});
 	});
 	
+	function getReview(page, aligntype) {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review/shoppingReview",
+			data: {
+				goods_no: ${item.goods_no },
+				alignType: aligntype,
+				page_no: page,
+				
+			},
+			success: function(res) {
+				$("#detailReview").html(res);
+			}
+		});
+	}
 	
+	$(function() {
+		getReview(1,"");
+	});
 	
 	</script>
 	
@@ -230,7 +247,7 @@
 				</div>
 				<div class="itemDetailReview" id="detailReview">
 					<p>전체 리뷰</p>
-					<jsp:include page="/review/shoppingReview?goods_no=${item.goods_no }"/>
+					<%--<jsp:include page="/review/shoppingReview?goods_no=${item.goods_no }"/> --%>
 				</div>
 				
 				

@@ -12,19 +12,22 @@
 	var mem_no = "${sessionScope.loginInfo.member_no}";
 	
 	function alignTypeBtnClicked(alignType) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
+		/*let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+alignType;
 		href += "&page_no=1"
-		location.replace(href);
+		location.replace(href);*/
+		getReview(1,alignType);
 	}
 
 	function PageBtnClicked(pagecnt) {
-		let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
+		/*let href = "${pageContext.request.contextPath}"+ "/review/shoppingReview?";
 		href += "goods_no=${map.goods_no}";
 		href += "&alignType="+"${map.alignType}";
 		href += "&page_no="+pagecnt;
-		location.replace(href);
+		location.replace(href);*/
+
+		getReview(pagecnt,${map.alignType});
 	}
 	function onLikeClicked(review_no,e){
 	//로그인 되어있는지 확인

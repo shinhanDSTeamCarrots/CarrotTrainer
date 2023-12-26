@@ -17,4 +17,6 @@ public interface PayMapper {
 	//void updateMainDataThumnail(@Param("order_no")int order_no, @Param("detail_no")int detail_no);
 	List<OrderDetailVO> getPurchaseDetails(Map map);
 	OrderVO getPurchaseMain(Map map);
+	void updateMemberMileage(Map map);
+	void insertMileageLog(Map map);
 }

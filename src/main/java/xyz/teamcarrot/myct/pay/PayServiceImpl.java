@@ -1,6 +1,7 @@
 package xyz.teamcarrot.myct.pay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,8 @@ public class PayServiceImpl implements PayService {
 	public int insertOrders(List<BuyGoodsVO> goodsvos, PayDataDTO dto) {
 		try {
 			System.out.println("member_no:"+dto.getMember_no());
-			int orderno = mapper.insertOrderMain(dto);
-			goodsvos.forEach(g -> g.setOrder_no(orderno));
+			mapper.insertOrderMain(dto);
+			goodsvos.forEach(g -> g.setOrder_no(dto.getOrder_no()));
 			List<Integer> iList = new ArrayList<Integer>();
 			for(BuyGoodsVO bgv : goodsvos) {
 				mapper.insertOrderDetail(bgv);
@@ -45,8 +46,26 @@ public class PayServiceImpl implements PayService {
 					iList.add(bgv.getCart_no());
 				}
 			}
-			cartmapper.deleteSelected(iList);
-			return orderno;
+			if(dto.getBuy_method().equals("C"))
+				cartmapper.deleteSelected(iList);
+			//추가로 마일리지 넣고 뺏기
+			Map paramMap = new HashMap<String, Object>();
+			paramMap.put("member_no", dto.getMember_no() );
+			paramMap.put("mileage_amt", dto.getPay_price() * 0.01  - dto.getMileage());
+			mapper.updateMemberMileage(paramMap);
+			if(dto.getMileage() != 0) {
+				paramMap.clear();
+				paramMap.put("member_no", dto.getMember_no() );
+				paramMap.put("mileage_change", - dto.getMileage());
+				paramMap.put("mileage_log","["+ dto.getOrder_no()+"]상품 구매 사용 마일리지");
+				mapper.insertMileageLog(paramMap);
+			}
+			paramMap.clear();
+			paramMap.put("member_no", dto.getMember_no() );
+			paramMap.put("mileage_change", (dto.getPay_price() * 0.01));
+			paramMap.put("mileage_log","["+ dto.getOrder_no()+"]상품 구매 추가 마일리지");
+			mapper.insertMileageLog(paramMap);
+			return dto.getOrder_no();
 		}
 		catch(Exception exception) {
 			throw exception;

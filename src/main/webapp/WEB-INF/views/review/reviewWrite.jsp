@@ -6,11 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>리뷰 작성</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div>개발자 리뷰 테스트</div>
+<div class="wrap">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div>
 	<%-- 상품정보 --%>
 	<%--이미지 / 이름 옵션 종류 출력 --%>
@@ -36,10 +40,6 @@
 	<div>
 		<%-- 별점. 나중에는 드래그방식이나 클릭으로 --%>
 		<c:if test="${mode eq 'w' }">
-		</c:if>
-		<c:if test="${mode eq 'm' }">
-		</c:if>
-		<c:if test="${mode eq 'w' }">
 			<input id="review_point" type="number" value="1" min="1" max="10" onchange="onChangeVal()" name="point" />
 		</c:if>
 		<c:if test="${mode eq 'm' }">
@@ -53,6 +53,8 @@
 	<input type="button" value="취소" class="reviewCancle cancle" id="btn_reviewCancle" onclick="OnCancle()"/>
 	<input type="submit" value="등록" class="reviewSubmit submit" id="btn_reviewSubmit"/>
 </form>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+</div>
 
 </body>
 
