@@ -1,22 +1,47 @@
-package xyz.teamcarrot.myct.board;
+	package xyz.teamcarrot.myct.board;
 
 import java.util.Arrays;
 
 public class Criteria {
 	
-	 /* ÇöÀç ÆäÀÌÁö */
+	
+	 private int page;  // í˜„ìž¬ íŽ˜ì´ì§€ ë²ˆí˜¸
+
+	    // íŽ˜ì´ì§€ ë²ˆí˜¸ì— ëŒ€í•œ getter
+	    public int getPage() {
+	        return page;
+	    }
+
+	    // íŽ˜ì´ì§€ ë²ˆí˜¸ì— ëŒ€í•œ setter
+	    public void setPage(int page) {
+	        this.page = page;
+	    }
+
+	    private String searchType;
+	    private String searchKeyword;
+	    
+	    public String getSearchType() {
+	        return searchType;
+	    }
+
+	    public void setSearchType(String searchType) {
+	        this.searchType = searchType;
+	    }
+	
+	
+	 /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     private int pageNum;
     
-    /* ÇÑ ÆäÀÌÁö ´ç º¸¿©Áú °Ô½Ã¹° °¹¼ö */
+    /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     private int amount;
     
-    /* °Ë»ö Å°¿öµå */
+    /* ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ */
     private String keyword;
     
-    /* °Ë»ö Å¸ÀÔ */
+    /* ï¿½Ë»ï¿½ Å¸ï¿½ï¿½ */
     private String type;
     
-    /* °Ë»ö Å¸ÀÔ ¹è¿­ */
+    /* ï¿½Ë»ï¿½ Å¸ï¿½ï¿½ ï¿½è¿­ */
     private String[] typeArr;
     
     public String getType() {
@@ -44,16 +69,16 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 
-	/* ½ºÅµ ÇÒ °Ô½Ã¹° ¼ö( (pageNum-1) * amount ) */
+	/* ï¿½ï¿½Åµ ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½( (pageNum-1) * amount ) */
     private int skip;
     
-    /* ±âº» »ý¼ºÀÚ -> ±âº¾ ¼¼ÆÃ : pageNum = 1, amount = 10 */
+    /* ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½âº¾ ï¿½ï¿½ï¿½ï¿½ : pageNum = 1, amount = 10 */
     public Criteria() {
         this(1,10);
         this.skip = 0;
     }
     
-    /* »ý¼ºÀÚ => ¿øÇÏ´Â pageNum, ¿øÇÏ´Â amount */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½Ï´ï¿½ pageNum, ï¿½ï¿½ï¿½Ï´ï¿½ amount */
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;

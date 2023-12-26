@@ -20,65 +20,192 @@
 </head>
 <style>
 
+body {
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	background-color: #f4f4f4;
+}
 
+.container {
+	max-width: 1200px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .notice-table {
-    margin: 20px auto;
-    width: 60%;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; /* 컬럼 너비 고정 */
-  }
-  th, td {
+.board-title {
+font-size: 2.0rem;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed; /* 컬럼 너비 고정 */
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: center;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.delete-btn, .write-btn {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.modify-btn {
+	background-color: #4bb399;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.delete-btn {
+	background-color: #f44336;
+}
+
+.Private-btn {
+	background-color: #6d58a6;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.buttons {
+	text-align: right;
+	margin-bottom: 10px;
+}
+
+th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3) {
+	text-align: center;
+}
+
+.pageInfo {
+	list-style: none;
+	display: inline-block;
+	margin: 50px 0 0 400px;
+}
+
+.pageInfo li {
+	float: left;
+	font-size: 20px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.active {
+	background-color: #cdd5ec;
+}
+
+.search_area {
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 0px;
+}
+
+.search_area input {
+	height: 30px;
+	width: 250px;
+}
+
+.search_area button {
+	width: 100px;
+	height: 36px;
+	background-color: #4CAF50; /* 버튼 배경색 */
+	color: white; /* 버튼 텍스트 색상 */
+	font-size: 1.3rem; /* 버튼 글씨 크기 조정 */
+}
+
+.search_area select {
+	height: 35px;
+}
+
+.pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.pagination span {
+	margin: 0 5px;
+	cursor: pointer;
+	font-size: 25px;
+}
+  
+ .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  .delete-btn, .write-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+    color: #333;
     text-decoration: none;
-  }
-  .delete-btn{
-    background-color: #f44336;
-  }
-  
-  
-  .buttons {
-    text-align: right;
-    margin-bottom: 10px;
-  }
-  th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3) {
-    text-align: center;
-  }
-  
-  
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 
 <body>
 	<div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	
-    	<div class="notice-table">
+    	<div class="container">
     	
-    		<h1>관리자 공지사항</h1>
+    		<div class="board-title">관리자 공지게시판</div>
   <div class="buttons">
     <button class="write-btn" onclick="writeNotice()">
-   		 <a href="write" class="write-button">게시판 등록</a>
+   		 <a href="write" class="write-button">게시글 등록</a>
    		
     </button>
      
    		 <button onclick="deleteSelectedBoards()" class="write-btn">선택 삭제</button>
-        <button onclick="modifySelectedBoard()" class="write-btn">선택 수정</button>
+   
   </div>
 	
 			<table>
@@ -106,9 +233,10 @@
 								<td>
 									 <a href="javascript:void(0);"
 									onclick="goToDetail(${vo.board_no});"> <c:out
-											value="${vo.board_title}" /> <c:if test="${vo.hasReply}">
+											value="${vo.board_title}" /> 
+											<%-- <c:if test="${vo.hasReply}">
 											<span style="color: green;">답변완료</span>
-										</c:if>
+										</c:if> --%>
 								</a>
 								</td>
 								<td><c:out value="${vo.member_nickname}" /></td>
@@ -118,7 +246,7 @@
 
 								<td>
 									<div class="btn_wrap">
-										<button class="delete-btn" data-board-no="${vo.board_no}"
+										<button class="modify-btn" data-board-no="${vo.board_no}"
 											data-category-no="${vo.category_no}"
 											onclick="modifyBoard(this)">수정</button>
 
@@ -140,8 +268,29 @@
 				
 				</tbody>
 			</table>
-		</div>
+			
+			
+			
+				<div class="pagination">
+    <c:if test="${pageMaker.prev}"> <!-- 이전 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> <!-- 다음 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
 
+
+
+		</div>
+		
+		
+		
 		<form id="infoForm" action="/board/modify" method="get">
 			<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
 			<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>

@@ -33,10 +33,12 @@ body {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.notice-table {
-	margin: 20px auto;
-	width: 60%;
+.board-title {
+font-size: 2.0rem;
+	font-weight: 700;
+	margin-bottom: 10px;
 }
+
 
 table {
 	width: 100%;
@@ -48,6 +50,11 @@ th, td {
 	border: 1px solid #ddd;
 	padding: 8px;
 	text-align: center;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #f5f5f5;
 }
 
 th {
@@ -101,6 +108,17 @@ th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3) {
 	font-weight: 500;
 }
 
+.pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.pagination span {
+	margin: 0 5px;
+	cursor: pointer;
+	font-size: 25px;
+}
+
 a:link {
 	color: black;
 	text-decoration: none;
@@ -142,6 +160,24 @@ a:hover {
 .search_area select {
 	height: 35px;
 }
+
+  .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 
 <body>
@@ -150,10 +186,10 @@ a:hover {
 
 		<div class="container">
 
-			<h1>관리자 게시판관리</h1>
+			<div class="board-title">관리자 게시판 관리</div>
 			<div class="buttons">
 				<button class="write-btn" onclick="writeNotice()">
-					<a href="write" class="write-button">게시판 등록</a>
+					<a href="write" class="write-button">게시글 등록</a>
 
 				</button>
 
@@ -194,7 +230,7 @@ a:hover {
 								 <a href="javascript:void(0);"
 								onclick="goToDetail(${vo.board_no});"> <c:out
 										value="${vo.board_title}" /> <c:if test="${vo.hasReply}">
-										<span style="color: green;">답변완료</span>
+								
 									</c:if>
 							</a>
 							</td>
@@ -208,6 +244,7 @@ a:hover {
 									<button class="Private-btn" data-board-no="${vo.board_no}"
 										data-category-no="${vo.category_no}"
 										onclick="modifyBoard(this)">비공개</button>
+
 
 									<button class="delete-btn"
 										onclick="deleteBoard(${vo.board_no})">삭제</button>
@@ -228,8 +265,9 @@ a:hover {
 					
 				</tbody>
 			</table>
-		</div>
-
+			
+			
+			
 		<div class="search_wrap">
 			<div class="search_area">
 				<select name="type">
@@ -256,35 +294,21 @@ a:hover {
 		</div>
 
 
-		<div class="pageInfo_wrap">
-			<div class="pageInfo_area">
-				<ul id="pageInfo" class="pageInfo">
-
-					<!-- 이전페이지 버튼 -->
-					<c:if test="${pageMaker.prev}">
-						<li class="pageInfo_btn previous"><a
-							href="${pageMaker.startPage-1}">Previous</a></li>
-					</c:if>
-
-					<!-- 각 번호 페이지 버튼 -->
-					<c:forEach var="num" begin="${pageMaker.startPage}"
-						end="${pageMaker.endPage}">
-						<li
-							class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-							<a href="${num}">${num}</a>
-						</li>
-					</c:forEach>
-
-
-					<!-- 다음페이지 버튼 -->
-					<c:if test="${pageMaker.next}">
-						<li class="pageInfo_btn next"><a
-							href="${pageMaker.endPage + 1 }">Next</a></li>
-					</c:if>
-
-				</ul>
-			</div>
+	<div class="pagination">
+    <c:if test="${pageMaker.prev}">
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> 
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
 		</div>
+
 
 		<form id="moveForm" method="get">
 			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
@@ -300,19 +324,36 @@ a:hover {
 		let form = $("#infoForm");
 		let mForm = $("#modifyForm"); 
 	    
-	    function modifyBoard(button) {
-	        
-	        var boardNo = $(button).data("board-no");
-	        var categoryNo = $(button).data("category-no");
+	    function modifyBoard(buttonElement) {
+	    	 var boardNo = $(buttonElement).data("board-no");
+	    	    var categoryNo = $(buttonElement).data("category-no"); 
 
-	       
-	        $("#board_no").val(boardNo);
-	        $("#category_no").val(categoryNo);
-
-	        
-	        form.attr("action", "/myct/board/modify");
-	        form.submit();
+	    	  
+	    	    console.log("게시글 번호: " + boardNo + ", 카테고리 번호: " + categoryNo);
+	        var isPrivate = confirm("이 게시글을 비공개 처리하시겠습니까?");
+	        if(isPrivate) {
+	            $.ajax({
+	                url: '/myct/board/updatePrivate',
+	                type: 'POST',
+	                data: {
+	                    board_no: boardNo,	               
+	                    board_private: 1
+	                },
+	                success: function(response) {
+	                    if(response === 'success') {
+	                        alert("비공개 처리 되었습니다.");
+	                        location.reload();  
+	                    } else {
+	                        alert("비공개 처리 실패했습니다.");
+	                    }
+	                },
+	                error: function() {
+	                    alert("오류 발생");
+	                }
+	            });
+	        }
 	    }
+
 
 	    
 	    

@@ -167,13 +167,15 @@ th {
   .search_area select {
   	height: 35px;
   }
+  
+ 
 </style>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<div class="board-title">자유게시판</div>
-			<!-- 글쓰기 버튼 추가 -->
+			<!-- 글쓰기 버튼 -->
 			<div class="write-btn-container">
 			<c:if test="${!empty loginInfo }">
 				<a href="write" class="write-button">게시글 등록</a>
@@ -198,10 +200,24 @@ th {
 						<tr>
 							
 							
-								<td class="title-column">
-								<a class="move" href="javascript:void(0);" onclick="ViewCount(${list.board_no});">
-										<c:out value=" ${list.board_title}" />
-								</a></td> 
+					 <td class="title-column">
+                    <c:choose>
+                       
+                        <c:when test="${list.board_private == 1}">
+                            <a href="javascript:void(0);" onclick="alert('비공개 처리 되었습니다.');location.href='/myct/board/freedetail?board_no=${list.board_no}'">
+                            [비공개 처리 되었습니다.]
+                            </a>
+                        </c:when>
+                       
+                        <c:otherwise>
+                            <a href="/myct/board/freedetail?board_no=${list.board_no}">
+                                <c:out value="${list.board_title}" />
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+								
+								
 								<td><c:out value="${list.member_nickname}" /></td>
 
 							<td><fmt:formatDate pattern="yyyy/MM/dd"
@@ -214,7 +230,7 @@ th {
 						</c:if>
 					</c:forEach>
 
-					<!-- 추가 게시물 행을 여기에 추가 -->
+					
 				</tbody>
 			</table>
 
@@ -239,12 +255,12 @@ th {
 		<div class="pageInfo_area">
 			<ul id="pageInfo" class="pageInfo">
 			
-				<!-- 이전페이지 버튼 -->
+				
 				<c:if test="${pageMaker.prev}">
 					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
 				</c:if>
 				
-				<!-- 각 번호 페이지 버튼 -->
+				
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
     <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
         <a href="${num}">${num}</a>
@@ -252,7 +268,7 @@ th {
 </c:forEach>
 
 				
-				<!-- 다음페이지 버튼 -->
+				
 				<c:if test="${pageMaker.next}">
 					<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
 				</c:if>	

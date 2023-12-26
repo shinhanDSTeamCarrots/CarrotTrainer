@@ -143,26 +143,47 @@ th {
       background-color: #cdd5ec;
   }
   
-  .search_area{
-    display: inline-block;
-    margin-top: 30px;
-    margin-left: 0px;
-  }
-  .search_area input{
-      height: 30px;
-    width: 250px;
-  }
-  .search_area button{
-     width: 100px;
-    height: 36px;
-    background-color: #4CAF50; /* 버튼 배경색 */
-	color: white; /* 버튼 텍스트 색상 */
-	font-size: 1.3rem; /* 버튼 글씨 크기 조정 */
-  }
+  .search-box input[type="text"] {
+    flex: 1; /* 검색창이 남은 공간을 모두 차지하도록 합니다. */
+    padding: 8px; /* 패딩 추가 */
+    border: 2px solid #ddd; /* 경계선 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+.search-box button {
+    padding: 8px 16px; /* 버튼 내부 여백 설정 */
+    margin-left: 8px; /* 검색창과의 간격 설정 */
+    margin-top: 8px;
+    border: none; /* 기본 경계선 제거 */
+    background-color: #007bff; /* 배경 색상 설정 */
+    color: white; /* 글자 색상 설정 */
+    cursor: pointer; /* 커서를 손가락 모양으로 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+.search-box button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 색상 변경 */
+}
   
-  .search_area select {
-  	height: 35px;
-  }
+.pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 <body>
 	<div class="wrap">
@@ -184,6 +205,7 @@ th {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+						<th>조회</th>
 						<th>첨부파일</th>
 					</tr>
 				</thead>
@@ -197,15 +219,13 @@ th {
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
 									<c:out value="${vo.board_title}" />
 									
-									<c:if test="${vo.hasReply}">
-											<span style="color: green;">답변완료</span>
-										</c:if>
+									
 								</a> 
 								</td>
 								<td><c:out value="${vo.member_nickname}" /></td>
 
 								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
-							
+								<td><c:out value="${vo.board_view}" /></td>
 							<td><c:if test="${vo.file_name != null}">
 										<a href="/myct/board/download?fileNo=${vo.file_no}">
 										 <img src="/img/ico_star_on.png" alt="첨부파일">
@@ -214,18 +234,36 @@ th {
 									
 									
 						</tr>
-						
-            <c:if test="${board.hasReply}">
-                <tr>
-                    <td colspan="5" style="text-align:center;">답글 등록됨</td>
-                </tr>
-            </c:if>
+		
 						</c:if>
 					</c:forEach>
 
 					
 				</tbody>
 			</table>
+			
+			 <!-- 검색 폼 -->
+    <form action="${pageContext.request.contextPath}/board/noticeboard" method="get">
+        <div class="search-box">
+            <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요"/>
+            <button type="submit">검색🔍</button>
+        </div>
+    </form>
+			
+			<div class="pagination">
+    <c:if test="${pageMaker.prev}"> <!-- 이전 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> <!-- 다음 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
+			
 
 			<form id="moveForm" method="get">
 			

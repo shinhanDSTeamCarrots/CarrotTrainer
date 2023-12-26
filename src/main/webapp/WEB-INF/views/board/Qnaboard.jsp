@@ -76,35 +76,28 @@ th {
 	font-size: 25px;
 }
 
-.search-container {
-	text-align: right;
-	margin-top: 20px;
+ .search-box input[type="text"] {
+    flex: 1; /* 검색창이 남은 공간을 모두 차지하도록 합니다. */
+    padding: 8px; /* 패딩 추가 */
+    border: 2px solid #ddd; /* 경계선 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
 }
 
-.search-input {
-	padding: 10px 15px; /* 입력창 내부 여백을 좌우로 제공 */
-	font-size: 1.6rem; /* 입력창 글씨 크기 조정 */
-	border: 1px solid #ddd; /* 테두리 스타일 조정 */
-	margin-right: 8px; /* 입력창과 검색버튼 사이의 간격 조정 */
-	width: 300px; /* 입력창 너비 조정 */
-	height: 48px; /* 입력창 높이 조정 */
-	vertical-align: middle; /* 입력창을 수직 중앙에 위치시키기 위함 */
+.search-box button {
+    padding: 8px 16px; /* 버튼 내부 여백 설정 */
+    margin-left: 8px; /* 검색창과의 간격 설정 */
+    margin-top: 8px;
+    border: none; /* 기본 경계선 제거 */
+    background-color: #007bff; /* 배경 색상 설정 */
+    color: white; /* 글자 색상 설정 */
+    cursor: pointer; /* 커서를 손가락 모양으로 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
 }
 
-.search-button {
-	background-color: #4CAF50; /* 버튼 배경색 */
-	color: white; /* 버튼 텍스트 색상 */
-	padding: 0 20px; /* 버튼 내부 여백을 좌우로만 제공 */
-	border: none; /* 테두리 없음 */
-	border-radius: 5px; /* 모서리 둥글게 */
-	cursor: pointer; /* 클릭 가능한 커서 모양 */
-	font-size: 1.6rem; /* 버튼 글씨 크기 조정 */
-	height: 38px; /* 버튼 높이 조정 */
-	line-height: 38px; /* 버튼의 높이에 맞춰 line-height 설정 */
-	text-align: center; /* 텍스트를 버튼의 중앙으로 정렬 */
-	display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
-	vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
-	white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+.search-box button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 색상 변경 */
 }
 
 .write-btn-container {
@@ -163,6 +156,24 @@ th {
   .search_area select {
   	height: 35px;
   }
+  
+  .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 <body>
 	<div class="wrap">
@@ -184,6 +195,7 @@ th {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+						<th>조회</th>
 						<th>첨부파일</th>
 					</tr>
 				</thead>
@@ -205,7 +217,7 @@ th {
 								<td><c:out value="${vo.member_nickname}" /></td>
 
 								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
-							
+							<td><c:out value="${vo.board_view}" /></td>
 							<td><c:if test="${vo.file_name != null}">
 										<a href="/myct/board/download?fileNo=${vo.file_no}">
 										 <img src="/img/ico_star_on.png" alt="첨부파일">
@@ -225,8 +237,28 @@ th {
 				</tbody>
 			</table>
 
-		
 
+ <!-- 검색 폼 -->
+    <form action="${pageContext.request.contextPath}/board/qnaboard" method="get">
+        <div class="search-box">
+            <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요"/>
+            <button type="submit">검색🔍</button>
+        </div>
+    </form>
+		
+<div class="pagination">
+    <c:if test="${pageMaker.prev}"> 
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> 
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
 			<form id="moveForm" method="get">
 			
 			</form>
