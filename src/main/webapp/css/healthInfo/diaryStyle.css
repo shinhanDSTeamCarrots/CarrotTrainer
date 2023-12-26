@@ -70,7 +70,6 @@
     position: relative;
     overflow: hidden;
     float: left;
-    z-index: 10;
 }
 #calendar_weekdays div,
 #calendar_content div {
