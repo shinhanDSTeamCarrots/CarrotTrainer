@@ -46,7 +46,13 @@ public class JsonUtils {
 		JSONArray jsonArray = new JSONArray();
 
 		for (Map<String, Object> map : list) {
-			jsonArray.add(getJsonStringFromMap(map));
+			//jsonArray.add(getJsonStringFromMap(map));
+
+			JSONObject json = new JSONObject();
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				json.put(entry.getKey(), entry.getValue());
+			}
+			jsonArray.add(json);
 		}
 
 		return jsonArray.toJSONString();

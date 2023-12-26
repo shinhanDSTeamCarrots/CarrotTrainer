@@ -1,5 +1,7 @@
 package xyz.teamcarrot.myct.member;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +17,7 @@ public interface MemberMapper {
 
 	int update(MemberVO vo);
 	
-	int deleteMember(@Param("member_id") String member_id, @Param("member_pw") String member_pw);
+	int deleteMember(MemberVO vo);
 
 	int dupNickname(String nickname);
 	
@@ -24,5 +26,9 @@ public interface MemberMapper {
 	void updateLoginFailCount(@Param("member") MemberVO member);
 
 	Integer updateLoginBlocked(MemberVO member);
-
+	//20231225
+	int memberInterest(InterestVO vo);
+	
+	List<MemberVO> all(MemberVO vo);
+	
 }

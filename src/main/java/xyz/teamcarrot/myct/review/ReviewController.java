@@ -14,8 +14,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,21 +22,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+import xyz.teamcarrot.myct.goods.GoodsService;
 import xyz.teamcarrot.myct.member.MemberVO;
-
+@Slf4j
 @Controller
 public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
+	@Autowired
+	GoodsService goodsservice;
 	
-	private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+	
+	
+	
 	
 	//AJAX 로 변환 필요?
 	//쇼핑몰 상품 리뷰 리스트
 	@GetMapping("review/shoppingReview")
 	public ModelAndView ShoppingReview(HttpSession session, HttpServletRequest request) {
-		logger.warn("review/shopping start");
+		log.debug("review/shopping start");
 		int goods_no;
 		try {
 			goods_no = Integer.parseInt(request.getParameter("goods_no"));
@@ -69,7 +73,7 @@ public class ReviewController {
 		//model.addAttribute("list",service.selectReview(0, 1));
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("goods/reviewlist");
-		logger.debug("review/shopping selectData");
+		log.debug("review/shopping selectData");
 		
 		Map returnmap = service.selectData(goods_no);
 		
@@ -83,7 +87,7 @@ public class ReviewController {
 		paramMap.put("searchType", "goods_search");
 		
 		
-		logger.error(returnmap.get("total_page").getClass().getName());
+		log.debug(returnmap.get("total_page").getClass().getName());
 		
 		
 		
@@ -92,12 +96,12 @@ public class ReviewController {
 		returnmap.put("alignType", alignType);
 		int total_cnt = ((Long)returnmap.get("total_cnt")).intValue();
 		int total_page = ((Long)returnmap.get("total_page")).intValue();
-		logger.error("total_cnt: "+total_cnt);
-		logger.error("total_page: "+total_page);
+		log.debug("total_cnt: "+total_cnt);
+		log.debug("total_page: "+total_page);
 		if(total_cnt > 0) {
 			List<Integer> listint = new ArrayList<Integer>();
 			for(int i = ((page_no-1)/5) * 5 + 1; (i <= total_page )&&(i <= ((page_no-1)/5+1) * 5);i++ ) {
-				logger.error("added: "+i);
+				log.debug("added: "+i);
 				listint.add(i);
 			}
 			returnmap.put("page_list", listint);
@@ -138,15 +142,16 @@ public class ReviewController {
 		
 		mav.setViewName("review/reviewWrite");
 		
-		
+		int goods_no = -1;
 		
 		try {
-			int goods_no =Integer.parseInt(request.getParameter("goods_no"));
-			mav.addObject("goods_no",goods_no);
+			goods_no =Integer.parseInt(request.getParameter("goods_no"));
 		}
 		catch(Exception e) {
-			logger.error(e.toString());	
+			log.error(e.toString());
 		}
+		mav.addObject("goods_no",goods_no);
+		mav.addObject("gData",goodsservice.detail(goods_no));
 		//리뷰 정보용 goods_no 가져옴
 		mav.addObject("mode", "w");
 		mav.addObject("ReviewNo",-1);
@@ -179,6 +184,7 @@ public class ReviewController {
 		//리뷰 정보 가져옴
 		ReviewVO vo = service.getSpecificReview(review_no);
 		mav.addObject("goods_no",vo.getGoods_no());
+		mav.addObject("gData",goodsservice.detail(vo.getGoods_no()));
 		mav.addObject("ReviewNo",vo.getReview_no());
 		mav.addObject("ReviewVO", vo);
 		mav.addObject("mode", "m");
@@ -197,7 +203,7 @@ public class ReviewController {
 		}
 		if(mode.equals("w"))
 			vo.setGoods_no(Integer.parseInt(formData.get("goods_no")));
-		logger.info(formData.get("imgstr"));
+		log.debug(formData.get("imgstr"));
 		if(formData.get("imgstr") != null && !formData.get("imgstr").equals("") && formData.get("imgstr").getBytes() != null)
 			vo.setImage(formData.get("imgstr").getBytes());
 		vo.setPoint(Integer.parseInt(formData.get("point")));
@@ -212,7 +218,7 @@ public class ReviewController {
 			service.updateReview(vo);
 		
 		
-		return "redirect:/";
+		return "/detail/"+vo.getGoods_no();
 	}
 	
 	//리뷰 삭제
@@ -223,7 +229,7 @@ public class ReviewController {
 			service.deleteReview(review_no);
 			return "T";
 		}catch(Exception e) {
-			logger.error(e.toString());
+			log.error(e.toString());
 			return "F";
 		}
 		
@@ -234,8 +240,8 @@ public class ReviewController {
 	@PostMapping("review/like")
 	public String Like(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no ) {
 		try {
-			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);
-			logger.debug("review Like Called");
+			log.debug("review_no: "+review_no +"\tmem_no: "+mem_no);
+			log.debug("review Like Called");
 			service.likeReview(review_no, mem_no);
 			return "T";
 		}
@@ -254,8 +260,8 @@ public class ReviewController {
 	@PostMapping("review/dislike")
 	public String Dislike(HttpServletRequest request, @RequestParam int review_no, @RequestParam int mem_no) {
 		try {
-			logger.error("review_no: "+review_no +"\tmem_no: "+mem_no);
-			logger.debug("review Like Called");
+			log.debug("review_no: "+review_no +"\tmem_no: "+mem_no);
+			log.debug("review Like Called");
 			service.dislikeReview(review_no, mem_no);
 			return "T";
 		}
@@ -263,6 +269,7 @@ public class ReviewController {
 			return "F";
 		}
 	}
+	
 	
 	
 	

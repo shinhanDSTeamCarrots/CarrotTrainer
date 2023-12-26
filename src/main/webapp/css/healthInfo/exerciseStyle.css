@@ -109,12 +109,13 @@
 	별
 --------*/
 .bookmark {
-  font-size: 23px;
-  line-height: 1;
-  color: #D9D9D9;
+	font-size: 23px;
+	line-height: 1;
+	color: #D9D9D9;
+	cursor: pointer; 
 }
 .bookmark:hover {
-  color: gold;
+	color: gold;
 }
 
 /*----------------

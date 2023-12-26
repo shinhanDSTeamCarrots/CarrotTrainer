@@ -20,7 +20,7 @@ public interface GoodsMapper {
 	List<GoodsOptionVO> goodsOption(int goods_no);
 	
 	//상품 추가
-	int insert(GoodsVO goods);
+	int goodsInsert(GoodsVO goods);
 	
 	//상품 삭제
 	int delete(int goods_no);

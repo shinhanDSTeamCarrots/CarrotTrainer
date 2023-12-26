@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class GoodsServiceImpl implements GoodsService {
 	
 	@Autowired
-	private GoodsMapper mapper;
+	public GoodsMapper mapper;
 	
 	
 	@Override
@@ -41,7 +41,11 @@ public class GoodsServiceImpl implements GoodsService {
 		List<GoodsOptionVO> goodsOptions = mapper.goodsOption(goods_no);
 		return goodsOptions;
 	}
-
+	
+	@Override
+	public int goodsInsert(GoodsVO goods) {
+		return mapper.goodsInsert(goods); 
+	}
 	
 
 }

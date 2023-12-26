@@ -53,15 +53,6 @@
 	flex-direction: row;
 	margin: 20px;
 	margin-bottom: 40px;
-	justify-content: center;
-}
-.foodDiary-food-result-image {
-	width: 50%;
-}
-.foodDiary-food-result-carrot {
-	width: 200px;
-	height: 200px;
-	background-color: #748E63;
 }
 /*달력*/
 .foodDiary-calendar {
@@ -71,31 +62,62 @@
 /*------------
 	세부 내용
 -------------*/
-/*음식 섭취 결과*/
-.foodDiary-result > .foodDiary-food-result-image {
-	width: 30%;
+/*음식 섭취 결과 당근 이미지*/
+.foodDiary-food-result-image {
+	width: 40%;
+	display: flex;
+	justify-content:center;
 }
-.foodDiary-result > .foodDiary-food-result-detail {
-	width: 70%;
+.foodDiary-food-result-carrot {
+	width: 200px;
+	height: 200px;
+	background-color: #748E63;
+}
+/*음식 섭취 결과*/
+.foodDiary-food-result-detail {
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+}
+/*영양소 그래프*/
+.nutrient {
+	width: 100%;
+}
+.nutrient-graph {
+	margin: 10px;
 	display: flex;
 	flex-direction: column;
 }
-/*영양소 그래프*/
 .nutrient-graph > .carbs-graph {
 	display: flex;
 	flex-direction: row;
+	margin: 5px;
 }
 .nutrient-graph > .protein-graph {
 	display: flex;
-	flex-direction: row;	
+	flex-direction: row;
+	margin: 5px;	
 }
 .nutrient-graph > .fat-graph {
 	display: flex;
 	flex-direction: row;
+	margin: 5px;
 }
 .nutrient-graph > .sugar-graph {
 	display: flex;
 	flex-direction: row;
+	margin: 5px;
+}
+.nutrient-graph-name {
+	display: flex;
+	justify-content: flex-end;
+	width: 15%;
+	margin: 0 5px 0 0;
+}
+.nutrient-graph-result {
+	width: 15%;
 }
 /*시간대별 음식 섭취*/
 .foodDiary-result > .foodDiary-food-input {
@@ -110,9 +132,47 @@
 .nutrient-image {
 	width: 130px;
 	height: 130px;
-	background-color: #748E63;
+	background-color: #D9D9D9;
 	border-radius: 10px;
 	margin: 0 auto;
+	cursor: pointer;
+}
+.nutrient-image:hover {
+	background-color: #748E63;
+}
+.nutrient-image > p {
+	font-size: 30px;
+	font-weight: 800;
+	color: #FFFFFF;
+	transform: translate(0%, 100%);
+}
+.nutrient-time {
+	font-size: 15px;
+	font-weight: 700;
+	margin: 5px;
+}
+.kcal {
+	font-weight: 800;
+}
+
+/*-----------------
+	progress 바
+-----------------*/
+.progress-bar {
+	width: 70%;
+	height: 20px;
+	background-color: #D9D9D9;
+	border-radius: 10px;
+	overflow: hidden; /* 넘침 방지 */
+}
+.progress-bar .progress {
+    width: 0; /* 초기값 설정 */
+    height: 20px;
+    padding: 0;
+    text-align: center;
+    background-color: #748E63;
+    border-radius: 10px;
+    transition: width 1s ease-in-out; /* 너비 변화에 대한 애니메이션 효과 */
 }
 
 /*-----------------
@@ -133,26 +193,36 @@
 .foodDiary-comment-text {
 	width: 35%;
 }
+.foodDiary-comment-text p {
+	font-size: 15px;
+	font-weight: 600;
+	margin: 5px;
+}
 
 /*-------------------
 	SQL 데이터 텍스트
 -------------------*/
-.sql-text-name {
-	color: #748E63;
-	font-size: 26px;
+/*총합 칼로리*/
+.sql-total-kcal {
 	font-weight: 800;
 }
-.sql-diary-result-main {
-	color: #748E63;
-	font-size: 33px;
+.sql-total-kcal > #sql-daily-kcal {
+	color: #435334;
+	font-size: 35px;
 }
+.sql-total-kcal > #sql-target-kcal {
+	font-size: 25px;
+}
+/*시간대별 칼로리*/
 .sql-diary-result {
-	color: #748E63;
-	font-size: 28px;
+	color: #435334;
+	font-size: 25px;
+	font-weight: 800;
 }
 /*개인 추천 한마디*/
 .sql-diary-comment {
-	font-size: 23px;
+	font-size: 20px;
+	font-weight: 700;
 	color: #748E63;
 }
 .sql-diary-detail {

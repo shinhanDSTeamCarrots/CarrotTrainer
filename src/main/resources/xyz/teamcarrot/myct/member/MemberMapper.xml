@@ -48,9 +48,10 @@
 		WHERE member_id = #{member.member_id}
 	</update>
 	<delete id="deleteMember">
-		DELETE FROM tb_member
-		WHERE member_id=#{member_id} AND
-		member_pw = SHA2(#{member_pw}, 256);
+		SELECT
+		COUNT(*) FROM tb_member WHERE member_id = #{member_id} AND 
+		member_pw = #{member_pw}
+		<!-- 임시로 일단(나중에 비밀번호 부분 수정해야함) -->
 	</delete>
 	<select id="dupNickname" resultType="Integer" parameterType="String">
 		SELECT
@@ -67,7 +68,7 @@
 		UPDATE tb_member
 		SET member_name = #{member_name},
 		member_nickname = #{member_nickname},
-		member_pw = SHA2(#{member_pw}, 256),
+		member_pw = #{member_pw},
 		member_hp = #{member_hp},
 		member_email = #{member_email},
 		member_addr = #{member_addr},
@@ -78,6 +79,26 @@
 	<select id="findByUsername"
 		resultType="xyz.teamcarrot.myct.member.MemberVO">
 		SELECT * FROM tb_member WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 20231225 -->
+	
+	<insert id = "memberInterest" parameterType = "xyz.teamcarrot.myct.member.InterestVO">
+		INSERT INTO tb_member_interest (
+		member_interest_no
+		) VALUES (
+		#{member_interest_no}
+		)
+		<selectKey keyProperty="member_no" order="AFTER"
+			resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>		
+	</insert>
+
+<select id="all" parameterType="xyz.teamcarrot.myct.member.MemberVO" resultType="xyz.teamcarrot.myct.member.MemberVO">
+		SELECT member_no, member_id, member_blocked
+		FROM tb_member
+		ORDER BY member_no
 	</select>
 
 
