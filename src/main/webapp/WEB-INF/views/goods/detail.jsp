@@ -187,11 +187,11 @@
 		console.log("문의 제목 클릭됨!")
 	});	
 	
-	//문의하기 수정 폼 열기
+	//문의상세보기 폼 열기
 	function openQnaForm(inquiryNo){
 		
 		//비밀글 여부 확인 -> 로그인정보 작성자정보 일치여부 확인
-		console.log(inquiryNo + "문의 수정폼 열기!");	
+		console.log(inquiryNo + "문의 상세보기 열기!");	
 		$.ajax({
 			type:"POST",
 			url:"${pageContext.request.contextPath}/detail/qna/" + inquiryNo,
@@ -200,8 +200,24 @@
 				
 				console.log("문의 수정용 ajax 성공");
 				console.log(qnaDetail);
-				//문의 상세보기
-				showQnaDetail(qnaDetail);
+				//비밀글 여부 확인
+				var isSecret = qnaDetail.is_secret;
+				
+				if (isSecret){
+					var memno="${sessionScope.loginInfo.member_no}";
+					console.log(memno);
+					var qnaMemberNo = qnaDetail.member_no;
+					//비밀글 작성자, 로그인된 사람 일치시에만 조회 가능
+					if (memno == qnaMemberNo){
+						showQnaDetail(qnaDetail);
+					}else{
+						alert("이 문의는 작성자만 볼 수 있는 비밀글입니다.");
+					}
+					
+				}else{
+					//문의 상세보기
+					showQnaDetail(qnaDetail);
+				}				
 			},
 			error:function(qnaDetil){
 				console.log(qnaDetil);
@@ -212,22 +228,85 @@
 	
 	//문의 상세보기
 	function showQnaDetail(qnaDetail){
+		
 		var title=qnaDetail.title;
 		var content=qnaDetail.content;
-		
-		$("input[name='title']").val(title).prop("readonly",false);
-		$("input[name='content']").val(content).prop("readonly",false);
+		var inquiryType = qnaDetail.inquiry_type;
+	    var isSecret = qnaDetail.is_secret;
+	    
+		$("select[name='inquiry_type']").val(inquiryType).prop("disabled", false);
+		$("input[name='is_secret']:checked").val(isSecret).prop("disabled", false);
+		$("input[name='title']").val(title).prop("disabled", false);
+		$("input[name='content']").val(content).prop("disabled", false);
 	
 		$(".writeform").slideDown();
 		
-		showEDbtns(qnaDetail);
+		//내용 작성 돼있으면 수정, 삭제 버튼
+		if (title && content){
+			showEDbtns(qnaDetail);
+			 $(".editbtn").on("click",function(){
+				//수정가능한 폼으로 전환
+				editForm(qnaDetail);
+			 });
+			
+		}
+		else{
+			showWriteButtons();
+		}
 	
+	}
+	//수정가능한 폼으로 전환 함수
+	function editForm(qnaDetail){
+		$("select[name]'inquiry_type']").prop("readonly",false);
+		$("input[name='is_secret']:checked").val(isSecret).prop("readonly", false);
+		$("input[name='title']").val(title).prop("readonly", false);
+		$("input[name='content']").val(content).prop("readonly", false);
+		
+		$(".editbtn").on("click", function(){
+			updateQna(qnaDetail.inquiry_no);
+		})
+	}
+	function updateQna(inquiryNo){
+		var mem_no="${sessionScope.logInfo.member_no}";
+		var formData = {
+			member_no:mem_no,
+			goods_no:goods_no,
+	        inquiry_type: $("select[name='inquiry_type']").val(),
+	        is_secret: $("input[name='is_secret']:checked").val(),
+	        title: $("input[name='title']").val(),
+	        content: $("input[name='content']").val()
+	    };
+		$.ajax({
+	       type: "POST",
+	       url: "${pageContext.request.contextPath}/detail/qnaUpdate",
+	       data: formData,
+	       success: function (response) {
+	    	   if (response !== "error") {
+	               // 수정 성공 시 처리
+	               console.log("Q&A 수정 성공");
+	               $(".writeform").slideUp();
+	               alert("문의가 수정되었습니다.");
+	               loadQnaList();
+	           } else {
+	               // 수정 실패 시 처리
+	               console.log("Q&A 수정 실패");
+	           }
+	       },
+	       error:function(error){
+	    	   console.log(error);
+			}
+		});
 	}
 	
 	function showEDbtns(qnaDetail){
-		$(".editBtn, .deleteBtn").show();
+		$(".editbtn, .deletebtn").show();
+		$(".donebtn, .closebtn").hide();
 		
-		
+	}
+	
+	function showWriteButtons(){
+		$(".donebtn, .closebtn").show();
+		$(".editbtn, .deletebtn").hide();
 	}
 	
 	//상품별 문의 갯수 가져오기
@@ -262,6 +341,7 @@
 			var mem_no = "${sessionScope.loginInfo.member_no}";
 			if(mem_no!=""){
 				$(".writeform").slideDown();
+				showWriteButtons();
 				//취소버튼 클릭시 폼 닫기
 				$(".closebtn").on("click",function(){
 					$(".writeform").slideUp();
@@ -436,9 +516,9 @@
 							</tbody>
 				 		</table>
 					</div>
-					
-					<button class="writebtn">작성하기</button>
-					
+					<div class="wBtn">
+						<button class="writebtn">작성하기</button>
+					</div>
 					<!-- 문의하기 작성 폼 -->					
 					<form action="${pageContext.request.contextPath}/detail/qnaInsert" method="post" class="writeform" onsubmit="return false;">
 						<input type="hidden" name="goods_no" value="${item.goods_no}" />
@@ -473,6 +553,9 @@
 						<div class="qnabtns">
 							<button class="donebtn">작성완료</button>
 							<button class="closebtn">취소</button>
+							<button class="editbtn">수정</button>
+							<button class="deletebtn">삭제</button>
+        					
 						</div>
 					</form>
 				</div>			

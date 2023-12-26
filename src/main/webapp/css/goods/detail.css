@@ -289,11 +289,14 @@ a:visited {
 .sub_title{
 	margin-bottom: 20px;
 }
-
+.itemDetailQna > .wBtn{
+	margin-top: 20px;
+	width:100%;
+}
 .writebtn{
 	width: 80px;
 	height:40px;
-	margin-left:50px;
+	margin-left:87%;
 	font-size : 14px;
 	font-weight : bold;
 	text-align : center;
@@ -316,6 +319,14 @@ a:visited {
 	font-weight: bold;
 	margin-bottom: 8px;
 }
+
+#qnaTableBody td.title{
+	cursor: pointer;
+}
+#qnaTableBody td.title:hover{
+	background-color: #CEDEBD;
+}
+
 .qnawriter{
 	margin:10px;
 }
@@ -342,8 +353,17 @@ a:visited {
 	width:60%;
 	height:300px;
 }
-.qnabtns{
+.qnabtns > button{
 	margin-top:30px;
+	width: 80px;
+	height:40px;
+	margin-left:50px;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : center;
+	cursor:pointer;	
+	border-radius: 10px;
+	background-color: #CEDEBD;	
 }
 .donebtn{
 	width: 80px;
