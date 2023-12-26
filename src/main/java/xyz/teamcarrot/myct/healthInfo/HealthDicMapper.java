@@ -15,5 +15,5 @@ public interface HealthDicMapper {
 	//북마크 추가
 	int addBookmark(HealthBookmarkVO vo);
 	//북마크 제거
-	int delBookmark(int no);
+	int delBookmark(int health_bookmark_no);
 }

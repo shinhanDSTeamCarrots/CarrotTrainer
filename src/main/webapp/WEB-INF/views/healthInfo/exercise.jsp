@@ -15,8 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/modalScript.js"></script>
-	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/exerciseScript.jsp"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -77,8 +76,10 @@
 									<col width="20%" />
 								</colgroup>
 								<c:forEach var="healthDic" items="${healthDic}">
-									<tr class="health-info" data-no="${healthDic.no }">
-										<td class="bookmark">&#9733;</td>
+									<tr class="health-info" data-no="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
+										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};"
+											data-color="${healthDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
+										</td>
 										<td class="health">${healthDic.health }</td>
 										<td class="calorie">${healthDic.calorie }kcal/hr</td>
 									</tr>
@@ -105,10 +106,10 @@
 					<div class="healthInfo">
 						<div id="healthInfo-text">
 							<p>
-								총 <span class="sql-text" id="total-exerciseTime">00</span>분 운동 진행
+								총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행
 							</p>
 							<p>
-								<span class="sql-text" id="total-calTime">000</span>kcal 소비
+								<span class="sql-text" id="total-calTime">0</span>kcal 소비
 							</p>
 						</div>
 						<div id="healthInfo-graph"></div>
@@ -148,7 +149,7 @@
     			  		<!-- 팝업 내용 -->
     			  		<div id="modalBody-content">
     			  			<div id="modalBody-title">
-    			  				<div id="modalBody-title-text">걷기</div>
+    			  				<div id="modalBody-title-text"></div>
     			  				<div class="title-division-line"></div>
     			  			</div>
     			  			<div id="modalBody-main">
@@ -157,14 +158,14 @@
 	    			  					<div class="modalBody-text">운동시간(분)</div>
 	    			  					<div class="modalBody-input">
 		    			  					<div id="minus-button">-</div>
-			    			  				<input id="">
+			    			  				<input id="minute">
 			    			  				<div id="plus-button">+</div>
 		    			  				</div>
 	    			  				</div>
 	    			  			</div>
     			  				<div class="modalBody-result" id="modalBody-calorie">
     			  					<div class="modalBody-text">칼로리(kcal)</div>
-    			  					<div class="modalBody-input"><input id=""></div>
+    			  					<div class="modalBody-input"><input id="calorie"></div>
     			  				</div>
     			  			</div>
     			  			<div id="modalBody-button">

@@ -46,7 +46,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		
 		//mapper.healthDic()을 호출할 때 필요한 정보를 담은 맵을 전달
 		List<Map<String, Object>> bookmarkHealthDicList = mapper.bookmarkHealthDic(healthDic);
-
+	    
 		return bookmarkHealthDicList;
 	}
 	
@@ -57,7 +57,7 @@ public class HealthDicServiceImpl implements HealthDicService {
     }
     //북마크 삭제
 	@Override
-    public int delBookmark(HealthBookmarkVO vo) {
-		return mapper.delBookmark(vo.getHealth_bookmark_no());
+    public int delBookmark(int health_bookmark_no) {
+		return mapper.delBookmark(health_bookmark_no);
     }
 }

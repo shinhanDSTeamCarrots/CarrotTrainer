@@ -5,7 +5,7 @@ $(function() {
 	updateUserName();
 	
     function updateUserName() {
-    	const userName = "${sessionScope.loginInfo.member_name}";
+    	const userName = "${sessionScope.loginInfo.member_nickname}";
     	if (userName) {	//로그인이 되어있을 때
     		$(".sql-text-name").text(userName);
       	} else {	//비로그인일 때
