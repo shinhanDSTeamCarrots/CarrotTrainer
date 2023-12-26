@@ -42,6 +42,9 @@
 	padding-left: 20px;
 	padding-right: 20px;
 }
+#foodName:focus {
+	outline: 2px solid #435334; /* 포커스 시 밑줄 색상 변경 */
+}
 .search-place > #search-text {
 	width: 50px;
 	font-size: 18px;
@@ -137,7 +140,7 @@
 	margin-left: 5px;
 }
 .date {
-	margin: 15px auto -5px 10px;
+	margin: 15px auto -5px 5px;
 }
 select {
 	border: none;
@@ -202,19 +205,21 @@ select {
 #foodInfo-total-fat {
 	display: flex;
 	flex-direction: row;
+	justify-content: end;
 }
 .foodInfo-color {
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
+	margin: 3px;
 }
-.carbs-color {
+#carbs-color {
 	background-color: #F9B572;
 }
-.protein-color {
+#protein-color {
 	background-color: #748E63;
 }
-.fat-color {
+#fat-color {
 	background-color: #CEDEBD;
 }
 /* 음식 내역 */
