@@ -10,6 +10,7 @@ $(function() {
 	
 	//운동 클릭 시, 장바구니로 이동
 	$(".health-info").click(function() {
+
 		// 쿠키에 저장
 	    cartMove(event);
 		calculateTotal();
@@ -81,8 +82,7 @@ $(function() {
 	    	calculateTotal();
     	}
 	});
-	
-	
+
 	let previousMinuteValue = parseInt($("#minute").val());
 	// 숫자 이외의 문자를 제거하고 input에 설정
 	$("#minute").on("input", function () {
@@ -133,7 +133,7 @@ $(function() {
 	    let enteredCalories = calculateCalories(previousValue, enteredTime);
 	    $("#calorie").val(enteredCalories);
 	});
-	
+
 	function calculateCalories(previousTime, currentTime) {
 	    // #calorie에서 입력된 값 가져오기
 	    let enteredCalories = parseInt($("#calorie").val());
@@ -196,6 +196,9 @@ $(function() {
 	//쿠키에서 모든 쿠키 값들 가져오기 >  페이지 로드 시에 특정 이름으로 시작하는 쿠키들을 찾아서 목록에 추가하는 데 사용
 	function loadCartItems(){
 		let allCookies = document.cookie.split(";");
+		//let allCookies = document.cookie;
+		console.log(allCookies);
+		//console.log(allCookies.get("healthData"));
 		
 		//각 쿠키 반복
 		allCookies.forEach(function(cookie) {
@@ -276,20 +279,21 @@ $(function() {
 		
 		// 쿠키에서 기존 데이터 가져오기
 		let existingData = getCookie("healthData");
-		
 		// 기존 데이터가 있으면 파싱
-		let existingHealthData = existingData ? JSON.parse(existingData) : [];
+		let existingHealthData = JSON.parse(existingData);
+		
 		// 이미 등록된 no인지 확인
-	    if (existingHealthData.some(item => item.no === no)) {
+		if (existingHealthData.no === no) {
 	        alert("이미 등록된 항목입니다.");
 	        return;
 	    }
 		
 		// 새로운 항목 추가
-		existingHealthData.push(healthData);
+		//existingHealthData.push(healthData);
 		
 		//json을 문자열로 반환하여 쿠키에 저장
-		setCookie("healthData", JSON.stringify(existingHealthData));
+		setCookie("healthData", JSON.stringify(healthData));
+		//setCookie(no, JSON.stringify(healthData));
 		$(e.currentTarget).css("background-color", "#FAF8ED");
 		
 		//새로운 항목을 장바구니에 추가
