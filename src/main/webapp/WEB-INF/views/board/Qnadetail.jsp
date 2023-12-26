@@ -21,148 +21,202 @@
 </head>
 <style>
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4; /* Light grey background */
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff; /* White background */
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 40px;
+    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .input_wrap {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color:#f9f9f9;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    
+}
+
+.input_wrap label {
+    flex: 0 0 150px; /* Adjust label width here */
+    margin-right: 20px; /* Spacing between label and input */
+}
+
+.input_wrap input {
+    flex: 1; /* Takes the remaining space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn_wrap {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #e1e1e1;
     margin-bottom: 20px;
-     color: rgb(0, 0, 0);
-                    font-size: 16px;
-                    font-weight: 400;
-            transition: all .2s ease;
-                    :hover{
-                        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 2px;
-                    }
-                    :focus{
-                        background: #fff;
-                        outline: 0;
-                        box-shadow: 0 0 0 0 #fff inset, #1de9b6 0 0 0 3px;
-                    }
+    border-radius: 4px;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #333333; /* Dark grey for text */
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 input, textarea {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #dddddd;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
 textarea {
     height: 150px;
-    resize: vertical; /* Allows resizing vertically */
-}
-
-.btn_wrap {
-    text-align: right;
-    margin-top: 30px;
 }
 
 .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none; /* If the button is a link */
+    display: inline-block;
+    background-color: #06b66c;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
+    margin-right: 10px;
+
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
-/* Comment Section Styles */
 .comment-section {
-    margin-top: 40px;
-    background-color: #ffffff;
+    background: #fff;
     padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
-/* Comment Submission Button */
-.comment-submit {
-    background-color: #4CAF50; /* Primary color */
-    color: white; /* Text color */
-    border: none; /* Removes border */
-    padding: 10px 15px; /* Vertical and horizontal padding */
-    font-size: 16px; /* Text size */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Cursor changes to indicate clickable */
-    display: block; /* Makes the button a block element */
-    width: 100%; /* Full width */
-    margin-top: 10px; /* Spacing above the button */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.comment-submit:hover {
-    background-color: #369456; /* Slightly darker shade on hover */
-}
-
-/* Comment List */
 .comment-list {
-    list-style-type: none; /* Removes default list styling */
-    padding: 0; /* Resets padding */
-    margin-top: 20px; /* Space above the list */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .comment-item {
+            background: #f9f9f9;
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .comment-item:hover {
+            background-color: #f3f3f3;
+        }
+
+        .comment-author,
+        .comment-date {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .comment-content {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .delete-comment {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+   
+		
+        }
+
+        .delete-comment:hover {
+            background: #c9302c;
+        }
+
+
+.comment-submit {
+
+                    display: inline-block;
+                    outline: none;
+                    cursor: pointer;
+                    font-weight: 500;
+                    border: 1px solid transparent;
+                    border-radius: 2px;
+                    height: 36px;
+                    line-height: 34px;
+                    font-size: 14px;
+                    color: #ffffff;
+                    background-color: #007c89;
+                    transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
+                    padding: 0 18px;
+                    :hover {
+                        color: #ffffff;
+                        background-color: #006570;
+                    }
+                
 }
 
-.comment-list li {
-    background: #f9f9f9; /* Slightly off-white background for each comment */
-    padding: 15px; /* Padding inside each comment box */
-    border-radius: 6px; /* Rounded corners for comment boxes */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
-    border-left: 4px solid #4CAF50; /* Accent border on the left */
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.reply {
+    background: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
-.comment-author, .comment, .comment-date {
-    margin: 0; /* Resets margin for p elements */
+.reply:hover {
+    background-color: #f3f3f3;
+}
+
+.reply p {
+    margin: 5px 0;
+    color: #333;
 }
 
 .comment-author {
     font-weight: bold;
-    color: #333; /* Dark color for emphasis */
-    font-size: 16px;
+    color: #007bff;
 }
 
-.comment {
-    color: #555; /* Standard text color */
-    font-size: 14px;
+.comment-content {
+    color: #555;
 }
 
 .comment-date {
-    font-size: 12px;
-    color: #777; /* Subdued color for date */
-    align-self: flex-end; /* Align date to the right */
+    font-size: 0.9em;
+    color: #888;
 }
 
 
@@ -172,9 +226,9 @@ textarea {
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 		
-		<label>게시판 카테고리</label>
-		 <div class="input_wrap">
 		
+		 <div class="input_wrap">
+		<label>카테고리</label>
 		<c:choose>
 			<c:when test="${pageInfo.category_no == 1 }">
 				<input name="category_no" readonly="readonly" value="공지사항">
@@ -188,18 +242,17 @@ textarea {
 		</c:choose>
 	</div> 
 	
-	<label>게시판 번호</label>
-			<div class="input_wrap">
-		
-		<input name="board_no" readonly="readonly" value='<c:out value="${pageInfo.board_no}"/>' >
-	</div>
-	<label>게시판 제목</label>
-	<div class="input_wrap">		
+	
+			
+	
+	<div class="input_wrap">	
+	<label>제목</label>	
 		<input name="board_title" readonly="readonly" value='<c:out value="${pageInfo.board_title}"/>' >
 	</div>
 	
-	<label>게시판 내용</label>
+	
 	<div class="input_wrap">
+	<label>내용</label>
 		<textarea rows="3" name="board_content" readonly="readonly"><c:out value="${pageInfo.board_content}"/></textarea>
 	</div>
 	
@@ -208,9 +261,18 @@ textarea {
 		
 	<div class="btn_wrap">
 		 <a class="btn" id="list_btn">조회 페이지</a> 
-		<a class="btn" id="modify_btn">수정 하기</a>
-		<a class="btn" id="reply_btn" href="<c:url value='/board/qnareply?board_title=${pageInfo.board_title}' />">답변</a>
+		<c:choose>
+    <c:when test="${pageInfo.member_no == loginInfo.member_no }">
+        <a class="btn" id="modify_btn">수정 하기</a>
+    </c:when>
+    
+    <c:otherwise>
+        <!-- 현재 사용자가 작성자가 아니므로 수정 버튼을 표시하지 않음 -->
+    </c:otherwise>
+</c:choose>
 	</div>
+	
+	
 	
 	 <!-- 댓글 섹션 시작 -->
             <div class="comment-section">

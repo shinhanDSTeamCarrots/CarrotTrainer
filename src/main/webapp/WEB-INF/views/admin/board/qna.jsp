@@ -19,39 +19,40 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
+body {
+	font-family: 'Roboto', sans-serif;
+	color: #333;
+	background-color: #f4f4f4;
+}
+
 .container {
-	width: 100%; /* 컨테이너의 너비를 100%로 설정 */
-	max-width: 1200px; /* 최대 너비를 600px로 설정하여 요소들의 너비를 줄임 */
-	margin: 50px auto; /* 상하 마진을 0으로, 좌우 마진을 auto로 설정하여 중앙 정렬 */
-	padding: 20px; /* 내부 여백 */
-	box-sizing: border-box; /* padding을 포함한 너비로 계산 */
+	max-width: 1200px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .board-title {
-	font-size: 2.4rem;
+	font-size: 2.0rem;
 	font-weight: 700;
 	margin-bottom: 10px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed; /* 컬럼 너비 고정 */
 }
 
 th, td {
-    border: 1px solid #e1e1e1;
-    padding: 12px 15px;
-    text-align:center;
-    font-size: 1.2rem;
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: center;
 }
 
 th {
-    background-color: #646664;
-    color: white;
-    font-weight: bold;
-    
+	background-color: #f2f2f2;
 }
 
 .title-column {
@@ -73,10 +74,7 @@ thead tr {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Zebra striping for rows */
-tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
+
 
 .pagination {
 	margin-top: 20px;
@@ -212,17 +210,35 @@ tbody tr:nth-child(odd) {
   .reply-btn {
    background-color: #60A5FA;
   }
+  
+  .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 <body>
 	<div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="container">
-    	<div class="board-title">문의게시판</div>
+    	<div class="board-title">관리자 문의게시판</div>
 			
 	
 			<div class="write-btn-container">
 			 <c:if test="${!empty loginInfo}">
-				<a href="write" class="write-button">게시판 등록</a>
+				<a href="write" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 
@@ -245,7 +261,9 @@ tbody tr:nth-child(odd) {
 								
                 <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
 									<c:out value="${vo.board_title}" />
-									
+									<c:if test="${vo.hasReply}">
+											<span style="color: green;" >[답변완료]</span>
+										</c:if> 
 								
 								</a> 
 							</td>
@@ -276,7 +294,21 @@ tbody tr:nth-child(odd) {
 					
 				</tbody>
 			</table>
-
+			
+				<div class="pagination">
+    <c:if test="${pageMaker.prev}"> <!-- 이전 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> <!-- 다음 페이지 그룹이 있는 경우 -->
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
+			
 			<form id="infoForm" action="/board/modify" method="get">
 			<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
 			<input type="hidden" id="category_no" name="category_no" value='<c:out value="${pageInfo.category_no}"/>'>
