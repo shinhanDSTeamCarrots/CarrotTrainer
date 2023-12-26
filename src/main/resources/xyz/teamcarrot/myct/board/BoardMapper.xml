@@ -13,6 +13,15 @@
 		VALUES (#{member_no}, #{board_title}, #{board_content},
 		#{category_no})
 	</insert>
+	
+	<!-- 게시글 비공개 처리 -->
+<update id="updatePrivateStatus">
+    UPDATE tb_board
+    SET board_private = #{board_private}
+    WHERE board_no = #{board_no}	
+</update>
+
+	
 
 
 	<!-- 첨부파일 정보 저장 -->
@@ -91,11 +100,21 @@
 	</insert>
 
 	<!-- 특정 게시글의 답글 목록을 조회 -->
-	<select id="getReplies"
-		resultType="xyz.teamcarrot.myct.board.ReplyVO">
-		SELECT * FROM tb_board_reply WHERE board_no = #{board_no} ORDER BY
-		reply_rdate DESC
-	</select>
+<select id="getReplies" resultType="xyz.teamcarrot.myct.board.ReplyVO">
+    SELECT 
+        r.*, 
+        m.member_nickname 
+    FROM 
+        tb_board_reply r
+    JOIN 
+        tb_member m ON r.member_no = m.member_no
+    WHERE 
+        r.board_no = #{board_no}
+    ORDER BY 
+        r.reply_rdate DESC
+</select>
+
+
 
 	<!-- 검색 조건문 -->
 	<sql id="criteria">
@@ -120,46 +139,64 @@
 
 
 
-	<!-- 게시물 목록(페이징) -->
-	<select id="getListPaging"
-		resultType="xyz.teamcarrot.myct.board.BoardVO">
-		select * from (
-		select b.board_no, b.board_title, b.board_rdate, b.board_view,
-		b.board_content, b.category_no, m.member_nickname
-		from tb_board b
-		join tb_member m on b.member_no = m.member_no
-		<if test="keyword != null">
-			where board_title like concat('%',#{keyword},'%' )
-		</if>
-		order by board_no desc) as T1
+	<!-- 통합된 게시물 목록 및 페이징 -->
+<select id="getListPaging" resultType="xyz.teamcarrot.myct.board.BoardVO">
+    SELECT * FROM (
+        SELECT
+            b.*,
+            (CASE
+                WHEN EXISTS (SELECT 1 FROM tb_board_reply WHERE board_no = b.board_no) THEN 'true'
+                ELSE 'false'
+            END) AS hasReply,
+            m.member_nickname,
+            bf.file_name,
+            bf.file_no,
+            (CASE WHEN (SELECT COUNT(*) FROM tb_board_reply WHERE board_no = b.board_no) > 0 THEN 'YES' ELSE 'NO' END) as isAnswered
+        FROM
+            tb_board b
+        LEFT JOIN
+            tb_member m ON b.member_no = m.member_no
+        LEFT JOIN
+            tb_board_file bf ON b.board_no = bf.board_no
+        <if test="keyword != null and searchType != null">
+            <choose>
+                <when test="searchType == 'T'">
+                    WHERE b.board_title LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'C'">
+                    WHERE b.board_content LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+    ) AS subQuery
+    ORDER BY
+        subQuery.board_rdate DESC  
+    LIMIT #{skip}, #{amount}
+</select>
 
-		limit #{skip},#{amount}
-	</select>
 
 	<!-- 게시판 목록 -->
-	<select id="getList"
-		resultType="xyz.teamcarrot.myct.board.BoardVO">
-		select
-		b.*,
-		(CASE
-		WHEN EXISTS (SELECT 1 FROM tb_board_reply WHERE board_no = b.board_no)
-		THEN 'true'
-		ELSE 'false'
-		END) AS hasReply,
-		m.member_nickname,
-		bf.file_name,
-		bf.file_no,
-		(CASE WHEN (SELECT COUNT(*) FROM tb_board_reply WHERE board_no =
-		b.board_no) > 0 THEN 'YES' ELSE 'NO' END) as isAnswered
-		from
-		tb_board b
-		join
-		tb_member m on b.member_no = m.member_no
-		left join
-		tb_board_file bf on b.board_no = bf.board_no
-		ORDER BY
-		(b.board_no = 71) DESC
-	</select>
+<select id="getList" resultType="xyz.teamcarrot.myct.board.BoardVO">
+    SELECT
+        b.*,
+        (CASE
+            WHEN EXISTS (SELECT 1 FROM tb_board_reply WHERE board_no = b.board_no) THEN 'true'
+            ELSE 'false'
+        END) AS hasReply,
+        m.member_nickname,
+        bf.file_name,
+        bf.file_no,
+        (CASE WHEN (SELECT COUNT(*) FROM tb_board_reply WHERE board_no = b.board_no) > 0 THEN 'YES' ELSE 'NO' END) as isAnswered
+    FROM
+        tb_board b
+    JOIN
+        tb_member m ON b.member_no = m.member_no
+    LEFT JOIN
+        tb_board_file bf ON b.board_no = bf.board_no
+    ORDER BY
+        b.board_rdate DESC  <!-- 이 부분을 수정하여 최신글이 위로 오도록 정렬 -->
+</select>
+
 
 	<!-- 게시물 총 개수 -->
 	<select id="getTotal" resultType="int">

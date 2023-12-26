@@ -12,5 +12,5 @@ public interface HealthDicService {
 	//북마크 추가
 	int addBookmark(HealthBookmarkVO vo);
 	//북마크 삭제
-	int delBookmark(HealthBookmarkVO vo);
+	int delBookmark(int health_bookmark_no);
 }

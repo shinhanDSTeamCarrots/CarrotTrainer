@@ -15,7 +15,8 @@ public interface MemberService {
 
 	MemberVO detail(MemberVO vo);
 
-	boolean deleteMember(String member_id, String member_pw);
+	//boolean deleteMember(String member_id, String member_pw);
+	boolean deleteMember(MemberVO vo);
 	
 	boolean dupNickname(String nickname);
 
@@ -25,5 +26,11 @@ public interface MemberService {
 
 	//void updateLoginBlocked(MemberVO member, HttpSession sess);
 	void updateLoginBlocked(MemberVO member);
-
+	
+	//20231225
+	
+	void memberInterest(InterestVO vo);
+	
+	List<MemberVO> all(MemberVO vo);
+	
 }

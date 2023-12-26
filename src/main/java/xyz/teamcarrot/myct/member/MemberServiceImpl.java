@@ -29,21 +29,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean regist(MemberVO vo) {
-		try {
-			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
 		return mapper.regist(vo) > 0 ? true : false;
 	}
 
 	@Override
 	public MemberVO login(MemberVO vo) {
-		try {
-			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
 		return mapper.login(vo);
 	}
 
@@ -53,31 +43,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int update(MemberVO vo) {
-		try {
-			vo.setMember_pw(this.encrypt(vo.getMember_pw()));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
 		return mapper.update(vo);
 	}
 
-	public String encrypt(String text) throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		md.update(text.getBytes());
 
-		return bytesToHex(md.digest());
-	}
-
-	private String bytesToHex(byte[] bytes) {
-		StringBuilder builder = new StringBuilder();
-		for (byte b : bytes) {
-			builder.append(String.format("%02x", b));
-		}
-		return builder.toString();
-	}
 
 	// 20231212 delete 추가
-	@Override
+	/*@Override
 	@Transactional
 	public boolean deleteMember(@Param("member_id") String member_id, @Param("member_pw") String member_pw) {
 		// 비밀번호 일치 여부 확인 및 회원 삭제
@@ -86,7 +58,11 @@ public class MemberServiceImpl implements MemberService {
 		// 삭제된 행이 1개 이상이면 삭제 성공
 		return affectedRows > 0;
 	}
-
+	*/
+	@Override
+	public boolean deleteMember(MemberVO vo) {
+		return mapper.deleteMember(vo) > 0 ? true : false;
+	}
 	// 20231214 추가
 	@Override
 	public void updateLoginFailCount(MemberVO member) {
@@ -101,6 +77,16 @@ public class MemberServiceImpl implements MemberService {
 	public void updateLoginBlocked(MemberVO member) {
 		mapper.updateLoginBlocked(member);
 
+	}
+	//20231225
+	
+	public void memberInterest(InterestVO vo) {
+		mapper.memberInterest(vo);
+	}
+
+@Override
+	public List<MemberVO> all(MemberVO vo) {
+		return mapper.all(vo);
 	}
 
 }

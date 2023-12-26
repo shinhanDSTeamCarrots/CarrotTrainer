@@ -7,13 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-/* 
- * Service�� �߻����� ���Ǹ� �����ϴ� Ŭ�����̴�. �������̽� ����ü
- * Ŭ���̾�Ʈ ��û�� ó���ϰ� �ʿ��� ��� Mapper�� ȣ���� 
- * Service -> Mapper -> ServiceImpl   (SMS ��� ������ �ܿ�� ��������.)
- * 
- * */
-
 @Service
 public interface BoardService {
 	
@@ -65,9 +58,13 @@ public interface BoardService {
     
     public void deleteSelectedBoards(List<Integer> boardNos);
     
-    // 댓글 삭제
+    // 댓글 삭제 (완성)
     public int deleteReply(int reply_no);
     
-    // 답변 (미완성)
-    public void updateHasReplyStatus(int board_no, boolean status); 
+    // 답변 (완성)
+    public void updateHasReplyStatus(int board_no, boolean status);
+    
+    // 비공개 (완성)
+    public void updatePrivateStatus(int board_no, int board_private);
+
 }

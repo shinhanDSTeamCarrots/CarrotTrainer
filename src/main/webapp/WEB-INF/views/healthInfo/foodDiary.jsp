@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/foodDiaryStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/foodDiaryScript.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -31,53 +32,91 @@
 	    					</div>
 	    				</div>
 	    				<div class="foodDiary-food-result-detail">
-	    					<div class="kcal">0/1390kcal</div>
+	    					<div class="sql-total-kcal">
+	    						<span id="sql-daily-kcal">0</span><span id="sql-target-kcal"> / 1390 kcal</span>
+   								<!--
+    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
+			                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
+    							 -->
+	    					</div>
 	    					<div class="nutrient">
 		    					<div class="nutrient-graph">
 		    						<div class="carbs-graph">
-			    						<div>탄수화물</div>
-			    						<div></div>
-			    						<div>0 / 180g</div>
+			    						<div class="nutrient-graph-name">탄수화물</div>
+			    						<div class="progress-bar" id="carbs-bar">
+			    							<div class="progress"></div>
+			    						</div>
+			    						<div class="nutrient-graph-result">0 / 50g</div>
+			    						<!--
+			    						<div>
+			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
+						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
+		    							</div>
+		    							 -->
 		    						</div>
 		    						<div class="protein-graph">
-			    						<div>단백질</div>
-			    						<div></div>
-			    						<div>0 / 100g</div>
+			    						<div class="nutrient-graph-name">단백질</div>
+			    						<div class="progress-bar" id="protein-bar">
+			    							<div class="progress"></div>
+			    						</div>
+			    						<div class="nutrient-graph-result">0 / 50g</div>
+			    						<!--
+			    						<div>
+			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_protein }g</c:if>
+						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_protein }g</c:if>
+		    							</div>
+		    							-->
 		    						</div>
 		    						<div class="fat-graph">
-			    						<div>지방</div>
-			    						<div></div>
-			    						<div>0 / 30g</div>
+			    						<div class="nutrient-graph-name">지방</div>
+			    						<div class="progress-bar" id="fat-bar">
+			    							<div class="progress"></div>
+			    						</div>
+			    						<div class="nutrient-graph-result">0 / 30g</div>
+			    						<!--
+			    						<div>
+			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_fat }g</c:if>
+						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_fat }g</c:if>
+		    							</div>
+		    							-->
 		    						</div>
 		    						<div class="sugar-graph">
-			    						<div>당</div>
-			    						<div></div>
-			    						<div>0 / 50g</div>
+			    						<div class="nutrient-graph-name">당</div>
+			    						<div class="progress-bar" id="sugar-bar">
+			    							<div class="progress"></div>
+			    						</div>
+			    						<div class="nutrient-graph-result">0 / 50g</div>
+			    						<!--
+			    						<div>
+			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_sugar }g</c:if>
+						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_sugar }g</c:if>
+		    							</div>
+		    							-->
 		    						</div>
 	    						</div>
     						</div>
     					</div>
     				</div>
     				<div class="foodDiary-food-input">
-    					<div class="foodDiary-food-inform" id="breakfast">
-    						<div class="nutrient-image"></div>
-    						<div>아침</div>
-    						<div>120 kcal</div>
+    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/food/breakfast'">
+    						<div class="nutrient-image"><p>+</p></div>
+    						<div class="nutrient-time">아침</div>
+    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="lunch">
-    						<div class="nutrient-image"></div>
-    						<div>점심</div>
-    						<div>120 kcal</div>
+    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/food/lunch'">
+    						<div class="nutrient-image"><p>+</p></div>
+    						<div class="nutrient-time">점심</div>
+    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="dinner">
-    						<div class="nutrient-image"></div>
-    						<div>저녁</div>
-    						<div>120 kcal</div>
+    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/food/dinner'">
+    						<div class="nutrient-image"><p>+</p></div>
+    						<div class="nutrient-time">저녁</div>
+    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="snack">
-    						<div class="nutrient-image"></div>
-    						<div>간식</div>
-    						<div>120 kcal</div>
+    					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/food/snack'">
+    						<div class="nutrient-image"><p>+</p></div>
+    						<div class="nutrient-time">간식</div>
+    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
     				</div>
     			</div>
@@ -89,9 +128,9 @@
     			<div class="foodDiary-comment-graph">
     			</div>
     			<div class="foodDiary-comment-text">
-	    			<p>탄수화물 50g 초과했어요</p>
-	    			<p>단백질 10g 더 먹어보세요</p>
-	    			<p>지방 10g 더 먹어보세요</p>
+	    			<p>탄수화물 <span class="sql-diary-comment">50</span>g <span>초과했어요</span></p>
+	    			<p>단백질 <span class="sql-diary-comment">10</span>g <span>더 먹어보세요</span></p>
+	    			<p>지방 <span class="sql-diary-comment">10</span>g <span>더 먹어보세요</span></p>
     			</div>
     		</div>
     	</div>

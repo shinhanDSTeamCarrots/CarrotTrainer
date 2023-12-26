@@ -22,24 +22,39 @@
 <script src="/myct/smarteditor2-2.8.2.3/js/HuskyEZCreator.js"></script>
 </head>
 <style>
-.container {
-	width: 100%;
-	max-width: 1000px; /* 전체 폭을 늘림 */
-	margin: 40px auto; /* 더 큰 상하 여백을 제공하여 요소들을 중앙에 배치 */
-	padding: 40px; /* 컨테이너 내부의 여백을 늘림 */
-	box-sizing: border-box;
+/* General Page Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
-.board-title {
-	font-size: 2.4rem;
-	font-weight: 700;
-	margin-bottom: 30px;
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 40px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Form Styling */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .form-group label {
-	display: block;
-	margin-bottom: 10px; /* 라벨과 입력 필드 사이의 여백을 늘림 */
-	font-size: 1.8rem; /* 라벨의 글씨 크기를 키움 */
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    color: #555;
 }
 
 .form-group input[type="text"], .form-group textarea
@@ -60,18 +75,31 @@
 }
 
 .form-group textarea {
-	height: 300px; /* textarea의 높이를 늘림 */
+    height: 200px; /* Adjust based on preference */
 }
 
+/* Button Styling */
 .form-group button {
-	padding: 10px 15px;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 1.4rem;
-	margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+}
+
+/* File Input Styling */
+#attach-file {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 40px;
 }
 
 .editor {
@@ -79,6 +107,8 @@
 	border-radius: 5px;
 	height: 400px; /* 위지윅 에디터의 높이를 늘림 */
 }
+
+
 </style>
  <script>
     var oEditors = [];
@@ -86,7 +116,8 @@
         nhn.husky.EZCreator.createInIFrame({
             oAppRef: oEditors,
             elPlaceHolder: "content",
-            sSkinURI: "/myct/smarteditor2-2.8.2.3/SmartEditor2Skin.html",    
+            sSkinURI: "/myct/smarteditor2-2.8.2.3/SmartEditor2Skin.html",
+            
             htParams : {
                 bUseToolbar : true,                // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
                 bUseVerticalResizer : true,        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -113,8 +144,11 @@
 
         // 폼 제출
         document.getElementById('writeForm').submit();
-    }
 
+    }
+	
+
+ 
     </script>
 <body>
 	<div class="wrap">
@@ -122,54 +156,66 @@
 		<div class="container">
 
 
-			<form action="/myct/board/insert" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
+			<form action="/myct/board/insert" method="post"
+				enctype="multipart/form-data" onsubmit="return submitForm();">
 
 
 				<div class="form-group">
-					<label for="category_no">카테고리 선택</label>
-					<select name="category_no" id="category_no">
+					<label for="category_no">카테고리 선택</label> <select name="category_no"
+						id="category_no">
 						<option value="1">공지사항</option>
 						<option value="2">자유게시판</option>
 						<option value="3">문의게시판</option>
+						<option value="4">웰니스 뉴스</option>
 					</select>
 				</div>
 
 				<div class="form-group">
-					<label for="board_title">글제목</label> 
-					<input type="text" id="title" name="board_title">
+					<label for="board_title">글제목</label> <input type="text" id="title"
+						name="board_title">
 				</div>
 
-				 <div class="form-group">
-                    <label for="member_no">작성자</label>
-                   <% MemberVO member = (MemberVO) session.getAttribute("loginInfo"); %>
-<% if (member != null) { %>
-    <input type="hidden" name="member_no" value="<%= member.getMember_no() %>">
-    <input type="text" value="<%= member.getMember_nickname() %>" readonly>
-<% } else { %>
+				<div class="form-group">
+					<label for="member_no">작성자</label>
+					<% MemberVO member = (MemberVO) session.getAttribute("loginInfo"); %>
+					<% if (member != null) { %>
+					<input type="hidden" name="member_no"
+						value="<%= member.getMember_no() %>"> <input type="text"
+						value="<%= member.getMember_nickname() %>" readonly>
+					<% } else { %>
 
-<% } %>
-
-
-                </div>
+					<% } %>
+				</div>
 
 				<div class="form-group">
-					<label for="board_content">글 내용</label>
 					<textarea id="content" name="board_content"></textarea>
-					
 				</div>
 
 				<div class="form-group">
-
-					<label for="file">파일 첨부</label>
-            <input type="file" name="file" id="attach-file" />
-
+					<input type="file" name="file" id="attach-file" />
 				</div>
 
 
 				<div class="form-group">
-                    <button>등록</button>
-                </div>
+					<button>등록</button>
+				</div>
+				
+			
+				
 			</form>
+
+			<form action="/myct/healthnews/uploadFile.do" method="post" enctype="multipart/form-data">
+    <!-- 기타 게시글 입력 필드 -->
+    <div class="form-group">
+        <label for="uploadFile">이미지 파일:</label>
+        <input type="file" name="uploadFile" id="uploadFile"/>
+    </div>
+    <button type="submit">업로드</button>
+</form>
+
+
+
+
 
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
