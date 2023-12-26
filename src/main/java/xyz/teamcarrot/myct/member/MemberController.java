@@ -206,12 +206,12 @@ public class MemberController {
 	}
 
 	// 20231225
-	@GetMapping("/member/joinInterest.do")
+	@GetMapping("/member/joinInterest")
 	public String memberinterest() {
 		return "member/joinInterest";
 	}
 	
-	@GetMapping("/member/userInfo.do")
+	@GetMapping("/member/userInfo")
 	public String userInfo(Model model, MemberVO vo) {
 		model.addAttribute("all", memberService.all(vo));
 		return "member/userInfo";
