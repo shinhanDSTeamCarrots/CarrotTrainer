@@ -315,9 +315,9 @@
 		<h2>현재 마일리지</h2>
 		<input type="number" value="${mileage }" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/${mileage }원</p>
 		<%-- 아임포트 --%>
-		<input type="button" onclick="kginicis()" class="pay CreditPay"><img src="${pageContext.request.contextPath}/img/credit.png" alt="KG 이니시스" ></input>
-		<input type="button" onclick="tosspay()" class="pay TossPay"><img src="${pageContext.request.contextPath}/img/tosspay.png" alt="토스 페이"></input>
-		<input type="button" onclick="kakaopay()" class="pay KakaoPay"><img src="${pageContext.request.contextPath}/img/kakaopay.svg" alt="카카오페이" ></input>
+		<input type="button" onclick="kginicis()" class="pay CreditPay"></input>
+		<input type="button" onclick="tosspay()" class="pay TossPay"></input>
+		<input type="button" onclick="kakaopay()" class="pay KakaoPay"></input>
 		<input type="button" onclick="bankpay()" value="무통장입금" class="pay BankPay"/>
 		<br><div id="additionalPayInfo"></div>
 	</div>
