@@ -29,6 +29,16 @@
 					<div class="search-place">
 						<div id="search-box"><input type="text" id="foodName" name="foodName"></div>
 						<div id="search-text"><p>검색</p></div>
+						<!-- 
+						<form action="/myct/food" method="get">
+						    <div id="search-box">
+						        <input type="text" id="foodName" name="foodName" value="${foodName}">
+						    </div>
+						    <div id="search-text">
+						        <input type="submit" value="검색">
+						    </div>
+						</form>
+						 -->
 					</div>
 					<div class="detail-division-line"></div>
 					<div class="search-tag"></div>
@@ -87,24 +97,27 @@
 					</div>
 				</div>
 			</div>
-			<div class="pagenate clear">
-			    <ul class='paging'>
-			    <c:if test="${retMap.prev }">
-			    	<li><a href="food?page=${retMap.startPage-1 }&foodName=${foodDic.foodName}"> << </a></li>
-			    </c:if>
-			    <c:forEach var="p" begin="${retMap.startPage}" end="${retMap.endPage}">
-			    	<c:if test="${p == foodDic.page}">
-			        <li><a href='#;' class='current'>${p}</a></li>
-			        </c:if>
-			        <c:if test="${p != foodDic.page}">
-			        <li><a href='food?page=${p}&foodName=${foodDic.foodName}'>${p}</a></li>
-			        </c:if>
-			    </c:forEach>
-			    <c:if test="${retMap.next }">
-			    	<li><a href="food?page=${retMap.endPage+1 }&foodName=${foodDic.foodName}"> >> </a></li>
-			    </c:if>
-			    </ul> 
-			</div>
+			<form action="/myct/food" method="get">
+				<input type="hidden" name="foodName" value="${foodName}">
+				<div class="pagenate clear">
+				    <ul class='paging'>
+				    <c:if test="${retMap.prev }">
+				    	<li><a href="#" onclick="submitPage(${retMap.startPage-1})"> << </a></li>
+				    </c:if>
+				    <c:forEach var="p" begin="${retMap.startPage}" end="${retMap.endPage}">
+				    	<c:if test="${p == page}">
+				        <li><a href='#;' class='current'>${p}</a></li>
+				        </c:if>
+				        <c:if test="${p != page}">
+				        <li><a href='#;' onclick="submitPage(${p})">${p}</a></li>
+				        </c:if>
+				    </c:forEach>
+				    <c:if test="${retMap.next }">
+				    	<li><a href="#" onclick="submitPage(${retMap.endPage+1})"> >> </a></li>
+				    </c:if>
+				    </ul> 
+				</div>
+			</form>
 			<!-- 기록란 -->
 			<div class="add-info">
 				<div class="add-info-content">

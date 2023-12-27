@@ -36,7 +36,10 @@ $(function() {
 	  	}
 	  }  
 	});
-
+	function submitPage(page) {
+        document.forms[1].elements["page"].value = page;
+        document.forms[1].submit();
+    }
 	/*-------------
 		검색 함수
 	-------------*/

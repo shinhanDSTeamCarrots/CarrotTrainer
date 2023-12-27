@@ -96,8 +96,7 @@ public class ExerciseController {
 			return "common/alert";
 		}
 	}
-	
-	@PostMapping("/insertHealthInfo")
+	@PostMapping("healthInfo/insertHealthInfo")
 	public String insertHealthInfo(HealthDiaryVO vo, Model model, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		vo.setMember_no(mem.getMember_no());
@@ -113,7 +112,7 @@ public class ExerciseController {
 		}
 		return "/common/alert";
 	}
-	@PostMapping("/updateHealthInfo")
+	@PostMapping("healthInfo/updateHealthInfo")
 	public String updateHealthInfo(Model model, HealthDiaryVO vo) {
 		int no = service.updateHealthInfo(vo);
 		
@@ -131,7 +130,7 @@ public class ExerciseController {
 
 		return "common/alert";
 	}
-	@PostMapping("/deleteHealthInfo")
+	@PostMapping("healthInfo/deleteHealthInfo")
 	public String deleteHealthInfo(Model model, HealthDiaryVO vo) {
 		int no = service.deleteHealthInfo(vo);
 		

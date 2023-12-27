@@ -25,17 +25,17 @@ public class FoodController {
 	
 	//리스트 출력
 	@GetMapping("/food")
-	public String searchFoodInfo(Model model, HttpSession sess, String foodName) {
+	public String searchFoodInfo(Model model, HttpSession sess, String foodName, Integer page) {
+		int pageNumber = (page != null) ? page : 1;
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		//member_no 확인용
 		int member_no = -1;
 		if(mem != null) {
 			member_no = mem.getMember_no();
 		}
-		
 		//기능별 분리
 		if(mem == null) { 	//비로그인
-			model.addAttribute("foodDic", service.getFoodDic(foodName, member_no));
+			model.addAttribute("foodDic", service.getFoodDic(foodName, member_no, pageNumber));
 			model.addAttribute("foodName", foodName);
 		}else {
 			if(foodName == null) {
@@ -44,7 +44,7 @@ public class FoodController {
 				model.addAttribute("foodDic", bookmarks);
 			}else {
 				//로그인 && 검색함 -> 일반 검색
-				model.addAttribute("foodDic", service.getFoodDic(foodName, member_no));
+				model.addAttribute("foodDic", service.getFoodDic(foodName, member_no, pageNumber));
 				model.addAttribute("foodName", foodName);
 			}
 		}

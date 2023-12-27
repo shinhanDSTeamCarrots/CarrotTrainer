@@ -81,9 +81,9 @@ public class HealthDicServiceImpl implements HealthDicService {
 	
 	//전체 음식 리스트
 	@Override
-	public Map<String, Object> getFoodDic(String foodName, int member_no){
-		int page = 1;
-		int startIdx = (page - 1) * 10;
+	public Map<String, Object> getFoodDic(String foodName, int member_no, Integer page){
+	    int pageNumber = (page != null && page > 0) ? page : 1;
+	    int startIdx = (pageNumber - 1) * 10;
 		
 		Map<String, Object> retMap = new HashMap<>();
 		
@@ -94,10 +94,12 @@ public class HealthDicServiceImpl implements HealthDicService {
 		//총 개수
 		int count = mapper.foodCount(paramMap);
 		//총 페이지 수
-		int totalPage = count/10;
+		int totalPage = (int) Math.ceil((double) count / 10);
 		if (count % 10 > 0) totalPage++;
 		//목록
-		List<Map<String, Object>> list = mapper.list(paramMap);
+	    paramMap.put("startIdx", startIdx); // startIdx 추가
+	    paramMap.put("pageSize", 10); // 페이지 크기 추가
+		List<Map<String, Object>> list = mapper.foodDic(paramMap);
 		
 		retMap.put("count", count);
 		retMap.put("list", list);

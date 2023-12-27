@@ -9,8 +9,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
@@ -164,6 +162,7 @@
     			  					<div class="modalBody-input"><input id="calorie" readonly="readonly"></div>
     			  				</div>
     			  			</div>
+    			  			<input id="no" type="hidden">
     			  			<div id="modalBody-button">
     			  				<button>기록 완료</button>
     			  			</div>
