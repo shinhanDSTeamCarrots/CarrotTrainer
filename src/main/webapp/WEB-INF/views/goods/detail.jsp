@@ -115,7 +115,7 @@
 		}		
 	}
     
-  //리뷰 
+    //------------- 리뷰 ------------------ 
 	function getReview(page, aligntype) {
 		$.ajax({
 			url: "${pageContext.request.contextPath}/review/shoppingReview",
@@ -135,6 +135,9 @@
 		getReview(1,"");
 	});
     
+	
+	//------------- 문의 -----------------
+	
 	//json타입의 시간을 년월일시분초로 변환해주는 함수
 	function convertTimestampToFormattedDate(timestamp) {
 		  var date = new Date(timestamp);
@@ -142,11 +145,9 @@
 		  var year = date.getFullYear();
 		  var month = ('0' + (date.getMonth() + 1)).slice(-2);
 		  var day = ('0' + date.getDate()).slice(-2);
-		  var hours = ('0' + date.getHours()).slice(-2);
-		  var minutes = ('0' + date.getMinutes()).slice(-2);
-		  var seconds = ('0' + date.getSeconds()).slice(-2);
 
-		  return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+
+		  return year + '-' + month + '-' + day ;
 	}
 	
 	//문의 list 가져오기
@@ -163,22 +164,57 @@
 	            
 	            var qnaTableBody = $("#qnaTableBody");
 	            qnaTableBody.empty();
-	            for (var i = 0; i < qnaList.length; i++) {
-	            	var qna = qnaList[i];
-	                var row = $("<tr>");
-	                row.append("<td class='no'>" + qna.inquiry_no + "</td>");
-	                row.append("<td class='title'>" + qna.title + "</td>");
-	                row.append("<td class='writer'>" + qna.member_nickname + "</td>");
-	                row.append("<td class='date'>" + convertTimestampToFormattedDate(qna.inquiry_date) + "</td>");
 
+	            if (qnaList.length === 0) {
+	                var row = $("<tr>");
+	                row.append("<td class='first' colspan='8'>등록된 문의가 없습니다.</td>");
 	                qnaTableBody.append(row);
+	            } else {
+	                for (var i = 0; i < qnaList.length; i++) {
+	                    var qna = qnaList[i];
+	                    var no=qnaList.length - i;
+	                    var row = $("<tr>");
+	                    row.append("<td class='no'>" + no + "</td>");
+	                    row.append("<td class='title'>" + getTitleText(qna) + "</td>");
+	                    row.append("<td class='writer'>" + qna.member_nickname + "</td>");
+	                    row.append("<td class='date'>" + convertTimestampToFormattedDate(qna.inquiry_date) + "</td>");
+	                    qnaTableBody.append(row);
+	                }
+	               
 	           }
 	        },
 	        error:function(qnaList){
 	            console.log(error);
 	        }
 	    });	    
-	}	
+	}
+	
+	//비밀글 여부에 따라 제목
+	function getTitleText(qna){
+		var inquiryType=qna.inquiry_type;
+		var titleText="";
+		if(qna.is_secret==1){
+			titleText = "해당문의는 비밀글입니다";
+		}else{
+			switch (inquiryType) {
+            case 0:
+                titleText = "[상품문의] " + qna.title;
+                break;
+            case 1:
+                titleText = "[배송문의] " + qna.title;
+                break;
+            case 2:
+                titleText = "[환불문의] " + qna.title;
+                break;
+            case 3:
+                titleText = "[기타문의] " + qna.title;
+                break;
+			}
+		}
+		return titleText;
+	}
+	
+	
 	//문의리스트에서 제목 클릭시
 	$(document).on("click","#qnaTableBody td.title",function(){
 		var inquiryNo = $(this).closest("tr").find("td.no").text();
@@ -198,25 +234,31 @@
 			dataType:"json",
 			success:function(qnaDetail){	
 				
-				console.log("문의 수정용 ajax 성공");
+				console.log("문의 상세보기 ajax 성공");
 				console.log(qnaDetail);
-				//비밀글 여부 확인
+				
 				var isSecret = qnaDetail.is_secret;
+				var memno="${sessionScope.loginInfo.member_no}";
+				var qnaMemberNo = qnaDetail.member_no;
 				
 				if (isSecret){
-					var memno="${sessionScope.loginInfo.member_no}";
+					
 					console.log(memno);
-					var qnaMemberNo = qnaDetail.member_no;
+					
 					//비밀글 작성자, 로그인된 사람 일치시에만 조회 가능
 					if (memno == qnaMemberNo){
-						showQnaDetail(qnaDetail);
+						editForm(qnaDetail);
 					}else{
 						alert("이 문의는 작성자만 볼 수 있는 비밀글입니다.");
 					}
-					
+				//일반글	
 				}else{
-					//문의 상세보기
-					showQnaDetail(qnaDetail);
+					if(memno==qnaMemberNo){
+						editForm(qnaDetail);
+					}else{
+						//문의 상세보기
+						showQnaDetail(qnaDetail);
+					}
 				}				
 			},
 			error:function(qnaDetil){
@@ -234,43 +276,54 @@
 		var inquiryType = qnaDetail.inquiry_type;
 	    var isSecret = qnaDetail.is_secret;
 	    
-		$("select[name='inquiry_type']").val(inquiryType).prop("disabled", false);
-		$("input[name='is_secret']:checked").val(isSecret).prop("disabled", false);
-		$("input[name='title']").val(title).prop("disabled", false);
-		$("input[name='content']").val(content).prop("disabled", false);
+		$("select[name='inquiry_type']").val(inquiryType).prop("readonly",true);
+		$("input[name='is_secret']:checked").val(isSecret).prop("readonly",true);
+		$("input[name='title']").val(title).prop("readonly",true);
+		$("input[name='content']").val(content).prop("readonly",true);
 	
 		$(".writeform").slideDown();
-		
-		//내용 작성 돼있으면 수정, 삭제 버튼
-		if (title && content){
-			showEDbtns(qnaDetail);
-			 $(".editbtn").on("click",function(){
-				//수정가능한 폼으로 전환
-				editForm(qnaDetail);
-			 });
-			
-		}
-		else{
-			showWriteButtons();
-		}
+		$(".donebtn, .closebtn").hide();
+		$(".editbtn, .deletebtn").hide();
+	
 	
 	}
 	//수정가능한 폼으로 전환 함수
 	function editForm(qnaDetail){
-		$("select[name]'inquiry_type']").prop("readonly",false);
+		var title=qnaDetail.title;
+		var content=qnaDetail.content;
+		var inquiryType = qnaDetail.inquiry_type;
+	    var isSecret = qnaDetail.is_secret;
+		$("select[name='inquiry_type']").val(inquiryType).prop("readonly",false);
 		$("input[name='is_secret']:checked").val(isSecret).prop("readonly", false);
 		$("input[name='title']").val(title).prop("readonly", false);
 		$("input[name='content']").val(content).prop("readonly", false);
+		$(".writeform").slideDown();
 		
+		showEDbtns(qnaDetail);
 		$(".editbtn").on("click", function(){
 			updateQna(qnaDetail.inquiry_no);
+			loadQnaCnt();
 		})
+		//문의 삭제 버튼 클릭시
+		$(".deletebtn").on("click", function(){
+			console.log("문의 번호 : "+ qnaDetail.inquiry_no);
+			console.log("삭제 버튼이 클릭됨!");
+			if (confirm("문의를 삭제하시겠습니까?")){
+				deleteQna(qnaDetail.inquiry_no);			
+				$(".writeform").slideUp();
+			}
+			loadQnaCnt();
+		});
 	}
+	
+	//문의 수정하기
 	function updateQna(inquiryNo){
 		var mem_no="${sessionScope.logInfo.member_no}";
+		var goods_no = "${item.goods_no}";
+		
 		var formData = {
-			member_no:mem_no,
-			goods_no:goods_no,
+		 	inquiry_no: inquiryNo,
+	        member_no: mem_no,
 	        inquiry_type: $("select[name='inquiry_type']").val(),
 	        is_secret: $("input[name='is_secret']:checked").val(),
 	        title: $("input[name='title']").val(),
@@ -279,9 +332,10 @@
 		$.ajax({
 	       type: "POST",
 	       url: "${pageContext.request.contextPath}/detail/qnaUpdate",
-	       data: formData,
+	       data: JSON.stringify(formData),  // 데이터를 JSON 문자열로 변환
+	       contentType: "application/json",
 	       success: function (response) {
-	    	   if (response !== "error") {
+	    	   if (response == "success") {
 	               // 수정 성공 시 처리
 	               console.log("Q&A 수정 성공");
 	               $(".writeform").slideUp();
@@ -297,6 +351,31 @@
 			}
 		});
 	}
+	
+	
+	//문의 삭제
+	function deleteQna(inquiryNo){
+		console.log(inquiryNo);
+		$.ajax({
+			type:"POST",
+			url:"${pageContext.request.contextPath}/detail/qnaDelete/" + inquiryNo,
+			success:function(response){
+				if(response == "success"){
+				//삭제 성공시
+				console.log("Q&A 삭제 성공");
+				alert("문의가 삭제되었습니다");
+				loadQnaList();
+				
+				}else{
+					console.log("Q&A 삭제 실패");
+				}
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	}
+	
 	
 	function showEDbtns(qnaDetail){
 		$(".editbtn, .deletebtn").show();
@@ -378,6 +457,7 @@
 				           console.log(error);
 				       }
 				   });
+					loadQnaCnt();
 		        });
 			}else{
 				var str="로그인이 필요한 서비스입니다! 로그인 화면으로 이동하시겠습니까?";
@@ -500,16 +580,9 @@
 					</div>
 					
 				 	<div class="qnaList">
-				 		<h2>문의목록</h2>	
+				 		<!-- <h2>문의목록</h2> -->
 				  		<table class="qnaTable">
-							<thead>
-								<tr>	    					
-									<th>글번호</th>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>작성일</th>	    					
-								</tr>
-							</thead>
+							
 							<tbody id="qnaTableBody">
 								
 							

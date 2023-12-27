@@ -39,7 +39,9 @@
 	        toggleDeleteButton();
 	        
 	    });
-
+	    
+	    
+		//총 장바구니 가격 계산
 	    function calculateTotalPrice() {
 	        var totalPrice = 0;
 	        var totalDeliveryfee = 0;
@@ -121,6 +123,76 @@
 	
     });
 	
+	$(function(){
+		// 옵션 수량 변경
+		$("#minus-button").on("click", function () {
+		    updateQuantity(-1);
+		    console.log("수량 -1 !!!");
+		});
+		
+		$("#plus-button").on("click", function () {
+		    updateQuantity(1);
+		    console.log("수량 +1 !!!");
+		});
+		
+		$("#cnt").on("input", function () {
+		    // 직접 값을 입력했을 때도 업데이트
+		    updateQuantity(0);
+		});
+		
+		//
+		function updateQuantity(change) {
+		    var currentValue = parseInt($("#cnt").val());
+		
+		    // 값이 숫자인지 확인 후 처리
+		    if (!isNaN(currentValue)) {
+		        var newQuantity = currentValue + change;
+		        var cartNo = $(".selectItem:checked").val();
+
+		        $.ajax({
+		            type: "POST",
+		            url: "${pageContext.request.contextPath}/cart/updateQuantity",
+		            data: {
+		            	cart_no: cartNo,
+		                newQuantity: newQuantity
+		            },
+		            success: function (result) {
+		            	//새로운 수량
+		                $("#cnt").val(newQuantity);
+		             	// 기존 가격 가져오기
+		                var originalPriceElement = $(".each_cartitem input[value='" + cartNo + "']").closest(".each_cartitem").find(".price");
+		                var originalPrice = parseInt(originalPriceElement.val());
+		                var newPrice = originalPrice * newQuantity;
+		                originalPriceElement.val(newPrice);
+		                
+		                calculateTotalPrice();
+		            },
+		            error: function (result) {
+		                alert("수량 업데이트 중 오류가 발생했습니다!!!.");
+		            }
+		        });
+		    }
+		}
+		
+		function updateCartQuantity(cartNo, newQuantity) {
+		    $.ajax({
+		        type: "POST",
+		        url: "${pageContext.request.contextPath}/cart/updateQuantity",
+		        data: {
+		        	cart_no: cartNo,
+		            newQuantity: newQuantity
+		        },
+		        success: function (result) {
+		            console.log(result);
+		            // 서버에서 성공적으로 응답을 받았을 때 수행할 작업을 추가할 수 있습니다.
+		        },
+		        error: function (result) {
+		            alert("수량 업데이트 중 오류가 발생했습니다.");
+		        }
+		    });
+		}
+		
+	});
 	</script>
 	
 </head>
@@ -172,7 +244,9 @@
 										</div>
 										<div class="rightalign">
 											<div class="itemCnt">
-												${cartList.goods_count}
+												<div id="minus-button"><p>-</p></div>
+												<input class="goodsCnt" type="text" name="cnt" id="cnt" value="${cartList.goods_count}">
+												<div id="plus-button"><p>+</p></div>
 											</div>
 											<div class="itemPrice">
 												${cartList.final_price}원

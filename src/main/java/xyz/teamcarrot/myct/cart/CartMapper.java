@@ -18,7 +18,8 @@ public interface CartMapper {
 	void deleteSelected(List<Integer> cartNos);
 	
 	//장바구니 수정
-	int update(CartVO cart);
+	int updateQuantity(CartVO cart);
+	void updateCartQuantity(CartVO cart);
 	
 	//장바구니에 존재 여부 확인
 	int existInCart(Map<String, Object> paramMap);

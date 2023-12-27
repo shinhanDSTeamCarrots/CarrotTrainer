@@ -16,17 +16,7 @@
 		INNER JOIN tb_member m ON i.member_no= m.member_no
 		WHERE inquiry_no=#{inquiry_no}	
 	</select>		
-	
-	<!-- 문의 수정 -->
-	<update id="updateQna" parameterType="map">
-		UPDATE tb_goods_inquiry
-		SET inquiry_type=#{inquiry_type},
-			is_secret=#{is_secret},
-			title=#{title},
-			content=#{content}
-		WHERE inquiry_no = #{inquiry_no}
-	</update>
-	
+		
 	
 	<!-- 상품별 문의 갯수 -->
 	<select id="getCntbyGoodsno" parameterType="int" resultType="int">
@@ -39,5 +29,21 @@
 		VALUES (#{inquiry_type}, #{title}, #{content}, NOW(), 0, #{goods_no}, #{member_no}, #{is_secret})
 	</insert>
 	
+	<!-- 문의 수정 -->
+	<update id="qnaUpdate" parameterType="xyz.teamcarrot.myct.goods.GoodsInquiryVO">
+		UPDATE tb_goods_inquiry
+		SET inquiry_type=#{inquiry_type},
+			is_secret=#{is_secret},
+			title=#{title},
+			content=#{content}
+		WHERE inquiry_no = #{inquiry_no}
+	</update>
+	
+	<!-- 문의 삭제 -->
+	<delete id="qnaDel" parameterType="int">
+		DELETE FROM tb_goods_inquiry
+		WHERE inquiry_no = #{inquiry_no}
+	
+	</delete>
 	
 </mapper>

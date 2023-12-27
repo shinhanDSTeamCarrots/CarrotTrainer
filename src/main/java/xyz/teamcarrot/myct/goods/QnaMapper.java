@@ -18,5 +18,9 @@ public interface QnaMapper {
 	//문의 작성
 	int qnaInsert(GoodsInquiryVO qna);
 	
+	//문의 수정
+	int qnaUpdate(GoodsInquiryVO qna);
 	
+	//문의 삭제
+	int qnaDel(int inquiry_no);
 }

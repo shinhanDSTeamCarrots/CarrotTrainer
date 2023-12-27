@@ -36,10 +36,9 @@
 	
 	
 	<!-- 장바구니 상품 수정 -->
-	<update id="update" parameterType="xyz.teamcarrot.myct.cart.CartVO">
+	<update id="updateQuantity" parameterType="xyz.teamcarrot.myct.cart.CartVO">
         UPDATE tb_cart
         SET goods_count = #{goods_count}
-        	,option_no=#{option_no}
         WHERE cart_no = #{cart_no}
     </update>
 	
