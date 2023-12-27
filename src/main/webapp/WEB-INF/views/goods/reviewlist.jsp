@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script>
 	var mem_no = "${sessionScope.loginInfo.member_no}";
 	
@@ -122,32 +124,109 @@
 		//아무것도 안함
 	}
 </script>
+<style type="text/css">
+/*정렬들*/
+
+.alignList{
+	background-color: red;
+	list-style: none;
+}
+.alignList > li{
+	float: left;
+	margin-right: 5px;
+	border: 1px solid black;
+    color: #435334;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #CEDEBD;
+}
+progress{
+appearance: none
+}
+/*사용자 평균 평점*/
+.headUserAvgPointConst{
+	display: flex;
+	flex-direction: row;
+}
+.headUserAvgPointConst > progress{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+progress::-webkit-progress-bar{
+	background: #CEDEBD;
+}
+progress::-webkit-progress-value{
+	background: #F9B572;
+}
+.reviewImg{
+	width:120px;
+	height:120px;
+}
+
+.points{
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+.likes > input[type='image']{
+	width:50px;
+	height:50px;
+}
+.eachItems{
+	border-bottom: 1px solid black;
+	margin-bottom: 5px;
+}
+.eachItemTexts{
+	display: flex;
+	flex-direction: row;
+}
+.nickname{
+	margin-right: 10px;
+}
+.itemContentBtn{
+	display: flex;
+	flex-direction: row;
+}
+.itemBtns{
+	justify-content: flex-end;
+	line-height: 20px;
+}
+</style>
 </head>
 <body>
     <div>
         <strong>상품리뷰 ${map.total_cnt}건</strong>
     </div>
+    
 	<%-- 정렬 선택 --%>
-    <ul>
+    <ul class="alignList">
         <li><a onclick="alignTypeBtnClicked('regist_desc')">최신순</a></li>
         <li><a onclick="alignTypeBtnClicked('regist_asc')">오래된순</a></li>
         <li><a onclick="alignTypeBtnClicked('point_desc')">평점 높은순</a></li>
         <li><a onclick="alignTypeBtnClicked('point_asc')">평점 낮은순</a></li>
         <li><a onclick="alignTypeBtnClicked('like_desc')">공감 순</a></li>
     </ul>
-    <div>
-    </div>
+    
+    <br>
+    <br>
     <ul>
         <c:if test="${map.total_cnt != 0 }">
     	<%-- 평균 데이터 --%>
     	<li>
-    		<div>
+    		<div class="headUserAvgPointConst">
     			<p>사용자 평균 평점</p><br>	
     			<progress min="0" max="5" value="${map.avg_point }" ></progress>
     			<p>${map.avg_point }</p>
     			<br>
     		</div>
-    		<div>
+    		<%--
+    		<div class="headPointRatio">
     		<p>평점 비율 </p>
 	    		<ul>
 		    		<li>
@@ -176,13 +255,14 @@
 		    			<p>1점</p>
 	    			</li>
 	    		</ul>
-    		</div>
+    		</div> --%>
     	</li>
 	        <%-- 실제 데이터 --%>
 	        <c:forEach var="vo" items="${map.list }">
-		        <li>
+		        <li class="eachItems">
 		        	<%-- 평점 --%>
-		        	<div>
+		        	<div class="eachItemTexts">
+		        	<div class="points">
 						<c:if test="${vo.point == 1}">
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
 		        		</c:if>
@@ -229,20 +309,23 @@
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
 		        		</c:if>
 		        	</div>
+		        	<p class="nickname">${vo.member_name }</p>
+		        	<p>${vo.regist_date }</p>
+		        	</div>
+		        	<div class="itemContentBtn">
+		        	<div class="itemContentAndImg">
+		        	<p>${vo.content }</p>
 		        	<c:choose>
 		        		<%-- 이미지 출력 --%>
 		        		<c:when test="${not empty vo.image }">
-		        			<img alt="" src="${vo.blobToImage() }">
+		        			<img alt="" src="${vo.blobToImage() }" class="reviewImg">
 		        		</c:when>
-		        		<c:otherwise>
-		        		</c:otherwise>
 		        	</c:choose>
-		        	<p class="nickname">${vo.member_name }</p>
-		        	<br>
-		        	<p>${vo.regist_date }</p>
-		        	<p>${vo.content }</p>
+		        	</div>
+		        	<div class="itemBtns">
 		        	<c:choose>
 		        		<c:when test="${ empty sessionScope.loginInfo.member_no  || vo.member_no ne sessionScope.loginInfo.member_no}">
+		        			<div class="likes">
 		        			<%-- 내 글이 아니고 --%>
 		        			<c:choose>
 		        				<c:when test="${vo.self_like eq 0 }">
@@ -254,14 +337,18 @@
 		        					<input type="image" alt="좋아요 취소" src="${pageContext.request.contextPath}/img/ico_like2.png" onclick="onLikeCancled(${vo.review_no},this)" />
 		        				</c:otherwise>
 		        			</c:choose>
+       						</div>
 		        		</c:when>
 		        		<c:otherwise>
+		        		<div class="eachItemVal">
 		        			<%-- 내 글이면 수정하고  --%>
 		        			<input type="button" alt="수정버튼" value="수정" onclick="onEditBtnClicked(${vo.review_no})"/>
 		        			<input type="button" alt="삭제버튼" value="삭제" onclick="onDeleteBtnClicked(${vo.review_no})"/>
+	        			</div>
 		        		</c:otherwise>
 		        	</c:choose>
-		        	<br>
+		        	</div>
+		        	</div>
 	        	</li>
 	        </c:forEach>
         </c:if>

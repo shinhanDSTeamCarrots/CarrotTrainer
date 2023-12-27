@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>결제 진행</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -33,6 +35,8 @@
 
 				$('#zipcode').val(data.zonecode);
 				$('#addr1').val(roadAddr);
+				$('#addr2').val("");
+				$('#addr2').focus();
 			}
 		}).open();
 	}
@@ -177,7 +181,7 @@
 			return;
 		//무통장 입금
 		//입금자 명 받을 수 있는 div 추가
-		$('#additionalPayInfo').append("<h2>입금자 명: </h2>"
+		$('#additionalPayInfo').append("<h2>입금자 명:    </h2>"
 		+"<input type='text'value='${sessionScope.loginInfo.member_name}'id='bankowner' name='bankowner'/>"
 		+"<input type='button' value='제출'id='banksubmit'/>");
 		paytype = "BANK";
@@ -294,6 +298,7 @@
 	font-weight: 600;	
 	line-height: 40px;
 	margin-right:20px;
+	margin-left:20px;
 	
 }
 .cart_header > .rightAlign > #cart_later{
@@ -332,14 +337,211 @@
 	font-weight: 500;
 }
 
+/*테이블 - 상품*/
+
 #goodsTable > tbody > tr{
-	display:flex;
-    flex-direction:row;
     margin:20px;
     margin-left:10px;
     width:100%;
 }
+#goodsTable {
+	width: 100%;
+    align-items: center;
+}
+.goodsImage{
+	width:120px;
+	height:120px;
+   	vertical-align: middle;	
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.goodsTable{
+	border-collapse: collapse;
+}
+.goodsTr2 {
+	border-bottom: 1px solid black;
+	margin-bottom: 5px;
+}
+.goodTr1 {
+	margin-top: 5px;
+}
+select {
+    border: 1px solid #d1d1d1;
+    height: 30px;
+    padding: 3px 3px 3px 4px;
+    vertical-align: middle;
+    line-height: 24px;
+}
+.goodsCnt{
+	text-align: center;
+}
+.goodsThead > tr{
+	border-bottom: 1px solid black;
+}
+.goodsAllSumPrice{
+	margin-bottom: 5px;
+	margin-top:5px;
+	font-size: 20px;
+	float:right;
+  	display: inline-block;
+}
+.goodsAllSumPriceConst{
+	margin-bottom: 5px;
+	margin-top:5px;
+	font-size: 20px;
+  	display: inline-block;
+}
+.amountReadOnlyText{
+	margin-bottom: 10px;
+	margin-top:10px;
+	float:right;
+	margin-right: 5px;
+	width: 120px;
+	border-width: 0px;
+	font-weight: bold;
+	font-size: 20px;
+}
 
+
+/*배송 정보*/
+
+select {
+    border: 1px solid #d1d1d1;
+    height: 30px;
+    padding: 3px 3px 3px 4px;
+    vertical-align: middle;
+    line-height: 24px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+table#deliverTable {
+    margin-left: 30px;
+    margin-top: 10px;
+    /* width: 600; */
+    margin-bottom: 20px;
+}
+input[type='text'].deliverInput{
+    border: none ; /*!important*/
+    background: transparent;
+    border-bottom: 2px solid #99B080;
+    outline: none;
+    margin-top: 10px;
+    width: 250px;
+    height: 30px;
+}
+#deliverTable > tbody > tr > td > p{
+	font-size: 20px;
+	width: 100px;
+}
+#deliverTable > tbody > tr > td{
+}
+#notice{
+	height: 50px;
+}
+/*결제 정보*/
+#payInfo > h2 {
+	margin-left: 20px;
+}
+.mileageInfo {
+	margin-left: 20px;
+}
+.mileageInfo > p{
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#mileage{
+	border: none ; /*!important*/
+    background: transparent;
+    border-bottom: 2px solid #99B080;
+    outline: none;
+    width: 100px;
+    height: 30px;
+    font-size: 20px;
+    text-align: right;
+    padding-right: 10px;
+    
+}
+#mileage::-webkit-inner-spin-button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.mileageInfo{
+	margin-top:10px;
+	margin-bottom: 50px;
+	display: flex;
+	flex-direction: row;
+}
+input[type='button'].pay {
+    color: #435334;
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #CEDEBD;
+    margin: 50px auto;
+}
+.payBtns{
+	align-content: center;
+	vertical-align: middle;
+}
+.kakaoPay{
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    margin: 50px auto;
+}
+.tossPay{
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    margin: 50px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    
+}
+.creditPay{
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    margin: 50px auto;
+}
+#additionalPayInfo{
+	display: flex;
+	flex-direction: row;
+}
+#banksubmit{
+    color: #435334;
+    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #CEDEBD;
+    margin: 50px auto;
+}
 </style>
 
 </head>
@@ -354,9 +556,9 @@
 		<div class="cart_header">
 		    	<h1 id ="cart_title">주문/결제</h1>
 		    	<div class="rightAlign">
-			    	<h2 id="cart_later">1.장바구니 ></h2>
-			    	<h2 id="cart_subtitle">2.주문/결제 </h2>
-			    	<h2 id="cart_later">> 3.주문완료</h2>	 
+			    	<h2 id="cart_later">1.장바구니  &gt </h2>
+			    	<h2 id="cart_subtitle"> 2.주문/결제 </h2>
+			    	<h2 id="cart_later">&gt 3.주문완료</h2>	 
 			    </div>   
 		    </div>
 		<table id="goodsTable" class="goodsTable">
@@ -371,7 +573,7 @@
 		</thead>
 		<tbody>
 			<c:forEach var="gList" items="${goodsList }">
-			<tr>
+			<tr class="goodsTr1">
 			<c:choose>
 			<c:when test="${not empty gList.goods_thumnail}">
 				<td rowspan="2"><img alt="상품 이미지" src="/myct/img/goods/${gList.goods_thumnail }.jpg" class="goodsImage"> </td>
@@ -385,7 +587,7 @@
 				<td rowspan="2"><p class="goodsCnt">X${gList.goods_cnt } 개</p><input type="hidden" value="${gList.goods_cnt }" name="goods_cnt"/></td>
 				<td><p class="goodsFinalPrice">${gList.goods_final_price }원</p><input type="hidden" value="${gList.goods_final_price }" name="goods_final_price"/></td>
 			</tr>
-			<tr>
+			<tr class="goodsTr2">
 				<td><p class="goodsOptionPrice">+${gList.option_price }</p> <input type="hidden" name="cart_no" value="${gList.cart_no }" /> </td>
 				<td><p class="goodsDeliverPrice">배달비 0원</p></td>
 			</tr>
@@ -402,14 +604,14 @@
 				<td colspan="2"></td>
 				<td><strong class="goodsAllSumPrice">총 합계</strong></td>
 				<td><input type="text" value="${total_amt }" class="amountReadOnlyText" readonly></td>
-				<td><strong class="goodsAllSumPrice">원</strong></td>
+				<td><strong class="goodsAllSumPriceConst">원</strong></td>
 			</tr>
 		</tfoot>
 		</table>
 	</div>
     <div class="title-division-line"></div>
 
-	<div>
+	<div class="deliverConst">
 		<h1>배송 정보</h1>
 		<select id="deliver_combobox" onchange="OnComboChange(this.value)" class="deliverCombo">
 			<option value="0">직접입력</option>
@@ -422,29 +624,29 @@
 	<table id="deliverTable">
 		<tr>
 			<td><p>배송지 명</p></td>
-			<td><input type="text" id="place_name"/> </td>
+			<td><input type="text" id="place_name" class="deliverInput name"/> </td>
 		</tr>
 		<tr>
 			<td><p>수신자 명</p></td>
-			<td><input type="text" id="recevier_name" name="recevier_name"/> </td>
+			<td><input type="text" id="recevier_name" name="recevier_name" class="deliverInput name"/> </td>
 		</tr>
 		<tr>
 			<td><p>번호</p></td>
-			<td><input type="text" id="phone" name="phone"/> </td>
+			<td><input type="text" id="phone" name="phone" class="deliverInput name"/> </td>
 		</tr>
 		<tr>
 			<td><p>주소</p></td>
-			<td><input type="text" id="addr1" onclick="daumMapFunc()" name="addr1" readonly/><br>
-			<input type="text" id="addr2" name="addr2" />
+			<td><input type="text" id="addr1" onclick="daumMapFunc()" name="addr1" class="deliverInput name" readonly/><br>
+			<input type="text" id="addr2" name="addr2" class="deliverInput name" />
 			</td>
 		</tr>
 		<tr>
 			<td><p>우편번호</p></td>
-			<td><input type="text" id="zipcode" name="zipcode" onclick="daumMapFunc()" readonly/> </td>
+			<td><input type="text" id="zipcode" name="zipcode" onclick="daumMapFunc()" class="deliverInput name" readonly/> </td>
 		</tr>
 		<tr>
 			<td><p>배송 메시지</p></td>
-			<td><input type="text" id="notice" name="notice"/> </td>
+			<td><input type="text" id="notice" name="notice" class="deliverInput name"/> </td>
 		</tr>
 	</table>
     <div class="title-division-line"></div>
@@ -453,13 +655,17 @@
 		<h1>결제 정보</h1>
 		<%--마일리지 정보 --%>
 		<h2>현재 마일리지</h2>
-		<input type="number" value="0" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/${mileage }원</p>
+		<div class="mileageInfo">
+			<input type="number" value="0" onfocusout="mileageChange()" name="mileage" id="mileage"><p>/ ${mileage }원</p>
+		</div>
+		<div class="payBtns">
 		<%-- 아임포트 --%>
-		<input type="button" onclick="kginicis()" class="pay CreditPay"></input>
-		<input type="button" onclick="tosspay()" class="pay TossPay"></input>
-		<input type="button" onclick="kakaopay()" class="pay KakaoPay"></input>
+		<input type="image" onclick="kginicis();return false;" class="pay creditPay" src="${pageContext.request.contextPath}/img/credit.png"></input>
+		<input type="image" onclick="tosspay();return false;" class="pay tossPay" src="${pageContext.request.contextPath}/img/tosspay.png"></input>
+		<input type="image" onclick="kakaopay();return false;" class="pay kakaoPay" src="${pageContext.request.contextPath}/img/kakaopay.svg"/>
 		<input type="button" onclick="bankpay()" value="무통장입금" class="pay BankPay"/>
 		<br><div id="additionalPayInfo"></div>
+		</div>
 	</div>
 </form>
 </div>
