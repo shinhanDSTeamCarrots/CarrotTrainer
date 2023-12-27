@@ -171,7 +171,7 @@ select {
 	flex-direction: row;
 }
 /* 입력 버튼 */
-.select-info {
+#select-info {
 	width: 320px;
 	height: 35px;
 	background-color: #CEDEBD;
@@ -179,7 +179,7 @@ select {
 	font-weight: 700;
 	margin-bottom: 15px;
 }
-.select-info:hover {
+#select-info:hover {
 	background-color: #435334;
 	color: #FAF1E4;
 }

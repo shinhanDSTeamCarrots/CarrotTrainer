@@ -56,12 +56,13 @@
 .bmi-input-detail li {
 	margin: 0 30px 0 0;
 }
+.bmi-input-detail > .exercise_mass {
+	margin-top: -3px;
+}
 .bmi-input-detail > #title-exercise_mass {
 	margin: 0 10px 0 0;
 }
-.bmi-input-detail > .exercise_mass {
-	margin: 0 6px;
-}
+
 .bmi-input-detail > .bmi-input-essential {
 	margin: 0;
 	font-size: 25px;
@@ -86,11 +87,8 @@
 select {
 	border: none;
 	background: transparent;
-	font-size: 20px;
-	font-weight: 600;
-	text-align: left;
+	font-size: 15px;
 	height: auto;
-	padding: none;
 	outline: none;
 }
 .bmi-input-button > .bmi-btn {

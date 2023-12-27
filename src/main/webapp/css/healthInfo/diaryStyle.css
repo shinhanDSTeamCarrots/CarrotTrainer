@@ -285,7 +285,9 @@
     flex-direction: row;
     justify-content: center;
 }
-.modalBody-input > .modalBody-input-text input[type="text"] {
+#weight,
+#muscle_mass,
+#fat_mass {
 	border: none;
 	background: transparent; /* 투명 */
 	border-bottom: 2px solid #99B080;
@@ -298,7 +300,9 @@
 	text-align: center;
 	margin: auto 0;
 }
-.modalBody-input-text input[type="text"]:focus {
+#weight:focus,
+#muscle_mass:focus,
+#fat_mass:focus {
 	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
 }
 /* 버튼 */

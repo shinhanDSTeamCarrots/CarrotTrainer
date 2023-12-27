@@ -102,9 +102,9 @@
 	    			  					<div class="modalBody-input-essential">*</div>
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
-		    			  					<div id="minus-button">-</div>
+		    			  					<div id="minus-button"><p>-</p></div>
 			    			  				<input class="modalBody-input-text" type="text" name="weight" id="weight" value="${bodyChange.weight }">
-			    			  				<div id="plus-button">+</div>
+			    			  				<div id="plus-button"><p>+</p></div>
 		    			  				</div>
 		    			  			</div>
 	    			  				<div class="detail-division-line"></div>

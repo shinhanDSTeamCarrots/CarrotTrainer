@@ -158,9 +158,9 @@
 	    			  				<div class="modalBody-result" id="modalBody-time">
 	    			  					<div class="modalBody-text">운동시간(분)</div>
 	    			  					<div class="modalBody-input">
-		    			  					<div id="minus-button">-</div>
+		    			  					<div id="minus-button"><p>-</p></div>
 			    			  				<input id="minute">
-			    			  				<div id="plus-button">+</div>
+			    			  				<div id="plus-button"><p>+</p></div>
 		    			  				</div>
 	    			  				</div>
 	    			  			</div>
