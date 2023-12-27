@@ -44,7 +44,7 @@ public class ExerciseController {
 		}else {
 			if(healthName == null) {
 				//로그인 && 검색 안함 -> 즐찾
-				List<Map<String, Object>> bookmarks = service.getbookmarkHealthDic(healthName, member_no, minute);
+				List<Map<String, Object>> bookmarks = service.getBookmarkHealthDic(healthName, member_no, minute);
 				model.addAttribute("healthDic", bookmarks);
 			}else {
 				//로그인 && 검색함 -> 일반 검색

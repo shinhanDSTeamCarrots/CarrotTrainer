@@ -22,4 +22,15 @@ public interface HealthDicMapper {
 	HealthDiaryVO selectHealthInfo(int no);
 	int updateHealthInfo(HealthDiaryVO vo);
 	int deleteHealthInfo(int no);
+	
+	
+	//전체 음식 리스트
+	List<Map<String, Object>> foodDic(Map<String, Object> map);
+	
+	//북마크 음식 리스트
+	List<Map<String, Object>> bookmarkFoodDic(Map<String, Object> map);
+	//북마크 추가
+	int addFoodBookmark(FoodBookmarkVO vo);
+	//북마크 제거
+	int delFoodBookmark(int food_bookmark_no);
 }

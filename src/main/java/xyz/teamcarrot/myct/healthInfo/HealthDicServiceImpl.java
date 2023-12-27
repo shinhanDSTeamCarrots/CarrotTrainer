@@ -32,9 +32,10 @@ public class HealthDicServiceImpl implements HealthDicService {
 		
 		return healthDicList;
 	}
+	
 	//즐겨찾기 운동 리스트
 	@Override
-	public List<Map<String, Object>> getbookmarkHealthDic(String healthName, int member_no, int minute){
+	public List<Map<String, Object>> getBookmarkHealthDic(String healthName, int member_no, int minute){
 		Map<String, Object> healthDic = new HashMap<>();
 		
 		//총 개수
@@ -49,7 +50,6 @@ public class HealthDicServiceImpl implements HealthDicService {
 	    
 		return bookmarkHealthDicList;
 	}
-	
 	//북마크 추가
 	@Override
     public int addBookmark(HealthBookmarkVO vo) {
@@ -78,4 +78,47 @@ public class HealthDicServiceImpl implements HealthDicService {
 	public int deleteHealthInfo(HealthDiaryVO vo) {
 		return mapper.deleteHealthInfo(vo.getHealth_diary_no());
 	}
+	
+	//전체 음식 리스트
+	@Override
+	public List<Map<String, Object>> getFoodDic(String foodName, int member_no){
+		Map<String, Object> foodDic = new HashMap<>();
+		
+		//총 개수
+		//int totalCount = healthDicList.size();
+		
+		foodDic.put("foodName", foodName);
+		foodDic.put("member_no", member_no);
+		
+		//mapper.foodDic()을 호출할 때 필요한 정보를 담은 맵을 전달
+		List<Map<String, Object>> foodDicList = mapper.foodDic(foodDic);
+		
+		return foodDicList;
+	}
+	//즐겨찾기 음식 리스트
+	@Override
+	public List<Map<String, Object>> getBookmarkFoodDic(String foodName, int member_no){
+		Map<String, Object> foodDic = new HashMap<>();
+		
+		//총 개수
+		//int totalCount = healthDicList.size();
+		
+		foodDic.put("foodName", foodName);
+		foodDic.put("member_no", member_no);
+		
+		//mapper.foodDic()을 호출할 때 필요한 정보를 담은 맵을 전달
+		List<Map<String, Object>> bookmarkFoodDicList = mapper.bookmarkFoodDic(foodDic);
+	    
+		return bookmarkFoodDicList;
+	}
+	//북마크 추가
+	@Override
+    public int addFoodBookmark(FoodBookmarkVO vo) {
+		return mapper.addFoodBookmark(vo);
+    }
+    //북마크 삭제
+	@Override
+    public int delFoodBookmark(int food_bookmark_no) {
+		return mapper.delFoodBookmark(food_bookmark_no);
+    }
 }
