@@ -81,19 +81,43 @@ public class HealthDicServiceImpl implements HealthDicService {
 	
 	//전체 음식 리스트
 	@Override
-	public List<Map<String, Object>> getFoodDic(String foodName, int member_no){
-		Map<String, Object> foodDic = new HashMap<>();
+	public Map<String, Object> getFoodDic(String foodName, int member_no){
+		int page = 1;
+		int startIdx = (page - 1) * 10;
+		
+		Map<String, Object> retMap = new HashMap<>();
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("foodName", foodName);
+		paramMap.put("member_no", member_no);
 		
 		//총 개수
-		//int totalCount = healthDicList.size();
+		int count = mapper.foodCount(paramMap);
+		//총 페이지 수
+		int totalPage = count/10;
+		if (count % 10 > 0) totalPage++;
+		//목록
+		List<Map<String, Object>> list = mapper.list(paramMap);
 		
-		foodDic.put("foodName", foodName);
-		foodDic.put("member_no", member_no);
+		retMap.put("count", count);
+		retMap.put("list", list);
+		
+		//하단에 페이징 처리
+        int endPage = (int)(Math.ceil(page/10.0)*10);
+        int startPage = endPage - 9;
+        if (endPage > totalPage) endPage = totalPage;
+        boolean prev = startPage > 1;
+        boolean next = endPage < totalPage;
+        retMap.put("endPage", endPage);
+        retMap.put("startPage", startPage);
+        retMap.put("prev", prev);
+        retMap.put("next", next);
 		
 		//mapper.foodDic()을 호출할 때 필요한 정보를 담은 맵을 전달
-		List<Map<String, Object>> foodDicList = mapper.foodDic(foodDic);
+		List<Map<String, Object>> foodDicList = mapper.foodDic(paramMap);
+		retMap.put("foodDicList", foodDicList);
 		
-		return foodDicList;
+		return retMap;
 	}
 	//즐겨찾기 음식 리스트
 	@Override

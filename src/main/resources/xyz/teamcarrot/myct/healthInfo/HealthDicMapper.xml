@@ -97,6 +97,11 @@
 			</if>
 		</where>
 	</sql>
+	<!-- 음식 정보 개수 -->
+	<select id="foodCount" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM tb_food_dic
+		<include refid="searchFoodName"/>
+	</select>
 	<!-- 음식 정보 -->
 	<select id="foodDic" resultType="java.util.Map" parameterType="map">
 		SELECT dic.food_dic_no AS no
@@ -115,6 +120,7 @@
 			ON dic.food_dic_no = bookmark.food_dic_no
 			AND bookmark.member_no = #{member_no}
 		<include refid="searchFoodName"/>
+		LIMIT #{startIdx}, 10
 	</select>
 	<!-- 음식 즐겨찾기 검색 -->
 	<select id="bookmarkFoodDic" resultType="java.util.Map" parameterType="map">
@@ -133,9 +139,10 @@
 			LEFT JOIN tb_food_bookmark bookmark
 			ON dic.food_dic_no = bookmark.food_dic_no
 		WHERE bookmark.member_no = #{member_no}
-		<if test="foodName != null or foodName != ''">
-			AND food LIKE '%${foodName}%'
-		</if>
+			<if test="foodName != null or foodName != ''">
+				AND food LIKE '%${foodName}%'
+			</if>
+		LIMIT #{startIdx}, 10
 	</select>
 	<!-- 음식 즐겨찾기 추가 -->
 	<insert id="addFoodBookmark" parameterType="xyz.teamcarrot.myct.healthInfo.FoodBookmarkVO">

@@ -72,7 +72,7 @@
 									<col width="70%" />
 									<col width="20%" />
 								</colgroup>
-								<c:forEach var="foodDic" items="${foodDic}">
+								<c:forEach var="foodDic" items="${retMap.list}">
 									<tr class="food-info" data-no="${foodDic.no }" data-bookmarkno="${foodDic.bookmarkNo}">
 										<td class="bookmark" style="color: ${foodDic.bookmarkNo ne null ? 'gold': ''};"
 											data-color="${foodDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
@@ -86,6 +86,24 @@
 						</table>
 					</div>
 				</div>
+			</div>
+			<div class="pagenate clear">
+			    <ul class='paging'>
+			    <c:if test="${retMap.prev }">
+			    	<li><a href="food?page=${retMap.startPage-1 }&foodName=${foodDic.foodName}"> << </a></li>
+			    </c:if>
+			    <c:forEach var="p" begin="${retMap.startPage}" end="${retMap.endPage}">
+			    	<c:if test="${p == foodDic.page}">
+			        <li><a href='#;' class='current'>${p}</a></li>
+			        </c:if>
+			        <c:if test="${p != foodDic.page}">
+			        <li><a href='food?page=${p}&foodName=${foodDic.foodName}'>${p}</a></li>
+			        </c:if>
+			    </c:forEach>
+			    <c:if test="${retMap.next }">
+			    	<li><a href="food?page=${retMap.endPage+1 }&foodName=${foodDic.foodName}"> >> </a></li>
+			    </c:if>
+			    </ul> 
 			</div>
 			<!-- 기록란 -->
 			<div class="add-info">

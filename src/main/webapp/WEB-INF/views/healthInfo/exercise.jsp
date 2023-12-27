@@ -109,12 +109,7 @@
 							<p><span class="sql-text" id="total-calTime">0</span>kcal 소비</p>
 						</div>
 						<div id="healthInfo-graph"></div>
-						<div class="healthInfo-cart">
-							<input type="hidden" id="health_name" name="health_name">
-							<input type="hidden" id="health_calorie" name="health_calorie">
-							<input type="hidden" id="health_time" name="health_time">
-							<input type="hidden" id="health_date" name="health_date">
-						</div>
+						<div class="healthInfo-cart"></div>
 						<!-- healthInfo-cart에 들어가는 자바스크립트 입력 코드
 						<div class="healthInfo-select">
 							<div class="healthInfo-detail">

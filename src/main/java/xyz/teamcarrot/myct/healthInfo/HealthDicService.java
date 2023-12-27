@@ -22,7 +22,7 @@ public interface HealthDicService {
 	
 	
 	//전체 음식 리스트
-	List<Map<String, Object>> getFoodDic(String foodName,int member_no);
+	Map<String, Object> getFoodDic(String foodName,int member_no);
 	
 	//북마크 음식 리스트
 	List<Map<String, Object>> getBookmarkFoodDic(String foodName,int member_no);

@@ -166,9 +166,57 @@ select {
 	height: 20px;
 }
 /* 운동 내역 */
+.healthInfo-select {
+	border-top: 1px solid #D9D9D9;
+	padding: 7px;
+	cursor: pointer;
+}
+.healthInfo-select:hover {
+	background-color: #FAF8ED;
+}
 .healthInfo-detail {
 	display: flex;
 	flex-direction: row;
+	margin: 0 10px;
+	align-items: center;
+}
+.healthInfo-name {
+	width: 70%;
+}
+.healthInfo-name-text {
+	font-size: 14px;
+	font-weight: 600;
+}
+.healthInfo-name-time {
+	font-size: 10px;
+	font-weight: 500;
+	color: #748E63;
+}
+.healthInfo-cals {
+	width: 15%;
+	font-size: 12px;
+	font-weight: 500;
+	margin-left: auto;
+	color: #435334;
+}
+.healthInfo-del {
+	width: 15%;
+}
+#delButton {
+	width: 25px;
+	height: 25px;
+	background-color: #CEDEBD;
+	margin: 0 auto;
+	cursor: pointer;
+}
+#delButton:hover {
+	background-color: #748E63;
+}
+#delButton > p {
+	font-size: 15px;
+	font-weight: 800;
+	color: #FFFFFF;
+	text-align: center;
 }
 /* 입력 버튼 */
 #select-info {
@@ -184,9 +232,9 @@ select {
 	color: #FAF1E4;
 }
 
-/*--------------
+/*-------------
 	메인 글씨
---------------*/
+-------------*/
 .healthInfo-title-text {
 	color: #435334;
 	font-size: 30px;
@@ -198,6 +246,15 @@ select {
 	font-size: 18px;
 	font-weight: 700;
 	height: 40px;
+}
+
+/*-------------
+	sql 글씨
+-------------*/
+#healthInfo-text > .sql-text {
+	color: #748E63;
+	font-size: 20px;
+	font-weight: 800;
 }
 
 /*-----------
