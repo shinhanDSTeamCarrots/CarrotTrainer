@@ -129,7 +129,7 @@
 					<div>
 						<div class="foodInfo">
 							<div class="time">
-								<input name="food_date" autocomplete="off" readonly="readonly">
+								<input id="food_date" name="food_date" autocomplete="off" readonly="readonly">
 							</div>
 							<div class="date">
 								<select name="intake_time" id="intake_time">

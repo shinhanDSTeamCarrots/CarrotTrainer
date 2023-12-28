@@ -28,34 +28,56 @@ $(function () {
 				// 세션에 저장된 데이터 가져오기
 				let foodInfo = sessionStorage.getItem("foodData");
 
-				// 세션 데이터가 있으면 분리하여 입력 필드에 할당
-				if (foodInfo) {
-					let foodData = JSON.parse(foodInfo);
 
-					if (foodData.hasOwnProperty(key)) {
-						// 새로운 폼 엘리먼트 생성
-						let form = $('<form>', {
-							'class': 'foodInfo-cart',
-							'action': '${pageContext.request.contextPath}/healthInfo/insertFoodDiary',
-							'method': 'post'
-						});
+				// input 요소의 값 가져오기
+				console.log($("input[name='health_date']").val());
 
-						// 숨겨진 입력 필드 생성 및 세션 값 할당
-						createHiddenInput(form, "intake_date", healthData[key].intake_date);
-						createHiddenInput(form, "intake_time", Number(healthData[key].intake_time));
-						createHiddenInput(form, "image", Number(healthData[key].minute));
-						createHiddenInput(form, "total_calorie", Number(healthData[key].total_calorie));
-						createHiddenInput(form, "total_carbs", healthData[key].total_carbs);
-						createHiddenInput(form, "total_protein", Number(healthData[key].total_protein));
-						createHiddenInput(form, "total_fat", Number(healthData[key].total_fat));
-						createHiddenInput(form, "total_sugar", Number(healthData[key].total_sugar));
-						createHiddenInput(form, "total_salt", Number(healthData[key].total_salt));
-
-						// 폼을 body에 추가하고 제출
-						//form.appendTo('body').submit().remove();
+				if ($("#food_date").val() != '') {
+					let foodDateInput = $("input[name='food_date']");
+					let foodDateValue = foodDateInput.val();
+					let foodDateObject = new Date(foodDateValue);
+					let formattedDate = foodDateObject.toISOString().split('T')[0];
+					
+					// 세션 데이터가 있으면 분리하여 입력 필드에 할당
+					if (foodInfo) {
+						let foodData = JSON.parse(foodInfo);
+						console.log(foodInfo);
+						hiArr = [];
+						for (var k in foodData) {
+							console.log(k);
+							hiArr.push(foodData[k]);
+						}
+						console.log(hiArr);
+						// 각 데이터에 대해 폼 생성 및 전송
+						for (let i = 0; i < hiArr.length; i++) {
+							console.log(hiArr[i]);
+		
+							// 새로운 폼 엘리먼트 생성
+							let form = $('<form>', {
+								'class': 'foodInfo-cart',
+								'action': 'insertFoodDiary',
+								'method': 'post'
+							});
+		
+							// 숨겨진 입력 필드 생성 및 세션 값 할당
+							createHiddenInput(form, "intake_date", formattedDate);
+							createHiddenInput(form, "intake_time", $('#intake_time').val());
+							createHiddenInput(form, "image", "");
+							createHiddenInput(form, "total_calorie", Number(hiArr[i].calorie));
+							createHiddenInput(form, "total_carbs", Number(hiArr[i].carbs));
+							createHiddenInput(form, "total_protein", Number(hiArr[i].protein));
+							createHiddenInput(form, "total_fat", Number(hiArr[i].fat));
+							createHiddenInput(form, "total_sugar", Number(hiArr[i].sugar));
+							createHiddenInput(form, "total_salt", Number(hiArr[i].salt));
+							
+							// 폼을 body에 추가하고 제출
+		    				form.appendTo('body').submit().remove();
+						}
+					} else {
+						alert("저장할 음식 목록이 없습니다.");
 					}
 				} else {
-					alert("저장할 음식 목록이 없습니다.");
+					alert("날짜를 입력해주세요.");
 				}
 			} else {
 				if (confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
