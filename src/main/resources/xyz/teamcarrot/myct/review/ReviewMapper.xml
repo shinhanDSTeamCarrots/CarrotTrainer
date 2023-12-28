@@ -105,7 +105,7 @@
 		UPDATE tb_review
 		<!-- NULL 에러 떔에 바꿈 -->
 		<!-- SET like_cnt = ( SELECT NVL(COUNT(*),0) FROM tb_review_like WHERE review_no = ${review_no} GROUP BY review_no) -->
-		SET like_cnt = (SELECT NVL(VAL, 0) FROM( SELECT NVL(COUNT(*),0) AS VAL FROM tb_review_like WHERE review_no = ${review_no} GROUP BY review_no) AS T )
+		SET like_cnt =  NVL((SELECT COUNT(*) FROM tb_review_like WHERE review_no = ${review_no} GROUP BY review_no),0)
 		WHERE review_no = ${review_no}
 	</update>
 	
