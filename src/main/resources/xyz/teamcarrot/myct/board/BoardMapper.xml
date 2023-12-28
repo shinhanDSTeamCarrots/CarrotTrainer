@@ -140,7 +140,7 @@
 
 
 	<!-- 통합된 게시물 목록 및 페이징 -->
-<select id="getListPaging" resultType="xyz.teamcarrot.myct.board.BoardVO">
+<select id="getListPaging" resultType="xyz.teamcarrot.myct.board.BoardVO" parameterType="map">
     SELECT * FROM (
         SELECT
             b.*,
@@ -158,15 +158,24 @@
             tb_member m ON b.member_no = m.member_no
         LEFT JOIN
             tb_board_file bf ON b.board_no = bf.board_no
-        <if test="keyword != null and searchType != null">
+            
+      	WHERE	0 = 0
+      	<if test="category_no != -1">
+      		AND category_no = #{category_no}
+      	</if>
+        <!-- <if test="keyword != null and searchType != null">
             <choose>
                 <when test="searchType == 'T'">
-                    WHERE b.board_title LIKE CONCAT('%', #{keyword}, '%')
+                    AND b.board_title LIKE CONCAT('%', #{keyword}, '%')
                 </when>
                 <when test="searchType == 'C'">
-                    WHERE b.board_content LIKE CONCAT('%', #{keyword}, '%')
+                    AND b.board_content LIKE CONCAT('%', #{keyword}, '%')
                 </when>
             </choose>
+        </if> -->
+        
+         <if test="keyword != null">
+            AND b.board_title LIKE CONCAT('%', #{keyword}, '%')  <!-- 제목 검색 조건 -->
         </if>
     ) AS subQuery
     ORDER BY

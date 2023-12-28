@@ -230,6 +230,7 @@ public class PayController implements InitializingBean{
 			String[] option_no = request.getParameterValues("option_no");
 			String[] goods_cnt = request.getParameterValues("goods_cnt");
 			String[] cart_no = request.getParameterValues("cart_no");
+			String[] prices = request.getParameterValues("goods_final_price");
 			List<BuyGoodsVO> list = new ArrayList<>();
 			for (int i=0; i<goods_no.length; i++) {
 				BuyGoodsVO bgvo = new BuyGoodsVO();
@@ -237,6 +238,7 @@ public class PayController implements InitializingBean{
 				bgvo.setOption_no(Integer.parseInt(option_no[i]));
 				bgvo.setGoods_cnt(Integer.parseInt(goods_cnt[i]));
 				bgvo.setCart_no(Integer.parseInt(cart_no[i]));
+				bgvo.setGoods_final_price(Integer.parseInt(prices[i]));
 				list.add(bgvo);
 			}
 			

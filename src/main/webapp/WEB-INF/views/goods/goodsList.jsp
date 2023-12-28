@@ -50,8 +50,9 @@
 		   		<div class="search_wrap">
 		   			<form method="get" name="searchForm" id="searchForm" action="${pageContext.request.contextPath}/goodsList">
 			   			<div class="search_area">
-			   				<input type="text" name="search_goods" value="${search_goods}" title="검색어 입력"> 
-			    			<input type="submit" id="search" value="검색" title="검색">
+			   				<input type="text" id="searchinput" name="search_goods" value="${search_goods}" title="검색어 입력"> 
+			    			<!-- <input type="submit" id="search" value="검색" title="검색"> -->
+			    			<input type="image" id="searchicon" src="/myct/img/searchicon.png"/> 
 			    		</div>
 			    	</form>
 		   		</div>		
@@ -76,6 +77,7 @@
 					</a>
 				</li>
 				</c:forEach>
+			
    			</ul>
    		</div>
   

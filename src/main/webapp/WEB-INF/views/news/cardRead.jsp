@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,31 +95,30 @@ hr {
     margin-bottom: 20px;
 }
 
+.NewsImg {
+	margin-bottom: 20px;
+}
+
 </style>
 <body>
 	<div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
-        <h1 class="board-title">웰니스 뉴스</h1>
+       <h1 class="board-title">웰니스 뉴스</h1>
         <div class="post-details">
-            <h2 class="post-title">제목: 안녕하세요</h2>
-            <div class="post-meta">등록일: 2023-11-12 조회수: 92</div>
+            <h2 class="post-title">제목: 고수, 오이를 싫어하는 이유<c:out value="${pageInfo.board_title}" /></h2>
+            <div class="post-meta">등록일: 2023-12-27 16:28:14 <c:out
+						value="${pageInfo.board_rdate}" /></div>
             <hr>
-            <div class="post-content">
-                <p>여기에는 카드뉴스 내용이 들어갑니다...</p>
-            </div>
+            <img class="NewsImg" src="/myct/img/upload/cac/cac_01.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/cac/cac_02.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/cac/cac_03.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/cac/cac_04.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/cac/cac_05.jpg" />
         </div>
-       <div class="pagination">
-    <a href="#" class="page-link">처음</a>
-    <a href="#" class="page-link">이전</a>
-    <a href="#" class="page-number active">1</a>
-    <a href="#" class="page-number">2</a>
-    <a href="#" class="page-number">3</a>
-    <a href="#" class="page-number">4</a>
-    <a href="#" class="page-number">5</a>
-    <a href="#" class="page-link">다음</a>
-    <a href="#" class="page-link">마지막</a>
-</div>
+     
+
+
 
     </div>
     	

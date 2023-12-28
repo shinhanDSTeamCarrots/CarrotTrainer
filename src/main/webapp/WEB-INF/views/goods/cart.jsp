@@ -15,6 +15,7 @@
 	
 	<!-- js -->
 	<script>
+	
 	$(document).ready(function () {
 	    // 전체 선택 체크박스 클릭하면
 	    $("#selectAll").change(function () {
@@ -39,7 +40,8 @@
 	        toggleDeleteButton();
 	        
 	    });
-
+	    	    
+		//총 장바구니 가격 계산
 	    function calculateTotalPrice() {
 	        var totalPrice = 0;
 	        var totalDeliveryfee = 0;
@@ -48,11 +50,12 @@
 	        	console.log($(this));
 	        	console.log(index);
 	        	if($(this).prop('checked')){
-	        		var itemPrice=$('.price').eq(index).val();	        		
-	        		var itemCnt=$('.cnt').eq(index).val();
 	        		
-	        		console.log(itemPrice);
-	        		totalPrice+=itemPrice*itemCnt;
+	                var itemPrice = parseInt($('.itemPrice').eq(index).text());
+	                
+	                console.log("최종 가격 계산용 장바구니 가격: " + itemPrice);
+	        		//최종가격
+	        		totalPrice+=itemPrice;
 	        		console.log(totalPrice);
 	        	}
 	        });	
@@ -60,8 +63,7 @@
 	        $('.calc').text('주문금액 '+totalPrice+'원 + 배송비 '+totalDeliveryfee+'원 = ');
 	        $('.totalpurchase').text('총 결제금액 '+(totalPrice+totalDeliveryfee)+'원');
 	    }
-	 	
-
+	
 	    // 페이지 로딩 시 초기 계산
 	    calculateTotalPrice();
 
@@ -117,9 +119,49 @@
 	        	alert("선택된 상품이 없습니다.");
 	        }
 		});
-		
+
+		//옵션 수량 변경
+		$(document).on("click", ".minus-button, .plus-button", function () {
+		    var index = $(this).data("index");
+		    var change = $(this).hasClass("plus-button") ? 1 : -1;
+		    updateQuantity(index, change);
+		});
 	
-    });
+		function updateQuantity(index, change) {
+		    var itemContainer = $(".each_cartitem li").eq(index);
+		    console.log(itemContainer);
+		    var itemPrice = parseInt(itemContainer.find('.price').val());
+		    console.log(itemPrice);
+		    var currentValue = parseInt(itemContainer.find('.goodsCnt').val());
+		    var newQuantity = currentValue + change;
+		    
+		    
+			console.log("!!!!!" + itemContainer.find('.price').val());
+		    
+			
+			if (!isNaN(newQuantity) && newQuantity >= 1) {
+		        itemContainer.find('.goodsCnt').val(newQuantity);
+		        updateItemPrice(itemContainer, itemPrice, newQuantity);
+		        
+		        calculateTotalPrice(); // 수량 변경 후 전체 가격 재계산
+		    } else {
+		        alert("수량은 1 이상이어야 합니다.");
+		    }
+	
+		    
+		}
+	
+		function updateItemPrice(itemContainer, itemPrice, quantity) {
+			
+			console.log("Item Price: " + itemPrice);
+		    console.log("Quantity: " + quantity);
+		    var totalPrice = itemPrice * quantity;
+		    console.log("장바구니 각 상품당 가격: " + totalPrice);
+		    itemContainer.find('.itemPrice').text(totalPrice + '원');
+		}
+	});
+
+	
 	
 	</script>
 	
@@ -149,11 +191,11 @@
 		    <div class="cart_list">
 		    	<div class="each_cartitem">
 		    		<ul>
-						<c:forEach items="${cartList}" var="cartList">
-						<input type="hidden" class="price" value="${cartList.final_price}">
-						<input type="hidden" class="cnt" value="${cartList.goods_count}">
+						<c:forEach items="${cartList}" var="cartList" varStatus="loop">
 						<div class="title-division-line"></div>
 						<li>
+						<input type="hidden" class="price" value="${cartList.final_price}">
+						<input type="hidden" class="cnt" value="${cartList.goods_count}">
 						<div class="eachItem">
 							<div class="">
 								<input type="checkbox" class = "selectItem" value="${cartList.cart_no }" checked="checked">
@@ -172,10 +214,13 @@
 										</div>
 										<div class="rightalign">
 											<div class="itemCnt">
-												${cartList.goods_count}
+												<div class="minus-button" data-index="${loop.index}" }><p>-</p></div>
+												<input class="goodsCnt" type="text" name="cnt"
+													value="${cartList.goods_count}" data-index="${loop.index}">
+												<div class="plus-button" data-index="${loop.index}"><p>+</p></div>
 											</div>
 											<div class="itemPrice">
-												${cartList.final_price}원
+												${cartList.final_price * cartList.goods_count}원
 											</div>
 										</div>
 									</c:if>

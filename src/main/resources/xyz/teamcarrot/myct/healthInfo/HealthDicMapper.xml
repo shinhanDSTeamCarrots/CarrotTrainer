@@ -2,13 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.healthInfo.HealthDicMapper">
 	<!-- 검색 -->
-	<sql id="search">
+	<sql id="searchHealthName">
 		<where>
 			<if test="healthName != null or healthName != ''">
 				health LIKE '%${healthName}%'
 			</if>
 		</where>
 	</sql>
+	<!-- 운동 정보 개수 -->
+	<select id="healthCount" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM tb_health_dic
+		<include refid="searchHealthName"/>
+	</select>
 	<!-- 운동 정보 -->
 	<select id="healthDic" resultType="java.util.Map" parameterType="map">
 		SELECT dic.health_dic_no AS no
@@ -21,12 +26,15 @@
 			LEFT JOIN tb_health_bookmark bookmark
 			ON dic.health_dic_no = bookmark.health_dic_no
 			AND bookmark.member_no = #{member_no}
-		<include refid="search"/>
+		<include refid="searchHealthName"/>
+		LIMIT #{startIdx}, 10
 	</select>
 	
 	<!-- 운동 즐겨찾기 검색 -->
 	<select id="bookmarkHealthDic" resultType="java.util.Map" parameterType="map">
-		SELECT dic.health_dic_no AS no, dic.health, bookmark.health_bookmark_no AS bookmarkNo
+		SELECT dic.health_dic_no AS no
+			, dic.health
+			, bookmark.health_bookmark_no AS bookmarkNo
 			, CAST(ROUND(((met * (3.5 * NVL(bodyInfo.weight,70) * #{minute}))/1000 * 5)) AS SIGNED INTEGER) AS calorie
 		FROM tb_health_dic dic 
 			LEFT JOIN tb_health_bookmark bookmark
@@ -55,7 +63,105 @@
 		DELETE FROM tb_health_bookmark WHERE health_bookmark_no = #{health_bookmark_no}
 	</delete>
 	
+	<!-- 운동 정보 입력 -->
+	<insert id="insertHealthInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		INSERT INTO tb_health_diary (
+			health_name, health_calorie, health_time, health_date, member_no 
+		) VALUES (
+			#{health_name}, #{health_calorie}, #{health_time}, #{health_date}, #{member_no}
+		)
+		<!-- tb_health_diary 테이블 키 값 -->
+		<selectKey keyProperty="health_diary_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 운동 정보 불러오기 -->
+	<select id="selectHealthInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		SELECT * FROM tb_health_diary WHERE member_no = #{member_no} AND health_diary_no = #{health_diary_no};
+	</select>
+	<!-- 운동 정보 수정 -->
+	<update id="updateHealthInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
+		UPDATE tb_health_diary
+		SET health_name = #{health_name}
+			, health_calorie = #{health_calorie}
+			, health_time = #{health_time}
+			, health_date = #{health_date}
+		WHERE health_diary_no = #{health_diary_no};
+	</update>
+	<!-- 운동 정보 삭제 -->
+	<delete id="deleteHealthInfo" parameterType="int">
+		DELETE FROM tb_health_diary WHERE health_diary_no = #{health_diary_no}
+	</delete>
 	
 	
+	<!-- 검색 -->
+	<sql id="searchFoodName">
+		<where>
+			<if test="foodName != null or foodName != ''">
+				food LIKE '%${foodName}%'
+			</if>
+		</where>
+	</sql>
+	<!-- 음식 정보 개수 -->
+	<select id="foodCount" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM tb_food_dic
+		<include refid="searchFoodName"/>
+	</select>
 	<!-- 음식 정보 -->
+	<select id="foodDic" resultType="java.util.Map" parameterType="map">
+		SELECT dic.food_dic_no AS no
+			, dic.food
+			, dic.total_gram
+			, dic.capacity_unit
+			, dic.calorie
+			, dic.carbs
+			, dic.protein
+			, dic.fat
+			, dic.sugar
+			, dic.salt
+			, bookmark.food_bookmark_no AS bookmarkNo
+		FROM tb_food_dic dic
+			LEFT JOIN tb_food_bookmark bookmark
+			ON dic.food_dic_no = bookmark.food_dic_no
+			AND bookmark.member_no = #{member_no}
+		<include refid="searchFoodName"/>
+		LIMIT #{startIdx}, 10
+	</select>
+	<!-- 음식 즐겨찾기 검색 -->
+	<select id="bookmarkFoodDic" resultType="java.util.Map" parameterType="map">
+		SELECT dic.food_dic_no AS no
+			, dic.food
+			, dic.total_gram
+			, dic.capacity_unit
+			, dic.calorie
+			, dic.carbs
+			, dic.protein
+			, dic.fat
+			, dic.sugar
+			, dic.salt
+			, bookmark.food_bookmark_no AS bookmarkNo
+		FROM tb_food_dic dic 
+			LEFT JOIN tb_food_bookmark bookmark
+			ON dic.food_dic_no = bookmark.food_dic_no
+		WHERE bookmark.member_no = #{member_no}
+			<if test="foodName != null or foodName != ''">
+				AND food LIKE '%${foodName}%'
+			</if>
+	</select>
+	<!-- 음식 즐겨찾기 추가 -->
+	<insert id="addFoodBookmark" parameterType="xyz.teamcarrot.myct.healthInfo.FoodBookmarkVO">
+		INSERT INTO tb_food_bookmark (
+			food_dic_no, member_no
+		) VALUES (
+			#{food_dic_no}, #{member_no}
+		)
+		<!-- tb_body_info테이블 키 값 -->
+		<selectKey keyProperty="food_bookmark_no" order="AFTER" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 음식 즐겨찾기 삭제 -->
+	<delete id="delFoodBookmark" parameterType="int">
+		DELETE FROM tb_food_bookmark WHERE food_bookmark_no = #{food_bookmark_no}
+	</delete>
 </mapper>

@@ -9,8 +9,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/exerciseStyle.css" />
@@ -51,7 +49,9 @@
 		            </div>
 					<div class="list-division-line">
 						<img>
-						<p>검색 결과: <span class="sql-text">${healthDic.size()}</span>개</p>
+						<c:if test="${null ne healthName}"> <!-- 검색 -->
+							<p>검색 결과: <span class="sql-text">${healthDic.count}</span>개</p>
+						</c:if>
 					</div>
 					<div class="list-result">
 						<table class="healthDic-list">
@@ -75,8 +75,8 @@
 									<col width="70%" />
 									<col width="20%" />
 								</colgroup>
-								<c:forEach var="healthDic" items="${healthDic}">
-									<tr class="health-info" data-no="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
+								<c:forEach var="healthDic" items="${healthDic.list}">
+									<tr class="health-info" data-healthno="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
 										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};"
 											data-color="${healthDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
 										</td>
@@ -89,6 +89,27 @@
 						</table>
 					</div>
 				</div>
+				<c:if test="${null ne healthName || empty loginInfo}"> <!-- 비로그인, 검색 여부 상관없음 && 로그인, 검색 시 -->
+				<!-- 페이징 -->
+				<div class="pagenate clear">
+				    <ul class='paging'>
+				    <c:if test="${healthDic.prev }">
+				    	<li><a href="exercise?page==${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
+				    </c:if>
+				    <c:forEach var="p" begin="${healthDic.startPage}" end="${healthDic.endPage}">
+				    	<c:if test="${p == page}">
+				        	<li><a href=";" class="current">${p}</a></li>
+				        </c:if>
+				        <c:if test="${p != page}">
+				        	<li><a href="exercise?page=${p}&healthName=${healthName}">${p}</a></li>
+				        </c:if>
+				    </c:forEach>
+				    <c:if test="${healthDic.next }">
+				    	<li><a href="exercise?page=${healthDic.endPage+1 }&healthName=${healthName}"> >> </a></li>
+				    </c:if>
+				    </ul> 
+				</div>
+				</c:if>
 			</div>
 			<!-- 기록란 -->
 			<div class="add-info">
@@ -105,12 +126,8 @@
 					<div class="detail-division-line"></div>
 					<div class="healthInfo">
 						<div id="healthInfo-text">
-							<p>
-								총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행
-							</p>
-							<p>
-								<span class="sql-text" id="total-calTime">0</span>kcal 소비
-							</p>
+							<p>총 <span class="sql-text" id="total-exerciseTime">0</span>분 운동 진행</p>
+							<p><span class="sql-text" id="total-calTime">0</span>kcal 소비</p>
 						</div>
 						<div id="healthInfo-graph"></div>
 						<div class="healthInfo-cart"></div>
@@ -129,7 +146,7 @@
 						</div>
 						-->
 					</div>
-					<button class="select-info" type="submit">기록하기</button>
+					<button id="select-info" type="submit">기록하기</button>
 					<%-- 이미 입력 값이 없으면
 	                <c:if test="${ }}">
 	                    <button class="select-info" type="submit" onclick="">기록 완료</button>
@@ -157,17 +174,18 @@
 	    			  				<div class="modalBody-result" id="modalBody-time">
 	    			  					<div class="modalBody-text">운동시간(분)</div>
 	    			  					<div class="modalBody-input">
-		    			  					<div id="minus-button">-</div>
+		    			  					<div id="minus-button"><p>-</p></div>
 			    			  				<input id="minute">
-			    			  				<div id="plus-button">+</div>
+			    			  				<div id="plus-button"><p>+</p></div>
 		    			  				</div>
 	    			  				</div>
 	    			  			</div>
     			  				<div class="modalBody-result" id="modalBody-calorie">
     			  					<div class="modalBody-text">칼로리(kcal)</div>
-    			  					<div class="modalBody-input"><input id="calorie"></div>
+    			  					<div class="modalBody-input"><input id="calorie" readonly="readonly"></div>
     			  				</div>
     			  			</div>
+    			  			<input id="no" type="hidden">
     			  			<div id="modalBody-button">
     			  				<button>기록 완료</button>
     			  			</div>
