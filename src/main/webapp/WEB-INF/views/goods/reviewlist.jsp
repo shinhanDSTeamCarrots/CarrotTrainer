@@ -126,13 +126,6 @@
 </script>
 <style type="text/css">
 /*정렬들*/
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5;
-    color: #333;
-    padding: 20px;
-    background-color: #f4f4f4;
-}
 
 
 .alignList {
@@ -258,6 +251,10 @@ progress::-webkit-progress-value {
 
 .point {
 	font-size: 24px;
+}
+
+.headUserAvgPointConst {
+	width:20%;
 }
 
 
