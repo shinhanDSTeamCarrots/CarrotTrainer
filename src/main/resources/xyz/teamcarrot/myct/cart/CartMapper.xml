@@ -4,7 +4,7 @@
 
 	<!-- 회원별 장바구니 목록보기 -->
 	<select id="cartList" resultType="xyz.teamcarrot.myct.cart.CartVO">
-		SELECT *,g.price + IFNULL(o.price_updown,0) AS final_price FROM tb_cart c
+		SELECT *, g.price + IFNULL(o.price_updown,0) AS final_price FROM tb_cart c
 		INNER JOIN tb_goods g ON c.goods_no=g.goods_no
 		LEFT JOIN tb_goods_option o ON c.option_no=o.option_no
 		WHERE c.member_no=#{c.member_no}
@@ -36,10 +36,9 @@
 	
 	
 	<!-- 장바구니 상품 수정 -->
-	<update id="update" parameterType="xyz.teamcarrot.myct.cart.CartVO">
+	<update id="updateQuantity" parameterType="xyz.teamcarrot.myct.cart.CartVO">
         UPDATE tb_cart
         SET goods_count = #{goods_count}
-        	,option_no=#{option_no}
         WHERE cart_no = #{cart_no}
     </update>
 	

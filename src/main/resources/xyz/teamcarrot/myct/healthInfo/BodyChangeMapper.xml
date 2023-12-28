@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.healthInfo.BodyChangeMapper">
+	<!-- 몸의 변화 -->
+	<!-- 최근 일별 몸무게 -->
+	<select id="dailyAvgWeight" resultType="double">
+		SELECT body_change_no
+			 , body_change_weight
+			 , muscle_mass
+			 , fat_mass
+			 , regist_date
+		  FROM tb_body_change
+		 WHERE member_no = #{member_no}
+		   AND DATE(regist_date) BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()
+	  ORDER BY regist_date;
+	</select> 
+	<!-- 최근 주간 평균 몸무게 -->
+	<select id="WeekAvgWeight" resultType="double">
+		SELECT AVG(body_change_weight) as avg_weight
+			 , AVG(muscle_mass) as avg_muscle
+			 , AVG(fat_mass) as avg_fat
+		  FROM tb_body_change
+		 WHERE member_no = #{member_no}
+		   AND regist_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW()
+		 GROUP BY WEEK(regist_date)
+		 ORDER BY regist_date;
+	</select> 
+	<!-- 최근 월별 평균 몸무게 -->
+	<select id="MonthAvgWeight" resultType="double">
+    SELECT AVG(body_change_weight) as avg_weight_month
+         , AVG(muscle_mass) as avg_muscle_month
+         , AVG(fat_mass) as avg_fat_month
+    FROM tb_body_change
+    WHERE member_no = #{member_no}
+        AND regist_date BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW()
+    GROUP BY YEAR(regist_date), MONTH(regist_date)
+    ORDER BY YEAR(regist_date), MONTH(regist_date);
+	</select>
+	
+	<!-- 음식 변화 -->
+	<!-- 최근 7일간 음식 -->
+	<!-- 최근 1개월간 평균 음식 -->
+	<!-- 최근 6개월간 평균 음식 -->
+	
+	<!-- 운동 변화 -->
+	<!-- 최근 7일간 운동 -->
+	<!-- 최근 1개월간 평균 운동 -->
+	<!-- 최근 6개월간 평균 운동 -->
+</mapper>

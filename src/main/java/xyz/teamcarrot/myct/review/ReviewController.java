@@ -6,6 +6,7 @@
  */
 package xyz.teamcarrot.myct.review;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,10 @@ public class ReviewController {
 		log.debug("review/shopping selectData");
 		
 		Map returnmap = service.selectData(goods_no);
+		if(returnmap.get("avg_point") != null) {
+			BigDecimal d = (BigDecimal)returnmap.get("avg_point");
+			returnmap.put("avg_point", Math.round(d.doubleValue() * 100)/100.0f);
+		}
 		
 		
 		

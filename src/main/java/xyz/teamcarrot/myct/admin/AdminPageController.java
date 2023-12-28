@@ -36,13 +36,14 @@ public class AdminPageController {
 		//관리자 페이지 로그인 정보 확인
 		
 		
-		
-		
-		
-		
-		
-		
-		
+		//로그인 되어있으면
+		if(sess.getAttribute("adminInfo") != null) {
+			
+		}
+		//안되어있으면
+		else {
+			mav.setViewName("redirect:/admin/login");
+		}
 		
 		
 		return mav;

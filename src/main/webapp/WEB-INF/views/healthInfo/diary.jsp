@@ -45,12 +45,26 @@
     					<div class="diary-result-wrap">
 		    				<div class="diary-result-main">
 		    					<div class="diary-result-main-text">
-			    					<p>총 섭취량 <span class="sql-diary-result-main">1100</span>kcal</p>
-			    					<p>총 활동량 <span class="sql-diary-result-main">50</span>kcal</p>
+			    					<p>총 섭취량
+			    						<span class="sql-diary-result-main">
+			    							<c:if test="${empty foodDiary }">0</c:if>
+							                <c:if test="${!empty foodDiary }">${foodDiary.total_calorie }</c:if>
+			    						</span>kcal
+		    						</p>
+			    					<p>총 활동량
+			    						<span class="sql-diary-result-main">
+			    							<c:if test="${empty healthDiary }">0</c:if>
+							                <c:if test="${!empty healthDiary }">${healthDiary.health_calorie }</c:if>
+			    						</span>kcal
+		    						</p>
 		    					</div>
 		    					<div class="detail-division-line"></div>
 		    					<div id="diary-result-main-sub">
-			    					<p>남은 섭취량 <span class="sql-diary-result">200</span>kcal</p>
+			    					<p>남은 섭취량
+			    						<span class="sql-diary-result">
+			    							<c:if test="${empty bodyInfo }">0</c:if>
+							                <c:if test="${!empty bodyInfo }">${healthDiary.health_calorie }-{foodDiary.total_calorie }</c:if>
+			    						</span>kcal</p>
 			    					<p>오늘의 상태는? 
 				    					<span class="sql-diary-result" id="sql-weight-result">
 					    					<c:if test="${empty bodyChange }">0.0</c:if>
@@ -102,9 +116,9 @@
 	    			  					<div class="modalBody-input-essential">*</div>
 	    			  					<div class="modalBody-text">체중(kg)</div>
 		    			  				<div class="modalBody-input">
-		    			  					<div id="minus-button">-</div>
+		    			  					<div id="minus-button"><p>-</p></div>
 			    			  				<input class="modalBody-input-text" type="text" name="weight" id="weight" value="${bodyChange.weight }">
-			    			  				<div id="plus-button">+</div>
+			    			  				<div id="plus-button"><p>+</p></div>
 		    			  				</div>
 		    			  			</div>
 	    			  				<div class="detail-division-line"></div>

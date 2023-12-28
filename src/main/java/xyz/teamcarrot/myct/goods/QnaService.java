@@ -15,4 +15,8 @@ public interface QnaService {
 	//문의 작성
 	int insertQna(GoodsInquiryVO qna);
 
+
+	int updateQna(GoodsInquiryVO qna);
+	
+	int qnaDel(int inquiry_no);
 }

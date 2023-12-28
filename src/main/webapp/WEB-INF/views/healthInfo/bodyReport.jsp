@@ -8,11 +8,13 @@
 	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/bodyReportStyle.css" />
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
+	<script src="${pageContext.request.contextPath}/js/healthInfo/bodyChangeChart.js"></script>
 </head>
 <body>
     <div class="wrap">
@@ -28,20 +30,23 @@
     		</div>
    			<div class="bodyReport-list" id="scroll-event">
    				<ul>
-    				<li><a href="#bodyReport-bmi">나의 BMI 변화</a></li>
+    				<li><a href="#bodyReport-bmi">나의 몸 변화</a></li>
 	    			<li><a href="#bodyReport-food">나의 음식 기록</a></li>
 	    			<li><a href="#bodyReport-exercise">나의 운동 기록</a></li>
    				</ul>
 	   		</div>
    			<div class="bodyReport-content">
     			<div class="bodyReport-content-detail" id="bodyReport-bmi">
-    				<p class="bodyReport-text">나의 BMI 변화</p>
+    				<p class="bodyReport-text">나의 몸 변화</p>
+    				<canvas id="line-chart"></canvas>
     			</div>
     			<div class="bodyReport-content-detail" id="bodyReport-food">
     				<p class="bodyReport-text">나의 음식 기록</p>
+    				<canvas id="foodBar-chart"></canvas>
     			</div>
     			<div class="bodyReport-content-detail" id="bodyReport-exercise">
     				<p class="bodyReport-text">나의 운동 기록</p>
+    				<canvas id="exerciseDoughnut-chart"></canvas>
     			</div>
     		</div>
 	    </div>
