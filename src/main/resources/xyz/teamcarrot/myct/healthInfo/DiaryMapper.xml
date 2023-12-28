@@ -45,7 +45,8 @@
 			, CAST(SUM(total_sugar) AS INT) AS total_sugar
 			, CAST(SUM(total_salt) AS INT) AS total_salt
 		FROM tb_food_diary
-		WHERE DATE(intake_date) = DATE(NOW()) AND member_no = 26;
+		WHERE member_no = #{member_no}
+			AND intake_date = CURDATE();
 	</select>
 	<!-- 식단 칼로리 섭취 시간 기준으로 불러오기 -->
 	<select id="selectFoodCal" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">

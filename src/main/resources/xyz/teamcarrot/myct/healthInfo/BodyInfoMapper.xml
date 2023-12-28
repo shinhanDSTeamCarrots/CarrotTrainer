@@ -19,7 +19,9 @@
 	</insert>
 	<!-- bmi 정보 불러오기 -->
 	<select id="selectBodyInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
-		SELECT * FROM tb_body_info WHERE member_no = #{member_no};
+		SELECT * 
+		FROM tb_body_info 
+		WHERE member_no = #{member_no};
 	</select>
 	<!-- bmi 정보 수정 -->
 	<update id="updateBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">

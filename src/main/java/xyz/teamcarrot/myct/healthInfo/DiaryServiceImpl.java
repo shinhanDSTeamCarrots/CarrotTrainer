@@ -30,7 +30,7 @@ public class DiaryServiceImpl implements DiaryService {
 	@Override
 	public FoodDiaryVO selectFoodCal(int member_no) {
 		FoodDiaryVO vo = mapper.selectFoodCal(member_no);
-		System.out.println("vo: "+vo.toString());
+		//System.out.println("vo: "+vo.toString());
 		return vo;
 	}
 	

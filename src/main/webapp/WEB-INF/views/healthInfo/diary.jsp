@@ -63,7 +63,7 @@
 			    					<p>남은 섭취량
 			    						<span class="sql-diary-result">
 			    							<c:if test="${empty bodyInfo }">0</c:if>
-							                <c:if test="${!empty healthDiary }">${healthDiary.health_calorie }-${foodDiary.total_calorie }</c:if>
+							                <c:if test="${!empty bodyInfo }"><c:out value="${bodyInfo.target_calorie - foodDiary.total_calorie }"/></c:if>
 			    						</span>kcal</p>
 			    					<p>오늘의 상태는? 
 				    					<span class="sql-diary-result" id="sql-weight-result">
@@ -134,8 +134,12 @@
 		    			  					<input class="modalBody-input-text" type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
 		    			  				</div>
 		    			  			</div>
+		    			  			<c:if test="${!empty bodyChange.body_change_no }">
 		    			  			<input type="hidden" name="body_change_no" id="body_change_no" value="${bodyChange.body_change_no }">
+		    			  			</c:if>
+		    			  			<c:if test="${!empty bodyChange.member_no }">
 		    			  			<input type="hidden" name="member_no" id="member_no" value="${bodyChange.member_no }">
+		    			  			</c:if>
     			  				</form>
     			  			</div>
     			  			<div id="modalBody-button">

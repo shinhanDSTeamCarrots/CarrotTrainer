@@ -123,7 +123,7 @@
     						<div class="nutrient-time">간식</div>
     						<div class="kcal">
     							<span class="sql-diary-result">
-    								<c:if test="${empty foodCal }">0</c:if>
+    								<c:if test="${empty foodCal && empty foodDiary }">0</c:if>
 									<c:if test="${!empty foodCal }">${foodCal.snack_calorie }</c:if>
     							</span> kcal
     						</div>
