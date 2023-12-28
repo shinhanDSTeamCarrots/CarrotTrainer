@@ -49,7 +49,9 @@
 		            </div>
 					<div class="list-division-line">
 						<img>
-						<p>검색 결과: <span class="sql-text">${healthDic.count}</span>개</p>
+						<c:if test="${null ne healthName}"> <!-- 검색 -->
+							<p>검색 결과: <span class="sql-text">${healthDic.count}</span>개</p>
+						</c:if>
 					</div>
 					<div class="list-result">
 						<table class="healthDic-list">
@@ -74,7 +76,7 @@
 									<col width="20%" />
 								</colgroup>
 								<c:forEach var="healthDic" items="${healthDic.list}">
-									<tr class="health-info" data-no="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
+									<tr class="health-info" data-healthno="${healthDic.no }" data-bookmarkno="${healthDic.bookmarkNo}">
 										<td class="bookmark" style="color: ${healthDic.bookmarkNo ne null ? 'gold': ''};"
 											data-color="${healthDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
 										</td>
@@ -87,11 +89,12 @@
 						</table>
 					</div>
 				</div>
+				<c:if test="${null ne healthName || empty loginInfo}"> <!-- 비로그인, 검색 여부 상관없음 && 로그인, 검색 시 -->
 				<!-- 페이징 -->
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${healthDic.prev }">
-				    	<li><a href="exercise?page=${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
+				    	<li><a href="exercise?page==${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
 				    </c:if>
 				    <c:forEach var="p" begin="${healthDic.startPage}" end="${healthDic.endPage}">
 				    	<c:if test="${p == page}">
@@ -106,6 +109,7 @@
 				    </c:if>
 				    </ul> 
 				</div>
+				</c:if>
 			</div>
 			<!-- 기록란 -->
 			<div class="add-info">

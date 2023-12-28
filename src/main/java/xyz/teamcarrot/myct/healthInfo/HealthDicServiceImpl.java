@@ -29,7 +29,8 @@ public class HealthDicServiceImpl implements HealthDicService {
 		//총 개수
 		int count = mapper.healthCount(healthDic);
 		//총 페이지 수
-		int totalPage = (int) Math.ceil(((double) count) / 10.0f);
+		int totalPage = count / 10;
+		//System.out.println("0"+totalPage);
 		if (count % 10 > 0) totalPage++;
 		//목록
 		healthDic.put("startIdx", startIdx); // startIdx 추가
@@ -40,9 +41,11 @@ public class HealthDicServiceImpl implements HealthDicService {
 		retMap.put("list", list);
 		
 		//하단에 페이징 처리
-        int endPage = (int)(Math.ceil((pageNumber * 1.0f)/10.0)*10);
+        int endPage = (int)(Math.ceil(pageNumber/10.0)*10);
+        //System.out.println("1"+totalPage);
         int startPage = endPage - 9;
         if (endPage > totalPage) endPage = totalPage;
+        //System.out.println("2"+totalPage);
         boolean prev = startPage > 1;
         boolean next = endPage < totalPage;
         retMap.put("endPage", endPage);
@@ -76,7 +79,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		//총 개수
 		int count = mapper.healthCount(healthDic);
 		//총 페이지 수
-		int totalPage = (int) Math.ceil((double) count / 10);
+		int totalPage = count / 10;
 		if (count % 10 > 0) totalPage++;
 		//목록
 		healthDic.put("startIdx", startIdx); // startIdx 추가
@@ -150,7 +153,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		//총 개수
 		int count = mapper.foodCount(paramMap);
 		//총 페이지 수
-		int totalPage = (int) Math.ceil((double) count / 10);
+		int totalPage = count / 10;
 		if (count % 10 > 0) totalPage++;
 		//목록
 	    paramMap.put("startIdx", startIdx); // startIdx 추가
@@ -193,7 +196,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		//총 개수
 		int count = mapper.foodCount(foodDic);
 		//총 페이지 수
-		int totalPage = (int) Math.ceil((double) count / 10);
+		int totalPage = count / 10;
 		if (count % 10 > 0) totalPage++;
 		//목록
 		foodDic.put("startIdx", startIdx); // startIdx 추가

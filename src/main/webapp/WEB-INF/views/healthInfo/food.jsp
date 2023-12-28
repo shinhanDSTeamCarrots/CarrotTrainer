@@ -8,6 +8,7 @@
 	<META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/healthInfo/foodStyle.css" />
@@ -58,12 +59,14 @@
 		            </div>
 					<div class="list-division-line">
 						<img>
-						<p>검색 결과: <span class="sql-text">${foodDic.count}</span>개</p>
+						<c:if test="${null ne healthName}"> <!-- 검색 -->
+							<p>검색 결과: <span class="sql-text">${foodDic.count}</span>개</p>
+						</c:if>
 					</div>
 					<div class="list-result">
 						<table class="foodDic-list">
 							<tbody id="foodTbody">
-							<!-- 로그인 -->
+							<!-- 로그인 --> <!-- 목록 확인 해야함!!!!!! -->
 							<c:if test="${null ne foodName && empty foodDic}"> <!-- 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
@@ -76,7 +79,7 @@
 								</colgroup>
 	               				<tr><td class="empty-foodlist">즐겨찾기 목록이 없습니다.</td></tr>	
 							</c:if>
-							<c:if test="${!empty foodDic}">
+							<c:if test="${!empty foodDic.list}">
 								<colgroup>
 									<col width="10%" />
 									<col width="70%" />
@@ -96,6 +99,7 @@
 						</table>
 					</div>
 				</div>
+				<c:if test="${null ne healthName || empty loginInfo}"> <!-- 비로그인, 검색 여부 상관없음 && 로그인, 검색 시 -->
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${foodDic.prev }">
@@ -114,6 +118,7 @@
 				    </c:if>
 				    </ul> 
 				</div>
+				</c:if>
 			</div>
 				
 			<!-- 기록란 -->
@@ -125,6 +130,9 @@
 					<div class="title-division-line"></div>
 					<div>
 						<div class="foodInfo">
+							<div class="time">
+								<input name="food_date" autocomplete="off" readonly="readonly">
+							</div>
 							<div class="date">
 								<select name="intake_time" id="intake_time">
 			    					<option value="" disabled selected>[필수] 섭취 시간을 입력해주세요</option>

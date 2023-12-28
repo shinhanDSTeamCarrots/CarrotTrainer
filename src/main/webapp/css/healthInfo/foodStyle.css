@@ -151,6 +151,9 @@
 .add-info-title {
 	margin-left: 5px;
 }
+.time {
+	margin: 15px auto -5px 5px;
+}
 .date {
 	margin: 15px auto -5px 5px;
 }

@@ -4,9 +4,29 @@
 	<!-- 식단 다이어리 입력 -->
 	<insert id="insertFoodDiary" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
 		INSERT INTO tb_food_diary (
-			food_diary_date, intake_date, intake_time, image, total_calorie, total_carbs, total_protein, total_fat, total_sugar, total_salt, member_no
+			food_diary_date
+			, intake_date
+			, intake_time
+			, image
+			, total_calorie
+			, total_carbs
+			, total_protein
+			, total_fat
+			, total_sugar
+			, total_salt
+			, member_no
 		) VALUES (
-			NOW(), #{intake_date}, #{intake_time}, #{image}, #{total_calorie}, #{total_carbs}, #{total_protein}, #{total_fat}, #{total_sugar}, #{total_salt}, #{member_no}
+			NOW()
+			, #{intake_date}
+			, #{intake_time}
+			, #{image}
+			, #{total_calorie}
+			, #{total_carbs}
+			, #{total_protein}
+			, #{total_fat}
+			, #{total_sugar}
+			, #{total_salt}
+			, #{member_no}
 		)
 		<!-- tb_health_diary 테이블 키 값 -->
 		<selectKey keyProperty="food_diary_no" order="AFTER" resultType="int">

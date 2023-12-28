@@ -22,47 +22,56 @@ $(function () {
 	$("#select-info").click(function (e) {
 		//세션에서 로그인 정보 불러옴
 		const userName = "${sessionScope.loginInfo.member_nickname}";
-		
+
 		if (userName) {
 			if (confirm("입력하시겠습니까?")) {
 				// 세션에 저장된 데이터 가져오기
 				let healthInfo = sessionStorage.getItem("healthData");
-	
+
+
 				// health_date input 요소 선택
-				let healthDateInput = $("input[name='health_date']");
+
 				// input 요소의 값 가져오기
-				let healthDateValue = healthDateInput.val();
-				let healthDateObject = new Date(healthDateValue);
-				let formattedDate = healthDateObject.toISOString().split('T')[0];
-				console.log("포맷팅된 Date 문자열:", formattedDate);
-				
-				if (formattedDate) {
+				console.log($("input[name='health_date']").val());
+
+				if ($("#health_date").val() != '') {
+					let healthDateInput = $("input[name='health_date']");
+					let healthDateValue = healthDateInput.val();
+					let healthDateObject = new Date(healthDateValue);
+					let formattedDate = healthDateObject.toISOString().split('T')[0];
 					// 세션 데이터가 있으면 분리하여 입력 필드에 할당
 					if (healthInfo) {
 						let healthData = JSON.parse(healthInfo);
-	
+						console.log(healthInfo);
+						hiArr = [];
+						for (var k in healthData) {
+							console.log(k);
+							hiArr.push(healthData[k]);
+						}
+						console.log(hiArr);
 						// 각 데이터에 대해 폼 생성 및 전송
-						for (let key in healthData) {
-							if (healthData.hasOwnProperty(key)) {
-								// 새로운 폼 엘리먼트 생성
-								let form = $('<form>', {
-									'class': 'healthInfo-cart',
-									'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
-									'method': 'post'
-								});
-	
-								// 숨겨진 입력 필드 생성 및 세션 값 할당
-								createHiddenInput(form, "health_name", healthData[key].health);
-								createHiddenInput(form, "health_calorie", Number(healthData[key].calorie));
-								createHiddenInput(form, "health_time", Number(healthData[key].minute));
-								createHiddenInput(form, "health_date", formattedDate);
-								console.log("포맷팅된 Date 문자열:", healthData[key].health);
-								console.log("포맷팅된 Date 문자열:", healthData[key].calorie);
-								console.log("포맷팅된 Date 문자열:", healthData[key].minute);
-								console.log("포맷팅된 Date 문자열:", formattedDate);
-								// 폼을 body에 추가하고 제출
-								form.appendTo('body').submit().remove();
-							}
+						for (let i = 0; i < hiArr.length; i++) {
+							console.log(hiArr[i]);
+
+							// 새로운 폼 엘리먼트 생성
+							let form = $('<form>', {
+								'class': 'healthInfo-cart',
+								'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
+								'method': 'post'
+							});
+
+							// 숨겨진 입력 필드 생성 및 세션 값 할당
+							createHiddenInput(form, "health_name", hiArr[i].health);
+							createHiddenInput(form, "health_calorie", Number(hiArr[i].calorie));
+							createHiddenInput(form, "health_time", Number(hiArr[i].minute));
+							createHiddenInput(form, "health_date", formattedDate);
+							console.log("포맷팅된 Date 문자열:", hiArr[i].health);
+							console.log("포맷팅된 Date 문자열:", hiArr[i].calorie);
+							console.log("포맷팅된 Date 문자열:", hiArr[i].minute);
+							console.log("포맷팅된 Date 문자열:", formattedDate);
+							// 폼을 body에 추가하고 제출
+							//form.appendTo('body').submit().remove();
+
 						}
 					} else {
 						alert("저장할 운동 목록이 없습니다.");
@@ -80,12 +89,12 @@ $(function () {
 });
 // 숨겨진 입력 필드 생성 및 세션 값 할당하는 함수
 function createHiddenInput(form, inputId, sessionValue) {
-    $('<input>', {
-        'type': 'hidden',
-        'id': inputId,
-        'name': inputId,
-        'value': sessionValue || ''
-    }).appendTo(form);
+	$('<input>', {
+		'type': 'hidden',
+		'id': inputId,
+		'name': inputId,
+		'value': sessionValue || ''
+	}).appendTo(form);
 }
 /*----------
 	북마크
@@ -129,13 +138,13 @@ function modalHandler() {
 	//장바구니에 있는 운동 클릭 시, 모달 팝업 +이벤트 동적 바인딩
 	$(".healthInfo-name").click(function (e) {
 		let no = $(this).closest(".healthInfo-select").data("no");
-		console.log("no:",no);
-		
+		console.log("no:", no);
+
 		// 세션 스토리지에서 해당 no 값에 해당하는 데이터 가져오기
-	    let healthDataString = sessionStorage.getItem("healthData");
-	    let healthData = healthDataString ? JSON.parse(healthDataString) : {};
-	
-	    let healthInfo = healthData[no];
+		let healthDataString = sessionStorage.getItem("healthData");
+		let healthData = healthDataString ? JSON.parse(healthDataString) : {};
+
+		let healthInfo = healthData[no];
 
 		// 모달 열기 함수 호출
 		openModal(healthInfo);
@@ -149,7 +158,7 @@ function modalHandler() {
 
 		// JSON 문자열을 JavaScript 객체로 파싱
 		let healthData = healthDataString ? JSON.parse(healthDataString) : null;
-		
+
 		let previousMinuteValue = 0;
 
 		if (healthData) {
@@ -159,14 +168,14 @@ function modalHandler() {
 			let selectedNo = Number($("#no").val());
 
 			for (let key in healthData) {
-			    if (healthData.hasOwnProperty(key)) {
+				if (healthData.hasOwnProperty(key)) {
 					if (healthData[key].no === selectedNo) {
-					    // 선택된 항목의 데이터 업데이트
-					    healthData[key].minute = enteredTime;
-					    healthData[key].calorie = enteredCalories;
-					    break;
+						// 선택된 항목의 데이터 업데이트
+						healthData[key].minute = enteredTime;
+						healthData[key].calorie = enteredCalories;
+						break;
 					}
-			    }
+				}
 			}
 			// 세션 스토리지에 저장
 			sessionStorage.setItem("healthData", JSON.stringify(healthData));
@@ -185,6 +194,7 @@ function modalHandler() {
 		$(this).val(inputValue.replace(/[^0-9]/g, ''));
 	});
 	// minus-button 클릭 이벤트
+	$("#minute-button").off("click");
 	$("#minus-button").on("click", function () {
 		let currentValue = parseInt($("#minute").val());
 		let enteredCalories = parseInt($("#calorie").val());
@@ -195,13 +205,14 @@ function modalHandler() {
 			let newCalories = Math.round(enteredCalories / currentValue * newMinuteValue);
 
 			previousMinuteValue = newMinuteValue;
-
+			console.log('newMinuteValue:', newMinuteValue);
 			$("#minute").val(newMinuteValue);
 			$("#calorie").val(newCalories);
 
 		}
 	});
 	// plus-button 클릭 이벤트
+	$("#plus-button").off("click");
 	$("#plus-button").on("click", function () {
 		let currentValue = parseInt($("#minute").val());
 		let enteredCalories = parseInt($("#calorie").val());
@@ -217,7 +228,7 @@ function modalHandler() {
 			$("#calorie").val(newCalories);
 		}
 	});
-	
+
 	// #minute 값이 변경될 때 이벤트 처리
 	$("#minute").keyup(function (e) {
 		let previousValue = previousMinuteValue;
@@ -226,15 +237,15 @@ function modalHandler() {
 		let enteredTime = Number($(this).val());
 
 		// 동적으로 #calorie 값 업데이트
-    	if (enteredTime < 0) {
-	        // 0 미만이면 0으로 설정
-	        enteredTime = 0;
-	        $(this).val(0);  // 입력값도 0으로 설정
-	    }
+		if (enteredTime < 0) {
+			// 0 미만이면 0으로 설정
+			enteredTime = 0;
+			$(this).val(0);  // 입력값도 0으로 설정
+		}
 		// 칼로리 계산
-    	enteredCalories = (enteredTime === 0) ? 0 : calculateCalories(previousValue, enteredTime);
+		enteredCalories = (enteredTime === 0) ? 0 : calculateCalories(previousValue, enteredTime);
 		console.log(enteredCalories, previousValue, enteredTime);
-		
+
 		$("#calorie").val(enteredCalories);
 	});
 	/*--------------------
@@ -295,7 +306,7 @@ function calendarHandler() {
 -------------*/
 function calculateCalories(previousTime, currentTime) {
 	// #calorie에서 입력된 값 가져오기
-	console.log('calori',$("#calorie").val());
+	console.log('calori', $("#calorie").val());
 	let enteredCalories = Number($("#calorie").val());
 
 	// 칼로리 계산
@@ -374,10 +385,10 @@ function cartMove(e) {
 		existingHealthData = JSON.parse(existingData);
 	}
 	// 최대 10개만 허용
-    if (Object.keys(existingHealthData).length >= 10) {
-        alert("최대 10개까지만 선택 가능합니다.");
-        return;
-    }
+	if (Object.keys(existingHealthData).length >= 10) {
+		alert("최대 10개까지만 선택 가능합니다.");
+		return;
+	}
 	// 이미 등록된 no인지 확인
 	if (existingHealthData.hasOwnProperty(no)) {
 		alert("이미 등록된 항목입니다.");
@@ -392,12 +403,12 @@ function cartMove(e) {
 		};
 		// 세션에 데이터 저장
 		sessionStorage.setItem("healthData", JSON.stringify(existingHealthData));
-		
+
 		//배경색 변경
 		$(e.currentTarget).css("background-color", "#FAF8ED");
 		//배경색 상태 저장
 		sessionStorage.setItem("background-color", "#FAF8ED");
-		
+
 		// 새로운 항목을 장바구니에 추가
 		addHealthToCart(existingHealthData[no]);
 	}
@@ -410,14 +421,14 @@ function loadCartItems() {
 
 	if (healthInfo) {
 		// 세션 데이터가 있으면 파싱하여 운동 목록에 추가
-        let healthData = JSON.parse(healthInfo);
-        for (let key in healthData) {
-            if (healthData.hasOwnProperty(key)) {
-                addHealthToCart(healthData[key]);
-                // 배경색 설정
-                let background_color = sessionStorage.getItem("background-color");
-            }
-        }
+		let healthData = JSON.parse(healthInfo);
+		for (let key in healthData) {
+			if (healthData.hasOwnProperty(key)) {
+				addHealthToCart(healthData[key]);
+				// 배경색 설정
+				let background_color = sessionStorage.getItem("background-color");
+			}
+		}
 	}
 }
 /*-------------------
@@ -432,22 +443,22 @@ function addHealthToCart(healthData) {
 	healthInfoDetail.append('<div class="healthInfo-name"><div class="healthInfo-name-text">' + healthData.health + '</div><div class="healthInfo-name-time">' + healthData.minute + '분</div></div>');
 	healthInfoDetail.append('<div class="healthInfo-cals">' + healthData.calorie + 'kcal</div>');
 	healthInfoDetail.append('<div class="healthInfo-del"><div id="delButton"><p>-</p></div></div>'); //빼기 이미지
-	
+
 	// no 값을 data-no 속성으로 설정
-    healthInfoSelect.attr('data-no', healthData.no);
-    
+	healthInfoSelect.attr('data-no', healthData.no);
+
 	healthInfoSelect.append(healthInfoDetail);
 
 	$('.healthInfo-cart').append(healthInfoSelect);
 	modalHandler();
-	
+
 	//빼기 버튼 클릭 시, 세션에서 삭제
 	$(".healthInfo-del").click(function (e) {
 		// 세션에 저장
 		console.log($(this).closest(".healthInfo-select").data("no"));
-		
+
 		// 빼기 버튼에 설정된 data-no 속성 값을 가져옴
-    	const no = $(this).closest(".healthInfo-select").data("no");
+		const no = $(this).closest(".healthInfo-select").data("no");
 		// 세션에서 삭제
 		delHealthToCart(no);
 	});
@@ -455,27 +466,27 @@ function addHealthToCart(healthData) {
 //진행 운동 목록 삭제 함수
 function delHealthToCart(no) {
 	// 세션 스토리지에서 현재 운동 목록 가져오기
-    let existingData = sessionStorage.getItem("healthData");
-    let existingHealthData = {};
+	let existingData = sessionStorage.getItem("healthData");
+	let existingHealthData = {};
 
-    // 기존 데이터가 있으면 파싱
-    if (existingData) {
-        existingHealthData = JSON.parse(existingData);
-    }
+	// 기존 데이터가 있으면 파싱
+	if (existingData) {
+		existingHealthData = JSON.parse(existingData);
+	}
 
-    // 운동 삭제
-    if (existingHealthData.hasOwnProperty(no)) {
-        delete existingHealthData[no];
-        // 세션에 데이터 갱신
-        sessionStorage.setItem("healthData", JSON.stringify(existingHealthData));
-        
-        // UI 갱신 (운동 목록에서 삭제)
-    	//$(`.healthInfo-select[data-no="${no}"]`).remove();
-    	$(".healthInfo-cart").empty();
+	// 운동 삭제
+	if (existingHealthData.hasOwnProperty(no)) {
+		delete existingHealthData[no];
+		// 세션에 데이터 갱신
+		sessionStorage.setItem("healthData", JSON.stringify(existingHealthData));
 
-    	loadCartItems();
+		// UI 갱신 (운동 목록에서 삭제)
+		//$(`.healthInfo-select[data-no="${no}"]`).remove();
+		$(".healthInfo-cart").empty();
+
+		loadCartItems();
 		calculateTotal();
-    }
+	}
 }
 //클릭 시, 진행 운동 계산 함수
 function calculateTotal() {
