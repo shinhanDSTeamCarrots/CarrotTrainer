@@ -71,9 +71,15 @@ a:visited {
     display:flex;
     flex-direction:row;
 }
+.login a{
+	margin-left:5px;
+	margin-right:5px;
+}
 #carticon{
 	width:20px;
 	height:20px;
+	margin-bottom:2px;
+	margin-right:3px;
 }
 .menu {
     width:1200px;

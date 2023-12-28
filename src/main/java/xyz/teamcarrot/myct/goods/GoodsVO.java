@@ -24,9 +24,13 @@ public class GoodsVO {
 	private double goods_rate;
 	private int category_no;
 	
+	
+	//옵션용
 	private int price_updown;
-
 	private String category_name;
 	
+	//페이징용
+	private int startIdx;
+	private int page;
 	
 }
