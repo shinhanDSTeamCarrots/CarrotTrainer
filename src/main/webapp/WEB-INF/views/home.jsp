@@ -36,9 +36,11 @@
 		
 		<div class="container">
 		
+			
 			<div class="health">
-				<h1>건강정보</h1>
-				<div class="healthimg"></div>
+				<div class="healthimg">
+					이미지들어갈예정
+				</div>
 				 <div class="visual">
 		            <div class="swiper swiper-visual">
 		                <div class="swiper-wrapper">
@@ -47,39 +49,28 @@
 		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide3.png');"></div>
 		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide4.png');"></div>
 		                </div>
-		            </div>
-		            
+		            </div>   
 		        </div>
-				
-			</div>
 			
+			</div>
+		
 			<div class="board">
+			
 				<div class="noticeboard">
-					공지사항 최신순
-				</div>	
-							
-				<div class="freeboard">
-					자유게시판글 인기순
+					<p class="title">공지사항</p>
+					<c:forEach items="${noticeList}" var="notices">
+					<p>${notices.board_title }</p>
+					</c:forEach>
 				</div>
+				<div class="freeboard">
+					<p class="title">인기글</p>
+					<c:forEach items="${hotBoardList}" var="hotBoard">
+					<p>${hotBoard.board_title }</p>
+					</c:forEach>
+				</div>	
 			</div>
-			
 			<div class="shopping">
-				<h1>인기상품</h1>
-
-			</div>
-			
-			
-			<div class="noticeDiv">
-				<c:forEach items="${noticeList}" var="notices">
-				<p>${notices.board_title }</p><br>
-				</c:forEach>
-			</div>
-			<div class="hotBoardDiv">
-				<c:forEach items="${hotBoardList}" var="hotBoard">
-				<p>${hotBoard.board_title }</p><br>
-				</c:forEach>
-			</div>
-			<div class="hotGoodsDiv">
+				<p class="title">인기상품</p>
 				<c:forEach items="${hotGoodsList}" var="hotGoods">
 				<p>${hotGoods.goods_name }</p><br>
 				</c:forEach>

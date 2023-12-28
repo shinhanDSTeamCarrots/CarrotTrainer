@@ -44,8 +44,22 @@ a:visited {
 
 
 
+.title{
+	margin-bottom: 15px;
+	font-size: 20px;
+	font-weight: 500;
+}
 
-
+/* 건강정보 */
+.health{
+	margin:20px;
+	display:flex;
+	flex-direction:row;
+}
+.healthimg{
+	width:35%;
+	margin-right:5%;
+}
 
 
 /* 게시판 */
@@ -56,8 +70,17 @@ a:visited {
 	flex-direction:row;
 }
 .noticeboard{
+	margin:20px;
 	width:50%;
 }
 .freeboard{
+	margin:20px;
 	width:50%;
+}
+
+
+
+/* 인기상품 */
+.shopping{
+	margin:20px;
 }
