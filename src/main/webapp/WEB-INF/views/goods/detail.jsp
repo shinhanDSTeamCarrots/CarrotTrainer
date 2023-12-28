@@ -311,6 +311,127 @@
 	</script>
 	
 </head>
+<style>
+/* 상품문의 Section Container */
+.itemDetailQna {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.qnaHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.qnaHeader .sub_title {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.qnaHeader .qnaCnt {
+    font-size: 16px;
+    color: #666;
+}
+
+.writebtn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.writebtn:hover {
+    background-color: #0056b3;
+}
+
+/* Form Styling */
+.writeform {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.writeform p {
+    margin: 0;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.writeform input[type="text"], .writeform select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Buttons in Form */
+.qnabtns {
+    text-align: right;
+}
+
+.qnabtns button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.donebtn {
+    background-color: #28a745;
+    color: white;
+}
+
+.closebtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.donebtn:hover {
+    background-color: #218838;
+}
+
+.closebtn:hover {
+    background-color: #c82333;
+}
+
+/* QnA List Table Styling */
+.qnaTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.qnaTable th, .qnaTable td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.qnaTable th {
+    background-color: #f0f0f0;
+}
+
+.qnaTable td {
+    background-color: #ffffff;
+}
+
+.qnaTable tr:hover {
+    background-color: #f2f2f2;
+}
+
+</style>
 <body>
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -416,7 +537,7 @@
 		    		<div class="qnaHeader">
 						<h1 class="sub_title">상품문의</h1>
 						<p class="qnaCnt"><span>총 개</span></p>
-						<button class="writebtn">작성하기</button>
+						<button class="writebtn">작성</button>
 					</div>
 					<!-- 문의하기 작성 폼 -->
 					<form action="${pageContext.request.contextPath}/detail/qnaInsert" method="post" class="writeform" onsubmit="return false;">
