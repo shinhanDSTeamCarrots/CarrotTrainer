@@ -179,7 +179,14 @@
         </if>
     ) AS subQuery
     ORDER BY
-        subQuery.board_rdate DESC  
+    <choose>
+    	<when test="orderType != null">
+        	subQuery.board_view DESC, subQuery.board_rdate DESC  
+    	</when>
+    	<otherwise>
+        	subQuery.board_rdate DESC  
+    	</otherwise>
+    </choose>
     LIMIT #{skip}, #{amount}
 </select>
 
