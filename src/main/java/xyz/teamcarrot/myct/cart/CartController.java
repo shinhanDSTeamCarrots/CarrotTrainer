@@ -66,10 +66,20 @@ public class CartController {
         service.removeFromCart(cartNos);       
     }
 	
-	@PostMapping("cart/update")
-    public void updateCart(@RequestBody CartVO cart) {
-        service.updateCart(cart);
-    }
+	
+	@ResponseBody
+	@PostMapping("/cart/updateQuantity")
+	public String updateCartQuantity(@RequestParam("cart_no") int cartNo, @RequestParam("newQuantity") int newQuantity) {
+	    CartVO cart = new CartVO();
+	    cart.setCart_no(cartNo);
+	    cart.setGoods_count(newQuantity);
+	    
+	    // 확인을 위해 콘솔에 출력
+	    System.out.println("Cart: " + cart);
+	    service.updateCartQuantity(cart);
+
+	    return "success";
+	}
 	
 	@ResponseBody
 	@PostMapping("cart/check")

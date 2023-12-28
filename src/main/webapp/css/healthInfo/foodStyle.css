@@ -7,7 +7,7 @@
     padding : 20px;
 }
 /*--------------
-	운동 리스트
+	음식 리스트
 --------------*/
 .container > .info {
 	display: flex;
@@ -17,11 +17,11 @@
 	flex-direction: column;
 }
 /* 제목 */
-.healthInfo-title {
+.foodInfo-title {
 	display: flex;
 	flex-direction: row;
 }
-.healthInfo-title > .healthInfo-title-text {
+.foodInfo-title > .foodInfo-title-text {
 	width: 85%;
 }
 /* 검색 */
@@ -42,7 +42,7 @@
 	padding-left: 20px;
 	padding-right: 20px;
 }
-#healthName:focus {
+#foodName:focus {
 	outline: 2px solid #435334; /* 포커스 시 밑줄 색상 변경 */
 }
 .search-place > #search-text {
@@ -90,25 +90,24 @@
 	font-size: 10px;
 	font-weight: 700;
 }
-.health-info {
+.food-info {
 	border-top: 1px solid #D9D9D9;
 	cursor: pointer;
 }
-.health-info:hover {
+.food-info:hover {
 	background-color: #FAF8ED;
 }
-.health-info > td {
+.food-info > td {
 	padding: 10 0px;
 	text-align: center;
 }
-.health-info > td.health {
+.food-info > td.food {
 	text-align: left;
 }
-.empty-healthlist {
+.empty-foodlist {
 	padding: 250px;
 	text-align: center;
 }
-
 /*----------
 	페이징
 -----------*/
@@ -121,21 +120,21 @@
 .paging li {
 	margin: 3px;
 }
-
 /*-------
 	별
 --------*/
 .bookmark {
-  font-size: 23px;
-  line-height: 1;
-  color: #D9D9D9;
+	font-size: 23px;
+	line-height: 1;
+	color: #D9D9D9;
+	cursor: pointer; 
 }
 .bookmark:hover {
-  color: gold;
+	color: gold;
 }
 
 /*----------------
-	진행 운동 목록
+	섭취 음식 목록
 ----------------*/
 .container > .add-info {
 	flex-direction: column;
@@ -152,6 +151,9 @@
 .add-info-title {
 	margin-left: 5px;
 }
+.time {
+	margin: 15px auto -5px 5px;
+}
 .date {
 	margin: 15px auto -5px 5px;
 }
@@ -165,75 +167,83 @@ select {
 	padding: none;
 	outline: none;
 }
-/* 총 운동 결과 */
-#healthInfo-text {
+/* 총 음식 결과 */
+.foodInfo-main-detail {
+	display: flex;
+	flex-direction: row;
+	margin: 10px;
+}
+/* 이미지 */
+.foodInfo-image {
+	width: 40%;
+}
+.foodInfo-image-detail {
+	width: 115px;
+	height: 115px;
+	background-color: #D9D9D9;
+	border-radius: 10px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+.foodInfo-image-detail:hover {
+	background-color: #748E63;
+}
+.foodInfo-image-detail > p {
+	font-size: 30px;
+	font-weight: 800;
+	color: #FFFFFF;
+	transform: translate(0%, 80%);
+	text-align: center;
+}
+/* 음식 총합 데이터 */
+.foodInfo-text-detail {
+	width: 60%;
+	margin: auto;
+}
+#foodInfo-text {
 	font-size: 14px;
 	font-weight: 700;
 	text-align: right;
-	margin-right: 10px;
 }
-#healthInfo-graph {
-	margin: 5px;
-	margin-bottom: 10px;
+#foodInfo-graph {
+	margin: 5px 0 10px 5px;
 	background-color: #D9D9D9;
 	border-radius: 20px;
 	height: 20px;
 }
-/* 운동 내역 */
-.healthInfo-select {
-	border-top: 1px solid #D9D9D9;
-	padding: 7px;
-	cursor: pointer;
+#foodInfo-total-data {
+	font-size: 10px;
+	text-align: right;
 }
-.healthInfo-select:hover {
-	background-color: #FAF8ED;
-}
-.healthInfo-detail {
+#foodInfo-total-carbs,
+#foodInfo-total-protein,
+#foodInfo-total-fat {
 	display: flex;
 	flex-direction: row;
-	margin: 0 10px;
-	align-items: center;
+	justify-content: end;
 }
-.healthInfo-name {
-	width: 70%;
+.foodInfo-color {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 3px;
 }
-.healthInfo-name-text {
-	font-size: 14px;
-	font-weight: 600;
+#carbs-color {
+	background-color: #F9B572;
 }
-.healthInfo-name-time {
-	font-size: 10px;
-	font-weight: 500;
-	color: #748E63;
-}
-.healthInfo-cals {
-	width: 15%;
-	font-size: 12px;
-	font-weight: 500;
-	margin-left: auto;
-	color: #435334;
-}
-.healthInfo-del {
-	width: 15%;
-}
-#delButton {
-	width: 25px;
-	height: 25px;
-	background-color: #CEDEBD;
-	margin: 0 auto;
-	cursor: pointer;
-}
-#delButton:hover {
+#protein-color {
 	background-color: #748E63;
 }
-#delButton > p {
-	font-size: 15px;
-	font-weight: 800;
-	color: #FFFFFF;
-	text-align: center;
+#fat-color {
+	background-color: #CEDEBD;
+}
+/* 음식 내역 */
+.foodInfo-detail {
+	display: flex;
+	flex-direction: row;
 }
 /* 입력 버튼 */
-#select-info {
+.select-info {
 	width: 320px;
 	height: 35px;
 	background-color: #CEDEBD;
@@ -241,15 +251,15 @@ select {
 	font-weight: 700;
 	margin-bottom: 15px;
 }
-#select-info:hover {
+.select-info:hover {
 	background-color: #435334;
 	color: #FAF1E4;
 }
 
-/*-------------
+/*--------------
 	메인 글씨
--------------*/
-.healthInfo-title-text {
+--------------*/
+.foodInfo-title-text {
 	color: #435334;
 	font-size: 30px;
 	font-weight: 700;
@@ -260,15 +270,6 @@ select {
 	font-size: 18px;
 	font-weight: 700;
 	height: 40px;
-}
-
-/*-------------
-	sql 글씨
--------------*/
-#healthInfo-text > .sql-text {
-	color: #748E63;
-	font-size: 20px;
-	font-weight: 800;
 }
 
 /*-----------
@@ -290,7 +291,7 @@ select {
 /* 모달 팝업 */
 #modalBody {
 	width: 700px;
-	height: 500px;
+	height: 650px;
 	padding: 30px 30px;
 	margin: 0 auto;
 	border: 1px solid #777;
@@ -334,13 +335,8 @@ select {
     flex-direction: row;
     justify-content: center;
 }
-/* 글씨 */
-.modalBody-text {
-	font-size: 20px;
-	font-weight: 700;
-}
 /* 입력값 */
-#minute {
+#gram {
 	border: none;
 	background: transparent; /* 투명 */
 	border-bottom: 2px solid #99B080;
@@ -352,7 +348,7 @@ select {
 	text-align: center;
 	margin: auto 0;
 }
-#minute:focus {
+#gram:focus {
 	border-bottom-color: #435334; /* 포커스 시 밑줄 색상 변경 */
 }
 #calorie {
@@ -400,6 +396,44 @@ select {
 	color: #FFFFFF;
 	text-align: center;
 	transform: translate(0%, 20%);
+}
+/* 부가 내용 */
+#modalBody-sub {
+	padding: 10px 30px;
+	margin: 30px;
+	margin-top: 15px;
+}
+/* 글씨 */
+.modalBody-text {
+	font-size: 20px;
+	font-weight: 700;
+}
+#modalBody-sub-detail {
+	font-size: 15px;
+	margin-bottom: 15px;
+}
+#modalBody-carbs,
+#modalBody-protein,
+#modalBody-fat,
+#modalBody-sugar,
+#modalBody-salt {
+	display: flex;
+    flex-direction: row;
+}
+.modalBody-carbs-sql {
+	text-align: right;
+	width: 20%;
+}
+.modalBody-graph {
+	margin: 5px 0 10px auto;
+	background-color: #D9D9D9;
+	border-radius: 20px;
+	height: 15px;
+	width: 50%;
+	text-align: right;
+}
+#modalBody-sub-text {
+	font-size: 10px;
 }
 /* 버튼 */
 /* 닫기 버튼 */

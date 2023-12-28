@@ -26,7 +26,7 @@ public interface MemberMapper {
 	void updateLoginFailCount(@Param("member") MemberVO member);
 
 	Integer updateLoginBlocked(MemberVO member);
-	//20231225
+	
 	int memberInterest(InterestVO vo);
 	
 	List<MemberVO> all(MemberVO vo);
