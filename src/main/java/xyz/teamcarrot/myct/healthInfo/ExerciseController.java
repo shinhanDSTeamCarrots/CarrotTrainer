@@ -23,7 +23,7 @@ public class ExerciseController {
 	HealthDicService service;
 	
 	//리스트 출력
-	@GetMapping("/exercise")
+	@GetMapping("healthInfo/exercise")
 	public String searchHealthInfo(Model model, HttpSession sess, String healthName, Integer minute, Integer page) {
 		int pageNumber = (page != null) ? page : 1;
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");

@@ -10,6 +10,8 @@ public interface DiaryMapper {
 	int updateFoodDiary(FoodDiaryVO vo);
 	int deleteFoodDiary(int no);
 	
+	FoodDiaryVO selectFoodCal(int no);
+	
 	//tb_food_diary_info 테이블
 	int insertFoodInfo(FoodDiaryInfoVO vo);
 	FoodDiaryInfoVO selectFoodInfo(int no);

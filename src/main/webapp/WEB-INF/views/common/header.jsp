@@ -45,11 +45,11 @@
                 <li>
                     <a href="#">건강정보</a>
                     <ul class="depth2">
-                        <li><a href="${pageContext.request.contextPath}/bmi">일일 권장량 계산</a></li>
-                        <li><a href="${pageContext.request.contextPath}/food">음식 정보</a></li>
-                        <li><a href="${pageContext.request.contextPath}/exercise">운동 정보</a></li>
-                        <li><a href="${pageContext.request.contextPath}/diary">다이어리</a></li>
-                        <li><a href="${pageContext.request.contextPath}/bodyReport">리포트</a></li>
+                        <li><a href="${pageContext.request.contextPath}/healthInfo/bmi">일일 권장량 계산</a></li>
+                        <li><a href="${pageContext.request.contextPath}/healthInfo/food">음식 정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/healthInfo/exercise">운동 정보</a></li>
+                        <li><a href="${pageContext.request.contextPath}/healthInfo/diary">다이어리</a></li>
+                        <li><a href="${pageContext.request.contextPath}/healthInfo/bodyReport">리포트</a></li>
                     </ul>
                 </li>
                 <li>

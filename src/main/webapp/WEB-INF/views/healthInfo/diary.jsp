@@ -23,7 +23,7 @@
     	<div class="container">
     		<div class="diary-title">
     			<p class="diary-title-text">TODAY'S DIARY</p>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<p class="diary-text">안녕하세요, <span class="sql-text-name"></span>님!</p>
@@ -63,7 +63,7 @@
 			    					<p>남은 섭취량
 			    						<span class="sql-diary-result">
 			    							<c:if test="${empty bodyInfo }">0</c:if>
-							                <c:if test="${!empty bodyInfo }">${healthDiary.health_calorie }-{foodDiary.total_calorie }</c:if>
+							                <c:if test="${!empty bodyInfo }"><c:out value="${bodyInfo.target_calorie - foodDiary.total_calorie }"/></c:if>
 			    						</span>kcal</p>
 			    					<p>오늘의 상태는? 
 				    					<span class="sql-diary-result" id="sql-weight-result">
@@ -74,8 +74,8 @@
 		    					</div>
 		    				</div>
 		    				<div class="diary-contact-text">
-		    					<a href="${pageContext.request.contextPath}/foodDiary">오늘의 음식 기록하기 ></a>
-		    					<a href="${pageContext.request.contextPath}/exercise">오늘의 운동 기록하기 ></a>
+		    					<a href="${pageContext.request.contextPath}/healthInfo/foodDiary">오늘의 음식 기록하기 ></a>
+		    					<a href="${pageContext.request.contextPath}/healthInfo/exercise">오늘의 운동 기록하기 ></a>
 		    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
 	    					</div>
 	    				</div>
@@ -134,8 +134,12 @@
 		    			  					<input class="modalBody-input-text" type="text" name="fat_mass" id="fat_mass" value="${bodyChange.fat_mass }">
 		    			  				</div>
 		    			  			</div>
+		    			  			<c:if test="${!empty bodyChange.body_change_no }">
 		    			  			<input type="hidden" name="body_change_no" id="body_change_no" value="${bodyChange.body_change_no }">
+		    			  			</c:if>
+		    			  			<c:if test="${!empty bodyChange.member_no }">
 		    			  			<input type="hidden" name="member_no" id="member_no" value="${bodyChange.member_no }">
+		    			  			</c:if>
     			  				</form>
     			  			</div>
     			  			<div id="modalBody-button">

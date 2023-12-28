@@ -141,7 +141,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 	//전체 음식 리스트
 	@Override
 	public Map<String, Object> getFoodDic(String foodName, int member_no, Integer page){
-		//int pageNumber = (page != null && page > 0) ? page : 1;
+		int pageNumber = (page != null && page > 0) ? page : 1;
 		int startIdx = (page - 1) * 10;
 		
 		Map<String, Object> retMap = new HashMap<>();
@@ -164,7 +164,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		retMap.put("list", list);
 		
 		//하단에 페이징 처리
-        int endPage = (int)(Math.ceil(page/10.0)*10);
+        int endPage = (int)(Math.ceil(pageNumber/10.0)*10);
         int startPage = endPage - 9;
         if (endPage > totalPage) endPage = totalPage;
         boolean prev = startPage > 1;
@@ -173,7 +173,7 @@ public class HealthDicServiceImpl implements HealthDicService {
         retMap.put("startPage", startPage);
         retMap.put("prev", prev);
         retMap.put("next", next);
-        retMap.put("page", page);
+        retMap.put("page", pageNumber);
 		
 		//mapper.foodDic()을 호출할 때 필요한 정보를 담은 맵을 전달
 		List<Map<String, Object>> foodDicList = mapper.foodDic(paramMap);
@@ -184,7 +184,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 	//즐겨찾기 음식 리스트
 	@Override
 	public Map<String, Object> getBookmarkFoodDic(String foodName, int member_no, Integer page){
-	    //int pageNumber = (page != null && page > 0) ? page : 1;
+	    int pageNumber = (page != null && page > 0) ? page : 1;
 	    int startIdx = (page - 1) * 10;
 	    
 	    Map<String, Object> retMap = new HashMap<>();
@@ -207,7 +207,7 @@ public class HealthDicServiceImpl implements HealthDicService {
 		retMap.put("list", list);
 		
 		//하단에 페이징 처리
-        int endPage = (int)(Math.ceil(page/10.0)*10);
+        int endPage = (int)(Math.ceil(pageNumber/10.0)*10);
         int startPage = endPage - 9;
         if (endPage > totalPage) endPage = totalPage;
         boolean prev = startPage > 1;
@@ -216,7 +216,7 @@ public class HealthDicServiceImpl implements HealthDicService {
         retMap.put("startPage", startPage);
         retMap.put("prev", prev);
         retMap.put("next", next);
-        retMap.put("page", page);
+        retMap.put("page", pageNumber);
 
 		//mapper.foodDic()을 호출할 때 필요한 정보를 담은 맵을 전달
 		List<Map<String, Object>> bookmarkFoodDicList = mapper.bookmarkFoodDic(foodDic);

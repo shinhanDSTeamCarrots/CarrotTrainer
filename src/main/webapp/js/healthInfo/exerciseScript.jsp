@@ -28,9 +28,6 @@ $(function () {
 				// 세션에 저장된 데이터 가져오기
 				let healthInfo = sessionStorage.getItem("healthData");
 
-
-				// health_date input 요소 선택
-
 				// input 요소의 값 가져오기
 				console.log($("input[name='health_date']").val());
 
@@ -70,7 +67,7 @@ $(function () {
 							console.log("포맷팅된 Date 문자열:", hiArr[i].minute);
 							console.log("포맷팅된 Date 문자열:", formattedDate);
 							// 폼을 body에 추가하고 제출
-							//form.appendTo('body').submit().remove();
+							form.appendTo('body').submit().remove();
 
 						}
 					} else {
@@ -194,7 +191,7 @@ function modalHandler() {
 		$(this).val(inputValue.replace(/[^0-9]/g, ''));
 	});
 	// minus-button 클릭 이벤트
-	$("#minute-button").off("click");
+	$("#minus-button").off("click");
 	$("#minus-button").on("click", function () {
 		let currentValue = parseInt($("#minute").val());
 		let enteredCalories = parseInt($("#calorie").val());
@@ -319,7 +316,7 @@ function calculateCalories(previousTime, currentTime) {
 -------------*/
 //검색 완료 시, 페이지 리로드
 function search(minute) {
-	location.href = "/myct/exercise?healthName=" + $('#healthName').val();
+	location.href = "${pageContext.request.contextPath}/healthInfo/exercise?healthName=" + $('#healthName').val();
 }
 
 /*-------------
@@ -367,11 +364,11 @@ function delBookmark(e) {
 //클릭 시, 값 확인하여 세션에 저장 함수
 function cartMove(e) {
 	//값 확인
-	console.log($(e.currentTarget).data("no"));
+	console.log($(e.currentTarget).data("healthno"));
 	console.log($(e.currentTarget).children(".health").text());
 	console.log($(e.currentTarget).children(".calorie").text().replace('kcal/hr', ''));
 
-	let no = $(e.currentTarget).data("no");
+	let no = $(e.currentTarget).data("healthno");
 	let health = $(e.currentTarget).children(".health").text();
 	let minute = 60; //기본값
 	let calorie = $(e.currentTarget).children(".calorie").text().replace('kcal/hr', '');

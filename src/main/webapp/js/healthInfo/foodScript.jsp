@@ -80,7 +80,7 @@ function createHiddenInput(form, inputId, sessionValue) {
 -------------*/
 //검색 완료 시, 페이지 리로드
 function search() {
-	location.href = "/myct/food?foodName=" + $('#foodName').val();
+	location.href = "${pageContext.request.contextPath}/healthInfo/food?foodName=" + $('#foodName').val();
 }
 
 /*----------

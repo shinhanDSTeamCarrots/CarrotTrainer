@@ -20,8 +20,8 @@
     	<div class="container">
     		<div class="foodDiary-title">
     			<p class="foodDiary-title-text">TODAY'S DIARY</p>
-    			<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
+    			<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/diary'">오늘의 다이어리</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<div class="foodDiary-content">
@@ -33,11 +33,12 @@
 	    				</div>
 	    				<div class="foodDiary-food-result-detail">
 	    					<div class="sql-total-kcal">
-	    						<span id="sql-daily-kcal">0</span><span id="sql-target-kcal"> / 1390 kcal</span>
-   								<!--
-    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
-			                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
-    							 -->
+    							<c:if test="${empty foodDiary }">
+    							<span id="sql-daily-kcal">0</span><span id="sql-target-kcal"> / ${bodyInfo.target_calorie } kcal</span>
+    							</c:if>
+			                	<c:if test="${!empty foodDiary }">
+			                	<span id="sql-daily-kcal">${foodDiary.total_calorie }</span><span id="sql-target-kcal"> / ${bodyInfo.target_calorie } kcal</span>
+			                	</c:if>
 	    					</div>
 	    					<div class="nutrient">
 		    					<div class="nutrient-graph">
@@ -46,81 +47,88 @@
 			    						<div class="progress-bar" id="carbs-bar">
 			    							<div class="progress"></div>
 			    						</div>
-			    						<div class="nutrient-graph-result">0 / 50g</div>
-			    						<!--
-			    						<div>
-			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
-						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_carbs }g</c:if>
+			    						<div class="nutrient-graph-result">
+			    							<c:if test="${empty foodDiary }"><div id="carbs">0</div> / ${bodyInfo.target_carbs }g</c:if>
+						                	<c:if test="${!empty foodDiary }"><div id="carbs">${foodDiary.total_carbs }</div> / ${bodyInfo.target_carbs }g</c:if>
 		    							</div>
-		    							 -->
 		    						</div>
 		    						<div class="protein-graph">
 			    						<div class="nutrient-graph-name">단백질</div>
 			    						<div class="progress-bar" id="protein-bar">
 			    							<div class="progress"></div>
 			    						</div>
-			    						<div class="nutrient-graph-result">0 / 50g</div>
-			    						<!--
-			    						<div>
-			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_protein }g</c:if>
-						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_protein }g</c:if>
+			    						<div class="nutrient-graph-result">
+			    							<c:if test="${empty foodDiary }"><div id="protein">0</div> / ${bodyInfo.target_protein }g</c:if>
+						                	<c:if test="${!empty foodDiary }"><div id="protein">${foodDiary.total_protein }</div> / ${bodyInfo.target_protein }g</c:if>
 		    							</div>
-		    							-->
 		    						</div>
 		    						<div class="fat-graph">
 			    						<div class="nutrient-graph-name">지방</div>
 			    						<div class="progress-bar" id="fat-bar">
 			    							<div class="progress"></div>
 			    						</div>
-			    						<div class="nutrient-graph-result">0 / 30g</div>
-			    						<!--
-			    						<div>
-			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_fat }g</c:if>
-						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_fat }g</c:if>
+			    						<div class="nutrient-graph-result">
+			    							<c:if test="${empty foodDiary }"><div id="fat">0</div> / ${bodyInfo.target_fat }g</c:if>
+						                	<c:if test="${!empty foodDiary }"><div id="fat">${foodDiary.total_fat }</div> / ${bodyInfo.target_fat }g</c:if>
 		    							</div>
-		    							-->
 		    						</div>
 		    						<div class="sugar-graph">
 			    						<div class="nutrient-graph-name">당</div>
 			    						<div class="progress-bar" id="sugar-bar">
 			    							<div class="progress"></div>
 			    						</div>
-			    						<div class="nutrient-graph-result">0 / 50g</div>
-			    						<!--
-			    						<div>
-			    							<c:if test="${empty bodyInfo }">0 / ${bodyInfo.target_sugar }g</c:if>
-						                	<c:if test="${!empty bodyInfo }">0 / ${bodyInfo.target_sugar }g</c:if>
+			    						<div class="nutrient-graph-result">
+			    							<c:if test="${empty foodDiary }"><div id="sugar">0</div> / ${bodyInfo.target_sugar }g</c:if>
+						                	<c:if test="${!empty foodDiary }"><div id="sugar">${foodDiary.total_sugar }</div> / ${bodyInfo.target_sugar }g</c:if>
 		    							</div>
-		    							-->
 		    						</div>
 	    						</div>
     						</div>
     					</div>
     				</div>
     				<div class="foodDiary-food-input">
-    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">아침</div>
-    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
+    						<div class="kcal">
+    							<span class="sql-diary-result">
+    								<c:if test="${empty foodCal }">0</c:if>
+									<c:if test="${!empty foodCal }">${foodCal.breakfast_calorie }</c:if>
+    							</span> kcal
+    						</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">점심</div>
-    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
+    						<div class="kcal">
+    						<input type="hidden" value="${foodCal.lunch_calorie }"/>
+    							<span class="sql-diary-result">
+    								<c:if test="${empty foodCal }">0</c:if>
+									<c:if test="${!empty foodCal }">${foodCal.lunch_calorie }</c:if>
+    							</span> kcal
+    						</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">저녁</div>
-    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
+    						<div class="kcal">
+    							<span class="sql-diary-result">
+    								<c:if test="${empty foodCal }">0</c:if>
+									<c:if test="${!empty foodCal }">${foodCal.dinner_calorie }</c:if>
+    							</span> kcal
+    						</div>
     					</div>
     					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">간식</div>
-    						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
+    						<div class="kcal">
+    							<span class="sql-diary-result">
+    								<c:if test="${empty foodCal && empty foodDiary }">0</c:if>
+									<c:if test="${!empty foodCal }">${foodCal.snack_calorie }</c:if>
+    							</span> kcal
+    						</div>
     					</div>
     				</div>
-    			</div>
-    			<div class="foodDiary-calendar">
     			</div>
     		</div>
     		<div class="detail-division-line"></div>
