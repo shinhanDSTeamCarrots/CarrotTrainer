@@ -46,6 +46,11 @@ public class GoodsServiceImpl implements GoodsService {
 	public int goodsInsert(GoodsVO goods) {
 		return mapper.goodsInsert(goods); 
 	}
+
+	@Override
+	public List<GoodsVO> hotGoodsList() {
+		return mapper.hotGoodsList();
+	}
 	
 
 }
