@@ -19,6 +19,10 @@ public class BodyInfoController {
 	
 	@Autowired
 	private BodyInfoService service;
+	@Autowired
+	private HealthDicService healthService;
+	@Autowired
+	private DiaryService diaryService;
 	
 	/*--------------
  		bmi.jsp
@@ -75,6 +79,9 @@ public class BodyInfoController {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		
 		if (mem != null) {
+			model.addAttribute("healthDiary", healthService.selectHealthInfo(mem.getMember_no()));
+			model.addAttribute("foodDiary", diaryService.selectFoodDiary(mem.getMember_no()));
+			model.addAttribute("bodyInfo", service.selectBodyInfo(mem.getMember_no()));
 			model.addAttribute("bodyChange", service.selectBodyChange(mem.getMember_no()));
 		}
 		return "/healthInfo/diary";

@@ -98,22 +98,22 @@
     					</div>
     				</div>
     				<div class="foodDiary-food-input">
-    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/food/breakfast'">
+    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">아침</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/food/lunch'">
+    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">점심</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/food/dinner'">
+    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">저녁</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/food/snack'">
+    					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">간식</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>

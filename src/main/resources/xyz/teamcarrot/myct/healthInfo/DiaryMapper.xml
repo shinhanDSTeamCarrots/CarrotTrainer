@@ -1,43 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.teamcarrot.myct.healthInfo.DiaryMapper">
-	<!-- 운동 정보 입력 -->
-	<insert id="insertExInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
-		INSERT INTO tb_health_diary (
-			health_name, health_calorie, health_time, health_date, member_no 
-		) VALUES (
-			#{health_name}, #{health_calorie}, #{health_time}, NOW(), #{member_no}
-		)
-		<!-- tb_health_diary 테이블 키 값 -->
-		<selectKey keyProperty="health_diary_no" order="AFTER" resultType="int">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	<!-- 운동 정보 불러오기 -->
-	<select id="selectExInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
-		SELECT * FROM tb_health_diary WHERE member_no = #{member_no} AND health_diary_no = #{health_diary_no};
-	</select>
-	<!-- 운동 정보 수정 -->
-	<update id="updateExInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
-		UPDATE tb_health_diary
-		SET health_name = #{health_name}
-			, health_calorie = #{health_calorie}
-			, health_time = #{health_time}
-			, health_date = #{health_date}
-		WHERE health_diary_no = #{health_diary_no};
-	</update>
-	<!-- 운동 정보 삭제 -->
-	<delete id="deleteExInfo" parameterType="int">
-		DELETE FROM tb_health_diary WHERE health_diary_no = #{health_diary_no}
-	</delete>
-	
-	
 	<!-- 식단 다이어리 입력 -->
 	<insert id="insertFoodDiary" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
 		INSERT INTO tb_food_diary (
-			food_diary_date, intake_date, intake_time, image, total_calorie, total_carbs, total_protein, total_fat, total_sugar, total_salt, member_no
+			food_diary_date
+			, intake_date
+			, intake_time
+			, image
+			, total_calorie
+			, total_carbs
+			, total_protein
+			, total_fat
+			, total_sugar
+			, total_salt
+			, member_no
 		) VALUES (
-			NOW(), #{intake_date}, #{intake_time}, #{image}, #{total_calorie}, #{total_carbs}, #{total_protein}, #{total_fat}, #{total_sugar}, #{total_salt}, #{member_no}
+			NOW()
+			, #{intake_date}
+			, #{intake_time}
+			, #{image}
+			, #{total_calorie}
+			, #{total_carbs}
+			, #{total_protein}
+			, #{total_fat}
+			, #{total_sugar}
+			, #{total_salt}
+			, #{member_no}
 		)
 		<!-- tb_health_diary 테이블 키 값 -->
 		<selectKey keyProperty="food_diary_no" order="AFTER" resultType="int">
