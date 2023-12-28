@@ -39,5 +39,15 @@ public class QnaServiceImpl implements QnaService {
 		return mapper.eachQna(inquiry_no);
 	}
 
+	@Override
+	public int updateQna(GoodsInquiryVO qna) {
+		return mapper.qnaUpdate(qna);
+	}
+
+	@Override
+	public int qnaDel(int inquiry_no) {
+		return mapper.qnaDel(inquiry_no);
+	}
+
 	
 }

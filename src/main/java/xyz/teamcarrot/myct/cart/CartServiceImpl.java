@@ -33,9 +33,9 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-    public void updateCart(CartVO cart) {
-        mapper.update(cart);
-    }
+	public void updateCartQuantity(CartVO cart) {
+	    mapper.updateQuantity(cart);
+	}
 	
 	@Override
 	public boolean checkCart(int mem_no, int goods_no) {

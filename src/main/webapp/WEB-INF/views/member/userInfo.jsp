@@ -21,6 +21,35 @@
 		$("#frm").submit();
 	}
 </script>
+<style>
+.wrap { 
+    	margin:auto; 
+        text-align:center;
+        }    	
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  
+}
+
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px; 
+  text-align: center;
+  
+  font-size: 0.8rem; 
+  padding-left: 50px; 
+  
+	
+}
+</style>
 </head>
 <body>
 	<div class="wrap">
@@ -35,32 +64,32 @@
 					<col width="200px" />
 				</colgroup>
 				<tbody>
+				<!-- 20231227 회원차단 여부 바꿨을때 db에 연동하는 법 -->
 					<th>회원번호</th>
 					<th>아이디</th>
+					<th>이름</th>
 					<th>차단 여부</th>
 					<c:if test="${!empty all }">
 						<c:forEach var="vo" items="${all }">
-
 							<tr>
-
 								<td>${vo.member_no }</td>
-
 								<td>${vo.member_id }</td>
+								<td>${vo.member_name }</td>
 								<td><select name="blocked" id="blocked">
 										<c:choose>
-											<c:when test="${vo.member_blocked == 1 }">
-												<option value="1">1</option>
-												<option value="0">0</option>
+											<c:when test="${vo.member_blocked == 0 }">
+												<option value="X">X</option>
+												<option value="O">O</option>
 											</c:when>
 											<c:otherwise>
-												<option value="0">0</option>
-												<option value="1">1</option>
+												<option value="O">O</option>
+												<option value="X">X</option>
 											</c:otherwise>
 										</c:choose>
 								</select></td>
 							</tr>
 						</c:forEach>
-					</c:if>
+						</c:if>
 				</tbody>
 			</table>
 			<input type="submit" value="수정사항 반영" onclick="return infoSave()" />

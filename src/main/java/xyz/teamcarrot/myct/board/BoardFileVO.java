@@ -1,6 +1,7 @@
 package xyz.teamcarrot.myct.board;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,7 @@ public class BoardFileVO {
 	private String file_name;
 	private int board_no;
 	private MultipartFile uploadFile;
+	private List<MultipartFile> pics;
 	
 	public String getFileName() {
 		return file_name;

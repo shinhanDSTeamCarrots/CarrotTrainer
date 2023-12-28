@@ -178,6 +178,30 @@ a:hover {
     background-color: #0056b3;
     color: white;
 }
+
+.search-box input[type="text"] {
+    flex: 1; /* 검색창이 남은 공간을 모두 차지하도록 합니다. */
+    padding: 8px; /* 패딩 추가 */
+    border: 2px solid #ddd; /* 경계선 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+.search-box button {
+    padding: 8px 16px; /* 버튼 내부 여백 설정 */
+    margin-left: 8px; /* 검색창과의 간격 설정 */
+    margin-top: 8px;
+    border: none; /* 기본 경계선 제거 */
+    background-color: #007bff; /* 배경 색상 설정 */
+    color: white; /* 글자 색상 설정 */
+    cursor: pointer; /* 커서를 손가락 모양으로 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+.search-box button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 색상 변경 */
+}
 </style>
 
 <body>
@@ -268,30 +292,13 @@ a:hover {
 			
 			
 			
-		<div class="search_wrap">
-			<div class="search_area">
-				<select name="type">
-					<option value=""
-						<c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
-					<option value="T"
-						<c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
-					<option value="C"
-						<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
-					<option value="W"
-						<c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
-					<option value="TC"
-						<c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목
-						+ 내용</option>
-					<option value="TW"
-						<c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목
-						+ 작성자</option>
-					<option value="TCW"
-						<c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목
-						+ 내용 + 작성자</option>
-				</select> <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-				<button>검색</button>
-			</div>
-		</div>
+		<form action="${pageContext.request.contextPath}/board/boardInfo" method="get">
+    <div class="search-box">
+        <!-- Ensure the input field has the name 'searchKeyword' -->
+        <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요"/>
+        <button type="submit">검색🔍</button>
+    </div>
+</form>
 
 
 	<div class="pagination">
