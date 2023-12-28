@@ -99,6 +99,16 @@ public class BoardServiceImpl implements BoardService {
         map.put("skip", cri.getSkip());
         map.put("amount", cri.getAmount());
         return mapper.getListPaging(map);
+    }
+    @Override
+    public List<BoardVO> getListPaging() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("searchType", "");
+        map.put("orderType", "T");
+        map.put("category_no", 2);
+        map.put("skip", 0);
+        map.put("amount", 10);
+        return mapper.getListPaging(map);
     }    
     
     /*�Խ��� ���*/

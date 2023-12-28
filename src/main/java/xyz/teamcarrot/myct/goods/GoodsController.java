@@ -25,7 +25,7 @@ public class GoodsController {
 		goodsList=service.goodsList(searchGoods);		
 		model.addAttribute("goodsList", goodsList);
 		
-		logger.info(searchGoods);
+		//logger.info(searchGoods);
         for (GoodsVO goods : goodsList) {
             logger.info("{}", goods);
         }
@@ -36,7 +36,7 @@ public class GoodsController {
 	
 	@GetMapping("/goodsList/{category_no}")
 	public String cateGoodsList(Model model, @PathVariable int category_no) {
-		System.out.println("category number 체크! " + category_no);
+		//System.out.println("category number 체크! " + category_no);
 		List<GoodsVO> goodsPerCate=service.getCategoryGoodsList(category_no);
 		
 		model.addAttribute("goodsList", goodsPerCate);			
@@ -46,7 +46,7 @@ public class GoodsController {
 	
 	@GetMapping("/detail/{goods_no}")
 	public String detailList(Model model,@PathVariable int goods_no) {
-		System.out.println("goods number 체크" + goods_no);
+		//System.out.println("goods number 체크" + goods_no);
 		GoodsVO goods = service.detail(goods_no);
 		List<GoodsOptionVO> options = service.goodsOption(goods_no);
 		model.addAttribute("item",goods);

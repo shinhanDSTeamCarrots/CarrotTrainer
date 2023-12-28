@@ -68,6 +68,24 @@
 
 			</div>
 			
+			
+			<div class="noticeDiv">
+				<c:forEach items="${noticeList}" var="notices">
+				<p>${notices.board_title }</p><br>
+				</c:forEach>
+			</div>
+			<div class="hotBoardDiv">
+				<c:forEach items="${hotBoardList}" var="hotBoard">
+				<p>${hotBoard.board_title }</p><br>
+				</c:forEach>
+			</div>
+			<div class="hotGoodsDiv">
+				<c:forEach items="${hotGoodsList}" var="hotGoods">
+				<p>${hotGoods.goods_name }</p><br>
+				</c:forEach>
+			</div>
+		
+			
 		</div>
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
