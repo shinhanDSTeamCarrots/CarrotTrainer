@@ -237,7 +237,7 @@ th {
 								<td><c:out value="${vo.board_view}" /></td>
 								<td><c:if test="${vo.file_name != null}">
 										<a href="/myct/board/download?fileNo=${vo.file_no}"> <img
-											src="/img/ico_star_on.png" alt="첨부파일">
+											src="/myct/img/ico_star_on.png" alt="첨부파일">
 										</a>
 									</c:if></td>
 							</tr>
@@ -294,7 +294,7 @@ th {
 			function checkAlert(result) {
 
 				if (result === '') {
-					reutrn;
+					return;
 				}
 
 				if (result === "enrol success") {
