@@ -103,7 +103,7 @@ function bookmarkHandler() {
 		event.stopPropagation(); // 또는 return false; 를 사용 가능
 
 		//확인용
-		console.log("no확인용:", $(this).closest(".health-info").data("no"));
+		console.log("no확인용:", $(this).closest(".health-info").data("healthno"));
 
 		//세션에서 로그인 정보 불러옴
 		const userName = "${sessionScope.loginInfo.member_nickname}";
@@ -324,7 +324,7 @@ function search(minute) {
 -------------*/
 function addBookmark(e) {
 	// 클릭한 행에 대한 정보 가져오기
-	const healthNo = $(e.currentTarget).closest(".health-info").data("no");
+	const healthNo = $(e.currentTarget).closest(".health-info").data("healthno");
 	console.log('healthNo:' + healthNo);
 	$.ajax({
 		url: '${pageContext.request.contextPath}/healthInfo/insertBookmark',
