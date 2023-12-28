@@ -194,7 +194,7 @@ function modalHandler() {
 		$(this).val(inputValue.replace(/[^0-9]/g, ''));
 	});
 	// minus-button 클릭 이벤트
-	$("#minute-button").off("click");
+	$("#minus-button").off("click");
 	$("#minus-button").on("click", function () {
 		let currentValue = parseInt($("#minute").val());
 		let enteredCalories = parseInt($("#calorie").val());
@@ -367,11 +367,11 @@ function delBookmark(e) {
 //클릭 시, 값 확인하여 세션에 저장 함수
 function cartMove(e) {
 	//값 확인
-	console.log($(e.currentTarget).data("no"));
+	console.log($(e.currentTarget).data("healthno"));
 	console.log($(e.currentTarget).children(".health").text());
 	console.log($(e.currentTarget).children(".calorie").text().replace('kcal/hr', ''));
 
-	let no = $(e.currentTarget).data("no");
+	let no = $(e.currentTarget).data("healthno");
 	let health = $(e.currentTarget).children(".health").text();
 	let minute = 60; //기본값
 	let calorie = $(e.currentTarget).children(".calorie").text().replace('kcal/hr', '');

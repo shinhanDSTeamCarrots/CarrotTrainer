@@ -66,7 +66,7 @@
 					<div class="list-result">
 						<table class="foodDic-list">
 							<tbody id="foodTbody">
-							<!-- 로그인 --> <!-- 목록 확인 해야함!!!!!! -->
+							<!-- 로그인 -->
 							<c:if test="${null ne foodName && empty foodDic.list}"> <!-- 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
