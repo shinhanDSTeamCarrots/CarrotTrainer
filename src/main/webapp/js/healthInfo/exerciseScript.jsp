@@ -53,7 +53,7 @@ $(function () {
 							// 새로운 폼 엘리먼트 생성
 							let form = $('<form>', {
 								'class': 'healthInfo-cart',
-								'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
+								'action': 'insertHealthInfo',
 								'method': 'post'
 							});
 
@@ -66,9 +66,9 @@ $(function () {
 							console.log("포맷팅된 Date 문자열:", hiArr[i].calorie);
 							console.log("포맷팅된 Date 문자열:", hiArr[i].minute);
 							console.log("포맷팅된 Date 문자열:", formattedDate);
+							
 							// 폼을 body에 추가하고 제출
-							form.appendTo('body').submit().remove();
-
+            				form.appendTo('body').submit().remove();
 						}
 					} else {
 						alert("저장할 운동 목록이 없습니다.");

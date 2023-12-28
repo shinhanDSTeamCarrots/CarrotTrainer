@@ -46,7 +46,7 @@ public class BodyInfoController {
 		if(bodyInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/healthInfo/bmi");
+			model.addAttribute("url", "bmi");
 		} else {
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "정보 등록 실패");
@@ -58,7 +58,7 @@ public class BodyInfoController {
 		int no = service.updateBodyInfo(vo);
 		
 		String msg = "";
-		String url = "/healthInfo/bmi";
+		String url = "bmi";
 
 		if(no > 0) {
 			msg = "수정되었습니다.";
@@ -97,7 +97,7 @@ public class BodyInfoController {
 			model.addAttribute("bodyChange", service.insertBodyChange(vo));
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
-			model.addAttribute("url", "/healthInfo/diary");
+			model.addAttribute("url", "diary");
 		} else { // 비로그인일 경우 > confirm알라트로 변경!
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "로그인이 필요합니다.");
@@ -110,7 +110,7 @@ public class BodyInfoController {
 		int no = service.updateBodyChange(vo);
 		
 		String msg = "";
-		String url = "/healthInfo/diary";
+		String url = "diary";
 
 		if(no > 0) {
 			msg = "수정되었습니다.";
@@ -128,7 +128,7 @@ public class BodyInfoController {
 		int no = service.deleteBodyChange(vo);
 		
 		String msg = "";
-		String url = "/healthInfo/diary";
+		String url = "diary";
 
 		if(no > 0) {
 			msg = "삭제되었습니다.";

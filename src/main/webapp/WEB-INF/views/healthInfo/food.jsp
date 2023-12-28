@@ -30,16 +30,6 @@
 					<div class="search-place">
 						<div id="search-box"><input type="text" id="foodName" name="foodName"></div>
 						<div id="search-text"><p>검색</p></div>
-						<!-- 
-						<form action="/myct/food" method="get">
-						    <div id="search-box">
-						        <input type="text" id="foodName" name="foodName" value="${foodName}">
-						    </div>
-						    <div id="search-text">
-						        <input type="submit" value="검색">
-						    </div>
-						</form>
-						 -->
 					</div>
 					<div class="detail-division-line"></div>
 					<div class="search-tag"></div>
@@ -59,7 +49,7 @@
 		            </div>
 					<div class="list-division-line">
 						<img>
-						<c:if test="${null ne healthName}"> <!-- 검색 -->
+						<c:if test="${null ne foodName}"> <!-- 검색 -->
 							<p>검색 결과: <span class="sql-text">${foodDic.count}</span>개</p>
 						</c:if>
 					</div>
@@ -86,11 +76,19 @@
 									<col width="20%" />
 								</colgroup>
 								<c:forEach var="foodDic" items="${foodDic.list}">
-									<tr class="food-info" data-no="${foodDic.no }" data-bookmarkno="${foodDic.bookmarkNo}">
+									<tr class="food-info" data-foodno="${foodDic.no }" data-bookmarkno="${foodDic.bookmarkNo}">
 										<td class="bookmark" style="color: ${foodDic.bookmarkNo ne null ? 'gold': ''};"
 											data-color="${foodDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
 										</td>
-										<td class="food">${foodDic.food }</td>
+										<td class="food-gram">
+											<div class="food">${foodDic.food }</div>
+											<div class="gram">${foodDic.total_gram }g</div>
+											<input type="hidden" class="carbs" value="${foodDic.carbs }">
+											<input type="hidden" class="protein" value="${foodDic.protein }">
+											<input type="hidden" class="fat" value="${foodDic.fat }">
+											<input type="hidden" class="sugar" value="${foodDic.sugar }">
+											<input type="hidden" class="salt" value="${foodDic.salt }">
+										</td>
 										<td class="calorie">${foodDic.calorie }kcal/hr</td>
 									</tr>
 								</c:forEach>
@@ -99,7 +97,7 @@
 						</table>
 					</div>
 				</div>
-				<c:if test="${null ne healthName || empty loginInfo}"> <!-- 비로그인, 검색 여부 상관없음 && 로그인, 검색 시 -->
+				<c:if test="${null ne foodName || empty loginInfo}"> <!-- 비로그인, 검색 여부 상관없음 && 로그인, 검색 시 -->
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${foodDic.prev }">
@@ -230,29 +228,29 @@
     			  			<div id="modalBody-sub">
     			  				<div id="modalBody-sub-detail">
 	    			  				<div id="modalBody-carbs">
-	    			  					<div id="modalBody-carbs-text">탄수화물(g)</div>
-	    			  					<div class="modalBody-carbs-sql"></div>
-	    			  					<div class="modalBody-graph" id="modalBody-carbs-graph"></div>
+	    			  					<div class="sub-detail" id="modalBody-carbs-text">탄수화물(g)</div>
+	    			  					<div class="modalBody-sql" id="carbs"></div>
+	    			  					<div class="modalBody-graph" id="modalBody-carbs-graph"><div class="progress"></div></div>
 	    			  				</div>
 	    			  				<div id="modalBody-protein">
-	    			  					<div id="modalBody-protein-text">단백질(g)</div>
-	    			  					<div class="modalBody-carbs-sql"></div>
-	    			  					<div class="modalBody-graph" id="modalBody-protein-graph"></div>
+	    			  					<div class="sub-detail" id="modalBody-protein-text">단백질(g)</div>
+	    			  					<div class="modalBody-sql" id="protein"></div>
+	    			  					<div class="modalBody-graph" id="modalBody-protein-graph"><div class="progress"></div></div>
 	    			  				</div>
 	    			  				<div id="modalBody-fat">
-	    			  					<div id="modalBody-fat-text">지방(g)</div>
-	    			  					<div class="modalBody-carbs-sql"></div>
-	    			  					<div class="modalBody-graph" id="modalBody-fat-graph"></div>
+	    			  					<div class="sub-detail" id="modalBody-fat-text">지방(g)</div>
+	    			  					<div class="modalBody-sql" id="fat"></div>
+	    			  					<div class="modalBody-graph" id="modalBody-fat-graph"><div class="progress"></div></div>
 	    			  				</div>
 	    			  				<div id="modalBody-sugar">
-	    			  					<div id="modalBody-sugar-text">당류(g)</div>
-	    			  					<div class="modalBody-carbs-sql"></div>
-	    			  					<div class="modalBody-graph" id="modalBody-sugar-graph"></div>
+	    			  					<div class="sub-detail" id="modalBody-sugar-text">당류(g)</div>
+	    			  					<div class="modalBody-sql" id="sugar"></div>
+	    			  					<div class="modalBody-graph" id="modalBody-sugar-graph"><div class="progress"></div></div>
 	    			  				</div>
 	    			  				<div id="modalBody-salt">
-	    			  					<div id="modalBody-salt-text">나트륨(mg)</div>
-	    			  					<div class="modalBody-carbs-sql"></div>
-	    			  					<div class="modalBody-graph" id="modalBody-salt-graph"></div>
+	    			  					<div class="sub-detail" id="modalBody-salt-text">나트륨(mg)</div>
+	    			  					<div class="modalBody-sql" id="salt"></div>
+	    			  					<div class="modalBody-graph" id="modalBody-salt-graph"><div class="progress"></div></div>
 	    			  				</div>
 	    			  			</div>
 	    			  			<div id="modalBody-sub-text">

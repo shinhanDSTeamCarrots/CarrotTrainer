@@ -94,7 +94,7 @@
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${healthDic.prev }">
-				    	<li><a href="exercise?page==${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
+				    	<li><a href="exercise?page=${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
 				    </c:if>
 				    <c:forEach var="p" begin="${healthDic.startPage}" end="${healthDic.endPage}">
 				    	<c:if test="${p == page}">

@@ -105,7 +105,7 @@ public class ExerciseController {
 		if(healthInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/healthInfo/exercise");
+			model.addAttribute("url", "diary");
 		} else {
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "정보 등록 실패");
@@ -117,7 +117,7 @@ public class ExerciseController {
 		int no = service.updateHealthInfo(vo);
 		
 		String msg = "";
-		String url = "/healthInfo/exercise";
+		String url = "exercise";
 
 		if(no > 0) {
 			msg = "수정되었습니다.";
@@ -135,7 +135,7 @@ public class ExerciseController {
 		int no = service.deleteHealthInfo(vo);
 		
 		String msg = "";
-		String url = "/healthInfo/exercise";
+		String url = "exercise";
 
 		if(no > 0) {
 			msg = "삭제되었습니다.";
