@@ -67,13 +67,13 @@
 						<table class="foodDic-list">
 							<tbody id="foodTbody">
 							<!-- 로그인 --> <!-- 목록 확인 해야함!!!!!! -->
-							<c:if test="${null ne foodName && empty foodDic}"> <!-- 목록 없음 -->
+							<c:if test="${null ne foodName && empty foodDic.list}"> <!-- 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
 								</colgroup>
 	               				<tr><td class="empty-foodlist">검색 결과가 없습니다.</td></tr>	
 							</c:if>
-							<c:if test="${!empty loginInfo && empty foodDic}"> <!-- 로그인 && 목록 없음 -->
+							<c:if test="${!empty loginInfo && empty foodDic.list}"> <!-- 로그인 && 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
 								</colgroup>
@@ -103,7 +103,7 @@
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${foodDic.prev }">
-				    	<li><a href="food?page==${foodDic.startPage-1 }&foodName=${foodDic.foodName}"> << </a></li>
+				    	<li><a href="food?page=${foodDic.startPage-1 }&foodName=${foodDic.foodName}"> << </a></li>
 				    </c:if>
 				    <c:forEach var="p" begin="${foodDic.startPage}" end="${foodDic.endPage}">
 				    	<c:if test="${p == page}">

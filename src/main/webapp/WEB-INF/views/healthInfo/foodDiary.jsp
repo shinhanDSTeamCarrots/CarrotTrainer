@@ -20,8 +20,8 @@
     	<div class="container">
     		<div class="foodDiary-title">
     			<p class="foodDiary-title-text">TODAY'S DIARY</p>
-    			<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
+    			<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/diary'">오늘의 다이어리</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<div class="foodDiary-content">
@@ -98,17 +98,17 @@
     					</div>
     				</div>
     				<div class="foodDiary-food-input">
-    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="breakfast" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">아침</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="lunch" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">점심</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="dinner" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">저녁</div>
     						<div class="kcal"><span class="sql-diary-result">120</span> kcal</div>

@@ -27,7 +27,7 @@ public class BodyInfoController {
 	/*--------------
  		bmi.jsp
 	--------------*/
-	@GetMapping("/bmi")
+	@GetMapping("healthInfo/bmi")
 	public String bmi(Model model, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		
@@ -36,8 +36,9 @@ public class BodyInfoController {
 		}
 		return "/healthInfo/bmi";
 	}
-	@PostMapping("/insertBodyInfo")
+	@PostMapping("healthInfo/insertBodyInfo")
 	public String insertBodyInfo(BodyInfoVO vo, Model model, HttpSession sess) {
+		log.debug("체크");
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		vo.setMember_no(mem.getMember_no());
 		boolean bodyInfo = service.insertBodyInfo(vo);
@@ -45,19 +46,19 @@ public class BodyInfoController {
 		if(bodyInfo) {
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "정보가 등록되었습니다!");
-			model.addAttribute("url", "/myct/bmi");
+			model.addAttribute("url", "/healthInfo/bmi");
 		} else {
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "정보 등록 실패");
 		}
 		return "/common/alert";
 	}
-	@PostMapping("/updateBodyInfo")
+	@PostMapping("healthInfo/updateBodyInfo")
 	public String updateBodyInfo(Model model, BodyInfoVO vo) {
 		int no = service.updateBodyInfo(vo);
 		
 		String msg = "";
-		String url = "/myct/bmi";
+		String url = "/healthInfo/bmi";
 
 		if(no > 0) {
 			msg = "수정되었습니다.";
@@ -74,7 +75,7 @@ public class BodyInfoController {
 	/*--------------
 	 	diary.jsp
 	--------------*/
-	@GetMapping("/diary")
+	@GetMapping("healthInfo/diary")
 	public String diary(Model model, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		
@@ -86,7 +87,7 @@ public class BodyInfoController {
 		}
 		return "/healthInfo/diary";
 	}
-	@PostMapping("/insertBodyChange")
+	@PostMapping("healthInfo/insertBodyChange")
 	public String insertBodyChange(Model model, BodyChangeVO vo, HttpSession sess) {
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
 		
@@ -96,7 +97,7 @@ public class BodyInfoController {
 			model.addAttribute("bodyChange", service.insertBodyChange(vo));
 			model.addAttribute("cmd", "move");
 			model.addAttribute("msg", "등록되었습니다.");
-			model.addAttribute("url", "/myct/diary");
+			model.addAttribute("url", "/healthInfo/diary");
 		} else { // 비로그인일 경우 > confirm알라트로 변경!
 			model.addAttribute("cmd", "back");
 			model.addAttribute("msg", "로그인이 필요합니다.");
@@ -104,12 +105,12 @@ public class BodyInfoController {
 		}
 		return "common/alert";
 	}
-	@PostMapping("/updateBodyChange")
+	@PostMapping("healthInfo/updateBodyChange")
 	public String updateBodyChange(Model model, BodyChangeVO vo) {
 		int no = service.updateBodyChange(vo);
 		
 		String msg = "";
-		String url = "/myct/diary";
+		String url = "/healthInfo/diary";
 
 		if(no > 0) {
 			msg = "수정되었습니다.";
@@ -122,12 +123,12 @@ public class BodyInfoController {
 
 		return "common/alert";
 	}
-	@PostMapping("/deleteBodyChange")
+	@PostMapping("healthInfo/deleteBodyChange")
 	public String deleteBodyChange(Model model, BodyChangeVO vo) {
 		int no = service.deleteBodyChange(vo);
 		
 		String msg = "";
-		String url = "/myct/diary";
+		String url = "/healthInfo/diary";
 
 		if(no > 0) {
 			msg = "삭제되었습니다.";

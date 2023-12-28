@@ -23,7 +23,7 @@
     	<div class="container">
     		<div class="diary-title">
     			<p class="diary-title-text">TODAY'S DIARY</p>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<p class="diary-text">안녕하세요, <span class="sql-text-name"></span>님!</p>
@@ -74,8 +74,8 @@
 		    					</div>
 		    				</div>
 		    				<div class="diary-contact-text">
-		    					<a href="${pageContext.request.contextPath}/foodDiary">오늘의 음식 기록하기 ></a>
-		    					<a href="${pageContext.request.contextPath}/exercise">오늘의 운동 기록하기 ></a>
+		    					<a href="${pageContext.request.contextPath}/healthInfo/foodDiary">오늘의 음식 기록하기 ></a>
+		    					<a href="${pageContext.request.contextPath}/healthInfo/exercise">오늘의 운동 기록하기 ></a>
 		    					<a href="#" id="popupBtn">오늘의 상태 기록하기 ></a>
 	    					</div>
 	    				</div>

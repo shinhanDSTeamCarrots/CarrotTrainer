@@ -319,7 +319,7 @@ function calculateCalories(previousTime, currentTime) {
 -------------*/
 //검색 완료 시, 페이지 리로드
 function search(minute) {
-	location.href = "/myct/exercise?healthName=" + $('#healthName').val();
+	location.href = "${pageContext.request.contextPath}/healthInfo/exercise?healthName=" + $('#healthName').val();
 }
 
 /*-------------
