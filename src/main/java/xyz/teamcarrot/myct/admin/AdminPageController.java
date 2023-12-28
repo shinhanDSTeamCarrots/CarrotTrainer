@@ -35,7 +35,7 @@ public class AdminPageController {
 		
 		//관리자 페이지 로그인 정보 확인
 		
-		
+		//안녕하신가
 		
 		
 		
