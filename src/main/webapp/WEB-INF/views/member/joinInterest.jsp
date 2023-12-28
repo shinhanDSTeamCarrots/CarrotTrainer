@@ -15,48 +15,9 @@
 
 
 
-/*function joinDone() {
-    const buttons = document.querySelectorAll('.btn');
-    const selectedButtons = [];
 
-    buttons.forEach(button => {
-        if (button.style.backgroundColor === 'green') {
-            selectedButtons.push(button.id);
-        }
-    });
 
-    if (selectedButtons.length === 0) {
-        alert('최소 하나의 항목을 선택하세요.');
-    } else {
-        // Ajax를 사용하여 서버에 선택된 버튼 정보 전송
-        $.ajax({
-            type: 'POST',
-            url: 'interestRegist', 
-            contentType: 'application/json',
-            data: JSON.stringify({ selectedButtons: selectedButtons }),
-            success: function (response) {
-                alert('회원 가입을 축하해요!');
-            },
-            error: function (error) {
-                console.error('에러 발생:', error);
-            }
-        });
-    }
-}
 
-let clickCount = 0;
-
-function changeColor(button) {
-    clickCount++;
-
-    if (clickCount % 2 === 1) {
-        // 홀수 번 클릭
-        button.style.backgroundColor = 'green';
-    } else {
-        // 짝수 번 클릭
-        button.style.backgroundColor = 'white';
-    }
-}*/
 
 function joinDone() {
     var checkboxes = document.getElementsByName('body');
@@ -68,27 +29,24 @@ function joinDone() {
             selectedValues.push(checkboxes[i].name);
         }
     }
+    var stringValue = selectedValues.join(",");
 
-    // 배열의 값을 String으로 변환하고 합치기
-    var stringValue = selectedValues.join("");
-    var numValue = parseInt(stringValue, 10);
-    if(stringValue ==""){
-    	alert("최소 하나의 항목을 선택해 주세요.");
-    } else{
-    	$.ajax({
-    		type : 'GET',
-    		url: 'interestRegist',
-    		data: numValue,
-    		success: function(response){
-    			alert('회원 가입을 축하해요!');
-    		},
+    if (stringValue.length == 0) {
+        alert("최소 하나의 항목을 선택해 주세요.");
+    } else {
+        $.ajax({
+            type: 'GET',
+            url: 'interestRegist',
+            data: { selectedValues: stringValue },
+            success: function (response) {
+                alert('회원 가입을 축하해요!');
+            },
             error: function (error) {
                 console.error('에러 발생:', error);
             }
-    		
-    	});
+        });
     }
-    $("#frm").submit();  
+    $("#frm").submit();
 }
 
 
@@ -120,39 +78,22 @@ function joinDone() {
                         transition-duration: 0.1s;
                     }
              }   
-    /*******나중에 컨테이너 부분 수정해야 함(지금 내용은 임시책)*******/
-    /*	.container{
-		    display: flex;
-		    flex-direction: row;
-		    justify-content: center;
-		    height : 1600px;		    
-    	}
-    	.menu{
-    		text-align: center;
-    	}
-    	.btn-container {
-        display: flex;
-        text-align : center;
-        font : 20px;
-    }
-
-    .btn {
-        margin-right: 20px;
-        text-align : center;
-       
-    } */
     
     .title{
     justify-content:center;
     margin-bottom: 40px;
     }
-    .container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-         /* 추가: 수직 가운데 정렬 */
-        height: 1600px;
-    }
+    .wrap { 
+    	margin:auto; 
+        text-align:center;
+        } 
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  
+}
 
     .menu {
         text-align: center;
@@ -162,18 +103,26 @@ function joinDone() {
         display: flex;
         justify-content: center; /* 추가: 수평 가운데 정렬 */
         text-align : center;
-        font-size: 25px; /* 수정: font 속성을 font-size로 변경 */
+        font-size: 15px; /* 수정: font 속성을 font-size로 변경 */
+        margin-bottom:30px;
+    }
+    
+    .btn-container2 {
+        display: flex;
+        justify-content: center; /* 추가: 수평 가운데 정렬 */
+        text-align : center;
+        font-size: 15px; /* 수정: font 속성을 font-size로 변경 */
         margin-bottom: 100px;
     }
 
-  
-    
-    .doneButton{
-    	font-size: 40px;
-    }
-    .btn:hover {
-            background-color: green; 
-        }
+  	input{
+  	margin-left: 5px;
+  	margin-right: 5px;
+  	margin-bottom: 3px;
+  	margin-top : 3px;
+  	
+  	}
+   
              
      
     </style>
@@ -184,7 +133,7 @@ function joinDone() {
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     	<div class="container">
-    		<div class = "menu">
+    		
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>  
     				  				
@@ -193,6 +142,8 @@ function joinDone() {
     					<input type = "checkbox" name = "1" id ="body" >눈
     					<input type = "checkbox" name ="2" id ="body">귀
     					<input type = "checkbox" name = "3" id ="body" >간
+    				</div>
+    				<div class = "btn-container2">	
     					<input type = "checkbox" name = "4" id ="body" >기관지
     					<input type = "checkbox" name = "5" id ="body" >위
     					<input type = "checkbox" name = "6" id ="body" >장
@@ -203,7 +154,6 @@ function joinDone() {
     				<div class = "doneButton">
     					<a href="javascript:;" onclick="joinDone();">가입</a>
     				</div>
-    		</div>
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

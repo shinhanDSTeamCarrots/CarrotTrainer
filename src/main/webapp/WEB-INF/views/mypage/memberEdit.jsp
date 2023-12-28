@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="xyz.teamcarrot.myct.member.MemberVO"%>
-<%
+<!--<%
 MemberVO vo = (MemberVO) request.getSession().getAttribute("loginInfo");
 if (vo == null) {
 	throw new RuntimeException("세션에서 'id' 속성을 찾을 수 없습니다.");
 }
 String member_id = vo.getMember_id();
 String member_birthday = vo.getMember_birthday();
+String member_email= vo.getMember_email();
+String member_name = vo.getMember_name();
+String member_nickname= vo.getMember_nickname();
+String member_hp = vo.getMember_hp();
+String member_addr = vo.getMember_addr();
+String member_addrDetail=vo.getMember_addrDetail();
 int member_no = vo.getMember_no();
-%>
+%> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,13 +37,74 @@ int member_no = vo.getMember_no();
 	}
 	
 </script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function zipcode() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				var roadAddr = data.roadAddress;
+				var extraRoadAddr = ''; // 참고 항목 변수
+
+				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+					extraRoadAddr += data.bname;
+				}
+
+				if (data.buildingName !== '' && data.apartment === 'Y') {
+					extraRoadAddr += (extraRoadAddr !== '' ? ', '
+							+ data.buildingName : data.buildingName);
+				}
+
+				if (extraRoadAddr !== '') {
+					extraRoadAddr = ' (' + extraRoadAddr + ')';
+				}
+
+				$('#zipcode').val(data.zonecode);
+				//
+				$('#member_addr').val(roadAddr);
+			}
+		}).open();
+	}
+</script>
+<style>
+.wrap { 
+    	margin:auto; 
+        text-align:center;
+        } 
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th {
+  padding: 10px; 
+  text-align: center;
+  
+  font-size: 1rem; 
+}
+
+td {
+  padding: 10px; 
+  text-align: left;
+  
+ 
+}
+</style>
 </head>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
 			<h2 class="title">개인정보 수정</h2>
-			<form name="frm" id="frm" action="update" method="post">
+			<form name="frm" id="frm" action="memberEdit" method="post">
 				<div class="memberInfo">
 					<table class="reg">
 						<caption>회원가입</caption>
@@ -64,7 +131,7 @@ int member_no = vo.getMember_no();
 							<tr>
 								<th>이메일</th>
 								<td><input type="text" name="member_email"
-									id="member_email" style="float: left;"></td>
+									id="member_email" value ="<%=member_email%>" style="float: left;"></td>
 							</tr>
 							<tr>
 								<th>생년월일</th>
@@ -75,21 +142,22 @@ int member_no = vo.getMember_no();
 							<tr>
 								<th>이름</th>
 								<td><input type="text" name="member_name" id="member_name"
-									style="float: left;"></td>
+									value="<%=member_name%>" style="float: left;" readonly></td>
 							</tr>
 							<tr>
 								<th>닉네임</th>
 								<td><input type="text" name="member_nickname"
-									id="member_nickname" style="float: left;"></td>
+									id="member_nickname" value= "<%=member_nickname%>" style="float: left;" readonly></td>
 							</tr>
 
 							<tr>
 								<th>핸드폰</th>
 								<td><input type="text" name="member_hp" id="member_hp"
-									style="float: left;" placeholder="'-'표시 생략"></td>
+									value = "<%=member_hp %>"style="float: left;" placeholder="'-'표시 생략"></td>
+									
 							</tr>
 							<tr>
-								<th rowspan="3">*주소</th>
+								<th rowspan="3">주소</th>
 								<td><input type="text" name="zipcode" id="zipcode" value=""
 									maxlength="6" style="float: left;" readonly> <a
 									href="javascript:zipcode();"
@@ -97,16 +165,16 @@ int member_no = vo.getMember_no();
 							</tr>
 							<tr>
 								<td><input type="text" name="member_addr" id="member_addr"
-									value="" maxlength="15" style="float: left;" readonly></td>
+									value="<%=member_addr%>" maxlength="15" style="float: left;" readonly></td>
 							</tr>
 							<tr>
 								<td><input type="text" name="member_addrDetail"
-									id="member_addrDetail" value="" maxlength="15"
+									id="member_addrDetail" value="<%=member_addrDetail %>" maxlength="15"
 									style="float: left;"></td>
 							</tr>
 						</tbody>
 					</table>
-					<input type="submit" value="다음" onclick="return infoSave()" /> <input
+					<input type="submit" value="수정하기" onclick="return infoSave()" /> <input
 						type="hidden" name="member_no" value="<%=member_no%>" />
 				</div>
 			</form>
