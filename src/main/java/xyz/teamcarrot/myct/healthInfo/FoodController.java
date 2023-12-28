@@ -1,6 +1,5 @@
 package xyz.teamcarrot.myct.healthInfo;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -40,7 +39,7 @@ public class FoodController {
 		}else {
 			if(foodName == null) {
 				//로그인 && 검색 안함 -> 즐찾
-				List<Map<String, Object>> bookmarks = service.getBookmarkFoodDic(foodName, member_no);
+				Map<String, Object> bookmarks = service.getBookmarkFoodDic(foodName, member_no, pageNumber);
 				model.addAttribute("foodDic", bookmarks);
 			}else {
 				//로그인 && 검색함 -> 일반 검색

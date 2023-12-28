@@ -20,51 +20,62 @@ $(function () {
 
 	//입력
 	$("#select-info").click(function (e) {
-		if (confirm("입력하시겠습니까?")) {
-			// 세션에 저장된 데이터 가져오기
-	        let healthInfo = sessionStorage.getItem("healthData");
-			
-			// health_date input 요소 선택
-			let healthDateInput = $("input[name='health_date']");
-			// input 요소의 값 가져오기
-			let healthDateValue = healthDateInput.val();
-			// 가져온 값 출력 (콘솔 등을 통해 확인)
-			let healthDateObject = new Date(healthDateValue);
-			let formattedDate = healthDateObject.toISOString().split('T')[0];
-			
-			console.log("포맷팅된 Date 문자열:", formattedDate);
-			
-	        // 세션 데이터가 있으면 분리하여 입력 필드에 할당
-	        if (healthInfo) {
-	            let healthData = JSON.parse(healthInfo);
+		//세션에서 로그인 정보 불러옴
+		const userName = "${sessionScope.loginInfo.member_nickname}";
+		
+		if (userName) {
+			if (confirm("입력하시겠습니까?")) {
+				// 세션에 저장된 데이터 가져오기
+				let healthInfo = sessionStorage.getItem("healthData");
 	
-	            // 각 데이터에 대해 폼 생성 및 전송
-	            for (let key in healthData) {
-	                if (healthData.hasOwnProperty(key)) {
-	                    // 새로운 폼 엘리먼트 생성
-	                    let form = $('<form>', {
-	                        'class': 'healthInfo-cart',
-	                        'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
-	                        'method': 'post'
-	                    });
+				// health_date input 요소 선택
+				let healthDateInput = $("input[name='health_date']");
+				// input 요소의 값 가져오기
+				let healthDateValue = healthDateInput.val();
+				let healthDateObject = new Date(healthDateValue);
+				let formattedDate = healthDateObject.toISOString().split('T')[0];
+				console.log("포맷팅된 Date 문자열:", formattedDate);
+				
+				if (formattedDate) {
+					// 세션 데이터가 있으면 분리하여 입력 필드에 할당
+					if (healthInfo) {
+						let healthData = JSON.parse(healthInfo);
 	
-	                    // 숨겨진 입력 필드 생성 및 세션 값 할당
-	                    createHiddenInput(form, "health_name", healthData[key].health);
-	                    createHiddenInput(form, "health_calorie", Number(healthData[key].calorie));
-	                    createHiddenInput(form, "health_time", Number(healthData[key].minute));
-	                    createHiddenInput(form, "health_date", formattedDate);
-						console.log("포맷팅된 Date 문자열:", healthData[key].health);
-						console.log("포맷팅된 Date 문자열:", healthData[key].calorie);
-						console.log("포맷팅된 Date 문자열:", healthData[key].minute);
-						console.log("포맷팅된 Date 문자열:", formattedDate);
-	                    // 폼을 body에 추가하고 제출
-	                    form.appendTo('body').submit().remove();
-	                }
-	            }
-	        } else {
-	            alert("저장할 운동 목록이 없습니다.");
-	        }
-	    }
+						// 각 데이터에 대해 폼 생성 및 전송
+						for (let key in healthData) {
+							if (healthData.hasOwnProperty(key)) {
+								// 새로운 폼 엘리먼트 생성
+								let form = $('<form>', {
+									'class': 'healthInfo-cart',
+									'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
+									'method': 'post'
+								});
+	
+								// 숨겨진 입력 필드 생성 및 세션 값 할당
+								createHiddenInput(form, "health_name", healthData[key].health);
+								createHiddenInput(form, "health_calorie", Number(healthData[key].calorie));
+								createHiddenInput(form, "health_time", Number(healthData[key].minute));
+								createHiddenInput(form, "health_date", formattedDate);
+								console.log("포맷팅된 Date 문자열:", healthData[key].health);
+								console.log("포맷팅된 Date 문자열:", healthData[key].calorie);
+								console.log("포맷팅된 Date 문자열:", healthData[key].minute);
+								console.log("포맷팅된 Date 문자열:", formattedDate);
+								// 폼을 body에 추가하고 제출
+								form.appendTo('body').submit().remove();
+							}
+						}
+					} else {
+						alert("저장할 운동 목록이 없습니다.");
+					}
+				} else {
+					alert("날짜를 입력해주세요.");
+				}
+			}
+		} else {
+			if (confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
+				location.href = "${pageContext.request.contextPath}/member/login";
+			}
+		}
 	});
 });
 // 숨겨진 입력 필드 생성 및 세션 값 할당하는 함수

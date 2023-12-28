@@ -108,6 +108,18 @@
 	padding: 250px;
 	text-align: center;
 }
+/*----------
+	페이징
+-----------*/
+.paging {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 10px;
+}
+.paging li {
+	margin: 3px;
+}
 /*-------
 	별
 --------*/

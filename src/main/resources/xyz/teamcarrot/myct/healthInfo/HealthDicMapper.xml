@@ -9,7 +9,11 @@
 			</if>
 		</where>
 	</sql>
-
+	<!-- 운동 정보 개수 -->
+	<select id="healthCount" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM tb_health_dic
+		<include refid="searchHealthName"/>
+	</select>
 	<!-- 운동 정보 -->
 	<select id="healthDic" resultType="java.util.Map" parameterType="map">
 		SELECT dic.health_dic_no AS no
@@ -23,6 +27,7 @@
 			ON dic.health_dic_no = bookmark.health_dic_no
 			AND bookmark.member_no = #{member_no}
 		<include refid="searchHealthName"/>
+		LIMIT #{startIdx}, 10
 	</select>
 	
 	<!-- 운동 즐겨찾기 검색 -->
@@ -40,6 +45,7 @@
 		<if test="healthName != null or healthName != ''">
 			AND health LIKE '%${healthName}%'
 		</if>
+		LIMIT #{startIdx}, 10
 	</select>
 	<!-- 운동 즐겨찾기 추가 -->
 	<insert id="addBookmark" parameterType="xyz.teamcarrot.myct.healthInfo.HealthBookmarkVO">

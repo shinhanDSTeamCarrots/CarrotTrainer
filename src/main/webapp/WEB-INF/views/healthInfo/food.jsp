@@ -58,7 +58,7 @@
 		            </div>
 					<div class="list-division-line">
 						<img>
-						<p>검색 결과: <span class="sql-text">${foodDic.size()}</span>개</p>
+						<p>검색 결과: <span class="sql-text">${foodDic.count}</span>개</p>
 					</div>
 					<div class="list-result">
 						<table class="foodDic-list">
@@ -82,7 +82,7 @@
 									<col width="70%" />
 									<col width="20%" />
 								</colgroup>
-								<c:forEach var="foodDic" items="${retMap.list}">
+								<c:forEach var="foodDic" items="${foodDic.list}">
 									<tr class="food-info" data-no="${foodDic.no }" data-bookmarkno="${foodDic.bookmarkNo}">
 										<td class="bookmark" style="color: ${foodDic.bookmarkNo ne null ? 'gold': ''};"
 											data-color="${foodDic.bookmarkNo ne null ? 'gold': ''}">&#9733;
@@ -96,28 +96,26 @@
 						</table>
 					</div>
 				</div>
-			</div>
-			<form action="/myct/food" method="get">
-				<input type="hidden" name="foodName" value="${foodName}">
 				<div class="pagenate clear">
 				    <ul class='paging'>
-				    <c:if test="${retMap.prev }">
-				    	<li><a href="#" onclick="submitPage(${retMap.startPage-1})"> << </a></li>
+				    <c:if test="${foodDic.prev }">
+				    	<li><a href="food?page==${foodDic.startPage-1 }&foodName=${foodDic.foodName}"> << </a></li>
 				    </c:if>
-				    <c:forEach var="p" begin="${retMap.startPage}" end="${retMap.endPage}">
+				    <c:forEach var="p" begin="${foodDic.startPage}" end="${foodDic.endPage}">
 				    	<c:if test="${p == page}">
-				        <li><a href='#;' class='current'>${p}</a></li>
+				        	<li><a href=";" class="current">${p}</a></li>
 				        </c:if>
 				        <c:if test="${p != page}">
-				        <li><a href='#;' onclick="submitPage(${p})">${p}</a></li>
+				        	<li><a href="food?page=${p}&foodName=${foodName}">${p}</a></li>
 				        </c:if>
 				    </c:forEach>
-				    <c:if test="${retMap.next }">
-				    	<li><a href="#" onclick="submitPage(${retMap.endPage+1})"> >> </a></li>
+				    <c:if test="${foodDic.next }">
+				    	<li><a href="food?page=${foodDic.endPage+1 }&foodName=${foodName}"> >> </a></li>
 				    </c:if>
 				    </ul> 
 				</div>
-			</form>
+			</div>
+				
 			<!-- 기록란 -->
 			<div class="add-info">
 				<div class="add-info-content">
