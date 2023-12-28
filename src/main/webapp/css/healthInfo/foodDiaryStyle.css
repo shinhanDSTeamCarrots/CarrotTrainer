@@ -51,7 +51,7 @@
 .foodDiary-food-result {
 	display: flex;
 	flex-direction: row;
-	margin: 20px;
+	margin: 0 40px;
 	margin-bottom: 40px;
 }
 
@@ -63,6 +63,10 @@
 	width: 30%;
 	display: flex;
 	justify-content:center;
+}
+#carrotImage {
+	width: 200px;
+	height: 200px;
 }
 .foodDiary-food-result-carrot {
 	width: 200px;

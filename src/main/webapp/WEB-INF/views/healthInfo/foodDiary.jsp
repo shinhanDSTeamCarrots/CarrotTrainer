@@ -29,6 +29,7 @@
     				<div class="foodDiary-food-result">
 	    				<div class="foodDiary-food-result-image">
 	    					<div class="foodDiary-food-result-carrot">
+	    						<img id="carrotImage" src="${pageContext.request.contextPath}/img/carrotTrainer.png">
 	    					</div>
 	    				</div>
 	    				<div class="foodDiary-food-result-detail">
