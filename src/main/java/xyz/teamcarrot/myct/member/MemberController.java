@@ -65,40 +65,14 @@ public class MemberController {
         e.printStackTrace();
       }
 		MemberVO login = memberService.login(vo);
-		if (login == null) {
-			if (vo.getMember_loginFailCnt() == 5) {
-
-			}
-
+		if(login==null) {
+			model.addAttribute("msg", "아이디나 비밀번호가 틀립니다.");
+			model.addAttribute("cmd", "back");
+			return "common/alert";
 		} else {
-			if (vo.getMember_loginBlocked() == 0) {
-				sess.setAttribute("loginInfo", login);
-				vo.setMember_loginFailCnt(0);
-				return "redirect:/";
-			} else {
-				model.addAttribute("msg", "차단된 사용자입니다.");
-				model.addAttribute("cmd", "back");
-				return "common/alert";
-			}
+			sess.setAttribute("loginInfo", login);
+			return "redirect:/";
 		}
-		return "redirect:/";
-		/*
-		 * int loginFail;
-		 * 
-		 * if(login==null) { model.addAttribute("msg", "아이디나 비밀번호가 틀립니다.");
-		 * model.addAttribute("cmd", "back"); if(sess.getAttribute("loginFail")==null) {
-		 * sess.setAttribute("loginFail", 0); } loginFail =
-		 * (Integer)sess.getAttribute("loginFail");
-		 * 
-		 * sess.setAttribute("loginFail", loginFail+1);
-		 * 
-		 * if ((Integer)sess.getAttribute("loginFail") >= 4) { model.addAttribute("msg",
-		 * "로그인 시도 가능 횟수를 초과하였습니다. 비밀번호 찾기를 먼저 해주세요."); model.addAttribute("cmd",
-		 * "move"); model.addAttribute("url", "memberFind.do"); } else {
-		 * model.addAttribute("msg", "아이디나 비밀번호가 틀립니다." + "(로그인 실패 횟수: " + loginFail +
-		 * "/5)"); model.addAttribute("cmd", "back"); } return "member/alert"; } else {
-		 * sess.setAttribute("loginInfo", login); return "redirect:/"; }
-		 */
 
 	}
 
@@ -147,14 +121,13 @@ public class MemberController {
 		}
 		boolean isDeleted = memberService.deleteMember(vo);
 		if (isDeleted) {
-			// 회원 삭제 성
 			sess.invalidate();
-			return "redirect:/"; // 로그아웃 페이지로 이동하거나, 다른 적절한 처리를 수행
+			return "redirect:/";
 		} else {
 			// 회원 삭제 실패
 
-			model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-			return "member/memberDel"; // 실패 시 탈퇴 페이지로 이동 또는 적절한 처리
+			model.addAttribute("msg", "아이디나 비밀번호가 틀립니다.");
+			return "common/alert"; 
 		}
 	}
 
@@ -170,15 +143,14 @@ public class MemberController {
 		return "member/memberEdit";
 	}
 
-	@PostMapping("/member/memberEdit")
+	/*@PostMapping("/member/memberEdit")
 	public String memberEdit2(HttpSession sess, Model model) {
 		MemberVO uv = (MemberVO) sess.getAttribute("loginInfo");
 		model.addAttribute("vo", memberService.detail(uv));
 		return "redirect:/";
-	}
-
-	@ResponseBody
-	@PostMapping("/member/update")
+	}*/
+	//20231227 회원정보 업데이트하고 나면 원래 비밀번호 입력해도 로그인이 안됨
+	@PostMapping("/member/memberEdit")
 	public String update(MemberVO vo, Model model) {
 
 		try {
@@ -190,14 +162,15 @@ public class MemberController {
 		String msg = "";
 		String url = "edit";
 		if (r > 0) {
-			msg = "정상적으로 수정되었습니다.";
+			return "redirect:/";
 		} else {
 			msg = "수정 오류";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			model.addAttribute("cmd", "move");
+			return "common/alert";
 		}
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		model.addAttribute("cmd", "move");
-		return "redirect:/";
+		
 	}
 
 	@GetMapping("/member/memberFind")
@@ -207,8 +180,15 @@ public class MemberController {
 
 	// 20231225
 	@GetMapping("/member/joinInterest")
-	public String memberinterest() {
+	public String joinInterest() {
 		return "member/joinInterest";
+	}
+	
+	@PostMapping("/member/joinInterest")
+	public String joinInterest(InterestVO vo, Model model) {
+		vo.setMember_interest_no(0);
+		return "a";
+		//20231227 정보 전송 안됨..
 	}
 
 	@GetMapping("/member/userInfo")

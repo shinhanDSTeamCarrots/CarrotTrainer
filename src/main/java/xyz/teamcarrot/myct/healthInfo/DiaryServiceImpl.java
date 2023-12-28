@@ -9,26 +9,6 @@ public class DiaryServiceImpl implements DiaryService {
 	@Autowired
 	DiaryMapper mapper;
 	
-	//운동
-	//tb_health_diary 테이블
-	@Override
-	public int insertExInfo(HealthDiaryVO vo) {
-		return mapper.insertExInfo(vo);
-	}
-	@Override
-	public HealthDiaryVO selectExInfo(int member_no) {
-		return mapper.selectExInfo(member_no);
-	}
-	@Override
-	public int updateExInfo(HealthDiaryVO vo) {
-		return mapper.updateExInfo(vo);
-	}
-	@Override
-	public int deleteExInfo(HealthDiaryVO vo) {
-		return mapper.deleteExInfo(vo.getHealth_diary_no());
-	}
-	
-	//식단
 	//tb_food_diary 테이블
 	@Override
 	public int insertFoodDiary(FoodDiaryVO vo) {

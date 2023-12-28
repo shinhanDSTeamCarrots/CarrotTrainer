@@ -92,30 +92,28 @@ thead tr {
 	margin-top: 20px;
 }
 
-.search-input {
-	padding: 10px 15px; /* 입력창 내부 여백을 좌우로 제공 */
-	font-size: 1.6rem; /* 입력창 글씨 크기 조정 */
-	border: 1px solid #ddd; /* 테두리 스타일 조정 */
-	margin-right: 8px; /* 입력창과 검색버튼 사이의 간격 조정 */
-	width: 300px; /* 입력창 너비 조정 */
-	height: 48px; /* 입력창 높이 조정 */
-	vertical-align: middle; /* 입력창을 수직 중앙에 위치시키기 위함 */
+.search-box input[type="text"] {
+    flex: 1; /* 검색창이 남은 공간을 모두 차지하도록 합니다. */
+    padding: 8px; /* 패딩 추가 */
+    border: 2px solid #ddd; /* 경계선 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
 }
 
-.search-button {
-	background-color: #4CAF50; /* 버튼 배경색 */
-	color: white; /* 버튼 텍스트 색상 */
-	padding: 0 20px; /* 버튼 내부 여백을 좌우로만 제공 */
-	border: none; /* 테두리 없음 */
-	border-radius: 5px; /* 모서리 둥글게 */
-	cursor: pointer; /* 클릭 가능한 커서 모양 */
-	font-size: 1.6rem; /* 버튼 글씨 크기 조정 */
-	height: 38px; /* 버튼 높이 조정 */
-	line-height: 38px; /* 버튼의 높이에 맞춰 line-height 설정 */
-	text-align: center; /* 텍스트를 버튼의 중앙으로 정렬 */
-	display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
-	vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
-	white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+.search-box button {
+    padding: 8px 16px; /* 버튼 내부 여백 설정 */
+    margin-left: 8px; /* 검색창과의 간격 설정 */
+    margin-top: 8px;
+    border: none; /* 기본 경계선 제거 */
+    background-color: #007bff; /* 배경 색상 설정 */
+    color: white; /* 글자 색상 설정 */
+    cursor: pointer; /* 커서를 손가락 모양으로 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+.search-box button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 색상 변경 */
 }
 
 .write-btn-container {
@@ -294,6 +292,14 @@ thead tr {
 					
 				</tbody>
 			</table>
+			
+			<form action="${pageContext.request.contextPath}/board/qna" method="get">
+    <div class="search-box">
+        <!-- Ensure the input field has the name 'searchKeyword' -->
+        <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요"/>
+        <button type="submit">검색🔍</button>
+    </div>
+</form>
 			
 				<div class="pagination">
     <c:if test="${pageMaker.prev}"> <!-- 이전 페이지 그룹이 있는 경우 -->

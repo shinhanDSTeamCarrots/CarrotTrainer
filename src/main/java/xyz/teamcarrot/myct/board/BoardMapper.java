@@ -1,6 +1,7 @@
 package xyz.teamcarrot.myct.board;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +24,7 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 
 	// 게시물 목록(페이징) (완성)
-    public List<BoardVO> getListPaging(Criteria cri);
+    public List<BoardVO> getListPaging(Map map);
 	
 	// 페이지 가져오기 (완성)
 	public BoardVO getPage(int board_no);

@@ -1,7 +1,24 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 	<%@ page import="xyz.teamcarrot.myct.member.MemberVO" %>
+
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%
+    // category_no와 카테고리 이름 매핑
+    Map<String, String> categoryNames = new HashMap<>();
+    categoryNames.put("1", "공지사항");
+    categoryNames.put("2", "자유게시판");
+    categoryNames.put("3", "문의게시판");
+    categoryNames.put("4", "웰니스 뉴스");
+
+    // URL로부터 category_no 받기
+    String categoryNo = request.getParameter("category_no");
+    String categoryName = categoryNames.getOrDefault(categoryNo, "Unknown"); // 기본값 설정
+%>
 	
 <!DOCTYPE html>
 <html>
@@ -161,14 +178,11 @@ body {
 
 
 				<div class="form-group">
-					<label for="category_no">카테고리 선택</label> <select name="category_no"
-						id="category_no">
-						<option value="1">공지사항</option>
-						<option value="2">자유게시판</option>
-						<option value="3">문의게시판</option>
-						<option value="4">웰니스 뉴스</option>
-					</select>
-				</div>
+    <label for="category_no">카테고리</label>
+    <input type="text" id="category_name" value="<%=categoryName %>" readonly>
+    <!-- 실제로 데이터를 전송하기 위한 hidden 필드 -->
+    <input type="hidden" name="category_no" value="<%=categoryNo %>">
+</div>
 
 				<div class="form-group">
 					<label for="board_title">글제목</label> <input type="text" id="title"
@@ -198,23 +212,32 @@ body {
 
 				<div class="form-group">
 					<button>등록</button>
-				</div>
-				
-			
-				
+				</div>	
 			</form>
 
-			<form action="/myct/healthnews/uploadFile.do" method="post" enctype="multipart/form-data">
-    <!-- 기타 게시글 입력 필드 -->
-    <div class="form-group">
-        <label for="uploadFile">이미지 파일:</label>
-        <input type="file" name="uploadFile" id="uploadFile"/>
-    </div>
-    <button type="submit">업로드</button>
-</form>
 
-
-
+			<!-- <form action="/myct/healthnews/uploadFile.do" method="post"
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="uploadFile">이미지 파일:</label> <input type="file"
+						name="uploadFile" id="uploadFile" />
+				</div>
+				<button type="submit">업로드</button>
+			</form> -->
+		<!-- <h3>파일 업로드 테스트</h3>
+		<hr>
+		<form action="/myct/healthnews/imageUpload" method="post" enctype="multipart/form-data">
+			<input type="file" name="pics" accept="image/*" multiple><br>
+			<input type="file" name="pics" accept="image/*" multiple><br>
+			<input type="file" name="pics" accept="image/*" multiple><br>
+			<button>전송</button>			
+		</form> -->
+		<hr>
+		<c:forEach items="${list }" var="vo">
+			<div>
+				<img src="/upload/${vo }" width="400px" height="400px" style="object-fit:cover">
+			</div>
+		</c:forEach>
 
 
 		</div>

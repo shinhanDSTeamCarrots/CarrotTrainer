@@ -121,13 +121,27 @@
 }
 
 .pagination {
-    text-align: center;
-    margin-top: 30px;
+	margin-top: 20px;
+	text-align: center;
 }
 
-.pagination span {
-    margin: 0 10px;
-    cursor: pointer;
+
+  .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
 }
 
 </style>
@@ -143,37 +157,67 @@
     </button>
 </div>
 
-<div class="write-btn-container">
+<!-- <div class="write-btn-container">
 		
 				<a href="write" class="write-button">게시글 등록</a>
 			
-			</div>
+			</div> -->
 
         <div class="cards-container">
             <!-- 여러 카드를 반복적으로 표시 -->
             
+            <div class="card">
+            <div class="card-image">
+                	<a href="cardRead3"><img class="NewsImg" src="/myct/img/upload/cardnews_04.jpg" /></a>
+                </div>
+               </div>
+               
+               <div class="card">
+            <div class="card-image">
+                	<a href="cardRead2"><img class="NewsImg" src="/myct/img/upload/cardnews_02.jpg" /></a>
+                </div>
+               </div>
+               
+               <div class="card">
+            <div class="card-image">
+                	<a href="cardRead"><img class="NewsImg" src="/myct/img/upload/cardnews_03.jpg" /></a>
+                </div>
+               </div>
             <c:forEach items="${page}" var="vo">
             	<c:if test="${vo.category_no == 4}">
           
 				
+				
+				
 				<div class="card">
-                <div class="card-image">
-                	<img class="NewsImg" src="/myct/img/news/cardnews_02.jpg" />
-                </div>
-                <div class="card-title">제목:<c:out value="${vo.board_title}" /></div>
+                
+                <div class="card-title">제목:<c:out value="${vo.board_title}" /> </div>
                 <div class="card-author">작성자:<c:out value="${vo.member_nickname}" /></div>
+                
+                
             </div>
+            
+            
+            
            
             </c:if>
             </c:forEach>
             
         </div>
-        <div class="pagination">
-            <!-- 페이지네이션 -->
-            <span>1</span>
-            <span>2</span>
-            <!-- ... -->
-        </div>
+       		
+<div class="pagination">
+    <c:if test="${pageMaker.prev}"> 
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> 
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
     </div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>

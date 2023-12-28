@@ -31,9 +31,6 @@
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
 		SELECT * FROM tb_member WHERE member_id = #{member_id} AND
 		member_pw = #{member_pw}
-		
-		<!-- member_pw = #{member_pw} -->
-		<!-- 패스워드 부분 주석 해제: 로그인 메소드 부분 어떻게 바꿀지 생각하기 -->
 	</select>
 	<update id="updateLoginFailCount"
 		parameterType="xyz.teamcarrot.myct.member.MemberVO">
@@ -84,18 +81,14 @@
 	
 	<insert id = "memberInterest" parameterType = "xyz.teamcarrot.myct.member.InterestVO">
 		INSERT INTO tb_member_interest (
-		member_interest_no
+		member_interest_no, member_id
 		) VALUES (
-		#{member_interest_no}
+		#{member_interest_no}, #{member_id}
 		)
-		<selectKey keyProperty="member_no" order="AFTER"
-			resultType="int">
-			SELECT LAST_INSERT_ID()
-		</selectKey>		
 	</insert>
 
 <select id="all" parameterType="xyz.teamcarrot.myct.member.MemberVO" resultType="xyz.teamcarrot.myct.member.MemberVO">
-		SELECT member_no, member_id, member_blocked
+		SELECT member_no, member_id, member_name, member_blocked
 		FROM tb_member
 		ORDER BY member_no
 	</select>
