@@ -85,7 +85,7 @@ public class HealthNewsController {
 	@PostMapping("/uploadImages")
 	public String upload(BoardFileVO vo, Model model, @RequestParam("pics") MultipartFile[] pics,
 			HttpServletRequest request) {
-		String path = "C:\\upload"; // 로컬 저장소 경로
+		String path = "C:\\upload";
 		List<String> fileNames = new ArrayList<>();
 
 		for (MultipartFile file : pics) {
@@ -97,7 +97,7 @@ public class HealthNewsController {
 
 					File sfile = new File(path + '\\' + storedFilename);
 					file.transferTo(sfile);
-					fileNames.add(storedFilename); // 파일명을 리스트에 추가
+					fileNames.add(storedFilename);
 
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
@@ -105,8 +105,8 @@ public class HealthNewsController {
 			}
 		}
 
-		model.addAttribute("fileNames", fileNames); // 파일명 리스트 모델에 추가
-		return "redirect:/healthnews/cardRead"; // 이미지를 불러올 페이지로 리다이렉트
+		model.addAttribute("fileNames", fileNames); 
+		return "redirect:/healthnews/cardRead";
 	}
 
 	// 메인 페이지
