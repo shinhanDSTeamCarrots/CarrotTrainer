@@ -2,7 +2,6 @@ package xyz.teamcarrot.myct.goods;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import xyz.teamcarrot.myct.member.MemberVO;
@@ -71,6 +72,24 @@ public class QnaController {
 				return "error";
 			}
 		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/detail/qnaUpdate")
+	public String updateQna(@RequestBody GoodsInquiryVO vo) {
+		int r = service.updateQna(vo);
+		logger.info("수정하러 들어옴" +vo);
+		System.out.println(r);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("/detail/qnaDelete/{inquiry_no}")
+	public String qnaDel(@PathVariable int inquiry_no) {
+		int r = service.qnaDel(inquiry_no);
+		logger.info("문의 삭제함"+ inquiry_no);
+		return "success";
 	}
 
 }

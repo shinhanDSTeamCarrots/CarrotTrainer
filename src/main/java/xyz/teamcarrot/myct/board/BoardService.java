@@ -26,7 +26,7 @@ public interface BoardService {
 	public List<BoardVO> getList();
 	
 	// 게시글 목록(페이징O)
-    public List<BoardVO> getListPaging(Criteria cri);
+    public List<BoardVO> getListPaging(Criteria cri, int category_no);
 	
     // 페이지 가져오기
 	public BoardVO getPage(int board_no);

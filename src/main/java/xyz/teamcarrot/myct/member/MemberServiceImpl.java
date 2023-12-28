@@ -64,14 +64,7 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.deleteMember(vo) > 0 ? true : false;
 	}
 	// 20231214 추가
-	@Override
-	public void updateLoginFailCount(MemberVO member) {
-		mapper.updateLoginFailCount(member);
-		//Integer loginFailCount = (Integer) sess.getAttribute("loginFail");
-		//if (loginFailCount == null) {
-			//loginFailCount = 0;
-		}
-		//sess.setAttribute("loginFail", 1);
+	
 	
 
 	public void updateLoginBlocked(MemberVO member) {

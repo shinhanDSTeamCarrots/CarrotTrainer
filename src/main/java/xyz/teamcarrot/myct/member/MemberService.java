@@ -20,11 +20,7 @@ public interface MemberService {
 	
 	boolean dupNickname(String nickname);
 
-	//void updateLoginFailCount(MemberVO member, HttpSession sess);
 	
-	void updateLoginFailCount(MemberVO member);
-
-	//void updateLoginBlocked(MemberVO member, HttpSession sess);
 	void updateLoginBlocked(MemberVO member);
 	
 	//20231225

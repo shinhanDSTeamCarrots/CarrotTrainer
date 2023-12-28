@@ -6,4 +6,15 @@
 		insert into tb_board_file(file_name) values(#{file_name})
 	</insert>
 	
+	<!-- MyBatis Mapper XML -->
+
+<insert id="saveImage" parameterType="xyz.teamcarrot.myct.board.BoardFileVO">
+    INSERT INTO tb_board_file (file_name, board_no) VALUES (#{file_name}, #{board_no});
+</insert>
+
+<select id="findImagesByBoardNo" resultType="xyz.teamcarrot.myct.board.BoardFileVO">
+    SELECT * FROM tb_board_file WHERE board_no = #{board_no};
+</select>
+	
+	
 </mapper>
