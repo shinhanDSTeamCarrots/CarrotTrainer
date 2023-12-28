@@ -27,14 +27,15 @@ a:visited {
     display: block; /* 이미지 하단 라인 제거 */
 }
 .visual {
-    height:300px;
-    width:60%;
+	margin:20px;
+    height:450px;
+    width:600px;
     text-align: center;
     position: relative;
 }
 
 .swiper {
-    height:300px;
+    height:450px;
 }
 .swiper-slide {
     background-position: center center;
@@ -47,18 +48,39 @@ a:visited {
 .title{
 	margin-bottom: 15px;
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 600;
 }
-
+.title-division-line {
+	height:300px;
+	border-left: 3px solid #EDF1D6;
+	margin : 0 auto;
+}
 /* 건강정보 */
 .health{
 	margin:20px;
+	margin-bottom:0px;
 	display:flex;
 	flex-direction:row;
 }
-.healthimg{
-	width:35%;
-	margin-right:5%;
+
+/* 인기상품 */
+.shopping{
+	margin:20px;
+	margin-left:35px;	
+	display:flex;
+	flex-direction:column;
+}
+.itemInfo{
+	margin-bottom:15px;
+	display:flex;
+	flex-direction:row;
+}
+#goodsImg{
+	margin-right:15px;
+}
+img{
+	width:65px;
+	height:65px;
 }
 
 
@@ -66,21 +88,21 @@ a:visited {
 .board{
 	height:30%;
 	width:100%;
+	margin-left:20px;
+	margin-bottom:30px;
 	display:flex;
 	flex-direction:row;
 }
 .noticeboard{
-	margin:20px;
 	width:50%;
+	margin:20px;
+	margin-left: 50px;
 }
 .freeboard{
-	margin:20px;
 	width:50%;
-}
-
-
-
-/* 인기상품 */
-.shopping{
 	margin:20px;
+	margin-left:50px;
 }
+
+
+

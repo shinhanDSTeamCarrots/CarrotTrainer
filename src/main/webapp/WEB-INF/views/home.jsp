@@ -38,9 +38,6 @@
 		
 			
 			<div class="health">
-				<div class="healthimg">
-					이미지들어갈예정
-				</div>
 				 <div class="visual">
 		            <div class="swiper swiper-visual">
 		                <div class="swiper-wrapper">
@@ -51,7 +48,18 @@
 		                </div>
 		            </div>   
 		        </div>
-			
+				<div class="shopping">
+					<p class="title">인기상품</p>
+					<div class="item">
+						<c:forEach items="${hotGoodsList}" var="hotGoods">
+							<div class="itemInfo">
+								<img id="goodsImg" src="/myct/img/goods/${hotGoods.image }.jpg"/>
+								<p>${hotGoods.goods_name }</p>
+							</div>
+						</c:forEach>
+					</div>
+					
+				</div>
 			</div>
 		
 			<div class="board">
@@ -62,6 +70,7 @@
 					<p>${notices.board_title }</p>
 					</c:forEach>
 				</div>
+				<div class="title-division-line"></div>
 				<div class="freeboard">
 					<p class="title">인기글</p>
 					<c:forEach items="${hotBoardList}" var="hotBoard">
@@ -69,12 +78,7 @@
 					</c:forEach>
 				</div>	
 			</div>
-			<div class="shopping">
-				<p class="title">인기상품</p>
-				<c:forEach items="${hotGoodsList}" var="hotGoods">
-				<p>${hotGoods.goods_name }</p><br>
-				</c:forEach>
-			</div>
+			
 		
 			
 		</div>
