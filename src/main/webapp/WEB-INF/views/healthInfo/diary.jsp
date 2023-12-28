@@ -63,7 +63,7 @@
 			    					<p>남은 섭취량
 			    						<span class="sql-diary-result">
 			    							<c:if test="${empty bodyInfo }">0</c:if>
-							                <c:if test="${!empty bodyInfo }">${healthDiary.health_calorie }-{foodDiary.total_calorie }</c:if>
+							                <c:if test="${!empty healthDiary }">${healthDiary.health_calorie }-${foodDiary.total_calorie }</c:if>
 			    						</span>kcal</p>
 			    					<p>오늘의 상태는? 
 				    					<span class="sql-diary-result" id="sql-weight-result">

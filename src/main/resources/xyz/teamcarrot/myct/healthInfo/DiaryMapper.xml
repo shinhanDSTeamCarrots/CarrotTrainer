@@ -35,7 +35,27 @@
 	</insert>
 	<!-- 식단 다이어리 불러오기 -->
 	<select id="selectFoodDiary" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
-		SELECT * FROM tb_food_diary WHERE food_diary_no = #{food_diary_no} AND member_no = #{member_no};
+		SELECT
+			  food_diary_no
+			, intake_date
+			, CAST(SUM(total_calorie) AS INT) AS total_calorie
+			, CAST(SUM(total_carbs) AS INT) AS total_carbs
+			, CAST(SUM(total_protein) AS INT) AS total_protein
+			, CAST(SUM(total_fat) AS INT) AS total_fat
+			, CAST(SUM(total_sugar) AS INT) AS total_sugar
+			, CAST(SUM(total_salt) AS INT) AS total_salt
+		FROM tb_food_diary
+		WHERE DATE(intake_date) = DATE(NOW()) AND member_no = 26;
+	</select>
+	<!-- 식단 칼로리 섭취 시간 기준으로 불러오기 -->
+	<select id="selectFoodCal" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
+		SELECT 
+		     SUM(CASE WHEN intake_time = 1 THEN total_calorie ELSE 0 END) AS breakfast_calorie
+		   , SUM(CASE WHEN intake_time = 2 THEN total_calorie ELSE 0 END) AS lunch_calorie
+		   , SUM(CASE WHEN intake_time = 3 THEN total_calorie ELSE 0 END) AS dinner_calorie
+		   , SUM(CASE WHEN intake_time = 4 THEN total_calorie ELSE 0 END) AS snack_calorie
+		FROM tb_food_diary
+		WHERE DATE(intake_date) = DATE(NOW()) AND member_no = #{member_no};
 	</select>
 	<!-- 식단 다이어리 수정 -->
 	<update id="updateFoodDiary" parameterType="xyz.teamcarrot.myct.healthInfo.FoodDiaryVO">
