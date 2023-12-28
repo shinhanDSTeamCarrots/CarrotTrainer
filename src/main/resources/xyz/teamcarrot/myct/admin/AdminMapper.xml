@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.teamcarrot.myct.admin.AdminMapper">
+<select id="selectLogin" parameterType="xyz.teamcarrot.myct.admin.AdminVO">
+	SELECT A.*
+	FROM tb_admin AS A
+	WHERE A.admin_id = #{admin_id}
+	  AND A.admin_pw = #{admin_pw}
+</select>
+	
+</mapper>
