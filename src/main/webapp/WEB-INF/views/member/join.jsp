@@ -21,8 +21,6 @@
 			alert('아이디를 입력해 주세요.');
 			return false;
 		}
-
-		//중복확인 안 누르고 다음 버튼 눌렀을때, 중복 아이디 이미 있을때 어떻게 할지 생각
 		if ($("#member_pw").val().trim() == '') {
 			alert('비밀번호를 입력해 주세요.');
 			return false;
@@ -45,7 +43,8 @@
 	$(function() {
 		$("#idCheck").click(
 				function() {
-					dupCheckNumber++;
+					var memberId = $('#member_id').val().trim();
+					 if (memberId !== '') {
 					$.ajax({
 						url : 'idCheck',
 						data : {
@@ -57,21 +56,26 @@
 								// 중복된 아이디
 								$("#idCheckMessage").text('아이디가 중복되었습니다.').css(
 										'color', 'red');
+								$("#idCheckMessage").text('아이디가 중복되었습니다.').css('font-size', '1rem');
 								$("#member_id").val('');
 								$("#member_id").focus();
 							} else {
 								// 사용 가능한 아이디
 								$("#idCheckMessage").text('사용 가능한 아이디입니다.')
 										.css('color', 'green');
+								$("#idCheckMessage").text('사용 가능한 아이디입니다.').css('font-size', '1rem');
 							}
 						}
 					});
+					 }
 				});
 	})
 	
 	$(function() {
 		$("#nicknameCheck").click(
-				function() {					
+				function() {
+					var memberNickname = $('#member_nickname').val().trim();
+					if (memberNickname !== '') {
 					$.ajax({
 						url : 'nicknameCheck',
 						data : {
@@ -83,25 +87,28 @@
 								// 중복된 아이디
 								$("#nicknameCheckMessage").text('닉네임이 중복되었습니다.').css(
 										'color', 'red');
+								$("#nicknameCheckMessage").text('닉네임이 중복되었습니다.').css('font-size', '1rem');
 								$("#member_nickname").val('');
 								$("#member_nickname").focus();
 							} else {
 								// 사용 가능한 아이디
 								$("#nicknameCheckMessage").text('사용 가능한 닉네임입니다.')
 										.css('color', 'green');
+								$("nicknameCheckMessage").text('사용 가능한 닉네임입니다.').css('font-size', '1rem');
 							}
 						}
 					});
+					}
 				});
 	})
 	
 	function validateId(){
 		var id = document.getElementById("member_id").value;
-		var isValid = id.length>=5 || id.length<=20;
-		if(isValid){
-			document.getElementById("error-id").style.display = "none";
-		} else{
+		var isValid = id.length>=5 && id.length<=20;
+		if(!isValid){
 			document.getElementById("error-id").style.display = "block";
+		} else{
+			document.getElementById("error-id").style.display = "none";
 		}
 	}
 
@@ -181,6 +188,7 @@
 </script>
 <style>
 /*******나중에 컨테이너 부분 수정해야 함(지금 내용은 임시책)*******/
+/*
 .container {
 	display: flex;
 	flex-direction: row;
@@ -190,31 +198,69 @@
 	position: relative;
 	float: right;
 }
-table.reg tbody tr th {
-	margin-bottom: 10px;
-	text-align: center;
+*/
+.wrap { 
+    	margin:auto; 
+        text-align:center;
+        } 
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  
 }
 
-table.reg tbody tr td input {
-	margin-bottom: 10px;
-	width: 250px;
+table {
+  width: 100%; 
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.error-message {
-	color: red;
+th {
+  padding: 10px; 
+  text-align: center;
+  
+  font-size: 1rem; 
 }
+
+td {
+  padding: 10px; 
+  text-align: left;
+  
+  font-size: 1rem; 
+}
+.error-message{
+	color : red;
+	font-size: 1rem;
+}
+
+ .reg input {
+            width: 210px;
+            padding: 8px;
+            margin: 5px 0;
+        }
+ .reg a {
+ 	font-size: 1rem;
+ 	margin-top: 5px;
+ 	margin-left: 5px;
+ }       
+
+   input[type="submit"]:hover {
+  background-color: #CEDEBD; /* 마우스를 올렸을 때의 초록색 */
+}     
+
+
 </style>
 </head>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-			<div class="menu">
+			
 				<div class="registry">
-					<h1 class="title">회원가입</h1>
-					<a href="joinOath">네이버/카카오 아이디로 회원가입하실 분은 여기를 클릭해 주세요</a>
+					<h2 class="title">회원가입</h2>
 				</div>
-				<div class="infos">
 					<form name="frm" id="frm" action="regist" method="post">
 						<table class="reg">
 							<caption>회원가입</caption>
@@ -222,9 +268,12 @@ table.reg tbody tr td input {
 								<col width="20%" />
 								<col width="*" />
 							<tbody>
+							
 								<tr>
 									<th>아이디</th>
-									<td><input type="text" name="member_id" id="member_id"
+									<td>
+									
+									<input type="text" name="member_id" id="member_id"
 										placeholder="5자 이상 20자 미만" style="float: left;"
 										oninput="validateId()"> <a href="javascript:;"
 										style="float: left; width: auto; clear: none;" id="idCheck">중복확인</a>
@@ -296,9 +345,13 @@ table.reg tbody tr td input {
 									<td><input type="text" name="member_hp" id="member_hp"
 										style="float: left;" placeholder="'-'표시 생략"
 										oninput="validatePhoneNumber()">
-										<div id="error-hp" class="error-message" style="display: none;">입력값이
-											올바르지 않습니다.</div></td>
+									</td>
 
+								</tr>
+								<tr>
+									<th></th>
+									<td><div id="error-hp" class="error-message" style="display: none;">입력값이
+											올바르지 않습니다.</div></td>
 								</tr>
 								<tr>
 									<th rowspan="3">주소</th>
@@ -320,10 +373,9 @@ table.reg tbody tr td input {
 						</table>
 						<input type="submit" value="다음" onclick="return infoSave()" />
 					</form>
-				</div>
-			</div>
-		</div>
+		</div>		
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
-	</div>
+		</div>
+		
 </body>
 </html>

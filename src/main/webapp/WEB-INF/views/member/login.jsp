@@ -28,37 +28,60 @@
 			return false;
 		}
 
-		if ($("#loginSave").is(":checked")) {
-			//로그인 상태 유지 체크했을때 어떻게 해야할지 처리해야 하는 부분
-		}
-
 		$("#board").submit();
 	}
 </script>
 <style>
-/* .container{
-    		text-align : center;
-    	
-    	} */
-.container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	/* 추가: 수직 가운데 정렬 */
-	height: 1600px;
-}
-
-.loginInfoSave {
-	position: relative;
-	display: flex;
-	justify-content: center;
+.wrap {
+	margin: auto;
 	text-align: center;
 }
 
-.loginSuccess {
-	position: relative;
+.container {
+	max-width: 1200px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	padding: 10px;
+	text-align: center;
+	font-size: 1rem;
+	padding-left: 10px;
+}
+
+table {
+	width: 1000px;
+}
+td:nth-child(2) {
+	padding-left: 50px;
+	width: 10%;
+	padding-right: 50px;
+}
+
+input[type="submit"] {
+	height: 75px;
+	width: 75px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-top: 30px;
+}
+
+input[type="submit"]:hover {
+	background-color: #CEDEBD;
+	
+}
+
+#board {
 	display: flex;
-	justify-content: center;
+	margin: auto;
 	text-align: center;
 }
 </style>
@@ -66,39 +89,32 @@
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
+		<div class="container">
 		<form action="login" method="post" id="board" name="board">
-			<div class="container">
-				<div class="menu">
+				<table class="reg">
+					<caption>회원가입</caption>
+					<colgroup>
+						<col width="20%" />
+						<col width="*" />
+					<tbody>
+						<tr>
+							<th>아이디</th>
+							<td><input type="text" name="member_id" id="member_id"
+								style="float: left;"></td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td><input type="password" name="member_pw" id="member_pw"
+								style="float: left;"></td>
+						</tr>
+					</tbody>
+				</table>
 
-					<table class="reg">
-
-						<caption>회원가입</caption>
-						<colgroup>
-							<col width="20%" />
-							<col width="*" />
-						<tbody>
-							<tr>
-								<th>아이디</th>
-								<td><input type="text" name="member_id" id="member_id"
-									style="float: left;"></td>
-							</tr>
-							<tr>
-								<th>비밀번호</th>
-								<td><input type="password" name="member_pw" id="member_pw"></td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="loginInfoSave">
-						<input type="checkbox" name="loginSave" id="loginSave">로그인 정보 저장
-						<!-- 로그인정보 저장 방법: 강사님한테 물어봐도 아직 모르겠음... 더 얼른 생각해야, 토큰 이용 방식 어떻게? -->
-					</div>
-					<div class="loginSuccess">
-						<input type="submit" value="로그인" onclick="return loginCheck();">
-					</div>
-				</div>
-			</div>
-		</form>
+				<input type="submit" value="로그인" onclick="return loginCheck();">
+			</form>
+		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+		
 	</div>
 </body>
 </html>
