@@ -216,8 +216,11 @@ textarea {
 	</div> --%>
 			<div class="input_wrap">
 				<label>내용</label>
+				<%-- 2023.12.28 전성욱 p 태그 처리
 				<textarea rows="3" name="board_content" readonly="readonly"><c:out
 						value="${pageInfo.board_content}" /></textarea>
+				 --%>
+				 <div class="boardContent" id="boardContentDiv"></div>
 			</div>
 			
 				
@@ -289,12 +292,8 @@ textarea {
 			<input type="hidden" id="board_no" name="board_no"
 				value='<c:out value="${pageInfo.board_no}"/>'> <input
 				type="hidden" id="category_no" name="category_no"
-				value='<c:out value="${pageInfo.category_no}"/>'> <input
-				type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-			<input type="hidden" name="amount"
-				value='<c:out value="${cri.amount}"/>'> <input type="hidden"
-				name="type" value="${cri.type }"> <input type="hidden"
-				name="keyword" value="${cri.keyword }">
+				value='<c:out value="${pageInfo.category_no}"/>'>
+				
 		</form>
 
 	</div>
@@ -335,6 +334,8 @@ textarea {
 		form.attr("action", "/myct/board/modify");
 		form.submit();
 	});	
+	
+	
 	
 	// 추천수 메서드 호출
 	function RecomCount(boardNO) {
@@ -417,8 +418,11 @@ textarea {
 	            }
 	        });
 	    });
-	});
 
+	    /*2023.12.28 전성욱 html 태그 추가*/
+	    $('#boardContentDiv').append("${pageInfo.board_content}");
+	    
+	});
 
 </script>
 </body>

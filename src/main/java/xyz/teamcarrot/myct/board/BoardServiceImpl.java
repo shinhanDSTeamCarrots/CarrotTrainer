@@ -1,6 +1,7 @@
 package xyz.teamcarrot.myct.board;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
             BoardFileVO boardFile = new BoardFileVO();
             boardFile.setBoard_no(board.getBoard_no()); 
             boardFile.setFile_name(storedFilename); 
-
+            
           
             mapper.enrollFile(boardFile);
         }
@@ -90,9 +91,14 @@ public class BoardServiceImpl implements BoardService {
     
     /* �Խ��� ���(����¡ ����) */
     @Override
-    public List<BoardVO> getListPaging(Criteria cri) {
-        
-        return mapper.getListPaging(cri);
+    public List<BoardVO> getListPaging(Criteria cri, int category_no) {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("searchType", cri.getSearchType());
+        map.put("keyword", cri.getKeyword());
+        map.put("category_no", category_no);
+        map.put("skip", cri.getSkip());
+        map.put("amount", cri.getAmount());
+        return mapper.getListPaging(map);
     }    
     
     /*�Խ��� ���*/
