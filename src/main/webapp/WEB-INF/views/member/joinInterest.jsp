@@ -20,7 +20,7 @@
 
 
 function joinDone() {
-    var checkboxes = document.getElementsByName('body');
+    /*var checkboxes = document.getElementsByName('body');
     var selectedValues = [];
 
     for (var i = 0; i < checkboxes.length; i++) {
@@ -45,6 +45,9 @@ function joinDone() {
                 console.error('에러 발생:', error);
             }
         });
+    }*/
+    if ($('input[name="chklist"]:checked').length === 0) {
+        alert("하나 이상의 체크박스를 선택해주세요.");
     }
     $("#frm").submit();
 }
@@ -137,16 +140,16 @@ function joinDone() {
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>  
     				  				
-    				<form name="frm" id="frm" action="joinInterest" method="get">
+    				<form name="frm" id="frm" action="joinInterest" method="Post">
     				<div class="btn-container">
-    					<input type = "checkbox" name = "1" id ="body" >눈
-    					<input type = "checkbox" name ="2" id ="body">귀
-    					<input type = "checkbox" name = "3" id ="body" >간
+    					<input type = "checkbox" name = "chklist" value="1" id ="body_eye" >눈
+    					<input type = "checkbox" name ="chklist" value="2" id ="body_ear">귀
+    					<input type = "checkbox" name = "chklist" value="3" id ="body_liver" >간
     				</div>
     				<div class = "btn-container2">	
-    					<input type = "checkbox" name = "4" id ="body" >기관지
-    					<input type = "checkbox" name = "5" id ="body" >위
-    					<input type = "checkbox" name = "6" id ="body" >장
+    					<input type = "checkbox" name = "chklist" value="4" id ="body_lung" >기관지
+    					<input type = "checkbox" name = "chklist" value="5" id ="body_stomach" >위
+    					<input type = "checkbox" name = "chklist" value="6" id ="body_intestine" >장
                     </div>
                     
           				
