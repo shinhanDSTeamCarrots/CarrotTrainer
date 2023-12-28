@@ -28,9 +28,6 @@ $(function () {
 				// 세션에 저장된 데이터 가져오기
 				let healthInfo = sessionStorage.getItem("healthData");
 
-
-				// health_date input 요소 선택
-
 				// input 요소의 값 가져오기
 				console.log($("input[name='health_date']").val());
 
@@ -70,7 +67,7 @@ $(function () {
 							console.log("포맷팅된 Date 문자열:", hiArr[i].minute);
 							console.log("포맷팅된 Date 문자열:", formattedDate);
 							// 폼을 body에 추가하고 제출
-							//form.appendTo('body').submit().remove();
+							form.appendTo('body').submit().remove();
 
 						}
 					} else {
