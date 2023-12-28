@@ -216,8 +216,11 @@ textarea {
 	</div> --%>
 			<div class="input_wrap">
 				<label>내용</label>
+				<%-- 2023.12.28 전성욱 p 태그 처리
 				<textarea rows="3" name="board_content" readonly="readonly"><c:out
 						value="${pageInfo.board_content}" /></textarea>
+				 --%>
+				 <div class="boardContent" id="boardContentDiv"></div>
 			</div>
 			
 				
@@ -415,8 +418,11 @@ textarea {
 	            }
 	        });
 	    });
-	});
 
+	    /*2023.12.28 전성욱 html 태그 추가*/
+	    $('#boardContentDiv').append("${pageInfo.board_content}");
+	    
+	});
 
 </script>
 </body>
