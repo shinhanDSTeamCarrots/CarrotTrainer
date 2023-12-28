@@ -106,15 +106,20 @@ hr {
     	<div class="container">
        <h1 class="board-title">웰니스 뉴스</h1>
         <div class="post-details">
-            <h2 class="post-title">제목: 고수, 오이를 싫어하는 이유<c:out value="${pageInfo.board_title}" /></h2>
-            <div class="post-meta">등록일: 2023-12-27 16:28:14 <c:out
+            <h2 class="post-title">제목: 고지혈증 식단에 '쌀밥,'우유'<c:out value="${pageInfo.board_title}" /></h2>
+            <div class="post-meta">등록일: 2023-12-27 16:28:26<c:out
 						value="${pageInfo.board_rdate}" /></div>
             <hr>
-            <img class="NewsImg" src="/myct/img/upload/cac/cac_01.jpg" />
-             <img class="NewsImg" src="/myct/img/upload/cac/cac_02.jpg" />
-             <img class="NewsImg" src="/myct/img/upload/cac/cac_03.jpg" />
-             <img class="NewsImg" src="/myct/img/upload/cac/cac_04.jpg" />
-             <img class="NewsImg" src="/myct/img/upload/cac/cac_05.jpg" />
+            <img class="NewsImg" src="/myct/img/upload/rice/cardnews_02.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_2.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_3.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_4.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_5.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_6.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_7.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_8.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_9.jpg" />
+             <img class="NewsImg" src="/myct/img/upload/rice/cardnews19_10.jpg" />
         </div>
      
 

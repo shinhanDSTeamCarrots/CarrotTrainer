@@ -184,7 +184,7 @@ th {
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
 			 <c:if test="${!empty loginInfo}">
-				<a href="write" class="write-button">게시판 등록</a>
+				<a href="write?category_no=3" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 
@@ -201,50 +201,67 @@ th {
 				</thead>
 				<tbody>
 					<c:forEach items="${page}" var="vo">
-					  <c:if test="${vo.category_no == 3}">
-						<tr>
-						
-							<td class="title-column">
+						<c:if test="${vo.category_no == 3}">
+							<tr>
+
+								<td class="title-column">
 								
-                <a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});">
-									<c:out value="${vo.board_title}" />
-									
-									<c:if test="${vo.hasReply}">
+								<c:choose>
+									<c:when test="${list.board_private == 1}">
+										<a href="javascript:void(0);"
+											onclick="alert('비공개 처리 되었습니다.');location.href='/myct/board/Qnadetail?board_no=${list.board_no}'">
+											[비공개 처리 되었습니다.] </a>
+									</c:when>
+
+									<c:otherwise>
+										<a href="/myct/board/Qnadetail?board_no=${list.board_no}">
+											<c:out value="${list.board_title}" />
+										</a>
+									</c:otherwise>
+								</c:choose>
+								
+								<a href="javascript:void(0);" onclick="goToDetail(${vo.board_no});"> 
+								<c:out value="${vo.board_title}" />
+										 <c:if test="${vo.hasReply}">
 											<span style="color: #ff3d71;">[답변완료]</span>
 										</c:if>
-								</a> 
-							</td>
+								</a>
+								
+								</td>
+								
+								
 								<td><c:out value="${vo.member_nickname}" /></td>
 
-								<td><fmt:formatDate pattern="yyyy/MM/dd" value="${vo.board_rdate}" /></td>
-							<td><c:out value="${vo.board_view}" /></td>
-							<td><c:if test="${vo.file_name != null}">
-										<a href="/myct/board/download?fileNo=${vo.file_no}">
-										 <img src="/img/ico_star_on.png" alt="첨부파일">
+								<td><fmt:formatDate pattern="yyyy/MM/dd"
+										value="${vo.board_rdate}" /></td>
+								<td><c:out value="${vo.board_view}" /></td>
+								<td><c:if test="${vo.file_name != null}">
+										<a href="/myct/board/download?fileNo=${vo.file_no}"> <img
+											src="/img/ico_star_on.png" alt="첨부파일">
 										</a>
-									</c:if></td>					
-						</tr>
-						
-            <c:if test="${board.hasReply}">
-                <tr>
-                    <td colspan="5" style="text-align:center;">답글 등록됨</td>
-                </tr>
-            </c:if>
+									</c:if></td>
+							</tr>
+
+							<c:if test="${board.hasReply}">
+								<tr>
+									<td colspan="5" style="text-align: center;">답글 등록됨</td>
+								</tr>
+							</c:if>
 						</c:if>
 					</c:forEach>
 
-			
+
 				</tbody>
 			</table>
 
 
- <!-- 검색 폼 -->
-    <form action="${pageContext.request.contextPath}/board/qnaboard" method="get">
-        <div class="search-box">
-            <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요"/>
-            <button type="submit">검색🔍</button>
-        </div>
-    </form>
+<form action="${pageContext.request.contextPath}/board/qnaboard" method="get">
+    <div class="search-box">
+        <!-- Ensure the input field has the name 'searchKeyword' -->
+        <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요"/>
+        <button type="submit">검색🔍</button>
+    </div>
+</form>
 		
 <div class="pagination">
     <c:if test="${pageMaker.prev}"> 

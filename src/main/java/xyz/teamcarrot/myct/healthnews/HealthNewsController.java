@@ -1,7 +1,10 @@
-package xyz.teamcarrot.myct.healthnews;
+	package xyz.teamcarrot.myct.healthnews;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +24,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.extern.slf4j.Slf4j;
 import xyz.teamcarrot.myct.board.BoardController;
 import xyz.teamcarrot.myct.board.BoardFileVO;
 import xyz.teamcarrot.myct.board.BoardService;
 import xyz.teamcarrot.myct.board.BoardVO;
+import xyz.teamcarrot.myct.board.Criteria;
+import xyz.teamcarrot.myct.board.PageMakerDTO;
 import xyz.teamcarrot.myct.member.MemberService;
 import xyz.teamcarrot.myct.member.MemberVO;
+import xyz.teamcarrot.myct.review.ReviewController;
 
 @Controller
+@Slf4j
 @RequestMapping("/healthnews/*")
 public class HealthNewsController {
 
@@ -39,7 +47,7 @@ public class HealthNewsController {
 	@Autowired
 	private MemberService mservcie;
 	
-	private static final Logger log = LoggerFactory.getLogger(HealthNewsController.class);
+	
 	
 	 @PostMapping("/uploadFile.do")
 	    public String uploadFile(@ModelAttribute("vo") BoardFileVO vo, HttpServletRequest request) {
@@ -75,13 +83,57 @@ public class HealthNewsController {
 	            return "redirect:/healthnews/write";
 	        }
 	    }
+	 
+	 @PostMapping("/uploadImages")
+	 public String upload(BoardFileVO vo, Model model, @RequestParam("pics") MultipartFile[] pics, HttpServletRequest request) {
+	     String path = "C:\\upload"; // 로컬 저장소 경로
+	     List<String> fileNames = new ArrayList<>();
+
+	     for (MultipartFile file : pics) {
+	         if (!file.isEmpty()) {
+	             try {
+	                 String originalFilename = file.getOriginalFilename();
+	                 String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+	                 String storedFilename = UUID.randomUUID().toString().substring(0, 8) + extension;
+
+	                 File sfile = new File(path + '\\' + storedFilename);
+	                 file.transferTo(sfile);
+	                 fileNames.add(storedFilename); // 파일명을 리스트에 추가
+
+
+	             } catch (IllegalStateException | IOException e) {
+	                 e.printStackTrace();
+	             }
+	         }
+	     }
+
+	     model.addAttribute("fileNames", fileNames); // 파일명 리스트 모델에 추가
+	     return "redirect:/healthnews/cardRead"; // 이미지를 불러올 페이지로 리다이렉트
+	 }
 
 
 	// 메인 페이지
 	@GetMapping("/cardboard")
-	public String cardboard(Model model) {
+	public String cardboard(Model model,  @RequestParam(value = "page", defaultValue = "1") int page,
+            							  @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+            							  HttpSession session) {
+		int category_no = 4;
+	
+		 Criteria criteria = new Criteria(page, 10);
+		 criteria.setKeyword(searchKeyword);
+		 criteria.setType("T");
+		 List<BoardVO> qnaList = bservice.getListPaging(criteria, category_no);
+		model.addAttribute("page", qnaList);
 		
-		model.addAttribute("page", bservice.getList());
+		 int total = bservice.getTotal(criteria);
+		    PageMakerDTO pageMaker = new PageMakerDTO(criteria, total);
+		    model.addAttribute("pageMaker", pageMaker);
+		 
+		    // 기타 필요한 정보 (예: 현재 로그인한 사용자 정보)
+		    MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+		    if (member != null) {
+		        model.addAttribute("member", member);
+		    }
 		
 		return "news/cardBoard";
 	}
@@ -99,10 +151,13 @@ public class HealthNewsController {
 		return "admin/healthnews/adminWrite";
 	}
 
-	@GetMapping("/cardRead")
-	public String cardReadDetail() {
-		return "news/cardRead";
-	}
+	/*
+	 * @GetMapping("/cardRead") public String cardReadDetail(Model model, int
+	 * board_no) {
+	 * 
+	 * BoardVO board = bservice.getPage(board_no); model.addAttribute("pageInfo",
+	 * board); return "news/cardRead"; }
+	 */
 	
 	@PostMapping("/insert")
 	public String boardEnrollPOST(@RequestParam("file") MultipartFile file, HttpSession session, BoardVO board,
@@ -130,10 +185,41 @@ public class HealthNewsController {
 			return "redirect:/";
 		}
 	}
-
+	@GetMapping("/cardwrite")
+	public String cardwrite() {
+		return "news/cardWrite";
+	}
 
 	@GetMapping("/write")
 	public String boardEnrollGET() {
 		return "board/write";
 	}
+	
+	 @GetMapping("/cardRead")
+	    public String cardReadDetail(Model model,
+	    					@RequestParam(value = "searchKeyword", required = false) String searchKeyword, 
+	    					@RequestParam(value = "page", defaultValue = "1") int page) {
+		 int category_no = 4;
+			
+		 Criteria criteria = new Criteria(page, 10);
+		 criteria.setKeyword(searchKeyword);
+		 criteria.setType("T");
+		 List<BoardVO> qnaList = bservice.getListPaging(criteria, category_no);
+		model.addAttribute("page", qnaList);
+	        return "news/cardRead";  
+	    }
+	 
+
+	 @GetMapping("/cardRead2")
+	    public String cardReadDetail2(Model model) {
+	      
+	        return "news/cardRead2";  
+	    }
+	 
+
+	 @GetMapping("/cardRead3")
+	    public String cardReadDetail3(Model model) {
+	      
+	        return "news/cardRead3";  
+	    }
 }

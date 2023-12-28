@@ -194,7 +194,7 @@ th {
 			<!-- 글쓰기 버튼 추가 -->
 			<div class="write-btn-container">
 			 <c:if test="${!empty loginInfo}">
-				<a href="write" class="write-button">게시글 등록</a>
+				<a href="write?category_no=1" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 

@@ -82,32 +82,30 @@ th {
 	margin-top: 20px;
 }
 
-.search-input {
-	padding: 10px 15px; /* 입력창 내부 여백을 좌우로 제공 */
-	font-size: 1.6rem; /* 입력창 글씨 크기 조정 */
-	border: 1px solid #ddd; /* 테두리 스타일 조정 */
-	margin-right: 8px; /* 입력창과 검색버튼 사이의 간격 조정 */
-	width: 300px; /* 입력창 너비 조정 */
-	height: 48px; /* 입력창 높이 조정 */
-	vertical-align: middle; /* 입력창을 수직 중앙에 위치시키기 위함 */
+ .search-box input[type="text"] {
+    flex: 1; /* 검색창이 남은 공간을 모두 차지하도록 합니다. */
+    padding: 8px; /* 패딩 추가 */
+    border: 2px solid #ddd; /* 경계선 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
 }
 
-.search-button {
-	background-color: #4CAF50; /* 버튼 배경색 */
-	color: white; /* 버튼 텍스트 색상 */
-	padding: 0 20px; /* 버튼 내부 여백을 좌우로만 제공 */
-	border: none; /* 테두리 없음 */
-	border-radius: 5px; /* 모서리 둥글게 */
-	cursor: pointer; /* 클릭 가능한 커서 모양 */
-	font-size: 1.6rem; /* 버튼 글씨 크기 조정 */
-	height: 38px; /* 버튼 높이 조정 */
-	line-height: 38px; /* 버튼의 높이에 맞춰 line-height 설정 */
-	text-align: center; /* 텍스트를 버튼의 중앙으로 정렬 */
-	display: inline-block; /* inline-block으로 설정하여 line-height가 적용되도록 함 */
-	vertical-align: middle; /* 버튼을 수직 중앙에 위치시키기 위함 */
-	white-space: nowrap; /* 텍스트를 한 줄로 유지 */
-	
+.search-box button {
+    padding: 8px 16px; /* 버튼 내부 여백 설정 */
+    margin-left: 8px; /* 검색창과의 간격 설정 */
+    margin-top: 8px;
+    border: none; /* 기본 경계선 제거 */
+    background-color: #007bff; /* 배경 색상 설정 */
+    color: white; /* 글자 색상 설정 */
+    cursor: pointer; /* 커서를 손가락 모양으로 설정 */
+    border-radius: 4px; /* 모서리 둥글게 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
 }
+
+.search-box button:hover {
+    background-color: #0056b3; /* 버튼에 마우스를 올렸을 때 색상 변경 */
+}
+
 
 .write-btn-container {
 	text-align: right; /* 버튼을 오른쪽으로 정렬 */
@@ -168,7 +166,23 @@ th {
   	height: 35px;
   }
   
- 
+   .pagination a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5em;  /* 폰트 크기를 늘림 */
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
 </style>
 <body>
 	<div class="wrap">
@@ -178,7 +192,7 @@ th {
 			<!-- 글쓰기 버튼 -->
 			<div class="write-btn-container">
 			<c:if test="${!empty loginInfo }">
-				<a href="write" class="write-button">게시글 등록</a>
+				  <a href="write?category_no=2" class="write-button">게시글 등록</a>
 				</c:if>
 			</div>
 
@@ -196,87 +210,72 @@ th {
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="list">
-					  <c:if test="${list.category_no == 2}">
 						<tr>
-							
-							
-					 <td class="title-column">
-                    <c:choose>
-                       
-                        <c:when test="${list.board_private == 1}">
-                            <a href="javascript:void(0);" onclick="alert('비공개 처리 되었습니다.');location.href='/myct/board/freedetail?board_no=${list.board_no}'">
-                            [비공개 처리 되었습니다.]
-                            </a>
-                        </c:when>
-                       
-                        <c:otherwise>
-                            <a href="/myct/board/freedetail?board_no=${list.board_no}">
-                                <c:out value="${list.board_title}" />
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-								
-								
-								<td><c:out value="${list.member_nickname}" /></td>
+
+
+							<td class="title-column">
+								<c:choose>
+									<c:when test="${list.board_private == 1}">
+										<a href="javascript:void(0);"
+											onclick="alert('비공개 처리 되었습니다.');location.href='/myct/board/freedetail?board_no=${list.board_no}'">
+											[비공개 처리 되었습니다.] </a>
+									</c:when>
+
+									<c:otherwise>
+										<a href="/myct/board/freedetail?board_no=${list.board_no}">
+											<c:out value="${list.board_title}" />
+										</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+
+
+							<td><c:out value="${list.member_nickname}" /></td>
 
 							<td><fmt:formatDate pattern="yyyy/MM/dd"
 									value="${list.board_rdate}" /></td>
 							<td><c:out value="${list.board_view}" /></td>
-							
-						
+
+
 
 						</tr>
-						</c:if>
 					</c:forEach>
 
-					
+
 				</tbody>
 			</table>
 
-			<div class="search_wrap">
-        <div class="search_area">
-        <select name="type">
-                <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
-                <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
-                <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>                
-                <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
-                <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>           
-                <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
-                <option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
-            </select>  
-            <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-            <button>검색🔍</button>
-        </div>
-    </div>   
+		
+    
+    <form action="${pageContext.request.contextPath}/board/freeboard" method="get">
+    <div class="search-box">
+        <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요"/>
+        <button type="submit">검색🔍</button>
+    </div>
+</form>
+    
 
 
-			<div class="pageInfo_wrap" >
-		<div class="pageInfo_area">
-			<ul id="pageInfo" class="pageInfo">
+			<div class="pagination">
+    <c:if test="${pageMaker.prev}"> 
+        <a href="?page=${pageMaker.startPage - 1}">이전</a>
+    </c:if>
+    
+    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+        <a href="?page=${pageNum}" class="${pageNum eq pageMaker.cri.page ? 'active' : ''}">${pageNum}</a>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next}"> 
+        <a href="?page=${pageMaker.endPage + 1}">다음</a>
+    </c:if>
+</div>
+			<form id="moveForm" method="get">
 			
-				
-				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
-				</c:if>
-				
-				
-				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-    <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-        <a href="${num}">${num}</a>
-    </li>
-</c:forEach>
+			</form>
 
-				
-				
-				<c:if test="${pageMaker.next}">
-					<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-				</c:if>	
-				
-			</ul>
 		</div>
+		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	</div>
-	
 
 
 

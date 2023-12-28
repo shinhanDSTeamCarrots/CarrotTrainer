@@ -289,12 +289,8 @@ textarea {
 			<input type="hidden" id="board_no" name="board_no"
 				value='<c:out value="${pageInfo.board_no}"/>'> <input
 				type="hidden" id="category_no" name="category_no"
-				value='<c:out value="${pageInfo.category_no}"/>'> <input
-				type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-			<input type="hidden" name="amount"
-				value='<c:out value="${cri.amount}"/>'> <input type="hidden"
-				name="type" value="${cri.type }"> <input type="hidden"
-				name="keyword" value="${cri.keyword }">
+				value='<c:out value="${pageInfo.category_no}"/>'>
+				
 		</form>
 
 	</div>
@@ -335,6 +331,8 @@ textarea {
 		form.attr("action", "/myct/board/modify");
 		form.submit();
 	});	
+	
+	
 	
 	// 추천수 메서드 호출
 	function RecomCount(boardNO) {
