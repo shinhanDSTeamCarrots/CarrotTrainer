@@ -123,6 +123,9 @@
 		}
 		//아무것도 안함
 	}
+	function whenReivewWriteClick() {
+		location.href = "${pageContext.request.contextPath}/review/write?goods_no=${map.goods_no}";
+	}
 </script>
 <style type="text/css">
 /*정렬들*/
@@ -486,6 +489,11 @@ progress::-webkit-progress-value {
         <strong>리뷰가 없습니다. 당신이 첫 리뷰의 주인공이 되어주세요!</strong>
         </c:if>
     </table>
+    <div class="reiewWriteBtnDiv">
+    	<c:if test="${ empty sessionScope.loginInfo.member_no  || vo.member_no ne sessionScope.loginInfo.member_no}">
+    	<input type="button" class="reviewWriteBtn" id = "reviewWriteBtn" value="리뷰 작성" onclick="whenReivewWriteClick()"/>
+    	</c:if>
+    </div>
     <div>
     <%-- 페이지 --%>
         <c:if test="${map.total_cnt > 0 }">

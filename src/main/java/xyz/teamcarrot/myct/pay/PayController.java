@@ -246,7 +246,7 @@ public class PayController implements InitializingBean{
 			int order = service.insertOrders(list, dto);
 			
 			mav.addObject("order", order);
-			
+			mav.addObject("order_data",dto);
 			
 			log.info("결제 성공");
 			mav.setViewName("pay/payDone");

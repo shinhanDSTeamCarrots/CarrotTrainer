@@ -51,7 +51,7 @@ public class BodyChangeServiceImpl implements BodyChangeService {
 	@Override
 	public String jsondailyAvgWeight(int member_no) {
 		try {
-			return JsonUtils.getJsonStringFromList(mapper.selectWeekHealthGraph(member_no));
+			return JsonUtils.getJsonStringFromList(mapper.dailyAvgWeight(member_no));
 		}
 		catch(NullPointerException n) {
 			return null;
