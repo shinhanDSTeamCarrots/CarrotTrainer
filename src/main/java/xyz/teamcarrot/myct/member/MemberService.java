@@ -29,4 +29,5 @@ public interface MemberService {
 	
 	List<MemberVO> all(MemberVO vo);
 	
+	List<InterestVO> interestSelect(int mem_no);
 }

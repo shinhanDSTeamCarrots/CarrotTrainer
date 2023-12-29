@@ -3,16 +3,15 @@
 <mapper namespace="xyz.teamcarrot.myct.healthInfo.BodyChangeMapper">
 	<!-- 몸의 변화 -->
 	<!-- 최근 일별 몸무게 -->
-	<select id="dailyAvgWeight" resultType="double">
-		SELECT body_change_no
-			 , body_change_weight
-			 , muscle_mass
-			 , fat_mass
-			 , regist_date
-		  FROM tb_body_change
-		 WHERE member_no = #{member_no}
-		   AND DATE(regist_date) BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()
-	  ORDER BY regist_date;
+	<select id="dailyAvgWeight" resultType="map" parameterType="int">
+		SELECT 	  weight
+				, muscle_mass
+				, fat_mass
+				, SUBSTRING(regist_date,1,10) AS regist_date
+		FROM tb_body_change
+		WHERE member_no = #{member_no}
+		AND regist_date BETWEEN DATE_SUB(DATE(NOW()),INTERVAL 6 DAY) AND DATE(NOW())
+		ORDER BY regist_date;
 	</select> 
 	<!-- 최근 주간 평균 몸무게 -->
 	<select id="WeekAvgWeight" resultType="double">
@@ -36,14 +35,52 @@
     GROUP BY YEAR(regist_date), MONTH(regist_date)
     ORDER BY YEAR(regist_date), MONTH(regist_date);
 	</select>
+
 	
 	<!-- 음식 변화 -->
 	<!-- 최근 7일간 음식 -->
+	<select id="selectWeekFoodGraph" parameterType="int" resultType="map">
+		SELECT 
+			  SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 6 DAY) ) THEN total_calorie ELSE 0 END) AS 1_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 6 DAY) ) THEN total_calorie ELSE 0 END) AS 1_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 6 DAY) ) THEN total_calorie ELSE 0 END) AS 1_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 5 DAY) ) THEN total_calorie ELSE 0 END) AS 2_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 5 DAY) ) THEN total_calorie ELSE 0 END) AS 2_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 5 DAY) ) THEN total_calorie ELSE 0 END) AS 2_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 4 DAY) ) THEN total_calorie ELSE 0 END) AS 3_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 4 DAY) ) THEN total_calorie ELSE 0 END) AS 3_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 4 DAY) ) THEN total_calorie ELSE 0 END) AS 3_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 3 DAY) ) THEN total_calorie ELSE 0 END) AS 4_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 3 DAY) ) THEN total_calorie ELSE 0 END) AS 4_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 3 DAY) ) THEN total_calorie ELSE 0 END) AS 4_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 2 DAY) ) THEN total_calorie ELSE 0 END) AS 5_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 2 DAY) ) THEN total_calorie ELSE 0 END) AS 5_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 2 DAY) ) THEN total_calorie ELSE 0 END) AS 5_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 1 DAY) ) THEN total_calorie ELSE 0 END) AS 6_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 1 DAY) ) THEN total_calorie ELSE 0 END) AS 6_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(DATE_SUB(NOW(),INTERVAL 1 DAY) ) THEN total_calorie ELSE 0 END) AS 6_3
+			, SUM(CASE WHEN intake_time=1 AND intake_date = DATE(NOW()) THEN total_calorie ELSE 0 END) AS 7_1
+			, SUM(CASE WHEN intake_time=2 AND intake_date = DATE(NOW()) THEN total_calorie ELSE 0 END) AS 7_2
+			, SUM(CASE WHEN intake_time=3 AND intake_date = DATE(NOW() ) THEN total_calorie ELSE 0 END) AS 7_3
+		FROM tb_food_diary
+		WHERE member_no=#{member_no};
+	
+	</select>
 	<!-- 최근 1개월간 평균 음식 -->
 	<!-- 최근 6개월간 평균 음식 -->
 	
 	<!-- 운동 변화 -->
 	<!-- 최근 7일간 운동 -->
+	<select id="selectWeekHealthGraph" parameterType="int" resultType="map">
+		SELECT COUNT(health_diary_no) AS cnt
+			, health_name AS name
+		FROM tb_health_diary
+		WHERE member_no=#{member_no} 
+			AND health_date BETWEEN DATE_SUB(DATE(NOW()), INTERVAL 6 DAY) AND DATE(NOW())
+		GROUP BY health_name
+		ORDER BY cnt DESC
+		LIMIT 7
+	</select>
 	<!-- 최근 1개월간 평균 운동 -->
 	<!-- 최근 6개월간 평균 운동 -->
 </mapper>

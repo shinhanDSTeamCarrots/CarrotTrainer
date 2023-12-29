@@ -28,6 +28,7 @@ public interface MemberMapper {
 	Integer updateLoginBlocked(MemberVO member);
 	
 	int memberInterest(InterestVO vo);
+	List<InterestVO> interestSelect(@Param("member_no")int member_no);
 	
 	List<MemberVO> all(MemberVO vo);
 	
