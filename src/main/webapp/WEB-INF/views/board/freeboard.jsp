@@ -20,23 +20,21 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 </head>
 <style>
-body {
-	font-family: 'Roboto', sans-serif;
-	color: #333;
-	background-color: #f4f4f4;
-}
 
 .container {
 	max-width: 1200px;
 	margin: 50px auto;
 	padding: 20px;
-	background-color: #fff;
+	
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	
+	color: #333;
+
 }
 
 .board-title {
 	font-size: 2.4rem;
-	color: #4CAF50;
+	color: #748E63;
 	margin-bottom: 20px;
 	font-weight: bold;
 }
@@ -59,7 +57,7 @@ th, td {
 }
 
 th {
-	background-color: #faa04b;
+	background-color: #f9b572;
 	color: white;
 }
 
@@ -135,7 +133,7 @@ th {
 }
 
 a:link {
-	color: black;
+
 	text-decoration: none;
 }
 

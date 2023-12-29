@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -185,10 +186,23 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/joinInterest")
-	public String joinInterest(InterestVO vo, Model model) {
-		vo.setMember_interest_no(0);
-		return "a";
-		//20231227 정보 전송 안됨..
+	public String joinInterest(HttpSession session, Model model,int[] chklist) {
+		MemberVO vo = (MemberVO)session.getAttribute("loginInfo");
+		if(vo != null) {
+			for(int interest: chklist) {
+				InterestVO instVO = new InterestVO();
+				instVO.setMember_no(vo.getMember_no());
+				instVO.setMember_interest_no(interest);
+				memberService.memberInterest(instVO);
+			}
+			return "/";
+		}else{
+
+			model.addAttribute("cmd", "move");
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "login");
+			return "common/alert";
+		}
 	}
 
 	@GetMapping("/member/userInfo")

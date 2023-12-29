@@ -20,7 +20,7 @@
 
 
 function joinDone() {
-    var checkboxes = document.getElementsByName('body');
+    /*var checkboxes = document.getElementsByName('body');
     var selectedValues = [];
 
     for (var i = 0; i < checkboxes.length; i++) {
@@ -45,6 +45,9 @@ function joinDone() {
                 console.error('에러 발생:', error);
             }
         });
+    }*/
+    if ($('input[name="chklist"]:checked').length === 0) {
+        alert("하나 이상의 체크박스를 선택해주세요.");
     }
     $("#frm").submit();
 }
@@ -79,10 +82,12 @@ function joinDone() {
                     }
              }   
     
-    .title{
-    justify-content:center;
-    margin-bottom: 40px;
-    }
+    /* Styling for titles */
+.title {
+    margin-bottom: 20px;
+    color: #333; /* Dark grey color for text */
+    font-size: 1.5em; /* Larger font size for titles */
+}
     .wrap { 
     	margin:auto; 
         text-align:center;
@@ -91,7 +96,9 @@ function joinDone() {
   max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: #f9f9f9; /* Soft background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
   
 }
 
@@ -123,7 +130,53 @@ function joinDone() {
   	
   	}
    
-             
+             /* Button-like styles for custom checkboxes */
+.custom-checkbox {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff; /* Primary button color */
+    border-radius: 20px; /* Rounded borders */
+    cursor: pointer;
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.custom-checkbox:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Invisible but accessible real checkboxes */
+.custom-checkbox input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+
+/* Styling for the join button */
+.doneButton a {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 30px;
+    background-color: #609966; /* Success color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.doneButton a:hover {
+    background-color: #489450;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+    .title {
+        font-size: 1.2em; /* Slightly smaller font size on smaller screens */
+    }
+}
      
     </style>
     	
@@ -137,18 +190,17 @@ function joinDone() {
     			<h2 class = "title">건강해지고 싶은 부위?</h2>
     				<h3 class = "title">관심 있는 신체 부위에 체크해 보아요. 저희가 도와드릴게요!<br>(최소 1개 선택, 중복선택 가능)</h3>  
     				  				
-    				<form name="frm" id="frm" action="joinInterest" method="get">
+    				<form name="frm" id="frm" action="joinInterest" method="Post">
     				<div class="btn-container">
-    					<input type = "checkbox" name = "1" id ="body" >눈
-    					<input type = "checkbox" name ="2" id ="body">귀
-    					<input type = "checkbox" name = "3" id ="body" >간
+    					<input type = "checkbox" name = "chklist" value="1" id ="body_eye" >눈
+    					<input type = "checkbox" name ="chklist" value="2" id ="body_ear">귀
+    					<input type = "checkbox" name = "chklist" value="3" id ="body_liver" >간
     				</div>
     				<div class = "btn-container2">	
-    					<input type = "checkbox" name = "4" id ="body" >기관지
-    					<input type = "checkbox" name = "5" id ="body" >위
-    					<input type = "checkbox" name = "6" id ="body" >장
-                    </div>
-                    
+    					<input type = "checkbox" name = "chklist" value="4" id ="body_lung" >기관지
+    					<input type = "checkbox" name = "chklist" value="5" id ="body_stomach" >위
+    					<input type = "checkbox" name = "chklist" value="6" id ="body_intestine" >장
+ 
           				
     				</form>
     				<div class = "doneButton">
