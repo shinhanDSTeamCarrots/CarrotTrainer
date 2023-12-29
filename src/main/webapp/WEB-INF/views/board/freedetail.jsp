@@ -23,7 +23,7 @@
 <style>
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    background-color: #f5f5f5;
+
     margin: 0;
     padding: 0;
     color: #333;
@@ -92,7 +92,7 @@ textarea {
 
 .btn {
     display: inline-block;
-    background-color: #06b66c;
+    background-color: #609966;
     color: #ffffff;
     padding: 10px 20px;
     text-align: center;
@@ -106,7 +106,7 @@ textarea {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #40513B;
 }
 
 .comment-section {
@@ -239,9 +239,7 @@ textarea {
     </c:otherwise>
 </c:choose>
 
-				
-				<a class="btn" id="recom_btn" href="javascript:void(0);"
-					onclick="RecomCount(${list.board_no});">추천</a>
+			
 			</div>
 
 			<!-- 댓글 섹션 시작 -->
