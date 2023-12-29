@@ -142,7 +142,11 @@ public class ReviewController {
 		
 		
 		if(((MemberVO)sess.getAttribute("loginInfo")) == null) {
-			mav.setViewName("redirect:/");
+
+			mav.addObject("cmd", "move");
+			mav.addObject("msg", "로그인이 필요합니다.");
+			mav.addObject("url", "/myct/member/login");
+			mav.setViewName("common/alert");
 			return mav;
 		}
 		
