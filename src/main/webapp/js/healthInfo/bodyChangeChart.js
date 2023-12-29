@@ -67,7 +67,7 @@ function drawGraphs(foodchange, healthchange,bodychange){
 	      datasets: [
 	        {
 	          label: "운동 횟수",
-	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#F9B572","#435334"],
+	          backgroundColor: ["#F9B572", "#435334","#CEDEBD","#FFF78A","#FFF7D4","#FFD1E3","#C3E2C2"],
 	          data: [healthchange[0]['cnt'],healthchange[1]['cnt'],healthchange[2]['cnt'],healthchange[3]['cnt'],healthchange[4]['cnt'],healthchange[5]['cnt'],healthchange[6]['cnt']]
 	        }
 	      ]
