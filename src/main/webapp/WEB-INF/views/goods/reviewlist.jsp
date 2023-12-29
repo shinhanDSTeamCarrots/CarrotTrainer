@@ -126,13 +126,6 @@
 </script>
 <style type="text/css">
 /*정렬들*/
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5;
-    color: #333;
-    padding: 20px;
-    background-color: #f4f4f4;
-}
 
 
 .alignList {
@@ -260,6 +253,10 @@ progress::-webkit-progress-value {
 	font-size: 24px;
 }
 
+.headUserAvgPointConst {
+	width:20%;
+}
+
 
 </style>
 </head>
@@ -285,7 +282,55 @@ progress::-webkit-progress-value {
     	<li>
     		<div class="headUserAvgPointConst">
     			<p class="point">사용자 평균 평점</p><br>	
-    			<progress min="0" max="5" value="${map.avg_point }" ></progress>
+    			<%--progress min="0" max="5" value="${map.avg_point }" ></progress--%>
+    			<input type="hidden" value="${map.avg_point_display }"/>
+    			<div class="points">
+						<c:if test="${map.avg_point_display == 1}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display > 1}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_on.png" alt="star_on">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display < 1 }">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display == 3}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display > 3}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_on.png" alt="star_on">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display < 3 }">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display == 5}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display > 5}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_on.png" alt="star_on">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display < 5 }">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display == 7}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display > 7}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_on.png" alt="star_on">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display < 7 }">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display == 9}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display > 9}">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_on.png" alt="star_on">
+		        		</c:if>
+		        		<c:if test="${map.avg_point_display < 9 }">
+		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
+		        		</c:if>
+		        	</div>
     			<p>${map.avg_point }</p>
     			<br>
     		</div>
