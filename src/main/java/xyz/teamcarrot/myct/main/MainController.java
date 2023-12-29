@@ -1,20 +1,21 @@
 
 package xyz.teamcarrot.myct.main;
 
-import java.lang.System.Logger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.mysql.cj.log.Log;
 
 import lombok.extern.slf4j.Slf4j;
 import xyz.teamcarrot.myct.board.BoardService;
 import xyz.teamcarrot.myct.board.BoardVO;
 import xyz.teamcarrot.myct.board.Criteria;
+import xyz.teamcarrot.myct.goods.GoodsOptionVO;
 import xyz.teamcarrot.myct.goods.GoodsService;
 import xyz.teamcarrot.myct.goods.GoodsVO;
 @Slf4j
@@ -54,4 +55,20 @@ public class MainController {
 		mav.setViewName("home");
 		return mav;
 	}
+	
+	@PostMapping("/detail/{goods_no}")
+	public String detailList(Model model,@PathVariable int goods_no) {
+		//System.out.println("goods number 체크" + goods_no);
+		GoodsVO goods = goodsService.detail(goods_no);
+		List<GoodsOptionVO> options = goodsService.goodsOption(goods_no);
+		model.addAttribute("item",goods);
+		model.addAttribute("detail", options);
+		return "/goods/detail";
+	}
+	
+	
+	
+	
+	
+	
 }
