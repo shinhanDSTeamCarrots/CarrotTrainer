@@ -44,19 +44,15 @@
 }
 /*음식 관련 기록*/
 .foodDiary-result {
-	width: 70%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
 .foodDiary-food-result {
 	display: flex;
 	flex-direction: row;
-	margin: 20px;
+	margin: 0 40px;
 	margin-bottom: 40px;
-}
-/*달력*/
-.foodDiary-calendar {
-	width: 30%;
 }
 
 /*------------
@@ -64,9 +60,13 @@
 -------------*/
 /*음식 섭취 결과 당근 이미지*/
 .foodDiary-food-result-image {
-	width: 40%;
+	width: 30%;
 	display: flex;
 	justify-content:center;
+}
+#carrotImage {
+	width: 200px;
+	height: 200px;
 }
 .foodDiary-food-result-carrot {
 	width: 200px;
@@ -75,7 +75,7 @@
 }
 /*음식 섭취 결과*/
 .foodDiary-food-result-detail {
-	width: 60%;
+	width: 70%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -118,11 +118,18 @@
 }
 .nutrient-graph-result {
 	width: 15%;
+	display: flex;
+	flex-direction: row;
+}
+.nutrient-graph-result div {
+	margin: auto 3px;
 }
 /*시간대별 음식 섭취*/
 .foodDiary-result > .foodDiary-food-input {
 	display: flex;
 	flex-direction: row;
+	width: 800px;
+	margin: auto;
 }
 .foodDiary-food-input > .foodDiary-food-inform {
 	width: 25%;

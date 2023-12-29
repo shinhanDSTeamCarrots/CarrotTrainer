@@ -38,7 +38,8 @@ public class QnaController {
 	public GoodsInquiryVO eachQna(Model model, @PathVariable int inquiry_no) {
 		System.out.println("inquiry number 체크! " + inquiry_no);
 		GoodsInquiryVO qnaDetail = service.eachQna(inquiry_no);
-		//logger.info("!!!!!");
+		logger.info("!!!!!");
+		System.out.println(qnaDetail);
 		return qnaDetail;
  	}
  	

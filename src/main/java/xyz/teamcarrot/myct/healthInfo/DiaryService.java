@@ -7,6 +7,8 @@ public interface DiaryService {
 	int updateFoodDiary(FoodDiaryVO vo);
 	int deleteFoodDiary(FoodDiaryVO vo);
 	
+	FoodDiaryVO selectFoodCal(int member_no);
+	
 	//tb_food_diary_info 테이블
 	int insertFoodInfo(FoodDiaryInfoVO vo);
 	FoodDiaryInfoVO selectFoodInfo(FoodDiaryInfoVO vo);

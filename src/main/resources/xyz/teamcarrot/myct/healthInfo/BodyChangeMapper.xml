@@ -15,9 +15,9 @@
 	</select> 
 	<!-- 최근 주간 평균 몸무게 -->
 	<select id="WeekAvgWeight" resultType="double">
-		SELECT AVG(body_change_weight) as avg_weight
-			 , AVG(muscle_mass) as avg_muscle
-			 , AVG(fat_mass) as avg_fat
+		SELECT AVG(body_change_weight) AS avg_weight
+			 , AVG(muscle_mass) AS avg_muscle
+			 , AVG(fat_mass) AS avg_fat
 		  FROM tb_body_change
 		 WHERE member_no = #{member_no}
 		   AND regist_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW()
@@ -26,9 +26,9 @@
 	</select> 
 	<!-- 최근 월별 평균 몸무게 -->
 	<select id="MonthAvgWeight" resultType="double">
-    SELECT AVG(body_change_weight) as avg_weight_month
-         , AVG(muscle_mass) as avg_muscle_month
-         , AVG(fat_mass) as avg_fat_month
+    SELECT AVG(body_change_weight) AS avg_weight_month
+         , AVG(muscle_mass) AS avg_muscle_month
+         , AVG(fat_mass) AS avg_fat_month
     FROM tb_body_change
     WHERE member_no = #{member_no}
         AND regist_date BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) AND NOW()

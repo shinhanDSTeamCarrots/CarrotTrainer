@@ -57,19 +57,19 @@
 						<table class="healthDic-list">
 							<tbody id="healthTbody">
 							<!-- 로그인 -->
-							<c:if test="${null ne healthName && empty healthDic}"> <!-- 목록 없음 -->
+							<c:if test="${null ne healthName && empty healthDic.list}"> <!-- 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
 								</colgroup>
 	               				<tr><td class="empty-healthlist">검색 결과가 없습니다.</td></tr>	
 							</c:if>
-							<c:if test="${!empty loginInfo && empty healthDic}"> <!-- 로그인 && 목록 없음 -->
+							<c:if test="${!empty loginInfo && empty healthDic.list}"> <!-- 로그인 && 목록 없음 -->
 								<colgroup>
 									<col width="100%" />
 								</colgroup>
 	               				<tr><td class="empty-healthlist">즐겨찾기 목록이 없습니다.</td></tr>	
 							</c:if>
-							<c:if test="${!empty healthDic}">
+							<c:if test="${!empty healthDic.list}">
 								<colgroup>
 									<col width="10%" />
 									<col width="70%" />
@@ -94,7 +94,7 @@
 				<div class="pagenate clear">
 				    <ul class='paging'>
 				    <c:if test="${healthDic.prev }">
-				    	<li><a href="exercise?page==${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
+				    	<li><a href="exercise?page=${healthDic.startPage-1 }&healthName=${healthDic.healthName}"> << </a></li>
 				    </c:if>
 				    <c:forEach var="p" begin="${healthDic.startPage}" end="${healthDic.endPage}">
 				    	<c:if test="${p == page}">
@@ -121,7 +121,7 @@
 					<div class="date">
 						<!-- autocomplte는 <input> 태그를 클릭했을때 이전 데이터가 뜨는 것을 막기 위해 -->
 						<!-- readonly는 추가해준 이유는 datepicker을 통해 삽입된 날짜 데이터를 사용자가 잘못된 형식으로 수정하지 못하도록 하기 위함 -->
-						<input name="health_date" autocomplete="off" readonly="readonly">
+						<input id="health_date" name="health_date" autocomplete="off" readonly="readonly" value="[필수] 날짜를 선택해주세요 ▼">
 					</div>
 					<div class="detail-division-line"></div>
 					<div class="healthInfo">

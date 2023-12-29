@@ -1,0 +1,178 @@
+a {
+    text-decoration: none;
+}
+a:visited {
+	color: #435334;
+}
+.wrap {
+    width:100%;
+    margin : 0 auto;    /* 가운데 정렬 */
+}
+
+.container {
+	width:1200px;
+	margin : 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding : 20px;
+}
+/*--------------------------------*/   
+
+.visual img {
+    display: block; /* 이미지 하단 라인 제거 */
+}
+.visual {
+    height:450px;
+    width:100%;
+    position: relative;
+    text-align: center;
+}
+.swiper {
+    height:450px;
+}
+.swiper-slide {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+/*------------------------------*/
+/* 건강정보 */
+.health{
+	margin:20px;
+	display:flex;
+	flex-direction:column;
+	margin-bottom: 50px;
+}
+
+/* 인기상품 */
+.shopping-wrap {
+	background-color: #EDF1D6;
+	margin-bottom: 50px;
+	width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    justify-content: center;
+    display: flex;
+}
+.shopping{
+	margin:20px;
+	margin-left:30px;	
+	display:flex;
+	flex-direction:row;
+	text-align: center;
+}
+.item {
+	display:flex;
+	flex-direction:row;
+	width: 100%
+}
+.item a {
+	width: 20%;
+	display: flex;
+	justify-content: center;
+}
+.itemInfo{
+	margin-bottom:15px;
+	display:flex;
+	flex-direction:row;
+}
+#goodsImg{
+	margin-right:15px;
+	width: 300px;
+	height: 300px;
+}
+.goodsrank{
+	width:35px;
+	height:65px;
+	line-height:50px;
+	font-size:14px;
+	margin-right:10px;
+	color:#435334;
+	font-weight:500;
+}
+.goodsname {
+	font-size: 15px;
+	height: 40px;
+}
+.goodsPrice {
+	font-size: 25px;
+    font-weight: 700;
+    margin: 10px;
+}
+
+
+/* 게시판 */
+.board{
+	height:30%;
+	width:100%;
+	margin-bottom:30px;
+	display:flex;
+	flex-direction:row;
+}
+.noticeboard{
+	width:50%;
+	margin:20px;
+	border-radius: 10px;
+}
+.noticeboard-content {
+	padding: 35px;
+	padding-top: 20px;
+}
+.noticeboard-detail {
+	margin: 5px;
+	margin-top: 25px;
+}
+.freeboard{
+	width:50%;
+	margin:20px;
+	border-radius: 10px;
+}
+.freeboard-content {
+	padding: 35px;
+	padding-top: 20px;
+}
+.freeboard-detail {
+	margin: 5px;
+	margin-top: 25px;
+}
+
+
+.boardRank {
+	display:flex;
+	flex-direction:row;
+	margin: 10px;
+	border-bottom: 1px solid #D9D9D9;
+	padding-bottom: 4px;
+}
+.boardRankNum {
+	margin-right: auto;
+	font-weight: 700;
+	width: 10%;
+}
+.boardRankTitle {
+	margin-right: auto;
+	width: 90%;
+}
+.title {
+	color: #435334;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.title-division-line{
+	border-top: 3px solid #435334;
+    margin: 0 auto 10px;
+}
+.list-division-line {
+    background-color: #CEDEBD;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+

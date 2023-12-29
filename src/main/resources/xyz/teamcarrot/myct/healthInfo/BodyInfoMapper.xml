@@ -4,12 +4,34 @@
 	<!-- bmi 정보 입력 -->
 	<insert id="insertBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
 		INSERT INTO tb_body_info (
-			body_info_date, age, height, weight, gender, target_weight, exercise_mass
-			, bmi, target_calorie, target_carbs, target_protein, target_fat, target_sugar
+			  body_info_date
+			, age
+			, height
+			, weight
+			, gender
+			, target_weight
+			, exercise_mass
+			, bmi
+			, target_calorie
+			, target_carbs
+			, target_protein
+			, target_fat
+			, target_sugar
 			, member_no
 		) VALUES (
-			NOW(), #{age}, #{height}, #{weight}, #{gender}, #{target_weight}, #{exercise_mass}
-			, #{bmi}, #{target_calorie}, #{target_carbs}, #{target_protein}, #{target_fat}, #{target_sugar}
+			  NOW()
+			, #{age}
+			, #{height}
+			, #{weight}
+			, #{gender}
+			, #{target_weight}
+			, #{exercise_mass}
+			, #{bmi}
+			, #{target_calorie}
+			, #{target_carbs}
+			, #{target_protein}
+			, #{target_fat}
+			, #{target_sugar}
 			, #{member_no}
 		)
 		<!-- tb_body_info테이블 키 값 -->
@@ -19,7 +41,9 @@
 	</insert>
 	<!-- bmi 정보 불러오기 -->
 	<select id="selectBodyInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
-		SELECT * FROM tb_body_info WHERE member_no = #{member_no};
+		SELECT * 
+		FROM tb_body_info 
+		WHERE member_no = #{member_no};
 	</select>
 	<!-- bmi 정보 수정 -->
 	<update id="updateBodyInfo" parameterType="xyz.teamcarrot.myct.healthInfo.BodyInfoVO">
