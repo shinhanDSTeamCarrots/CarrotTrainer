@@ -49,7 +49,7 @@
 .login-main img {
 	margin: 30px;
 }
-.login-card {
+.login-card {	
     width: 100%;
     max-width: 500px; /* Increase the maximum width */
     padding: 40px; /* More padding for larger appearance */

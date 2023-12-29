@@ -21,93 +21,109 @@
 <style>
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5; /* Lighter background for overall page */
+  
+    color: #333;
     margin: 0;
     padding: 0;
-    color: #333;
 }
 
 .container {
     width: 100%;
     max-width: 800px;
     margin: 40px auto;
-    padding: 40px;
-    box-sizing: border-box;
+    padding: 20px;
     background: #ffffff; /* White background for container */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Input Wraps */
+/* Input Wrapper */
 .input_wrap {
+    margin-bottom: 20px;
     display: flex;
-    align-items: center; /* Align items vertically */
-    margin-bottom: 20px; /* Added spacing between input fields */
-    gap: 10px; /* Space between label and input */
-}
-
-label {
-    flex: 0 0 130px; /* Adjust the width of the label */
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-
-input, textarea {
-    flex: 1; /* Input takes up the remaining space */
+    align-items: center;
+    background-color: #f9f9f9; /* Light gray background for inputs */
     padding: 10px;
-    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.input_wrap label {
+    width: 20%;
+    min-width: 130px;
+    font-size: 18px;
+    color: #333; /* Dark color for text */
+}
+
+.input_wrap input,
+.input_wrap textarea {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    color: #555; /* Slightly lighter color for input text */
+    background-color: #ffffff; /* White background for text area */
 }
 
 textarea {
-    height: 150px; /* Adjusted for better space */
+    height: 200px;
+    resize: vertical;
 }
 
 /* Button Styles */
 .btn_wrap {
-    display: flex; /* Align buttons in a row */
-    align-items: center;
-    margin-top: 30px; 
-    gap: 10px; /* Space between buttons */
+    text-align: center;
+    margin-top: 20px;
 }
 
-/* ...rest of your button styles... */
-
-
-/* Buttons */
 .btn {
+    padding: 10px 15px;
     font-size: 16px;
-    padding: 10px 20px; /* More padding for a larger clickable area */
-    background-color: #007bff; /* Primary color for buttons */
-    color: white; /* Text color */
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s; /* Smooth transition for hover effect */
-    margin-right: 10px; /* Spacing between buttons */
+    margin-right: 10px;
+    text-decoration: none; /* Removes underline from links */
+    transition: background-color 0.2s;
 }
 
-.btn:hover {
-    background-color: #0056b3; /* Darker shade for hover state */
+#list_btn {
+    background-color: #007bff;
+}
+
+#modify_btn {
+    background-color: #28a745;
 }
 
 #delete_btn {
-    background-color: #f44336; /* Red color for delete action */
+    background-color: #dc3545;
 }
 
-#delete_btn:hover {
-    background-color: #d32f2f; /* Slightly darker red for hover state */
+#cancel_btn {
+    background-color: #6c757d;
 }
 
-/* Button Wrapper */
-.btn_wrap {
-    margin-top: 30px; /* More top margin for spacing */
-    padding-left: 0; /* Align buttons with form fields */
+.btn:hover {
+    opacity: 0.9; /* Slight transition for hover effect */
 }
 
-/* 추가적인 스타일링이 필요한 경우 여기에 작성 */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .input_wrap label {
+        width: 100%; /* Full width on small screens */
+    }
+
+    .input_wrap input,
+    .input_wrap textarea {
+        width: 100%;
+    }
+}
+
+
 </style>
 <body>
 	<div class="wrap">

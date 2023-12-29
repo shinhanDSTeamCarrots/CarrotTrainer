@@ -22,7 +22,7 @@
 <style>
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    background-color: #f5f5f5;
+
     margin: 0;
     padding: 0;
     color: #333;
@@ -91,7 +91,7 @@ textarea {
 
 .btn {
     display: inline-block;
-    background-color: #06b66c;
+    background-color: #609966;
     color: #ffffff;
     padding: 10px 20px;
     text-align: center;
@@ -105,7 +105,7 @@ textarea {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #40513B;
 }
 
 .comment-section {
@@ -146,24 +146,10 @@ textarea {
         .comment-content {
             margin: 10px 0;
             line-height: 1.5;
+             position: relative; 
         }
 
-        .delete-comment {
-            background: #d9534f;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-   
-		
-        }
-
-        .delete-comment:hover {
-            background: #c9302c;
-        }
-
+       
 
 .comment-submit {
 
@@ -297,7 +283,7 @@ textarea {
 							<div class="reply">
 								<p>
 									작성자:
-									<c:out value="${reply.member_no}" />
+									<c:out value="${reply.member_nickname}" /> 
 								</p>
 								<p>
 									내용:

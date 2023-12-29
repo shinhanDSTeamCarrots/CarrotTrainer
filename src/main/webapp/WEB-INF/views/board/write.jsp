@@ -42,7 +42,7 @@
 /* General Page Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+  
     margin: 0;
     padding: 0;
     color: #333;
@@ -61,7 +61,7 @@ body {
 
 
 
-/* Form Styling */
+/* Form Group Styling */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -70,9 +70,11 @@ body {
 
 .form-group label {
     margin-bottom: 8px;
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1.6rem;
+    color: #609966; /* Shade of label color */
+    font-weight:bold;
 }
+
 
 .form-group input[type="text"], .form-group textarea
 	{
@@ -232,7 +234,7 @@ body {
 			<input type="file" name="pics" accept="image/*" multiple><br>
 			<button>전송</button>			
 		</form> -->
-		<hr>
+	
 		<c:forEach items="${list }" var="vo">
 			<div>
 				<img src="/upload/${vo }" width="400px" height="400px" style="object-fit:cover">
