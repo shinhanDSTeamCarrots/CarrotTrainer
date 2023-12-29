@@ -24,12 +24,23 @@ public class BodyChangeServiceImpl implements BodyChangeService {
 
 	@Override
 	public String JsonWeekFoodGraph(int member_no) {
-		return JsonUtils.getJsonStringFromMap(mapper.selectWeekFoodGraph(member_no));
+		try {
+			return JsonUtils.getJsonStringFromMap(mapper.selectWeekFoodGraph(member_no));
+		} catch(NullPointerException n) {
+			return null;
+		}
+		
 	}
 
 	@Override
 	public String JsonWeekHealthGraph(int member_no) {
-		return JsonUtils.getJsonStringFromList(mapper.selectWeekHealthGraph(member_no));
+		try {
+
+			return JsonUtils.getJsonStringFromList(mapper.selectWeekHealthGraph(member_no));
+		}
+		catch(NullPointerException n) {
+			return null;
+		}
 	}
 
 	@Override
@@ -39,7 +50,12 @@ public class BodyChangeServiceImpl implements BodyChangeService {
 
 	@Override
 	public String jsondailyAvgWeight(int member_no) {
-		return JsonUtils.getJsonStringFromList(mapper.dailyAvgWeight(member_no));
+		try {
+			return JsonUtils.getJsonStringFromList(mapper.dailyAvgWeight(member_no));
+		}
+		catch(NullPointerException n) {
+			return null;
+		}
 	}
 
 }

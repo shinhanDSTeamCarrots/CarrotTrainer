@@ -39,7 +39,7 @@
 		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide1.png');"></div>
 		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide2.png');"></div>
 		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide3.png');"></div>
-		                    <div class="swiper-slide" style="background-image:url('/myct/img/home/homeslide4.png');"></div>
+		              
 		                </div>
 		            </div>   
 		        </div>        
