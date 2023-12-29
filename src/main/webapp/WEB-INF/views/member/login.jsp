@@ -45,7 +45,7 @@
 	
 	
 }
-.login-card {
+.login-card {	
     width: 100%;
     max-width: 500px; /* Increase the maximum width */
     margin: auto;
