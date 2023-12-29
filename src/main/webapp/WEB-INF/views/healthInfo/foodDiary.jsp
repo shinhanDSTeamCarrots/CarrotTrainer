@@ -132,6 +132,7 @@
     				</div>
     			</div>
     		</div>
+    		<!-- 
     		<div class="detail-division-line"></div>
     		<div class="foodDiary-comment">
     			<div class="foodDiary-comment-graph">
@@ -142,6 +143,7 @@
 	    			<p>지방 <span class="sql-diary-comment">10</span>g <span>더 먹어보세요</span></p>
     			</div>
     		</div>
+    		-->
     	</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>
