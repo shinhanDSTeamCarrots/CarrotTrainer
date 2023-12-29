@@ -35,15 +35,12 @@
         <div class="menu">
             <ul class="depth1">
                 <li>
-                    <a href="#">건강뉴스</a>
+                    <a href="/myct/healthnews/cardboard">건강뉴스</a>
                     <ul class="depth2">
-                        <li><a href="/myct/healthnews/cardboard">웰니스 뉴스</a></li>
-                        <li><a href="#">MENU1-2</a></li>
-                        <li><a href="#">MENU1-3</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">건강정보</a>
+                    <a href="${pageContext.request.contextPath}/healthInfo/bmi">건강정보</a>
                     <ul class="depth2">
                         <li><a href="${pageContext.request.contextPath}/healthInfo/bmi">일일 권장량 계산</a></li>
                         <li><a href="${pageContext.request.contextPath}/healthInfo/food">음식 정보</a></li>
@@ -53,7 +50,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">커뮤니티</a>
+                    <a href="/myct/board/noticeboard">커뮤니티</a>
                     <ul class="depth2">
                         <li><a href="/myct/board/noticeboard">공지사항</a></li>
                         <li><a href="/myct/board/freeboard">자유게시판</a></li>
