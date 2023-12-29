@@ -53,7 +53,7 @@ $(function () {
 							// 새로운 폼 엘리먼트 생성
 							let form = $('<form>', {
 								'class': 'healthInfo-cart',
-								'action': '${pageContext.request.contextPath}/healthInfo/insertHealthInfo',
+								'action': 'insertHealthInfo',
 								'method': 'post'
 							});
 
@@ -66,9 +66,9 @@ $(function () {
 							console.log("포맷팅된 Date 문자열:", hiArr[i].calorie);
 							console.log("포맷팅된 Date 문자열:", hiArr[i].minute);
 							console.log("포맷팅된 Date 문자열:", formattedDate);
+							
 							// 폼을 body에 추가하고 제출
-							form.appendTo('body').submit().remove();
-
+            				form.appendTo('body').submit().remove();
 						}
 					} else {
 						alert("저장할 운동 목록이 없습니다.");
@@ -103,7 +103,7 @@ function bookmarkHandler() {
 		event.stopPropagation(); // 또는 return false; 를 사용 가능
 
 		//확인용
-		console.log("no확인용:", $(this).closest(".health-info").data("no"));
+		console.log("no확인용:", $(this).closest(".health-info").data("healthno"));
 
 		//세션에서 로그인 정보 불러옴
 		const userName = "${sessionScope.loginInfo.member_nickname}";
@@ -282,8 +282,8 @@ function calendarHandler() {
 	//일자 설정
 	const config = {
 		dateFormat: 'yy-mm-dd',
-		showOn: "button",
-		buttonText: "날짜 선택",
+		showOn: "both",
+		buttonText: "",
 		prevText: '이전 달',
 		nextText: '다음 달',
 		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -324,7 +324,7 @@ function search(minute) {
 -------------*/
 function addBookmark(e) {
 	// 클릭한 행에 대한 정보 가져오기
-	const healthNo = $(e.currentTarget).closest(".health-info").data("no");
+	const healthNo = $(e.currentTarget).closest(".health-info").data("healthno");
 	console.log('healthNo:' + healthNo);
 	$.ajax({
 		url: '${pageContext.request.contextPath}/healthInfo/insertBookmark',
