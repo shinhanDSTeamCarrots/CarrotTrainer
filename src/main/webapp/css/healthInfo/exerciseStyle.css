@@ -143,6 +143,7 @@
 	width: 380px;
 	background-color: #F3F3F3;
 	border-radius: 20px;
+	height: fit-content;
 }
 .add-info-content {
 	width: 320px;
@@ -154,6 +155,11 @@
 }
 .date {
 	margin: 15px auto -5px 5px;
+}
+#health_date {
+	background-color: #F3F3F3; 
+	font-weight: 600;
+	font-size: 20px;
 }
 select {
 	border: none;
@@ -260,6 +266,8 @@ select {
 	font-size: 18px;
 	font-weight: 700;
 	height: 40px;
+	margin: auto;
+	display: flex;
 }
 
 /*-------------

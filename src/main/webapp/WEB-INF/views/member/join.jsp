@@ -204,51 +204,112 @@
         text-align:center;
         } 
 .container {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  
+    max-width: 600px; /* Adjust as necessary */
+    margin: auto;
+    padding: 20px;
+    background-color: #f7f7f7; /* Soft background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+/* Styling for the form and its elements */
+form {
+    margin-top: 20px;
 }
 
 table {
-  width: 100%; 
-  border-collapse: collapse;
-  margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-th {
-  padding: 10px; 
-  text-align: center;
-  
-  font-size: 1rem; 
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+/* Error messages */
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+    display: none; /* Hide by default, show when needed */
 }
 
-td {
-  padding: 10px; 
-  text-align: left;
-  
-  font-size: 1rem; 
-}
-.error-message{
-	color : red;
-	font-size: 1rem;
+/* Adjust link appearance */
+a {
+    color: #007bff;
+    text-decoration: none;
 }
 
- .reg input {
-            width: 210px;
-            padding: 8px;
-            margin: 5px 0;
-        }
- .reg a {
- 	font-size: 1rem;
- 	margin-top: 5px;
- 	margin-left: 5px;
- }       
+a:hover {
+    text-decoration: underline;
+}
 
-   input[type="submit"]:hover {
-  background-color: #CEDEBD; /* 마우스를 올렸을 때의 초록색 */
-}     
+/* Specific styles for registration elements */
+.reg input {
+    width: auto; /* Adjust width for individual inputs */
+    padding: 8px;
+    margin-right: 10px; /* Spacing between input and check button */
+}
+
+.reg a {
+    display: inline-block; /* Align with input */
+    margin: 0 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* More width on smaller screens */
+    }
+}
+ 
+ input[type="text"],
+input[type="password"] {
+    width: calc(100% - 24px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+
+ input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f9b572;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #ffa954;
+}
+
+/* Button-like styles for links */
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 10px 5px 10px 0; /* Adjust as needed */
+    background-color: #9DC08B; /* Primary button color */
+    color: white; /* White text color */
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from links */
+    font-size: 0.875rem; /* Smaller font size for buttons */
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.button:hover {
+   
+    color: white; /* Ensure text color remains white on hover */
+}
+
+/* Rest of your styles remain unchanged */
 
 
 </style>
@@ -276,7 +337,7 @@ td {
 									<input type="text" name="member_id" id="member_id"
 										placeholder="5자 이상 20자 미만" style="float: left;"
 										oninput="validateId()"> <a href="javascript:;"
-										style="float: left; width: auto; clear: none;" id="idCheck">중복확인</a>
+										style="float: left; width: auto; clear: none;" id="idCheck" class="button">중복확인</a>
 
 									</td>
 								</tr>
@@ -331,7 +392,7 @@ td {
 										id="member_nickname" style="float: left;"
 										placeholder="10자 미만으로 입력" oninput="validateNickname()">
 										<a href="javascript:;"
-										style="float: left; width: auto; clear: none;" id="nicknameCheck">중복확인</a></td>
+										style="float: left; width: auto; clear: none;" id="nicknameCheck" class="button">중복확인</a></td>
 										
 											
 								</tr>
@@ -358,7 +419,7 @@ td {
 									<td><input type="text" name="zipcode" id="zipcode"
 										value="" maxlength="6" style="float: left;" readonly>
 										<a href="javascript:zipcode();"
-										style="float: left; width: auto; clear: none;">우편번호</a></td>
+										style="float: left; width: auto; clear: none;" class="button">우편번호</a></td>
 								</tr>
 								<tr>
 									<td><input type="text" name="member_addr" id="member_addr"

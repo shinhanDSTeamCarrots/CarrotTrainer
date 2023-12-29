@@ -81,11 +81,16 @@
 	
 	<insert id = "memberInterest" parameterType = "xyz.teamcarrot.myct.member.InterestVO">
 		INSERT INTO tb_member_interest (
-		member_interest_no, member_id
+		member_interest_no, member_no
 		) VALUES (
-		#{member_interest_no}, #{member_id}
+		#{member_interest_no}, #{member_no}
 		)
 	</insert>
+	<select id = "interestSelect"  resultType= "xyz.teamcarrot.myct.member.InterestVO" parameterType="int">
+		SELECT *
+		FROM tb_member_interest
+		WHERE member_no = #{member_no}
+	</select>
 
 <select id="all" parameterType="xyz.teamcarrot.myct.member.MemberVO" resultType="xyz.teamcarrot.myct.member.MemberVO">
 		SELECT member_no, member_id, member_name, member_blocked
