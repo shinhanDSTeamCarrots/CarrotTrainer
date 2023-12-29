@@ -14,7 +14,7 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css" />
-<script src="js/script.js"></script>
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 <script>
 	function loginCheck() {
 		if ($("#member_id").val() == '') {
@@ -32,28 +32,32 @@
 	}
 </script>
 <style>
-.wrap {
-	margin: auto;
-	text-align: center;
-}
-
 .container {
 	max-width: 1200px;
-	margin: 50px auto;
+	margin: 0 auto;
 	padding: 20px;
 	background-color: #fff;
+	height: 900px;
 	
-	
+}
+.login-main {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    margin: 100px auto;
+}
+.login-main img {
+	margin: 30px;
 }
 .login-card {
     width: 100%;
     max-width: 500px; /* Increase the maximum width */
-    margin: auto;
     padding: 40px; /* More padding for larger appearance */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Enhance shadow for depth */
     border-radius: 15px; /* Larger border radius for softer corners */
     background: white;
     transition: transform 0.3s ease; /* Smooth transition for hover effect */
+    margin: 0 auto;
 }
 
 h1 {
@@ -77,17 +81,21 @@ h1 {
 }
 
 label {
-    flex-basis: 30%; /* Allocate space for label */
     text-align: left; /* Align text to the left */
     margin-right: 10px;
     font-size: 14px;
     font-weight: bold;
 }
-
+.idpw {
+	margin: 10px;
+    text-align: center;
+}
+#member_id{
+	margin-left: 7px;
+}
 
 input[type="text"],
 input[type="password"] {
-    flex-grow: 1;
     padding: 15px; /* Larger padding for bigger input fields */
     border: 2px solid #ddd;
     border-radius: 5px;
@@ -123,19 +131,25 @@ button:hover {
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-			<div class="login-card">
-        <h1 class="ll">Login</h1>
-        <form action="login" method="post" id="login-form">
-            <div class="form-group">
-                <label for="member_id">아이디</label>
-                <input type="text" name="member_id" id="member_id">
-            </div>
-            <div class="form-group">
-                <label for="member_pw">비밀번호</label>
-                <input type="password" name="member_pw" id="member_pw">
-            </div>
-            <button type="submit" onclick="return loginCheck();">로그인</button>
-        </form>
+			<div class="login-main">
+				<img src="${pageContext.request.contextPath}/img/carrot_border.png">
+				<div class="login-card">
+			        <h1 class="ll">LOGIN</h1>
+			        <form action="login" method="post" id="login-form">
+				        <div class="idpw">
+				            <div class="form-group">
+				                <label class="name" for="member_id">ID</label>
+				                <input class="userInput" type="text" name="member_id" id="member_id">
+				            </div>
+				            <div class="form-group">
+				                <label class="name" for="member_pw">PW</label>
+				                <input class="userInput" type="password" name="member_pw" id="member_pw">
+				            </div>
+				         </div>
+			            <button type="submit" onclick="return loginCheck();">로그인</button>
+			        </form>
+	   			 </div>
+	   			 <img src="${pageContext.request.contextPath}/img/carrot_border.png">
    			 </div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
