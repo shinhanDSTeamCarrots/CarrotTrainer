@@ -172,9 +172,10 @@
 	            } else {
 	                for (var i = 0; i < qnaList.length; i++) {
 	                    var qna = qnaList[i];
-	                    var no=qnaList.length - i;
+	                    var alignNo=qnaList.length - i;
 	                    var row = $("<tr>");
-	                    row.append("<td class='no'>" + no + "</td>");
+	                    row.append("<td class='alignNo'>" + alignNo + "</td>");
+	                    row.append("<td class='no'>" + qna.inquiry_no+ "</td>");
 	                    row.append("<td class='title'>" + getTitleText(qna) + "</td>");
 	                    row.append("<td class='writer'>" + qna.member_nickname + "</td>");
 	                    row.append("<td class='date'>" + convertTimestampToFormattedDate(qna.inquiry_date) + "</td>");
@@ -261,8 +262,8 @@
 					}
 				}				
 			},
-			error:function(qnaDetil){
-				console.log(qnaDetil);
+			error: function (xhr, status, error) {
+		        console.error("문의 상세보기 ajax 에러:", status, error);
 			}
 		});
 		
@@ -467,131 +468,11 @@
 			}
 		});					
 	});
-
+	
 	</script>
 	
 </head>
-<style>
-/* 상품문의 Section Container */
-.itemDetailQna {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 5px;
-}
 
-.qnaHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.qnaHeader .sub_title {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
-}
-
-.qnaHeader .qnaCnt {
-    font-size: 16px;
-    color: #666;
-}
-
-.writebtn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.writebtn:hover {
-    background-color: #0056b3;
-}
-
-/* Form Styling */
-.writeform {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.writeform p {
-    margin: 0;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.writeform input[type="text"], .writeform select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Buttons in Form */
-.qnabtns {
-    text-align: right;
-}
-
-.qnabtns button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.donebtn {
-    background-color: #28a745;
-    color: white;
-}
-
-.closebtn {
-    background-color: #dc3545;
-    color: white;
-}
-
-.donebtn:hover {
-    background-color: #218838;
-}
-
-.closebtn:hover {
-    background-color: #c82333;
-}
-
-/* QnA List Table Styling */
-.qnaTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.qnaTable th, .qnaTable td {
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.qnaTable th {
-    background-color: #f0f0f0;
-}
-
-.qnaTable td {
-    background-color: #ffffff;
-}
-
-.qnaTable tr:hover {
-    background-color: #f2f2f2;
-}
-
-</style>
 <body>
     <div class="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -683,7 +564,7 @@
 				</div>
 				<div class="itemDetailPurchaseInfo" id="detailPurchaseInfo">
 					<p>구매정보</p>
-					${item.purchase_info}
+					<div class="infoText">${item.purchase_info}</div>
 				</div>
 				<div class="itemDetailReview" id="detailReview">
 					<p>전체 리뷰</p>

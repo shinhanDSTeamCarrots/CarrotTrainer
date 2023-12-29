@@ -19,4 +19,9 @@ public class FoodDiaryVO {
 	private double total_sugar;
 	private int total_salt;
 	private int member_no;
+	
+	private int breakfast_calorie;
+	private int lunch_calorie;
+	private int dinner_calorie;
+	private int snack_calorie;
 }

@@ -15,6 +15,19 @@
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/bodyChangeChart.js"></script>
+	<script type="text/javascript">
+		const foodchange = JSON.parse('${foodGraphJson}');
+		const healthchange = JSON.parse('${healthGraphJson}');
+		const bodychange = JSON.parse('${bodyGraphJson}');
+		console.log(foodchange);
+		console.log(healthchange);
+		console.log(bodychange);
+		$(document).ready(function(){
+			drawGraphs(foodchange, healthchange, bodychange);
+		});
+		
+	
+	</script>
 </head>
 <body>
     <div class="wrap">
@@ -23,7 +36,7 @@
     		<div class="bodyReport-title">
 	    		<div class="bodyReport-title-content">
 	    			<p class="bodyReport-title-text">REPORT</p>
-	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
+	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/diary'">오늘의 다이어리</button>
 	    		</div>
 	    		<div class="title-division-line"></div>
 	    		<p class="bodyReport-text">안녕하세요, <span class="sql-text-name"></span>님!</p>

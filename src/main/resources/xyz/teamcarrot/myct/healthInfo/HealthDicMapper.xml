@@ -77,7 +77,13 @@
 	</insert>
 	<!-- 운동 정보 불러오기 -->
 	<select id="selectHealthInfo" parameterType="int" resultType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">
-		SELECT * FROM tb_health_diary WHERE member_no = #{member_no} AND health_diary_no = #{health_diary_no};
+		SELECT 
+			  health_diary_no
+			, SUM(health_calorie) AS health_calorie
+			, SUM(health_time) AS health_time
+			, health_date
+		FROM tb_health_diary
+		WHERE member_no = #{member_no} AND DATE(health_date) = DATE(NOW());
 	</select>
 	<!-- 운동 정보 수정 -->
 	<update id="updateHealthInfo" parameterType="xyz.teamcarrot.myct.healthInfo.HealthDiaryVO">

@@ -26,6 +26,15 @@ public class DiaryServiceImpl implements DiaryService {
 	public int deleteFoodDiary(FoodDiaryVO vo) {
 		return mapper.deleteFoodDiary(vo.getFood_diary_no());
 	}
+	
+	@Override
+	public FoodDiaryVO selectFoodCal(int member_no) {
+		FoodDiaryVO vo = mapper.selectFoodCal(member_no);
+		//System.out.println("vo: "+vo.toString());
+		return vo;
+	}
+	
+	
 	//tb_food_diary_info 테이블
 	@Override
 	public int insertFoodInfo(FoodDiaryInfoVO vo) {

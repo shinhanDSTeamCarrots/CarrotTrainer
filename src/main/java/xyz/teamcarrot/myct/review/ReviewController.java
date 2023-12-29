@@ -80,6 +80,9 @@ public class ReviewController {
 		if(returnmap.get("avg_point") != null) {
 			BigDecimal d = (BigDecimal)returnmap.get("avg_point");
 			returnmap.put("avg_point", Math.round(d.doubleValue() * 100)/100.0f);
+			int value = (int) Math.round(d.doubleValue() * 2);
+			log.info("value: "+Math.round(d.doubleValue() * 2));
+			returnmap.put("avg_point_display", value);
 		}
 		
 		
