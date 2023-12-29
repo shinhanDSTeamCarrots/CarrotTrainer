@@ -15,6 +15,19 @@
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/userInfoScript.jsp"></script>
 	<script src="${pageContext.request.contextPath}/js/healthInfo/bodyChangeChart.js"></script>
+	<script type="text/javascript">
+		const foodchange = JSON.parse('${foodGraphJson}');
+		const healthchange = JSON.parse('${healthGraphJson}');
+		const bodychange = JSON.parse('${bodyGraphJson}');
+		console.log(foodchange);
+		console.log(healthchange);
+		console.log(bodychange);
+		$(document).ready(function(){
+			drawGraphs(foodchange, healthchange, bodychange);
+		});
+		
+	
+	</script>
 </head>
 <body>
     <div class="wrap">
