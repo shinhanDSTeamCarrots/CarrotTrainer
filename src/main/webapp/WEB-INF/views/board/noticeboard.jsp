@@ -22,8 +22,9 @@
 body {
   font-family: 'Roboto', sans-serif;
   color: #333;
-  background-color: #f4f4f4;
+
 }
+
 
 .container {
   max-width: 1200px;
@@ -35,7 +36,7 @@ body {
 
 .board-title {
   font-size: 2.4rem;
-  color: #4CAF50;
+  color: #748E63;
   margin-bottom: 20px;
    font-weight: bold;
 }
@@ -60,7 +61,7 @@ th, td {
 
 
 th {
-  background-color: #faa04b;
+  background-color: #f9b572;
   color: white;
 }
 
