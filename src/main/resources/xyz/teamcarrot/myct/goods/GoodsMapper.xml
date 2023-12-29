@@ -25,7 +25,7 @@
 		FROM tb_goods
 		WHERE is_delete = 0
 		ORDER BY goods_rate DESC
-		LIMIT 0, 10
+		LIMIT 0, 5
 	</select>
 	
 	<!-- 카테고리별 상품 리스트 -->
