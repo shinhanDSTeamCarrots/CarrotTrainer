@@ -18,7 +18,7 @@ public class BodyReportController {
 	BodyChangeService service;
 	
 	
-	@GetMapping("/bodyReport")
+	@GetMapping("healthInfo/bodyReport")
 	public ModelAndView bmi(HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
 		
@@ -27,7 +27,7 @@ public class BodyReportController {
 
 			mav.addObject("cmd", "move");
 			mav.addObject("msg", "로그인이 필요합니다.");
-			mav.addObject("url", "member/login");
+			mav.addObject("url", "/myct/member/login");
 			mav.setViewName("common/alert");
 			return mav;
 		}
