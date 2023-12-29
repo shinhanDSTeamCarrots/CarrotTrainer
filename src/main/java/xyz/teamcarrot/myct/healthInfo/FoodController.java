@@ -23,7 +23,7 @@ public class FoodController {
 	HealthDicService service;
 	
 	//리스트 출력
-	@GetMapping("/food")
+	@GetMapping("healthInfo/food")
 	public String searchFoodInfo(Model model, HttpSession sess, String foodName, Integer page) {
 		int pageNumber = (page != null) ? page : 1;
 		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");

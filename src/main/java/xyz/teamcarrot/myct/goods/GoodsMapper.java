@@ -29,4 +29,7 @@ public interface GoodsMapper {
 	int update(GoodsVO goods);
 	
 	
+	//핫한 상품 리스트
+	List<GoodsVO> hotGoodsList();
+	
 }

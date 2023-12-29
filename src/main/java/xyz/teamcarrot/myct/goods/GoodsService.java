@@ -19,4 +19,6 @@ public interface GoodsService {
 	//상품 추가
 	int goodsInsert(GoodsVO goods);
 
+	//핫한 상품 리스트
+	List<GoodsVO> hotGoodsList();
 }

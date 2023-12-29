@@ -21,8 +21,8 @@
     	<div class="container">
     		<div class="bmi-title">
     			<p class="bmi-title-text">DIARY</p>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
-   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/bodyReport'">모아보기</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/diary'">오늘의 다이어리</button>
+   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/bodyReport'">모아보기</button>
     		</div>
     		<div class="title-division-line"></div>
     		<p class="bmi-text">안녕하세요, <span class="sql-text-name"></span>님!</p>
@@ -69,8 +69,13 @@
 			    				</select>
 			    			</li>
 	   					</ul>
-	   					<input type="hidden" name="body_info_no" id="body_info_no" value="${bodyInfo.body_info_no }">
+	   					<c:if test="${!empty bodyInfo.body_info_no }">
+	   						<input type="hidden" name="body_info_no" id="body_info_no" value="${bodyInfo.body_info_no }">
+	   					</c:if>
+	   					
+	   					<c:if test="${!empty bodyInfo.member_no }">
 		    			<input type="hidden" name="member_no" id="member_no" value="${bodyInfo.member_no }">
+	   					</c:if>
 	   				</form>
 	   				<div class="bmi-input-button">
 	   					<button class="bmi-btn" id="bmi-calc">계산</button>

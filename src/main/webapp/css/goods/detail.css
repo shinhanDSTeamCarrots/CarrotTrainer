@@ -241,10 +241,10 @@ a:visited {
 
 .detailMenuContent > .itemDetailImage{
 	text-align: center;
-	margin-bottom: 20px;
+	margin-bottom: 35px;
 }
 .detailMenuContent > .itemDetailPurchaseInfo{
-	margin-bottom:20px;	
+	margin-bottom:35px;	
 }
 
 .detailMenuContent > .itemDetailPurchaseInfo > p{
@@ -253,8 +253,12 @@ a:visited {
 	text-align:left;
 	margin-bottom:10px;	
 }
+
+#detailPurchaseInfo .infoText {
+    white-space: pre-line;
+}
 .detailMenuContent > .itemDetailReview{
-	margin-bottom:20px;	
+	margin-bottom:35px;	
 }
 
 .detailMenuContent > .itemDetailReview > p{
@@ -264,7 +268,7 @@ a:visited {
 	margin-bottom:10px;	
 }
 .detailMenuContent > .itemDetailQna{
-	margin-bottom:20px;	
+	margin-bottom:35px;	
 }
 .detailMenuContent > .itemDetailQna > p{
 	font-size:24px;
@@ -425,4 +429,13 @@ a:visited {
 }
 .qnaTable > #qnaTableBody{
 	text-align: center;
+}
+
+td.alignNo {
+    display: table-cell;
+}
+
+/* inquiry_no 열은 감추기 */
+td.no {
+    display: none;
 }

@@ -23,7 +23,7 @@
     		<div class="bodyReport-title">
 	    		<div class="bodyReport-title-content">
 	    			<p class="bodyReport-title-text">REPORT</p>
-	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/diary'">오늘의 다이어리</button>
+	   				<button class="move" onclick="location.href='${pageContext.request.contextPath}/healthInfo/diary'">오늘의 다이어리</button>
 	    		</div>
 	    		<div class="title-division-line"></div>
 	    		<p class="bodyReport-text">안녕하세요, <span class="sql-text-name"></span>님!</p>

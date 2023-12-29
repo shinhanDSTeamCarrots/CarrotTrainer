@@ -29,7 +29,7 @@ public class QnaController {
 	@GetMapping("/detail/{goods_no}/qnaList")
 	public List<GoodsInquiryVO> qnaList(Model model, @PathVariable int goods_no) {
 		List<GoodsInquiryVO> qnaList = service.getQnaList(goods_no);
-	    logger.info("상품번호별 문의 리스트 goods_no {} qna: {}", goods_no, qnaList);
+	    //logger.info("상품번호별 문의 리스트 goods_no {} qna: {}", goods_no, qnaList);
 		return qnaList;
 	}
 	
@@ -39,6 +39,7 @@ public class QnaController {
 		System.out.println("inquiry number 체크! " + inquiry_no);
 		GoodsInquiryVO qnaDetail = service.eachQna(inquiry_no);
 		logger.info("!!!!!");
+		System.out.println(qnaDetail);
 		return qnaDetail;
  	}
  	
@@ -46,7 +47,7 @@ public class QnaController {
 	@GetMapping("/detail/{goods_no}/qnaCnt")
 	public int qnaCnt(Model model, @PathVariable int goods_no) {
 		int qnaCnt=service.getCntbyGoodsno(goods_no);
-		logger.info("상품번호별 문의 갯수 goods_no {} qnaCnt: {}", goods_no, qnaCnt);
+		//logger.info("상품번호별 문의 갯수 goods_no {} qnaCnt: {}", goods_no, qnaCnt);
 		return qnaCnt;
 	}
 	
@@ -78,7 +79,7 @@ public class QnaController {
 	@PostMapping("/detail/qnaUpdate")
 	public String updateQna(@RequestBody GoodsInquiryVO vo) {
 		int r = service.updateQna(vo);
-		logger.info("수정하러 들어옴" +vo);
+		//logger.info("수정하러 들어옴" +vo);
 		System.out.println(r);
 		
 		return "success";
@@ -88,7 +89,7 @@ public class QnaController {
 	@PostMapping("/detail/qnaDelete/{inquiry_no}")
 	public String qnaDel(@PathVariable int inquiry_no) {
 		int r = service.qnaDel(inquiry_no);
-		logger.info("문의 삭제함"+ inquiry_no);
+		//logger.info("문의 삭제함"+ inquiry_no);
 		return "success";
 	}
 
