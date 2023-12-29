@@ -119,7 +119,7 @@
     							</span> kcal
     						</div>
     					</div>
-    					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/food'">
+    					<div class="foodDiary-food-inform" id="snack" onclick="location.href='${pageContext.request.contextPath}/healthInfo/food'">
     						<div class="nutrient-image"><p>+</p></div>
     						<div class="nutrient-time">간식</div>
     						<div class="kcal">
