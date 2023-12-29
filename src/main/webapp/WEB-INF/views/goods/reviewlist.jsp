@@ -129,6 +129,7 @@
 
 
 .alignList {
+	margin-top:20px;
     display: flex;
     justify-content: start; 
     gap: 10px;
@@ -253,10 +254,28 @@ progress::-webkit-progress-value {
 	font-size: 24px;
 }
 
-.headUserAvgPointConst {
-	width:20%;
+.headUserAvgPointConst > .point {
+	width:20%;	
 }
-
+.headUserAvgPointConst{
+	display:flex;
+	flex-direction:row;
+}
+.avgPoint{
+	display:flex;
+	flex-direction:row;
+}
+.point{
+	font-size:24px;
+	font-weight:600;
+}
+.points{
+	margin-right:15px;
+}
+.avgPointText{
+	font-size:20px;
+	font-weight:bold;
+}
 
 </style>
 </head>
@@ -282,9 +301,10 @@ progress::-webkit-progress-value {
     	<li>
     		<div class="headUserAvgPointConst">
     			<p class="point">사용자 평균 평점</p><br>	
+    			<div class="avgPoint">
     			<%--progress min="0" max="5" value="${map.avg_point }" ></progress--%>
     			<input type="hidden" value="${map.avg_point_display }"/>
-    			<div class="points">
+    				<div class="points">
 						<c:if test="${map.avg_point_display == 1}">
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_half.png" alt="star_half">
 		        		</c:if>
@@ -331,8 +351,9 @@ progress::-webkit-progress-value {
 		        		<img src="${pageContext.request.contextPath}/img/ico_star_off.png" alt="star_off">
 		        		</c:if>
 		        	</div>
-    			<p>${map.avg_point }</p>
-    			<br>
+		        	<p class="avgPointText">${map.avg_point }</p>
+    			
+    			</div>
     		</div>
     		<%--
     		<div class="headPointRatio">
