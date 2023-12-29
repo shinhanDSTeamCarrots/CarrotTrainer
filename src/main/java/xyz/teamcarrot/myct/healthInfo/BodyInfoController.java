@@ -84,8 +84,15 @@ public class BodyInfoController {
 			model.addAttribute("foodDiary", diaryService.selectFoodDiary(mem.getMember_no()));
 			model.addAttribute("bodyInfo", service.selectBodyInfo(mem.getMember_no()));
 			model.addAttribute("bodyChange", service.selectBodyChange(mem.getMember_no()));
+			
+			return "/healthInfo/diary";
+		} else {
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/member/login");
+			
+			return "common/alert";
 		}
-		return "/healthInfo/diary";
 	}
 	@PostMapping("healthInfo/insertBodyChange")
 	public String insertBodyChange(Model model, BodyChangeVO vo, HttpSession sess) {
