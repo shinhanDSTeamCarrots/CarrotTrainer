@@ -128,9 +128,11 @@
 					<div class="title-division-line"></div>
 					<div>
 						<div class="foodInfo">
+							<!--
 							<div class="time">
-								<input id="food_date" name="food_date" autocomplete="off" readonly="readonly">
+								<input id="food_date" name="food_date" autocomplete="off" readonly="readonly" value="날짜를 선택해주세요">
 							</div>
+							-->
 							<div class="date">
 								<select name="intake_time" id="intake_time">
 			    					<option value="" disabled selected>[필수] 섭취 시간을 입력해주세요</option>

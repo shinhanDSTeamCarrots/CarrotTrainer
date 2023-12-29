@@ -28,9 +28,8 @@ $(function () {
 				// 세션에 저장된 데이터 가져오기
 				let foodInfo = sessionStorage.getItem("foodData");
 
-
 				// input 요소의 값 가져오기
-				console.log($("input[name='health_date']").val());
+				console.log($("input[name='food_date']").val());
 
 				if ($("#food_date").val() != '') {
 					let foodDateInput = $("input[name='food_date']");
@@ -38,41 +37,74 @@ $(function () {
 					let foodDateObject = new Date(foodDateValue);
 					let formattedDate = foodDateObject.toISOString().split('T')[0];
 					
-					// 세션 데이터가 있으면 분리하여 입력 필드에 할당
 					if (foodInfo) {
-						let foodData = JSON.parse(foodInfo);
-						console.log(foodInfo);
-						hiArr = [];
-						for (var k in foodData) {
-							console.log(k);
-							hiArr.push(foodData[k]);
-						}
-						console.log(hiArr);
-						// 각 데이터에 대해 폼 생성 및 전송
-						for (let i = 0; i < hiArr.length; i++) {
-							console.log(hiArr[i]);
-		
-							// 새로운 폼 엘리먼트 생성
-							let form = $('<form>', {
-								'class': 'foodInfo-cart',
-								'action': 'insertFoodDiary',
-								'method': 'post'
-							});
-		
-							// 숨겨진 입력 필드 생성 및 세션 값 할당
-							createHiddenInput(form, "intake_date", formattedDate);
-							createHiddenInput(form, "intake_time", $('#intake_time').val());
-							createHiddenInput(form, "image", "");
-							createHiddenInput(form, "total_calorie", Number(hiArr[i].calorie));
-							createHiddenInput(form, "total_carbs", Number(hiArr[i].carbs));
-							createHiddenInput(form, "total_protein", Number(hiArr[i].protein));
-							createHiddenInput(form, "total_fat", Number(hiArr[i].fat));
-							createHiddenInput(form, "total_sugar", Number(hiArr[i].sugar));
-							createHiddenInput(form, "total_salt", Number(hiArr[i].salt));
-							
-							// 폼을 body에 추가하고 제출
-		    				form.appendTo('body').submit().remove();
-						}
+					    let foodData = JSON.parse(foodInfo);
+					    console.log(foodInfo);
+					    hiArr = [];
+					    for (var k in foodData) {
+					        console.log(k);
+					        hiArr.push(foodData[k]);
+					    }
+					    console.log(hiArr);
+					
+					    // 각 데이터에 대해 Ajax를 사용하여 전송
+					    for (let i = 0; i < hiArr.length; i++) {
+					        console.log(hiArr[i]);
+					
+					        $.ajax({
+					            type: 'POST',
+					            url: 'insertFoodDiary',  // 실제 서버 엔드포인트에 맞게 수정
+					            data: {
+					                intake_date: formattedDate,
+					                intake_time: $('#intake_time').val(),
+					                image: "",
+					                total_calorie: Number(hiArr[i].calorie),
+					                total_carbs: Number(hiArr[i].carbs),
+					                total_protein: Number(hiArr[i].protein),
+					                total_fat: Number(hiArr[i].fat),
+					                total_sugar: Number(hiArr[i].sugar),
+					                total_salt: Number(hiArr[i].salt),
+					            },
+					            success: function(response) {
+					            	//성공하면 데이터 추가 전송
+					                console.log('Success:', response);
+								    hiArr = [];
+									for (var k in foodData) {
+										console.log(k);
+										hiArr.push(foodData[k]);
+									}
+									console.log(hiArr);
+									// 각 데이터에 대해 폼 생성 및 전송
+									for (let i = 0; i < hiArr.length; i++) {
+										console.log(hiArr[i]);
+					
+										// 새로운 폼 엘리먼트 생성
+										let form = $('<form>', {
+											'class': 'foodInfo-cart',
+											'action': 'insertFoodInfo',
+											'method': 'post'
+										});
+					
+										// 숨겨진 입력 필드 생성 및 세션 값 할당
+										createHiddenInput(form, "food_name", hiArr[i].health);
+										createHiddenInput(form, "food_gram", Number(hiArr[i].gram));
+										createHiddenInput(form, "food_unit", "g");
+										createHiddenInput(form, "food_calorie", Number(hiArr[i].calorie));
+										createHiddenInput(form, "food_carbs", Number(hiArr[i].carbs));
+										createHiddenInput(form, "food_protein", Number(hiArr[i].protein));
+										createHiddenInput(form, "food_fat", Number(hiArr[i].fat));
+										createHiddenInput(form, "food_sugar", Number(hiArr[i].sugar));
+										createHiddenInput(form, "food_salt", Number(hiArr[i].salt));
+										
+										// 폼을 body에 추가하고 제출
+					    				form.appendTo('body').submit().remove();
+									}
+					            },
+					            error: function(error) {
+					                console.error('Error:', error);
+					            }
+					        });
+					    }
 					} else {
 						alert("저장할 음식 목록이 없습니다.");
 					}
@@ -533,8 +565,8 @@ function calendarHandler() {
 	//일자 설정
 	const config = {
 		dateFormat: 'yy-mm-dd',
-		showOn: "button",
-		buttonText: "날짜 선택",
+		showOn: "both",
+		buttonText: "",
 		prevText: '이전 달',
 		nextText: '다음 달',
 		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],

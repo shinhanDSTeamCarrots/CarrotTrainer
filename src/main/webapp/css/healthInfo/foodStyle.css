@@ -151,6 +151,7 @@
 	width: 380px;
 	background-color: #F3F3F3;
 	border-radius: 20px;
+	height: fit-content;
 }
 .add-info-content {
 	width: 320px;
@@ -344,9 +345,16 @@ select {
 .date {
 	font-size: 18px;
 	font-weight: 700;
-	height: 40px;
 }
-
+.time {
+	height: 40px;
+	margin: auto;
+	display: flex;
+}
+#food_date {
+	background-color: #F3F3F3; 
+	font-weight: 600;
+}
 /*-----------
 	모달팝업
 -----------*/

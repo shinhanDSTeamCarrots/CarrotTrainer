@@ -282,8 +282,8 @@ function calendarHandler() {
 	//일자 설정
 	const config = {
 		dateFormat: 'yy-mm-dd',
-		showOn: "button",
-		buttonText: "날짜 선택",
+		showOn: "both",
+		buttonText: "",
 		prevText: '이전 달',
 		nextText: '다음 달',
 		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
