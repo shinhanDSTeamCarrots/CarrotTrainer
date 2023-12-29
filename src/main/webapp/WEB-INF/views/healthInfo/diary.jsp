@@ -82,6 +82,7 @@
     					<img src="${pageContext.request.contextPath}/img/carrot_border.png">
     				</div>
     			</div>
+    			<!-- 
     			<div class="diary-comment">
     				<p id="diary-comment-title"><span class="sql-text-name" id="sql-user-name"></span>님의 <span class="sql-diary-comment">11월 20일</span>부터 <span class="sql-diary-comment">11월 26일</span>까지의 기록이에요</p>
     				<div class="diary-comment-detail" id="body">
@@ -97,6 +98,7 @@
     					<p>꾸준한 운동은 몸 건강에 좋아요</p>
     				</div>
     			</div>
+    			 -->
     		</div>
     		<!-- 모달 팝업 -->
     		<div id="modalWrap">
