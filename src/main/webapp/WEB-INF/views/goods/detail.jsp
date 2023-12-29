@@ -172,9 +172,10 @@
 	            } else {
 	                for (var i = 0; i < qnaList.length; i++) {
 	                    var qna = qnaList[i];
-	                    var no=qnaList.length - i;
+	                    var alignNo=qnaList.length - i;
 	                    var row = $("<tr>");
-	                    row.append("<td class='no'>" + no + "</td>");
+	                    row.append("<td class='alignNo'>" + alignNo + "</td>");
+	                    row.append("<td class='no'>" + qna.inquiry_no+ "</td>");
 	                    row.append("<td class='title'>" + getTitleText(qna) + "</td>");
 	                    row.append("<td class='writer'>" + qna.member_nickname + "</td>");
 	                    row.append("<td class='date'>" + convertTimestampToFormattedDate(qna.inquiry_date) + "</td>");
@@ -261,8 +262,8 @@
 					}
 				}				
 			},
-			error:function(qnaDetil){
-				console.log(qnaDetil);
+			error: function (xhr, status, error) {
+		        console.error("문의 상세보기 ajax 에러:", status, error);
 			}
 		});
 		
@@ -467,7 +468,7 @@
 			}
 		});					
 	});
-
+	
 	</script>
 	
 </head>
@@ -563,7 +564,7 @@
 				</div>
 				<div class="itemDetailPurchaseInfo" id="detailPurchaseInfo">
 					<p>구매정보</p>
-					${item.purchase_info}
+					<div class="infoText">${item.purchase_info}</div>
 				</div>
 				<div class="itemDetailReview" id="detailReview">
 					<p>전체 리뷰</p>
