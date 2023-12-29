@@ -42,76 +42,101 @@
 	margin: 50px auto;
 	padding: 20px;
 	background-color: #fff;
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-}
-
-th, td {
-	padding: 10px;
-	text-align: center;
-	font-size: 1rem;
-	padding-left: 10px;
-}
-
-table {
-	width: 1000px;
-}
-td:nth-child(2) {
-	padding-left: 50px;
-	width: 10%;
-	padding-right: 50px;
-}
-
-input[type="submit"] {
-	height: 75px;
-	width: 75px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	margin-top: 30px;
-}
-
-input[type="submit"]:hover {
-	background-color: #CEDEBD;
+	
 	
 }
-
-#board {
-	display: flex;
-	margin: auto;
-	text-align: center;
+.login-card {
+    width: 100%;
+    max-width: 500px; /* Increase the maximum width */
+    margin: auto;
+    padding: 40px; /* More padding for larger appearance */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Enhance shadow for depth */
+    border-radius: 15px; /* Larger border radius for softer corners */
+    background: white;
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem; /* Larger font size */
+    margin-bottom: 30px; /* More space below heading */
+}
+
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.input-row {
+    display: flex; /* Align items in a row */
+    justify-content: space-between; /* Space out label and input */
+    align-items: center; /* Align items vertically */
+    margin-bottom: 20px; /* Space between rows */
+}
+
+label {
+    flex-basis: 30%; /* Allocate space for label */
+    text-align: left; /* Align text to the left */
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+input[type="text"],
+input[type="password"] {
+    flex-grow: 1;
+    padding: 15px; /* Larger padding for bigger input fields */
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem; /* Adjust font size as needed */
+}
+
+
+button {
+    width: 100%;
+    padding: 15px; /* Bigger button */
+    font-size: 1.1rem; /* Larger font size */
+    color: white;
+    background-color: #f9b572;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+
+button:hover {
+    background-color: #ffa954; /* Darken color on hover */
+}
+
+.login-card:hover {
+    transform: translateY(-5px); /* Slight raise effect on hover */
+}
+
+
 </style>
 </head>
 <body>
 	<div class="wrap">
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<div class="container">
-		<form action="login" method="post" id="board" name="board">
-				<table class="reg">
-					<caption>회원가입</caption>
-					<colgroup>
-						<col width="20%" />
-						<col width="*" />
-					<tbody>
-						<tr>
-							<th>아이디</th>
-							<td><input type="text" name="member_id" id="member_id"
-								style="float: left;"></td>
-						</tr>
-						<tr>
-							<th>비밀번호</th>
-							<td><input type="password" name="member_pw" id="member_pw"
-								style="float: left;"></td>
-						</tr>
-					</tbody>
-				</table>
-
-				<input type="submit" value="로그인" onclick="return loginCheck();">
-			</form>
+			<div class="login-card">
+        <h1 class="ll">Login</h1>
+        <form action="login" method="post" id="login-form">
+            <div class="form-group">
+                <label for="member_id">아이디</label>
+                <input type="text" name="member_id" id="member_id">
+            </div>
+            <div class="form-group">
+                <label for="member_pw">비밀번호</label>
+                <input type="password" name="member_pw" id="member_pw">
+            </div>
+            <button type="submit" onclick="return loginCheck();">로그인</button>
+        </form>
+   			 </div>
 		</div>
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 		
