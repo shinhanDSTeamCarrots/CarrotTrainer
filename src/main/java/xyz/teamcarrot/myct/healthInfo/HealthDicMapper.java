@@ -37,4 +37,7 @@ public interface HealthDicMapper {
 	int addFoodBookmark(FoodBookmarkVO vo);
 	//북마크 제거
 	int delFoodBookmark(int food_bookmark_no);
+	
+	int insertFoodDiary(HealthDiaryVO vo);
+	int insertFoodInfo(HealthDiaryVO vo);
 }

@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 $(function () {
-	calendarHandler();
-	bookmarkHandler();
-	loadCartItems();
-	calculateTotal();
+	//페이지 초기화
+	initializePage();
 
 	//검색
 	$("#search-text").click(function () {
@@ -19,106 +17,18 @@ $(function () {
 	});
 
 	//입력
-	$("#select-info").click(function (e) {
-		//세션에서 로그인 정보 불러옴
-		const userName = "${sessionScope.loginInfo.member_nickname}";
-
-		if (userName) {
-			if (confirm("입력하시겠습니까?")) {
-				// 세션에 저장된 데이터 가져오기
-				let foodInfo = sessionStorage.getItem("foodData");
-
-				// input 요소의 값 가져오기
-				console.log($("input[name='food_date']").val());
-
-				if ($("#food_date").val() != '') {
-					let foodDateInput = $("input[name='food_date']");
-					let foodDateValue = foodDateInput.val();
-					let foodDateObject = new Date(foodDateValue);
-					let formattedDate = foodDateObject.toISOString().split('T')[0];
-					
-					if (foodInfo) {
-					    let foodData = JSON.parse(foodInfo);
-					    console.log(foodInfo);
-					    hiArr = [];
-					    for (var k in foodData) {
-					        console.log(k);
-					        hiArr.push(foodData[k]);
-					    }
-					    console.log(hiArr);
-					
-					    // 각 데이터에 대해 Ajax를 사용하여 전송
-					    for (let i = 0; i < hiArr.length; i++) {
-					        console.log(hiArr[i]);
-					
-					        $.ajax({
-					            type: 'POST',
-					            url: 'insertFoodDiary',  // 실제 서버 엔드포인트에 맞게 수정
-					            data: {
-					                intake_date: formattedDate,
-					                intake_time: $('#intake_time').val(),
-					                image: "",
-					                total_calorie: Number(hiArr[i].calorie),
-					                total_carbs: Number(hiArr[i].carbs),
-					                total_protein: Number(hiArr[i].protein),
-					                total_fat: Number(hiArr[i].fat),
-					                total_sugar: Number(hiArr[i].sugar),
-					                total_salt: Number(hiArr[i].salt),
-					            },
-					            success: function(response) {
-					            	//성공하면 데이터 추가 전송
-					                console.log('Success:', response);
-								    hiArr = [];
-									for (var k in foodData) {
-										console.log(k);
-										hiArr.push(foodData[k]);
-									}
-									console.log(hiArr);
-									// 각 데이터에 대해 폼 생성 및 전송
-									for (let i = 0; i < hiArr.length; i++) {
-										console.log(hiArr[i]);
-					
-										// 새로운 폼 엘리먼트 생성
-										let form = $('<form>', {
-											'class': 'foodInfo-cart',
-											'action': 'insertFoodInfo',
-											'method': 'post'
-										});
-					
-										// 숨겨진 입력 필드 생성 및 세션 값 할당
-										createHiddenInput(form, "food_name", hiArr[i].health);
-										createHiddenInput(form, "food_gram", Number(hiArr[i].gram));
-										createHiddenInput(form, "food_unit", "g");
-										createHiddenInput(form, "food_calorie", Number(hiArr[i].calorie));
-										createHiddenInput(form, "food_carbs", Number(hiArr[i].carbs));
-										createHiddenInput(form, "food_protein", Number(hiArr[i].protein));
-										createHiddenInput(form, "food_fat", Number(hiArr[i].fat));
-										createHiddenInput(form, "food_sugar", Number(hiArr[i].sugar));
-										createHiddenInput(form, "food_salt", Number(hiArr[i].salt));
-										
-										// 폼을 body에 추가하고 제출
-					    				form.appendTo('body').submit().remove();
-									}
-					            },
-					            error: function(error) {
-					                console.error('Error:', error);
-					            }
-					        });
-					    }
-					} else {
-						alert("저장할 음식 목록이 없습니다.");
-					}
-				} else {
-					alert("날짜를 입력해주세요.");
-				}
-			} else {
-				if (confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
-					location.href = "${pageContext.request.contextPath}/member/login";
-				}
-			}
-		}
-	});
+    $(".select-info").click(function (e) {
+        //handleFoodDataInput();
+        alert("기능을 준비중입니다.")
+    });
 });
+// 페이지 초기화 함수
+function initializePage() {
+    calendarHandler();
+    bookmarkHandler();
+    loadCartItems();
+    calculateTotal();
+}
 // 숨겨진 입력 필드 생성 및 세션 값 할당하는 함수
 function createHiddenInput(form, inputId, sessionValue) {
 	$('<input>', {
@@ -128,7 +38,104 @@ function createHiddenInput(form, inputId, sessionValue) {
 		'value': sessionValue || ''
 	}).appendTo(form);
 }
+// 음식 데이터 처리
+function handleFoodDataInput() {
+    // 세션에서 로그인 정보 불러옴
+    const userName = "${sessionScope.loginInfo.member_nickname}";
 
+    if (userName) {
+        if (confirm("입력하시겠습니까?")) {
+            processFoodEntry();
+        } else {
+            alert("날짜를 입력해주세요.");
+        }
+    } else {
+        handleLoginPrompt();
+    }
+}
+// 음식 데이터 처리
+function processFoodEntry() {
+    // 세션에 저장된 데이터 가져오기
+    let foodInfo = sessionStorage.getItem("foodData");
+    let selectedDate = $("#food_date").val();
+
+    if (selectedDate !== '') {
+        let formattedDate = getFormattedDate(selectedDate);
+
+        if (foodInfo) {
+            let foodData = JSON.parse(foodInfo);
+
+            // 각 데이터에 대해 Ajax를 사용하여 전송
+            for (let i = 0; i < foodData.length; i++) {
+                sendDiaryEntry(foodData[i], formattedDate);
+            }
+        } else {
+            alert("저장할 음식 목록이 없습니다.");
+        }
+    } else {
+        alert("날짜를 입력해주세요.");
+    }
+}
+// Ajax 요청 보내기
+function sendDiaryEntry(data, formattedDate) {
+    $.ajax({
+        type: 'POST',
+        url: 'insertFoodDiary',
+        data: {
+            intake_date: formattedDate,
+            intake_time: $('#intake_time').val(),
+            image: "",
+            total_calorie: Number(data.calorie),
+            total_carbs: Number(data.carbs),
+            total_protein: Number(data.protein),
+            total_fat: Number(data.fat),
+            total_sugar: Number(data.sugar),
+            total_salt: Number(data.salt),
+        },
+        success: function(response) {
+            console.log('Success:', response);
+            processFoodInfoData(data);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+// 로그인 프롬프트 처리
+function handleLoginPrompt() {
+    if (confirm("로그인이 필요한 기능입니다.\n로그인하시겠습니까?")) {
+        location.href = "${pageContext.request.contextPath}/member/login";
+    }
+}
+
+// 음식 정보 처리
+function processFoodInfoData(data) {
+    // 새로운 폼 엘리먼트 생성
+    let form = $('<form>', {
+        'class': 'foodInfo-cart',
+        'action': 'insertFoodInfo',
+        'method': 'post'
+    });
+
+    // 숨겨진 입력 필드 생성 및 세션 값 할당
+	createHiddenInput(form, "food_name", data.health);
+	createHiddenInput(form, "food_gram", Number(data.gram));
+	createHiddenInput(form, "food_unit", "g");
+	createHiddenInput(form, "food_calorie", Number(data.calorie));
+	createHiddenInput(form, "food_carbs", Number(data.carbs));
+	createHiddenInput(form, "food_protein", Number(data.protein));
+	createHiddenInput(form, "food_fat", Number(data.fat));
+	createHiddenInput(form, "food_sugar", Number(data.sugar));
+	createHiddenInput(form, "food_salt", Number(data.salt));
+
+    // 폼을 body에 추가하고 제출
+    form.appendTo('body').submit().remove();
+}
+// 선택한 날짜를 ISO 형식으로 변환하는 함수
+function getFormattedDate(selectedDate) {
+    let foodDateObject = new Date(selectedDate);
+    return foodDateObject.toISOString().split('T')[0];
+}
 /*-------------
 	검색 함수
 -------------*/

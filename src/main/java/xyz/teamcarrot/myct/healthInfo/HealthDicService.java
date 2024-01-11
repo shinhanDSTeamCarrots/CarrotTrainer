@@ -29,4 +29,7 @@ public interface HealthDicService {
 	int addFoodBookmark(FoodBookmarkVO vo);
 	//북마크 삭제
 	int delFoodBookmark(int food_bookmark_no);
+	
+	boolean insertFoodDiary(HealthDiaryVO vo);
+	boolean insertFoodInfo(HealthDiaryVO vo);
 }
