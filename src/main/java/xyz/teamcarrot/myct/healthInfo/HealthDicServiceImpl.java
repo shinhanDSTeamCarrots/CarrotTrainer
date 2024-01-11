@@ -234,4 +234,13 @@ public class HealthDicServiceImpl implements HealthDicService {
     public int delFoodBookmark(int food_bookmark_no) {
 		return mapper.delFoodBookmark(food_bookmark_no);
     }
+	
+	@Override
+	public boolean insertFoodDiary(HealthDiaryVO vo) {
+		return mapper.insertHealthInfo(vo) > 0 ? true : false;
+	}
+	@Override
+	public boolean insertFoodInfo(HealthDiaryVO vo) {
+		return mapper.insertHealthInfo(vo) > 0 ? true : false;
+	}
 }

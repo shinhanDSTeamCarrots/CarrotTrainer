@@ -89,5 +89,36 @@ public class FoodController {
 			return "common/alert";
 		}
 	}
-
+	@PostMapping("healthInfo/insertFoodDiary")
+	public String insertFoodDiary(HealthDiaryVO vo, Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		vo.setMember_no(mem.getMember_no());
+		boolean foodDiary = service.insertFoodDiary(vo);
+		
+		if(foodDiary) {
+			model.addAttribute("cmd", "move");
+			model.addAttribute("msg", "정보가 등록되었습니다!");
+			model.addAttribute("url", "diary");
+		} else {
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "정보 등록 실패");
+		}
+		return "/common/alert";
+	}
+	@PostMapping("healthInfo/insertFoodInfo")
+	public String insertHealthInfo(HealthDiaryVO vo, Model model, HttpSession sess) {
+		MemberVO mem = (MemberVO)sess.getAttribute("loginInfo");
+		vo.setMember_no(mem.getMember_no());
+		boolean foodInfo = service.insertFoodInfo(vo);
+		
+		if(foodInfo) {
+			model.addAttribute("cmd", "move");
+			model.addAttribute("msg", "정보가 등록되었습니다!");
+			model.addAttribute("url", "diary");
+		} else {
+			model.addAttribute("cmd", "back");
+			model.addAttribute("msg", "정보 등록 실패");
+		}
+		return "/common/alert";
+	}
 }
