@@ -17,7 +17,17 @@
 - **소개: 건강한 라이프스타일 추구, 운동 및 식사 관리를 지원하는 웹 서비스**
 
 ## 🤗 주요 기능
-### 유저
+### 메인 페이지
+
+### 로그인
+
+### 게시판
+
+### 건강 기능 시스템
+
+### 쇼핑
+
+### 결제
 
 ## 💻 개발 환경
 <img width="968" alt="image" src="https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/19569104/ded3ba2d-f096-4e63-beee-5e3eba46ca9f">
