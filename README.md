@@ -20,6 +20,8 @@
 ### 유저
 
 ## 💻 개발 환경
+<img width="968" alt="image" src="https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/19569104/ded3ba2d-f096-4e63-beee-5e3eba46ca9f">
+
 ### 공통
 - Trello
 - Notion
@@ -38,12 +40,19 @@
 - DatePicker
 
 ## ⚙️ 서비스 아키텍쳐
+<img width="964" alt="image" src="https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/19569104/ce461d09-aa9f-4bbf-b4dc-e54bc3fff789">
 
 
 ## 🌟 Git 전략 및 컨벤션
 ### Git 전략
 ```
-Merge
+   1. 각자 작업 branches 분리
+   2. Main Branch에 통합
+   3. Merge 하기 위해서는 이하의 규칙이 필요
+      3.1. Merge는 정기 회의 이후 실행
+      3.2. 3명 이상의 Code Review후 Approval 승인 후 Merge 가능
+      3.3 긴급 수정의 경우 팀장과 협의 후 Merge 실행
+   4. Dev-Ops 역할의 분리로, Conflict 시 Merge 작업과 DBMS 재정의 등은 문서화 분리 관리
 ```
 ### Git 컨벤션
 **태그종류**
