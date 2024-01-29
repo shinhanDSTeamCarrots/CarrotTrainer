@@ -18,17 +18,17 @@
 
 ## 🤗 주요 기능
 ### 메인 페이지
-https://github.com/shinhanDSTeamCarrots/CarrotTrainer/issues/new
+![mainpage](https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/107539679/c18bd285-d2e3-4eda-9ff2-6eaae6498d33)
 ### 로그인
-
+![login](https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/107539679/b5df04c0-1a10-43f3-a874-9c0a23542134)
 ### 게시판
-
+![community](https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/107539679/291782ee-8038-4008-88d9-642dfd567c69)
 ### 건강 기능 시스템
 
 ### 쇼핑
-
+![shopping_review_inquiry](https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/107539679/cf1e11de-6d86-4efa-88b1-f7ccf3d27443)
 ### 결제
-
+![pay](https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/107539679/99b385eb-06e9-4a6d-99aa-d973ce917336)
 ## 💻 개발 환경
 <img width="968" alt="image" src="https://github.com/shinhanDSTeamCarrots/CarrotTrainer/assets/19569104/ded3ba2d-f096-4e63-beee-5e3eba46ca9f">
 
