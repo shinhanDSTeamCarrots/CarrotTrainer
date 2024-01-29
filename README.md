@@ -18,7 +18,7 @@
 
 ## 🤗 주요 기능
 ### 메인 페이지
-
+https://github.com/shinhanDSTeamCarrots/CarrotTrainer/issues/new
 ### 로그인
 
 ### 게시판
